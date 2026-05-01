@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rim Academy — Aylıq İmtahan Paneli</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0f1a;
+    --surface: #131729;
+    --surface2: #1a1f38;
+    --border: rgba(255,255,255,0.07);
+    --accent: #4f8ef7;
+    --accent2: #7c3aed;
+    --gold: #f5a623;
+    --green: #22c55e;
+    --red: #ef4444;
+    --orange: #f97316;
+    --text: #e8eaf6;
+    --muted: #6b7280;
+    --radius: 14px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ROLE SELECTOR */
+  #role-screen {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+    padding: 40px;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(79,142,247,0.12), transparent),
+                radial-gradient(ellipse 60% 40% at 80% 80%, rgba(124,58,237,0.1), transparent);
+  }
+
+  .logo-area { text-align: center; }
+  .logo-area .brand {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .logo-area h1 {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.1;
+  }
+  .logo-area h1 span {
+    background: linear-gradient(135deg, #4f8ef7, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .logo-area p {
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  .role-cards {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .role-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px 32px;
+    width: 220px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(.4,0,.2,1);
+    position: relative;
+    overflow: hidden;
+  }
+  .role-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.3s;
+    border-radius: 20px;
+  }
+  .role-card.student::before { background: radial-gradient(circle at 50% 0%, rgba(79,142,247,0.15), transparent 70%); }
+  .role-card.teacher::before { background: radial-gradient(circle at 50% 0%, rgba(34,197,94,0.15), transparent 70%); }
+  .role-card.admin::before   { background: radial-gradient(circle at 50% 0%, rgba(245,166,35,0.15), transparent 70%); }
+
+  .role-card:hover { transform: translateY(-6px); border-color: rgba(255,255,255,0.15); }
+  .role-card:hover::before { opacity: 1; }
+  .role-card.student:hover { box-shadow: 0 20px 60px rgba(79,142,247,0.2); }
+  .role-card.teacher:hover { box-shadow: 0 20px 60px rgba(34,197,94,0.2); }
+  .role-card.admin:hover   { box-shadow: 0 20px 60px rgba(245,166,35,0.2); }
+
+  .role-icon {
+    font-size: 42px;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .role-card h3 { font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .role-card p  { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .role-badge {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .student .role-badge { background: rgba(79,142,247,0.15); color: var(--accent); }
+  .teacher .role-badge { background: rgba(34,197,94,0.15); color: var(--green); }
+  .admin   .role-badge  { background: rgba(245,166,35,0.15); color: var(--gold); }
+
+  /* PANEL LAYOUT */
+  #panel { display: none; min-height: 100vh; }
+
+  .panel-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(12,15,26,0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    height: 64px;
+  }
+  .back-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-family: 'Sora', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .back-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
+
+  .header-brand { font-size: 15px; font-weight: 700; color: #fff; }
+  .header-brand span { opacity: 0.4; margin: 0 6px; }
+  .header-role {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+  .student-role { background: rgba(79,142,247,0.15); color: var(--accent); }
+  .teacher-role { background: rgba(34,197,94,0.15); color: var(--green); }
+  .admin-role   { background: rgba(245,166,35,0.15); color: var(--gold); }
+
+  .header-user {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; color: #fff;
+  }
+  .student-avatar { background: linear-gradient(135deg, #4f8ef7, #7c3aed); }
+  .teacher-avatar { background: linear-gradient(135deg, #22c55e, #15803d); }
+  .admin-avatar   { background: linear-gradient(135deg, #f5a623, #ef4444); }
+
+  /* NAV TABS */
+  .nav-tabs {
+    display: flex;
+    gap: 4px;
+    padding: 16px 32px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    overflow-x: auto;
+  }
+  .nav-tab {
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    font-family: 'Sora', sans-serif;
+  }
+  .nav-tab:hover { color: var(--text); background: var(--surface2); }
+  .nav-tab.active { color: #fff; background: var(--surface2); border: 1px solid var(--border); }
+  .nav-tab.active.s { color: var(--accent); }
+  .nav-tab.active.t { color: var(--green); }
+  .nav-tab.active.a { color: var(--gold); }
+
+  /* CONTENT */
+  .content { padding: 32px; max-width: 1100px; margin: 0 auto; }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .card-title { font-size: 16px; font-weight: 700; color: #fff; }
+  .card-sub   { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* STATS ROW */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .stat-box {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .stat-box::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+  .stat-box.blue::after  { background: var(--accent); }
+  .stat-box.green::after { background: var(--green); }
+  .stat-box.gold::after  { background: var(--gold); }
+  .stat-box.red::after   { background: var(--red); }
+  .stat-box.purple::after { background: #a78bfa; }
+
+  .stat-value { font-size: 28px; font-weight: 800; color: #fff; font-family: 'JetBrains Mono', monospace; }
+  .stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  /* EXAM CARD */
+  .exam-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: all 0.2s;
+  }
+  .exam-item:hover { border-color: rgba(255,255,255,0.12); transform: translateX(2px); }
+  .exam-month {
+    min-width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .exam-month .day { font-size: 20px; font-weight: 800; font-family: 'JetBrains Mono', monospace; line-height: 1; margin-top: 2px; }
+  .em-blue   { background: rgba(79,142,247,0.15); color: var(--accent); }
+  .em-green  { background: rgba(34,197,94,0.15); color: var(--green); }
+  .em-gold   { background: rgba(245,166,35,0.15); color: var(--gold); }
+  .em-red    { background: rgba(239,68,68,0.15); color: var(--red); }
+  .em-purple { background: rgba(167,139,250,0.15); color: #a78bfa; }
+
+  .exam-info { flex: 1; }
+  .exam-name { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+  .exam-meta { font-size: 12px; color: var(--muted); display: flex; gap: 16px; flex-wrap: wrap; }
+  .exam-meta span { display: flex; align-items: center; gap: 4px; }
+
+  .status-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .sb-active  { background: rgba(34,197,94,0.15); color: var(--green); }
+  .sb-waiting { background: rgba(245,166,35,0.15); color: var(--gold); }
+  .sb-done    { background: rgba(107,114,128,0.2); color: var(--muted); }
+  .sb-review  { background: rgba(79,142,247,0.15); color: var(--accent); }
+  .sb-upcoming{ background: rgba(167,139,250,0.15); color: #a78bfa; }
+
+  /* BUTTONS */
+  .btn {
+    padding: 10px 20px;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Sora', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-primary  { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: #6096f8; transform: translateY(-1px); }
+  .btn-green    { background: var(--green); color: #fff; }
+  .btn-green:hover { background: #16a34a; }
+  .btn-gold     { background: var(--gold); color: #000; }
+  .btn-gold:hover { background: #e8941f; }
+  .btn-ghost    { background: var(--surface2); border: 1px solid var(--border); color: var(--muted); }
+  .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
+  .btn-danger   { background: rgba(239,68,68,0.15); color: var(--red); border: 1px solid rgba(239,68,68,0.2); }
+  .btn-sm       { padding: 6px 14px; font-size: 12px; }
+
+  /* TABLE */
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 14px;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    vertical-align: middle;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* PROGRESS BAR */
+  .progress-bar {
+    height: 6px;
+    background: var(--surface2);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.5s ease;
+  }
+
+  /* FORM ELEMENTS */
+  .form-group { margin-bottom: 18px; }
+  .form-label { font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 8px; display: block; letter-spacing: 0.5px; }
+  .form-input, .form-select, .form-textarea {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--text);
+    font-family: 'Sora', sans-serif;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: rgba(79,142,247,0.5);
+    box-shadow: 0 0 0 3px rgba(79,142,247,0.1);
+  }
+  .form-select option { background: var(--surface); }
+  .form-textarea { resize: vertical; min-height: 100px; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: modalIn 0.3s cubic-bezier(.4,0,.2,1);
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.95) translateY(10px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+  .modal-title  { font-size: 18px; font-weight: 700; color: #fff; }
+  .modal-close  { background: var(--surface2); border: 1px solid var(--border); color: var(--muted); width: 32px; height: 32px; border-radius: 8px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .modal-close:hover { color: var(--text); }
+
+  /* TIMER */
+  .exam-timer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+    background: rgba(79,142,247,0.1);
+    border: 1px solid rgba(79,142,247,0.2);
+    padding: 8px 16px;
+    border-radius: 10px;
+  }
+  .timer-warning { color: var(--red); background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.2); animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
+
+  /* ANSWER OPTION */
+  .answer-opt {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .answer-opt:hover { border-color: rgba(79,142,247,0.4); background: rgba(79,142,247,0.05); }
+  .answer-opt.selected { border-color: var(--accent); background: rgba(79,142,247,0.1); }
+  .answer-opt.correct  { border-color: var(--green); background: rgba(34,197,94,0.1); }
+  .answer-opt.wrong    { border-color: var(--red); background: rgba(239,68,68,0.1); }
+  .opt-circle {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+    flex-shrink: 0; margin-top: 1px;
+    transition: all 0.2s;
+  }
+  .selected .opt-circle { border-color: var(--accent); background: var(--accent); color: #fff; }
+  .correct  .opt-circle { border-color: var(--green); background: var(--green); color: #fff; }
+  .wrong    .opt-circle { border-color: var(--red); background: var(--red); color: #fff; }
+
+  /* CHIP */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  /* QUESTION CARD */
+  .q-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 12px;
+  }
+  .q-num { font-size: 11px; color: var(--muted); font-weight: 600; margin-bottom: 8px; }
+  .q-text { font-size: 14px; color: var(--text); line-height: 1.6; margin-bottom: 16px; }
+  .q-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  /* SCORE CIRCLE */
+  .score-big {
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    font-size: 32px; font-weight: 800;
+    font-family: 'JetBrains Mono', monospace;
+    background: conic-gradient(var(--accent) calc(var(--pct) * 1%), var(--surface2) 0);
+    position: relative;
+    margin: 0 auto 24px;
+  }
+  .score-big::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border-radius: 50%;
+    background: var(--surface);
+  }
+  .score-big span { position: relative; z-index: 1; }
+  .score-sub { font-size: 12px; color: var(--muted); font-weight: 400; font-family: 'Sora', sans-serif; }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+
+  /* EMPTY STATE */
+  .empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+  }
+  .empty .icon { font-size: 48px; margin-bottom: 16px; opacity: 0.5; }
+  .empty p { font-size: 14px; }
+
+  /* ALERT */
+  .alert {
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 13px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .alert-info    { background: rgba(79,142,247,0.1); border: 1px solid rgba(79,142,247,0.2); color: #93c5fd; }
+  .alert-warning { background: rgba(245,166,35,0.1); border: 1px solid rgba(245,166,35,0.2); color: #fcd34d; }
+  .alert-success { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); color: #86efac; }
+
+  /* GRADING */
+  .grading-row {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 10px;
+  }
+  .student-name-row {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* TAG */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .tag-math { background: rgba(167,139,250,0.15); color: #a78bfa; }
+  .tag-phys { background: rgba(79,142,247,0.15); color: var(--accent); }
+  .tag-chem { background: rgba(34,197,94,0.15); color: var(--green); }
+  .tag-az   { background: rgba(245,166,35,0.15); color: var(--gold); }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- ROLE SELECTOR -->
+<div id="role-screen">
+  <div class="logo-area">
+    <div class="brand">Rim Academy</div>
+    <h1>Aylıq <span>İmtahan</span> Paneli</h1>
+    <p>Rolunuzu seçin — interfeys avtomatik açılacaq</p>
+  </div>
+  <div class="role-cards">
+    <div class="role-card student" onclick="openPanel('student')">
+      <span class="role-icon">🎓</span>
+      <h3>Tələbə</h3>
+      <p>İmtahana girin, nəticənizi görün</p>
+      <span class="role-badge">Tələbə Paneli</span>
+    </div>
+    <div class="role-card teacher" onclick="openPanel('teacher')">
+      <span class="role-icon">👨‍🏫</span>
+      <h3>Müəllim</h3>
+      <p>İmtahan yaradın, yoxlayın, idarə edin</p>
+      <span class="role-badge">Müəllim Paneli</span>
+    </div>
+    <div class="role-card admin" onclick="openPanel('admin')">
+      <span class="role-icon">⚙️</span>
+      <h3>Admin</h3>
+      <p>Sual bankı, statistika, export</p>
+      <span class="role-badge">Admin Paneli</span>
+    </div>
+  </div>
+</div>
+
+<!-- PANEL -->
+<div id="panel">
+  <div class="panel-header">
+    <button class="back-btn" onclick="goBack()">← Geri</button>
+    <div class="header-brand">Rim Academy <span>·</span> <span id="panel-title">Aylıq İmtahan</span></div>
+    <span class="header-role" id="role-badge-header"></span>
+    <div class="header-user">
+      <div class="avatar" id="user-avatar"></div>
+      <span id="user-name"></span>
+    </div>
+  </div>
+  <div class="nav-tabs" id="nav-tabs"></div>
+  <div class="content" id="panel-content"></div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal" id="modal-inner">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">Modal</span>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+// ─── STATE ───────────────────────────────────────────────────────────
+let currentRole = '';
+let currentTab  = 0;
+let examTimer   = null;
+let examSeconds = 0;
+let examStarted = false;
+let currentQuestion = 0;
+let selectedAnswers = {};
+let tabSwitchCount = 0;
+
+// ─── OPEN PANEL ───────────────────────────────────────────────────────
+function openPanel(role) {
+  currentRole = role;
+  document.getElementById('role-screen').style.display = 'none';
+  document.getElementById('panel').style.display = 'block';
+
+  const names = { student: 'Əli Hüseynov', teacher: 'Nərmin Əliyeva', admin: 'Admin' };
+  const avatarClasses = { student: 'student-avatar', teacher: 'teacher-avatar', admin: 'admin-avatar' };
+  const initials = { student: 'Ə', teacher: 'N', admin: 'A' };
+  const roleLabels = { student: 'Tələbə', teacher: 'Müəllim', admin: 'Admin' };
+  const roleBadgeClasses = { student: 'student-role', teacher: 'teacher-role', admin: 'admin-role' };
+
+  document.getElementById('user-name').textContent = names[role];
+  const av = document.getElementById('user-avatar');
+  av.className = 'avatar ' + avatarClasses[role];
+  av.textContent = initials[role];
+
+  const badge = document.getElementById('role-badge-header');
+  badge.textContent = roleLabels[role];
+  badge.className = 'header-role ' + roleBadgeClasses[role];
+
+  if (role === 'student') renderStudentPanel();
+  else if (role === 'teacher') renderTeacherPanel();
+  else renderAdminPanel();
+}
+
+function goBack() {
+  if (examStarted) { if (!confirm('İmtahanı tərk etmək istəyirsiniz? İmtahan bitmiş sayılacaq.')) return; }
+  clearInterval(examTimer);
+  examStarted = false;
+  document.getElementById('role-screen').style.display = 'flex';
+  document.getElementById('panel').style.display = 'none';
+}
+
+// ─── TAB SYSTEM ───────────────────────────────────────────────────────
+function setTabs(tabs, contents, colorClass) {
+  const nav = document.getElementById('nav-tabs');
+  nav.innerHTML = tabs.map((t, i) =>
+    `<button class="nav-tab ${colorClass} ${i===0?'active':''}" onclick="switchTab(${i})">${t}</button>`
+  ).join('');
+  document.getElementById('panel-content').innerHTML = contents.map((c, i) =>
+    `<div class="tab-content ${i===0?'active':''}" id="tab-${i}">${c}</div>`
+  ).join('');
+}
+
+function switchTab(i) {
+  document.querySelectorAll('.nav-tab').forEach((t,j) => t.classList.toggle('active', i===j));
+  document.querySelectorAll('.tab-content').forEach((t,j) => t.classList.toggle('active', i===j));
+  currentTab = i;
+}
+
+// ─── MODAL ────────────────────────────────────────────────────────────
+function openModal(title, body) {
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-body').innerHTML = body;
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+}
+
+// ══════════════════════════════════════════════════════════════════════
+// STUDENT PANEL
+// ══════════════════════════════════════════════════════════════════════
+function renderStudentPanel() {
+  document.getElementById('panel-title').textContent = 'Aylıq İmtahan';
+  const tabs = ['📋 İmtahanlarım', '📊 Nəticələrim', '📝 Cavab Açarları'];
+  const contents = [studentExamsTab(), studentResultsTab(), studentAnswersTab()];
+  setTabs(tabs, contents, 's');
+}
+
+function studentExamsTab() {
+  return `
+  <div class="stats-row">
+    <div class="stat-box blue"><div class="stat-value">3</div><div class="stat-label">Keçirilən İmtahan</div></div>
+    <div class="stat-box green"><div class="stat-value">1</div><div class="stat-label">Aktiv İmtahan</div></div>
+    <div class="stat-box gold"><div class="stat-value">487</div><div class="stat-label">Orta Bal</div></div>
+    <div class="stat-box purple"><div class="stat-value">12-ci</div><div class="stat-label">Kurs Sıralaması</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div><div class="card-title">Aktiv İmtahan</div><div class="card-sub">Bu ay keçirilən imtahan</div></div>
+    </div>
+    <div class="alert alert-warning">⚡ İmtahanınız bu gün saat 18:00-da başlayır. Hazır olun!</div>
+    <div class="exam-item" style="border-color: rgba(34,197,94,0.3); background: rgba(34,197,94,0.05);">
+      <div class="exam-month em-green">May<div class="day">17</div></div>
+      <div class="exam-info">
+        <div class="exam-name">May 2025 — Aylıq İmtahan #5</div>
+        <div class="exam-meta">
+          <span>📚 Riyaziyyat, Fizika, Kimya</span>
+          <span>⏱ 135 dəq</span>
+          <span>📝 90 sual</span>
+          <span>🎯 I Qrup</span>
+        </div>
+      </div>
+      <span class="status-badge sb-active">● Aktiv</span>
+      <button class="btn btn-green" onclick="startExam()">Başla →</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">Keçmiş İmtahanlar</div></div>
+    ${[
+      {month:'Apr', day:'19', name:'Aprel 2025 — #4', sub:'Riyaziyyat, Fizika, Kimya', ball:'521', status:'sb-done', label:'Tamamlandı'},
+      {month:'Mar', day:'15', name:'Mart 2025 — #3',  sub:'Riyaziyyat, Fizika, Kimya', ball:'468', status:'sb-done', label:'Tamamlandı'},
+      {month:'Feb', day:'22', name:'Fevral 2025 — #2',sub:'Riyaziyyat, Fizika, Kimya', ball:'503', status:'sb-done', label:'Tamamlandı'},
+    ].map(e => `
+      <div class="exam-item">
+        <div class="exam-month em-blue">${e.month}<div class="day">${e.day}</div></div>
+        <div class="exam-info">
+          <div class="exam-name">${e.name}</div>
+          <div class="exam-meta"><span>📚 ${e.sub}</span></div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:20px;font-weight:800;font-family:'JetBrains Mono',monospace;color:#fff">${e.ball}</div>
+          <div style="font-size:11px;color:var(--muted)">bal</div>
+        </div>
+        <span class="status-badge ${e.status}">${e.label}</span>
+        <button class="btn btn-ghost btn-sm" onclick="showAnswers()">Cavablar</button>
+      </div>
+    `).join('')}
+  </div>`;
+}
+
+function studentResultsTab() {
+  return `
+  <div class="card">
+    <div class="card-header"><div class="card-title">Bal Dinamikam</div></div>
+    <div style="display:flex;gap:16px;align-items:flex-end;height:120px;padding:10px 0;">
+      ${[{bal:503,m:'Feb'},{bal:468,m:'Mar'},{bal:521,m:'Apr'},{bal:0,m:'May',cur:true}].map(b => `
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;">
+          <div style="font-size:11px;font-weight:700;color:${b.cur?'var(--muted)':'#fff'}">${b.bal||'—'}</div>
+          <div style="width:100%;background:${b.cur?'var(--surface2)':'var(--accent)'};height:${b.bal?Math.round(b.bal/700*90):10}px;border-radius:6px 6px 0 0;opacity:${b.cur?0.3:1};"></div>
+          <div style="font-size:11px;color:var(--muted)">${b.m}</div>
+        </div>
+      `).join('')}
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">Fənn üzrə Nəticə — Aprel</div></div>
+    ${[
+      {fenn:'Riyaziyyat', ball:178, max:200, cls:'tag-math'},
+      {fenn:'Fizika',     ball:162, max:200, cls:'tag-phys'},
+      {fenn:'Kimya',      ball:181, max:200, cls:'tag-chem'},
+    ].map(f => `
+      <div style="margin-bottom:16px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <span class="tag ${f.cls}">${f.fenn}</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:#fff">${f.ball}<span style="color:var(--muted);font-size:12px">/${f.max}</span></span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${f.ball/f.max*100}%;background:var(--accent);"></div></div>
+      </div>
+    `).join('')}
+  </div>`;
+}
+
+function studentAnswersTab() {
+  return `
+  <div class="alert alert-info">📖 Müəllim nəticələri yayımladıqdan sonra hər sualın düzgün cavabını burada görə bilərsiniz.</div>
+  <div class="card">
+    <div class="card-header">
+      <div><div class="card-title">Aprel 2025 — Cavab Açarı</div></div>
+      <button class="btn btn-ghost btn-sm">Hamısını Gör</button>
+    </div>
+    <div class="section-title">Riyaziyyat</div>
+    ${[
+      {q:'İki ədədin cəmi 48, onların fərqi 12-dir. Böyük ədədi tapın.', a:['24','30','36','42'], correct:1, selected:1},
+      {q:'x² - 5x + 6 = 0 tənliyinin kökləri nədir?', a:['1 və 6','2 və 3','3 və 4','-2 və -3'], correct:1, selected:3},
+      {q:'Trapesiyanın diaqonalları biri-birini 3:5 nisbətdə kəsirsə, trapesiyanın əsaslarının nisbəti nədir?', a:['3:5','5:3','2:3','1:2'], correct:0, selected:0},
+    ].map((q,i) => `
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:10px;">
+        <div class="q-num">Sual ${i+1}</div>
+        <div class="q-text">${q.q}</div>
+        ${q.a.map((a,j) => `
+          <div class="answer-opt ${j===q.correct?'correct':j===q.selected&&j!==q.correct?'wrong':''}">
+            <div class="opt-circle">${['A','B','C','D'][j]}</div>
+            <span style="font-size:13px">${a} ${j===q.correct?'✓':j===q.selected&&j!==q.correct?'✗':''}</span>
+          </div>
+        `).join('')}
+      </div>
+    `).join('')}
+  </div>`;
+}
+
+// ─── EXAM SESSION ─────────────────────────────────────────────────────
+function startExam() {
+  examStarted = true;
+  tabSwitchCount = 0;
+  selectedAnswers = {};
+  currentQuestion = 0;
+  examSeconds = 135 * 60;
+
+  document.addEventListener('visibilitychange', handleTabSwitch);
+
+  const questions = [
+    {fenn:'Riyaziyyat', type:'closed', text:'2x + 5 = 13 tənliyinin həlli nədir?', opts:['x = 3','x = 4','x = 5','x = 6']},
+    {fenn:'Riyaziyyat', type:'closed', text:'Düzbucaqlı üçbucağın hipotenuzası 10, bir katetin uzunluğu 6-dır. Digər katetin uzunluğu?', opts:['7','8','9','10']},
+    {fenn:'Fizika',     type:'closed', text:'Işığın boşluqda sürəti neçə km/s-dir?', opts:['200 000','300 000','400 000','500 000']},
+    {fenn:'Fizika',     type:'open',   text:'Kütləsi 2 kq olan cisim 5 m/s² sürətlənmə ilə hərəkət edir. Cismə təsir edən qüvvəni tapın.'},
+    {fenn:'Kimya',      type:'closed', text:'H₂O molekulundakı hidrogen atomlarının sayı nədir?', opts:['1','2','3','4']},
+  ];
+
+  openModal('May 2025 — Aylıq İmtahan', renderExamQuestion(questions, 0));
+  startTimer();
+}
+
+function renderExamQuestion(questions, idx) {
+  const q = questions[idx];
+  const pct = Math.round((idx / questions.length) * 100);
+  return `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <div>
+        <span class="chip">${q.fenn}</span>
+        <span class="chip" style="margin-left:6px">${q.type==='open'?'Açıq tip':'Qapalı tip'}</span>
+      </div>
+      <div class="exam-timer" id="exam-timer-display">02:15:00</div>
+    </div>
+    <div class="progress-bar" style="margin-bottom:20px;">
+      <div class="progress-fill" style="width:${pct}%;background:var(--accent);"></div>
+    </div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:16px;">Sual ${idx+1} / ${questions.length}</div>
+    <div class="q-text" style="font-size:15px;margin-bottom:20px;">${q.text}</div>
+    ${q.type==='closed' ? q.opts.map((o,j)=>`
+      <div class="answer-opt" id="opt-${j}" onclick="selectOpt(${j}, ${questions.length})">
+        <div class="opt-circle">${['A','B','C','D'][j]}</div>
+        <span>${o}</span>
+      </div>
+    `).join('') : `
+      <textarea class="form-textarea" placeholder="Cavabınızı buraya yazın..." rows="4"></textarea>
+    `}
+    <div style="display:flex;justify-content:space-between;margin-top:24px;">
+      ${idx > 0 ? `<button class="btn btn-ghost" onclick="startExam()">← Geri</button>` : '<div></div>'}
+      ${idx < questions.length-1
+        ? `<button class="btn btn-primary" onclick="nextQuestion(${questions.length})">Növbəti →</button>`
+        : `<button class="btn btn-green" onclick="submitExam()">✓ Bitir və Göndər</button>`}
+    </div>
+  `;
+}
+
+function selectOpt(j) {
+  document.querySelectorAll('.answer-opt').forEach((el,i) => {
+    el.classList.toggle('selected', i === j);
+    el.querySelector('.opt-circle').classList.remove('selected');
+  });
+  document.getElementById('opt-'+j).classList.add('selected');
+}
+
+function nextQuestion(total) {
+  currentQuestion++;
+  if (currentQuestion >= total) submitExam();
+  else {
+    const questions = [
+      {fenn:'Riyaziyyat', type:'closed', text:'2x + 5 = 13 tənliyinin həlli nədir?', opts:['x = 3','x = 4','x = 5','x = 6']},
+      {fenn:'Fizika', type:'closed', text:'Işığın boşluqda sürəti neçə km/s-dir?', opts:['200 000','300 000','400 000','500 000']},
+      {fenn:'Fizika', type:'open', text:'Kütləsi 2 kq olan cisim 5 m/s² sürətlənmə ilə hərəkət edir.'},
+      {fenn:'Kimya', type:'closed', text:'H₂O molekulundakı hidrogen atomlarının sayı nədir?', opts:['1','2','3','4']},
+    ];
+    document.getElementById('modal-body').innerHTML = renderExamQuestion(questions, Math.min(currentQuestion, questions.length-1));
+    startTimer();
+  }
+}
+
+function submitExam() {
+  clearInterval(examTimer);
+  examStarted = false;
+  document.removeEventListener('visibilitychange', handleTabSwitch);
+  document.getElementById('modal-body').innerHTML = `
+    <div style="text-align:center;padding:20px 0;">
+      <div style="font-size:64px;margin-bottom:16px">✅</div>
+      <h2 style="font-size:22px;font-weight:800;color:#fff;margin-bottom:8px">İmtahan göndərildi!</h2>
+      <p style="color:var(--muted);font-size:14px;margin-bottom:24px">Müəllim açıq tipli sualları yoxladıqdan sonra nəticəniz görünəcək.</p>
+      <div class="alert alert-info">📨 Nəticəniz hazır olduqda sizə bildiriş gəlməyəcək — panel-ə daxil olub yoxlayın.</div>
+      <button class="btn btn-primary" onclick="closeModal()">Bağla</button>
+    </div>
+  `;
+}
+
+function startTimer() {
+  clearInterval(examTimer);
+  examTimer = setInterval(() => {
+    examSeconds--;
+    const h = String(Math.floor(examSeconds/3600)).padStart(2,'0');
+    const m = String(Math.floor((examSeconds%3600)/60)).padStart(2,'0');
+    const s = String(examSeconds%60).padStart(2,'0');
+    const el = document.getElementById('exam-timer-display');
+    if (!el) { clearInterval(examTimer); return; }
+    el.textContent = `${h}:${m}:${s}`;
+    if (examSeconds < 300) el.className = 'exam-timer timer-warning';
+    if (examSeconds <= 0) { clearInterval(examTimer); submitExam(); }
+  }, 1000);
+}
+
+function handleTabSwitch() {
+  if (!examStarted || !document.hidden) return;
+  tabSwitchCount++;
+  if (tabSwitchCount === 1) {
+    alert('⚠️ Xəbərdarlıq! Başqa tabı açdınız. Bir daha edərsinizsə imtahan dayandırılacaq.');
+  } else {
+    alert('🚫 İmtahan dayandırıldı! Başqa tab açmağa cəhd etdiniz.');
+    submitExam();
+    closeModal();
+  }
+}
+
+function showAnswers() {
+  openModal('Aprel 2025 — Cavab Açarı', `
+    <div class="alert alert-success">✅ Nəticəniz: <strong>521 bal</strong> | Düzgün: 74/90</div>
+    ${[
+      {n:1,text:'2x + 5 = 13 tənliyinin həlli nədir?',opts:['x = 3','x = 4','x = 5','x = 6'],correct:1,selected:1},
+      {n:2,text:'Düzbucaqlı üçbucağın hipotenuzası 10, katet 6. Digər katet?',opts:['7','8','9','10'],correct:1,selected:2},
+    ].map(q=>`
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:10px;">
+        <div class="q-num">Sual ${q.n}</div>
+        <div class="q-text">${q.text}</div>
+        ${q.opts.map((o,j)=>`
+          <div class="answer-opt ${j===q.correct?'correct':j===q.selected&&j!==q.correct?'wrong':''}">
+            <div class="opt-circle">${['A','B','C','D'][j]}</div>
+            <span>${o}</span>
+          </div>
+        `).join('')}
+      </div>
+    `).join('')}
+  `);
+}
+
+// ══════════════════════════════════════════════════════════════════════
+// TEACHER PANEL
+// ══════════════════════════════════════════════════════════════════════
+function renderTeacherPanel() {
+  document.getElementById('panel-title').textContent = 'Müəllim — Aylıq İmtahan';
+  const tabs = ['📋 İmtahanlar', '✏️ İmtahan Yarat', '🔍 Yoxla', '📊 Nəticələr'];
+  const contents = [teacherExamsTab(), teacherCreateTab(), teacherGradeTab(), teacherResultsTab()];
+  setTabs(tabs, contents, 't');
+}
+
+function teacherExamsTab() {
+  return `
+  <div class="stats-row">
+    <div class="stat-box green"><div class="stat-value">1</div><div class="stat-label">Aktiv İmtahan</div></div>
+    <div class="stat-box blue"><div class="stat-value">24</div><div class="stat-label">Qeydiyyatlı Tələbə</div></div>
+    <div class="stat-box gold"><div class="stat-value">5</div><div class="stat-label">Yoxlanılacaq</div></div>
+    <div class="stat-box purple"><div class="stat-value">19</div><div class="stat-label">Tamamlanan</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Mənim İmtahanlarım</div>
+      <button class="btn btn-green btn-sm" onclick="switchTab(1)">+ Yeni İmtahan</button>
+    </div>
+    ${[
+      {ay:'May 2025',kurs:'Qrup A — Riyaziyyat/Fizika/Kimya',tarix:'17 May 2025',saat:'18:00',telebe:24,bitiren:19,status:'sb-active',label:'Aktiv'},
+      {ay:'Apr 2025',kurs:'Qrup A — Riyaziyyat/Fizika/Kimya',tarix:'19 Apr 2025',saat:'18:00',telebe:24,bitiren:24,status:'sb-done',label:'Bitdi'},
+      {ay:'Mar 2025',kurs:'Qrup A — Riyaziyyat/Fizika/Kimya',tarix:'15 Mar 2025',saat:'18:00',telebe:22,bitiren:22,status:'sb-done',label:'Bitdi'},
+    ].map((e,i)=>`
+      <div class="exam-item">
+        <div class="exam-month em-${['green','blue','blue'][i]}">${e.ay.split(' ')[0].slice(0,3)}<div class="day">${e.tarix.split(' ')[0]}</div></div>
+        <div class="exam-info">
+          <div class="exam-name">${e.ay} — Aylıq İmtahan</div>
+          <div class="exam-meta">
+            <span>👥 ${e.kurs}</span>
+            <span>📅 ${e.tarix} ${e.saat}</span>
+            <span>✅ ${e.bitiren}/${e.telebe} bitirdi</span>
+          </div>
+          <div class="progress-bar" style="margin-top:8px;max-width:200px">
+            <div class="progress-fill" style="width:${e.bitiren/e.telebe*100}%;background:var(--green)"></div>
+          </div>
+        </div>
+        <span class="status-badge ${e.status}">${e.label}</span>
+        ${i===0?`<button class="btn btn-ghost btn-sm" onclick="switchTab(2)">Yoxla</button>`:''}
+        <button class="btn btn-ghost btn-sm" onclick="switchTab(3)">Nəticə</button>
+      </div>
+    `).join('')}
+  </div>`;
+}
+
+function teacherCreateTab() {
+  return `
+  <div class="card">
+    <div class="card-header"><div class="card-title">Yeni Aylıq İmtahan Yarat</div></div>
+
+    <div class="section-title">Əsas Məlumatlar</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Kurs / Qrup</label>
+        <select class="form-select">
+          <option>Qrup A — Riyaziyyat/Fizika/Kimya</option>
+          <option>Qrup B — Azərbaycan dili/Tarix</option>
+          <option>Qrup C — Biologiya/Kimya</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">İmtahan Ayı</label>
+        <input class="form-input" type="month" value="2025-05">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Tarix</label>
+        <input class="form-input" type="date" value="2025-05-17">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Başlanğıc Saatı</label>
+        <input class="form-input" type="time" value="18:00">
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-title">Fənnlər və Suallar</div>
+
+    ${[
+      {ad:'Riyaziyyat', tag:'tag-math', qapal:22, aciq:8, vaxt:45},
+      {ad:'Fizika',     tag:'tag-phys', qapal:22, aciq:8, vaxt:45},
+      {ad:'Kimya',      tag:'tag-chem', qapal:22, aciq:8, vaxt:45},
+    ].map(f=>`
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:12px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+          <span class="tag ${f.tag}" style="font-size:13px;padding:4px 12px;">${f.ad}</span>
+          <button class="btn btn-ghost btn-sm" onclick="openQuestionPicker('${f.ad}')">📚 Sual Seç (${f.qapal+f.aciq})</button>
+        </div>
+        <div class="form-row" style="grid-template-columns:1fr 1fr 1fr;">
+          <div class="form-group" style="margin-bottom:0">
+            <label class="form-label">Qapalı tip</label>
+            <input class="form-input" type="number" value="${f.qapal}">
+          </div>
+          <div class="form-group" style="margin-bottom:0">
+            <label class="form-label">Açıq tip</label>
+            <input class="form-input" type="number" value="${f.aciq}">
+          </div>
+          <div class="form-group" style="margin-bottom:0">
+            <label class="form-label">Vaxt (dəq)</label>
+            <input class="form-input" type="number" value="${f.vaxt}">
+          </div>
+        </div>
+      </div>
+    `).join('')}
+
+    <div class="divider"></div>
+    <div class="section-title">Tələbələr</div>
+    <div class="alert alert-info">ℹ️ Seçdiyiniz qrupun bütün tələbələri avtomatik əlavə edilir. Aşağıdan kənarda saxlamaq istədiklərinizi çıxarın.</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
+      ${['Əli H.','Leyla M.','Orxan K.','Nigar S.','Rauf A.','Aytən B.','Kamran D.','Sevinc T.'].map(n=>`
+        <div style="display:flex;align-items:center;gap:6px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:12px;">
+          ${n} <span style="cursor:pointer;color:var(--muted)" onclick="this.parentElement.remove()">✕</span>
+        </div>
+      `).join('')}
+    </div>
+
+    <div style="display:flex;gap:12px;justify-content:flex-end;">
+      <button class="btn btn-ghost">Yadda Saxla (Draft)</button>
+      <button class="btn btn-green" onclick="publishExam()">✓ İmtahanı Yayımla</button>
+    </div>
+  </div>`;
+}
+
+function teacherGradeTab() {
+  return `
+  <div class="card">
+    <div class="card-header">
+      <div><div class="card-title">Açıq Tip Sualların Yoxlanması</div><div class="card-sub">May 2025 İmtahanı</div></div>
+      <span class="status-badge sb-review">5 yoxlanılmamış</span>
+    </div>
+    <div class="alert alert-warning">⚠️ Açıq tipli sualları yoxladıqdan sonra "Nəticəni Yayımla" düyməsini basın.</div>
+
+    ${[
+      {ad:'Əli Hüseynov', sual:'Kütləsi 2 kq olan cisim 5 m/s² sürətlənmə ilə hərəkət edir. Cismə təsir edən qüvvəni tapın.', cavab:'F = m × a = 2 × 5 = 10 N. Cismə 10 Newton qüvvə təsir edir.', maxBal:10, verilmis:null},
+      {ad:'Leyla Məmmədova', sual:'Kütləsi 2 kq olan cisim 5 m/s² sürətlənmə ilə hərəkət edir. Cismə təsir edən qüvvəni tapın.', cavab:'F=ma, 2x5=10, qüvvə 10 N-dur', maxBal:10, verilmis:8},
+    ].map((s,i)=>`
+      <div class="grading-row">
+        <div class="student-name-row">
+          <span>👤 ${s.ad}</span>
+          ${s.verilmis!==null?`<span style="color:var(--green);font-weight:700">${s.verilmis}/${s.maxBal} bal verildi</span>`:`<span class="status-badge sb-waiting">Yoxlanılmamış</span>`}
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:10px;">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:6px;">SUAL</div>
+          <div style="font-size:13px;color:var(--text)">${s.sual}</div>
+        </div>
+        <div style="background:rgba(79,142,247,0.05);border:1px solid rgba(79,142,247,0.15);border-radius:8px;padding:12px;margin-bottom:12px;">
+          <div style="font-size:11px;color:var(--accent);margin-bottom:6px;">TƏLƏBƏNİN CAVABI</div>
+          <div style="font-size:13px;color:var(--text)">${s.cavab}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <label class="form-label" style="margin:0">Bal (maks. ${s.maxBal}):</label>
+          <input class="form-input" type="number" min="0" max="${s.maxBal}" value="${s.verilmis||''}" style="width:80px" placeholder="0">
+          <input class="form-input" placeholder="Şərh (istəyə bağlı)" style="flex:1">
+          <button class="btn btn-green btn-sm">Yadda Saxla</button>
+        </div>
+      </div>
+    `).join('')}
+
+    <div style="margin-top:20px;text-align:right">
+      <button class="btn btn-primary" onclick="alert('Nəticələr tələbələrə göstərildi!')">📢 Nəticəni Yayımla</button>
+    </div>
+  </div>`;
+}
+
+function teacherResultsTab() {
+  return `
+  <div class="stats-row">
+    <div class="stat-box green"><div class="stat-value">521</div><div class="stat-label">Ən Yüksək Bal</div></div>
+    <div class="stat-box blue"><div class="stat-value">468</div><div class="stat-label">Orta Bal</div></div>
+    <div class="stat-box red"><div class="stat-value">312</div><div class="stat-label">Ən Aşağı Bal</div></div>
+    <div class="stat-box purple"><div class="stat-value">24/24</div><div class="stat-label">İştirak</div></div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Tələbə Nəticələri — Aprel 2025</div>
+      <button class="btn btn-ghost btn-sm" onclick="exportResults()">⬇ Export</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>#</th><th>Tələbə</th><th>Riyaziyyat</th><th>Fizika</th><th>Kimya</th><th>Ümumi Bal</th><th>Ətraflı</th></tr>
+        ${[
+          ['1','Əli Hüseynov','178','162','181','521'],
+          ['2','Leyla Məmmədova','165','170','168','503'],
+          ['3','Orxan Kərimov','155','158','163','476'],
+          ['4','Nigar Sadıqova','148','152','168','468'],
+          ['5','Rauf Abbasov','140','138','152','430'],
+        ].map(r=>`
+          <tr>
+            <td style="color:var(--muted)">${r[0]}</td>
+            <td style="font-weight:600">${r[1]}</td>
+            <td><span class="tag tag-math">${r[2]}</span></td>
+            <td><span class="tag tag-phys">${r[3]}</span></td>
+            <td><span class="tag tag-chem">${r[4]}</span></td>
+            <td style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px">${r[5]}</td>
+            <td><button class="btn btn-ghost btn-sm" onclick="showStudentDetail('${r[1]}')">Bax</button></td>
+          </tr>
+        `).join('')}
+      </table>
+    </div>
+  </div>`;
+}
+
+function openQuestionPicker(fenn) {
+  openModal(`${fenn} — Sual Seç`, `
+    <div class="form-group">
+      <input class="form-input" placeholder="🔍 Sual axtar...">
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
+      <button class="btn btn-ghost btn-sm">Hamısı</button>
+      <button class="btn btn-ghost btn-sm">Qapalı tip</button>
+      <button class="btn btn-ghost btn-sm">Açıq tip</button>
+      <button class="btn btn-ghost btn-sm">Asan</button>
+      <button class="btn btn-ghost btn-sm">Orta</button>
+      <button class="btn btn-ghost btn-sm">Çətin</button>
+    </div>
+    ${[
+      {id:'M001',text:'2x + 5 = 13 tənliyinin həlli nədir?',tip:'Qapalı',cetinlik:'Asan',secildi:true},
+      {id:'M002',text:'Trapesiyanın diaqonalları 3:5 nisbətdə kəsirsə, əsasların nisbəti?',tip:'Qapalı',cetinlik:'Orta',secildi:true},
+      {id:'M003',text:'∫(2x + 3)dx inteqralını hesablayın.',tip:'Açıq',cetinlik:'Çətin',secildi:false},
+      {id:'M004',text:'Ədədi ifadəni sadələşdirin: (a+b)² − (a−b)²',tip:'Açıq',cetinlik:'Orta',secildi:false},
+    ].map(q=>`
+      <div class="q-card" style="${q.secildi?'border-color:rgba(34,197,94,0.4);background:rgba(34,197,94,0.05)':''}">
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+          <div style="display:flex;gap:6px;">
+            <span class="chip">${q.id}</span>
+            <span class="chip">${q.tip}</span>
+            <span class="chip">${q.cetinlik}</span>
+          </div>
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px">
+            <input type="checkbox" ${q.secildi?'checked':''}>
+            Seç
+          </label>
+        </div>
+        <div style="font-size:13px;color:var(--text)">${q.text}</div>
+      </div>
+    `).join('')}
+    <div style="text-align:right;margin-top:12px;">
+      <button class="btn btn-green" onclick="closeModal()">✓ 2 sual seçildi — Tətbiq Et</button>
+    </div>
+  `);
+}
+
+function publishExam() {
+  openModal('İmtahan Yayımlandı!', `
+    <div style="text-align:center;padding:20px 0;">
+      <div style="font-size:64px;margin-bottom:16px">🎉</div>
+      <h2 style="font-size:20px;font-weight:800;color:#fff;margin-bottom:8px">İmtahan uğurla yaradıldı!</h2>
+      <p style="color:var(--muted);font-size:14px;margin-bottom:24px">May 2025 aylıq imtahanı 17 May saat 18:00-da başlayacaq.</p>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:left;">
+        <div style="font-size:12px;color:var(--muted);margin-bottom:12px">XÜLASƏ</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;">
+          <div>👥 24 tələbə qeydiyyatdan keçdi</div>
+          <div>📚 3 fənn · 90 sual</div>
+          <div>⏱ Cəmi 135 dəqiqə</div>
+          <div>📅 17 May 2025, 18:00</div>
+        </div>
+      </div>
+      <button class="btn btn-primary" style="margin-top:20px" onclick="closeModal();switchTab(0)">İmtahanlara Bax</button>
+    </div>
+  `);
+}
+
+function exportResults() {
+  openModal('Nəticələri Export Et', `
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div class="form-group">
+        <label class="form-label">İmtahan Seç</label>
+        <select class="form-select">
+          <option>May 2025 — Aylıq İmtahan</option>
+          <option>Aprel 2025 — Aylıq İmtahan</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Format</label>
+        <div style="display:flex;gap:8px;">
+          <label style="flex:1;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:10px;padding:14px;text-align:center;cursor:pointer;">
+            <input type="radio" name="fmt" checked style="margin-bottom:8px;display:block;margin:0 auto 8px;">
+            📊 Excel (.xlsx)
+          </label>
+          <label style="flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;cursor:pointer;">
+            <input type="radio" name="fmt" style="margin-bottom:8px;display:block;margin:0 auto 8px;">
+            📄 PDF
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Məzmun</label>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          ${['Tələbə adları və balları','Fənn üzrə bölünmə','Hər sual üçün cavablar','Açıq tip qiymətlər'].map(m=>`
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;">
+              <input type="checkbox" checked> ${m}
+            </label>
+          `).join('')}
+        </div>
+      </div>
+      <button class="btn btn-green" onclick="alert('Fayl yüklənir...');closeModal()">⬇ Yüklə</button>
+    </div>
+  `);
+}
+
+function showStudentDetail(name) {
+  openModal(name + ' — Ətraflı Nəticə', `
+    <div style="display:flex;gap:16px;margin-bottom:20px;">
+      <div class="stat-box blue" style="flex:1;padding:14px">
+        <div class="stat-value" style="font-size:22px">521</div>
+        <div class="stat-label">Ümumi Bal</div>
+      </div>
+      <div class="stat-box green" style="flex:1;padding:14px">
+        <div class="stat-value" style="font-size:22px">82%</div>
+        <div class="stat-label">Uğur Faizi</div>
+      </div>
+    </div>
+    ${[
+      {fenn:'Riyaziyyat',ball:178,max:200,tag:'tag-math',dogru:22,sehv:8},
+      {fenn:'Fizika',    ball:162,max:200,tag:'tag-phys',dogru:20,sehv:10},
+      {fenn:'Kimya',     ball:181,max:200,tag:'tag-chem',dogru:23,sehv:7},
+    ].map(f=>`
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <span class="tag ${f.tag}">${f.fenn}</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-weight:700">${f.ball}/${f.max}</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${f.ball/f.max*100}%;background:var(--accent)"></div></div>
+        <div style="display:flex;gap:12px;margin-top:8px;font-size:12px;">
+          <span style="color:var(--green)">✓ ${f.dogru} düzgün</span>
+          <span style="color:var(--red)">✗ ${f.sehv} səhv</span>
+        </div>
+      </div>
+    `).join('')}
+  `);
+}
+
+// ══════════════════════════════════════════════════════════════════════
+// ADMIN PANEL
+// ══════════════════════════════════════════════════════════════════════
+function renderAdminPanel() {
+  document.getElementById('panel-title').textContent = 'Admin — Aylıq İmtahan';
+  const tabs = ['📊 Ümumi Baxış', '🗄️ Sual Bankı', '📋 Bütün İmtahanlar', '⬇ Export'];
+  const contents = [adminOverviewTab(), adminQuestionBankTab(), adminAllExamsTab(), adminExportTab()];
+  setTabs(tabs, contents, 'a');
+}
+
+function adminOverviewTab() {
+  return `
+  <div class="stats-row">
+    <div class="stat-box gold">  <div class="stat-value">847</div> <div class="stat-label">Sual Bankında</div></div>
+    <div class="stat-box blue">  <div class="stat-value">12</div>  <div class="stat-label">Aktiv İmtahan</div></div>
+    <div class="stat-box green"> <div class="stat-value">284</div> <div class="stat-label">Bu ay iştirak</div></div>
+    <div class="stat-box purple"><div class="stat-value">7</div>   <div class="stat-label">Müəllim</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">Bu Ay — Kurs Statistikası</div></div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Kurs / Qrup</th><th>Müəllim</th><th>İştirak</th><th>Orta Bal</th><th>Durum</th></tr>
+        ${[
+          ['Qrup A — Riy/Fiz/Kim','N. Əliyeva','24/24','487','active'],
+          ['Qrup B — Az.dili/Tarix','E. Quliyev','18/20','412','active'],
+          ['Qrup C — Biol/Kim','S. Hüseynov','15/16','453','active'],
+          ['Qrup D — Coğrafiya','R. Babayev','0/22','—','upcoming'],
+        ].map(r=>`
+          <tr>
+            <td style="font-weight:600">${r[0]}</td>
+            <td style="color:var(--muted)">${r[1]}</td>
+            <td style="font-family:'JetBrains Mono',monospace">${r[2]}</td>
+            <td style="font-family:'JetBrains Mono',monospace;font-weight:700">${r[3]}</td>
+            <td><span class="status-badge ${r[4]==='active'?'sb-active':'sb-upcoming'}">${r[4]==='active'?'Aktiv':'Gözləyir'}</span></td>
+          </tr>
+        `).join('')}
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">Müəllim İcazələri</div></div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Müəllim</th><th>Kurslar</th><th>İmtahan Yarat</th><th>Export</th><th>İcazə Düzəlt</th></tr>
+        ${[
+          ['Nərmin Əliyeva','3 kurs',true,true],
+          ['Elnur Quliyev','2 kurs',true,false],
+          ['Sevinc Hüseynov','1 kurs',true,false],
+        ].map(r=>`
+          <tr>
+            <td style="font-weight:600">${r[0]}</td>
+            <td style="color:var(--muted)">${r[1]}</td>
+            <td>${r[2]?'✅':'❌'}</td>
+            <td>${r[3]?'✅':'❌'}</td>
+            <td><button class="btn btn-ghost btn-sm">Düzəlt</button></td>
+          </tr>
+        `).join('')}
+      </table>
+    </div>
+  </div>`;
+}
+
+function adminQuestionBankTab() {
+  return `
+  <div class="card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">Sual Bankı</div>
+        <div class="card-sub">847 sual · 6 fənn</div>
+      </div>
+      <button class="btn btn-gold btn-sm" onclick="openAddQuestion()">+ Sual Əlavə Et</button>
+    </div>
+
+    <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
+      <input class="form-input" placeholder="🔍 Sual axtar..." style="max-width:280px">
+      <select class="form-select" style="max-width:160px">
+        <option>Bütün fənnlər</option>
+        <option>Riyaziyyat</option>
+        <option>Fizika</option>
+        <option>Kimya</option>
+        <option>Azərbaycan dili</option>
+        <option>Tarix</option>
+        <option>Biologiya</option>
+      </select>
+      <select class="form-select" style="max-width:130px">
+        <option>Bütün tiplər</option>
+        <option>Qapalı</option>
+        <option>Açıq</option>
+      </select>
+      <select class="form-select" style="max-width:130px">
+        <option>Çətinlik</option>
+        <option>Asan</option>
+        <option>Orta</option>
+        <option>Çətin</option>
+      </select>
+    </div>
+
+    <div class="stats-row">
+      ${[
+        {fenn:'Riyaziyyat', say:245, tag:'tag-math'},
+        {fenn:'Fizika',     say:198, tag:'tag-phys'},
+        {fenn:'Kimya',      say:167, tag:'tag-chem'},
+        {fenn:'Az. dili',   say:134, tag:'tag-az'},
+        {fenn:'Tarix',      say:61,  tag:''},
+        {fenn:'Biologiya',  say:42,  tag:''},
+      ].map(f=>`
+        <div class="stat-box blue" style="padding:14px;cursor:pointer">
+          <div class="stat-value" style="font-size:22px">${f.say}</div>
+          <div class="stat-label">${f.fenn}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <tr><th>ID</th><th>Sual (qısa)</th><th>Fənn</th><th>Tip</th><th>Çətinlik</th><th>İstifadə</th><th>Əməliyyat</th></tr>
+        ${[
+          {id:'M001',text:'2x + 5 = 13 tənliyinin həlli...',fenn:'Riyaziyyat',tip:'Qapalı',c:'Asan',ist:14},
+          {id:'M002',text:'Trapesiyanın diaqonalları 3:5...',fenn:'Riyaziyyat',tip:'Qapalı',c:'Orta',ist:9},
+          {id:'F001',text:'Işığın boşluqda sürəti...',fenn:'Fizika',tip:'Qapalı',c:'Asan',ist:17},
+          {id:'F002',text:'Kütləsi 2 kq olan cisim...',fenn:'Fizika',tip:'Açıq',c:'Orta',ist:11},
+          {id:'K001',text:'H₂O molekulundakı hidrogen...',fenn:'Kimya',tip:'Qapalı',c:'Asan',ist:19},
+          {id:'A001',text:'Azərbaycan dilinin fonetik...',fenn:'Az. dili',tip:'Açıq',c:'Çətin',ist:6},
+        ].map(q=>`
+          <tr>
+            <td style="font-family:'JetBrains Mono',monospace;color:var(--muted);font-size:11px">${q.id}</td>
+            <td style="max-width:240px;color:var(--text)">${q.text}</td>
+            <td><span class="tag ${q.fenn==='Riyaziyyat'?'tag-math':q.fenn==='Fizika'?'tag-phys':q.fenn==='Kimya'?'tag-chem':'tag-az'}">${q.fenn}</span></td>
+            <td style="color:var(--muted);font-size:12px">${q.tip}</td>
+            <td><span class="chip">${q.c}</span></td>
+            <td style="font-family:'JetBrains Mono',monospace;color:var(--muted)">${q.ist}x</td>
+            <td>
+              <div style="display:flex;gap:4px">
+                <button class="btn btn-ghost btn-sm">Düzəlt</button>
+                <button class="btn btn-danger btn-sm">Sil</button>
+              </div>
+            </td>
+          </tr>
+        `).join('')}
+      </table>
+    </div>
+  </div>`;
+}
+
+function adminAllExamsTab() {
+  return `
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Bütün İmtahanlar — May 2025</div>
+      <div style="display:flex;gap:8px;">
+        <select class="form-select" style="max-width:150px">
+          <option>May 2025</option>
+          <option>Aprel 2025</option>
+          <option>Mart 2025</option>
+        </select>
+        <button class="btn btn-ghost btn-sm">Süzgəc</button>
+      </div>
+    </div>
+    ${[
+      {kurs:'Qrup A — Riy/Fiz/Kim',muellim:'N. Əliyeva',tarix:'17 May 18:00',telebe:'24/24',orta:'487',status:'sb-active',label:'Aktiv'},
+      {kurs:'Qrup B — Az.dili/Tarix',muellim:'E. Quliyev',tarix:'18 May 10:00',telebe:'18/20',orta:'412',status:'sb-active',label:'Aktiv'},
+      {kurs:'Qrup C — Biol/Kim',muellim:'S. Hüseynov',tarix:'19 May 14:00',telebe:'15/16',orta:'453',status:'sb-review',label:'Yoxlanılır'},
+      {kurs:'Qrup D — Coğrafiya',muellim:'R. Babayev',tarix:'22 May 16:00',telebe:'0/22',orta:'—',status:'sb-upcoming',label:'Gözləyir'},
+    ].map(e=>`
+      <div class="exam-item">
+        <div class="exam-info">
+          <div class="exam-name">${e.kurs}</div>
+          <div class="exam-meta">
+            <span>👨‍🏫 ${e.muellim}</span>
+            <span>📅 ${e.tarix}</span>
+            <span>👥 ${e.telebe} iştirak</span>
+            <span>📊 Orta: ${e.orta}</span>
+          </div>
+        </div>
+        <span class="status-badge ${e.status}">${e.label}</span>
+        <div style="display:flex;gap:6px;">
+          <button class="btn btn-ghost btn-sm">Ətraflı</button>
+          <button class="btn btn-danger btn-sm" onclick="if(confirm('Bu imtahanı ləğv etmək istəyirsiniz?'))alert('İmtahan ləğv edildi.')">İptal Et</button>
+        </div>
+      </div>
+    `).join('')}
+  </div>`;
+}
+
+function adminExportTab() {
+  return `
+  <div class="card">
+    <div class="card-header"><div class="card-title">Nəticə Export</div></div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Ay</label>
+        <select class="form-select">
+          <option>May 2025</option>
+          <option>Aprel 2025</option>
+          <option>Mart 2025</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Kurs</label>
+        <select class="form-select">
+          <option>Bütün kurslar</option>
+          <option>Qrup A</option>
+          <option>Qrup B</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Export Tipi</label>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        ${[
+          {icon:'📊',label:'Excel (.xlsx)',desc:'Bütün tələbələrin balları, cavablar, statistika'},
+          {icon:'📄',label:'PDF Hesabat',desc:'Hər tələbə üçün fərdi nəticə vərəqəsi'},
+          {icon:'📈',label:'Müqayisəli Hesabat',desc:'Aylara görə bal dinamikası'},
+          {icon:'🗄️',label:'Sual Bankı Export',desc:'Bütün sualları Excel-ə yüklə'},
+        ].map(t=>`
+          <label style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px;cursor:pointer;display:flex;gap:12px;align-items:flex-start;">
+            <input type="radio" name="exptype" style="margin-top:2px">
+            <div>
+              <div style="font-size:18px;margin-bottom:4px">${t.icon}</div>
+              <div style="font-size:13px;font-weight:600;color:#fff;margin-bottom:4px">${t.label}</div>
+              <div style="font-size:11px;color:var(--muted)">${t.desc}</div>
+            </div>
+          </label>
+        `).join('')}
+      </div>
+    </div>
+    <div style="text-align:right;margin-top:8px;">
+      <button class="btn btn-gold" onclick="alert('Fayl hazırlanır... Bir az gözləyin.')">⬇ Export Et</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><div class="card-title">Sual Bankına Toplu Yükləmə</div></div>
+    <div class="alert alert-info">ℹ️ Excel şablonu ilə toplu sual yükləyə bilərsiniz. Şablonu yükləyin, doldurun və geri göndərin.</div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <button class="btn btn-ghost" onclick="alert('Şablon yüklənir...')">⬇ Excel Şablonu Yüklə</button>
+      <button class="btn btn-gold" onclick="alert('Fayl yükləndi! 47 sual əlavə edildi.')">⬆ Doldurulmuş Faylı Yüklə</button>
+    </div>
+  </div>`;
+}
+
+function openAddQuestion() {
+  openModal('Yeni Sual Əlavə Et', `
+    <div class="form-group">
+      <label class="form-label">Fənn</label>
+      <select class="form-select">
+        <option>Riyaziyyat</option><option>Fizika</option><option>Kimya</option>
+        <option>Azərbaycan dili</option><option>Tarix</option><option>Biologiya</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Sual Tipi</label>
+        <select class="form-select" onchange="toggleOpenType(this.value)">
+          <option value="closed">Qapalı tip (A/B/C/D)</option>
+          <option value="open">Açıq tip</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Çətinlik</label>
+        <select class="form-select">
+          <option>Asan</option><option>Orta</option><option>Çətin</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Sual Mətni (LaTeX dəstəklidir)</label>
+      <textarea class="form-textarea" placeholder="Sual mətnini daxil edin... LaTeX üçün $formula$ istifadə edin" rows="3"></textarea>
+    </div>
+    <div id="opts-section">
+      ${['A','B','C','D'].map((l,i)=>`
+        <div class="form-group">
+          <label class="form-label" style="display:flex;align-items:center;gap:8px;">
+            <input type="radio" name="correct" ${i===0?'checked':''}> Düzgün cavab — ${l} variantı
+          </label>
+          <input class="form-input" placeholder="${l} variantı...">
+        </div>
+      `).join('')}
+    </div>
+    <div class="form-group">
+      <label class="form-label">Şəkil (istəyə bağlı)</label>
+      <input class="form-input" type="file" accept="image/*">
+    </div>
+    <div style="text-align:right">
+      <button class="btn btn-gold" onclick="alert('Sual sual bankına əlavə edildi!');closeModal()">+ Sual Əlavə Et</button>
+    </div>
+  `);
+}
+</script>
+</body>
+</html>

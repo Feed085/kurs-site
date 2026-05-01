@@ -1,0 +1,297 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --site-header-height: 4rem;
+    --site-shell-gutter: clamp(1rem, 3vw, 2rem);
+    --background: 40 60% 98%;
+    --foreground: 222 22% 13%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 22% 13%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 22% 13%;
+    --primary: 43 85% 54%;
+    --primary-foreground: 222 22% 12%;
+    --secondary: 42 30% 92%;
+    --secondary-foreground: 222 22% 13%;
+    --muted: 42 25% 94%;
+    --muted-foreground: 222 10% 42%;
+    --accent: 38 75% 62%;
+    --accent-foreground: 222 22% 13%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 42 20% 86%;
+    --input: 42 20% 86%;
+    --ring: 43 85% 54%;
+    --radius: 0.625rem;
+    --sidebar-background: 40 56% 97%;
+    --sidebar-foreground: 222 22% 13%;
+    --sidebar-primary: 43 85% 54%;
+    --sidebar-primary-foreground: 222 22% 12%;
+    --sidebar-accent: 42 30% 92%;
+    --sidebar-accent-foreground: 222 22% 13%;
+    --sidebar-border: 42 20% 86%;
+    --sidebar-ring: 43 85% 54%;
+  }
+
+  .dark {
+    --background: 222 28% 10%;
+    --foreground: 40 58% 96%;
+    --card: 222 26% 12%;
+    --card-foreground: 40 58% 96%;
+    --popover: 222 26% 12%;
+    --popover-foreground: 40 58% 96%;
+    --primary: 43 85% 58%;
+    --primary-foreground: 222 22% 12%;
+    --secondary: 222 20% 16%;
+    --secondary-foreground: 40 58% 96%;
+    --muted: 222 18% 16%;
+    --muted-foreground: 40 18% 74%;
+    --accent: 43 70% 25%;
+    --accent-foreground: 40 58% 96%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 222 18% 18%;
+    --input: 222 18% 18%;
+    --ring: 43 85% 58%;
+    --sidebar-background: 222 26% 11%;
+    --sidebar-foreground: 40 58% 96%;
+    --sidebar-primary: 43 85% 58%;
+    --sidebar-primary-foreground: 222 22% 12%;
+    --sidebar-accent: 222 18% 16%;
+    --sidebar-accent-foreground: 40 58% 96%;
+    --sidebar-border: 222 18% 18%;
+    --sidebar-ring: 43 85% 58%;
+  }
+
+  @media (min-width: 1024px) {
+    :root {
+      --site-header-height: 5rem;
+    }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    min-height: 100%;
+    scroll-behavior: smooth;
+    overflow-x: clip;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+    min-height: 100%;
+    min-width: 320px;
+    overflow-x: clip;
+  }
+  #root {
+    min-height: 100%;
+    overflow-x: clip;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+  }
+  img,
+  picture,
+  video,
+  canvas,
+  svg,
+  iframe {
+    display: block;
+    max-width: 100%;
+  }
+  input,
+  textarea,
+  select,
+  button {
+    font: inherit;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .home-hero-float {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 1023px) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .site-entry-loader__glow {
+    width: 16rem;
+    height: 16rem;
+    filter: blur(42px);
+  }
+}
+
+@layer utilities {
+  .min-h-screen {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  .h-screen {
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  .page-shell {
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: clip;
+  }
+
+  .page-section {
+    padding-inline: var(--site-shell-gutter);
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      transform: translate3d(0, -12px, 0);
+    }
+  }
+
+  @keyframes floatReverse {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      transform: translate3d(0, 12px, 0);
+    }
+  }
+
+  @keyframes siteEntryPulse {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.72;
+    }
+    50% {
+      transform: scale(1.06);
+      opacity: 1;
+    }
+  }
+
+  @keyframes siteEntrySpin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes siteEntryDrift {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      transform: translate3d(0, -18px, 0);
+    }
+  }
+}
+
+.site-entry-loader {
+  opacity: 1;
+  transition: opacity 320ms ease, visibility 320ms ease;
+}
+
+.site-entry-loader--exit {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.site-entry-loader__ring {
+  animation: siteEntrySpin 0.95s linear infinite;
+}
+
+.site-entry-loader__seal {
+  position: relative;
+  animation: siteEntryPulse 1.8s ease-in-out infinite;
+}
+
+.site-entry-loader__seal::after {
+  content: '';
+  position: absolute;
+  inset: 10px;
+  border-radius: 9999px;
+  border: 1px solid rgba(212, 175, 55, 0.22);
+}
+
+.site-entry-loader__glow {
+  position: absolute;
+  width: 22rem;
+  height: 22rem;
+  border-radius: 9999px;
+  filter: blur(70px);
+  opacity: 0.7;
+  animation: siteEntryDrift 5.5s ease-in-out infinite;
+}
+
+.site-entry-loader__glow--left {
+  left: -5rem;
+  top: 10%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.28) 0%, rgba(212, 175, 55, 0) 70%);
+}
+
+.site-entry-loader__glow--right {
+  right: -5rem;
+  bottom: 6%;
+  background: radial-gradient(circle, rgba(168, 122, 31, 0.22) 0%, rgba(168, 122, 31, 0) 72%);
+  animation-delay: -2.4s;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f3ead3;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D4AF37;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B88A1B;
+}
+
+/* Selection color */
+::selection {
+  background: #D4AF37;
+  color: white;
+}
+
+/* Responsive Menu Styles - Hides background when menu is open on mobile */
+@media (max-width: 1024px) {
+  body.mobile-menu-open {
+    overflow: hidden;
+    touch-action: none;
+  }
+}
+

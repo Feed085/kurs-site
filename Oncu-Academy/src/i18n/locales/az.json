@@ -1,0 +1,265 @@
+{
+  "nav": {
+    "home": "Ana Səhifə",
+    "courses": "Kurslar",
+    "teachers": "Müəllimlər",
+    "tests": "Testlər",
+    "contact": "Əlaqə",
+    "login": "Daxil ol",
+    "register": "Qeydiyyat",
+    "logout": "Çıxış",
+    "dashboard": "Panel",
+    "profile": "Profil"
+  },
+  "hero": {
+    "title": "Sizin Akademiyanız",
+    "subtitle": "Təhsildə aydın yol, güclü nəticə",
+    "description": "Peşəkar müəllimlər, müasir metodlar və fərdi yanaşma ilə hər mərhələdə yanınızdayıq.",
+    "cta": "Kəşf Et",
+    "cta_secondary": "Müraciət et"
+  },
+  "features": {
+    "title": "Niyə Sizin Akademiyanız?",
+    "subtitle": "Qısa baxışda 3 əsas üstünlük",
+    "items": {
+      "teachers": {
+        "title": "Peşəkar Müəllimlər",
+        "desc": "Təcrübəli və sertifikatlı müəllimlər tərəfindən tədris"
+      },
+      "online": {
+        "title": "Online və Video Dərslər",
+        "desc": "İstədiyiniz yerdən, istədiyiniz vaxt dərs izləyin"
+      },
+      "certificate": {
+        "title": "Beynəlxalq Sertifikatlar",
+        "desc": "Dünya tərəfindən tanınan sertifikatlar əldə edin"
+      },
+      "support": {
+        "title": "7/24 Dəstək",
+        "desc": "Hər zaman yanınızda olan dəstək komandası"
+      }
+    }
+  },
+  "stats": {
+    "experience": {
+      "number": "15",
+      "label": "İLLİK TƏCRÜBƏ"
+    },
+    "students": {
+      "number": "5000+",
+      "label": "TƏLƏBƏ"
+    },
+    "teachers": {
+      "number": "50+",
+      "label": "MÜƏLLİM"
+    },
+    "courses": {
+      "number": "100+",
+      "label": "KURS"
+    }
+  },
+  "courses": {
+    "title": "Proqramlar",
+    "subtitle": "Gələcəyinizi bizimlə kəşf edin",
+    "categories": {
+      "all": "Hamısı",
+      "language": "Dil Kursları",
+      "exam": "İmtahan Hazırlığı",
+      "computer": "Komputer"
+    },
+    "items": {
+      "sat": {
+        "title": "SAT",
+        "desc": "ABŞ universitetlərinə qəbul imtahanına hazırlıq"
+      },
+      "ielts": {
+        "title": "IELTS",
+        "desc": "Beynəlxalq ingilis dili sertifikatı"
+      },
+      "english": {
+        "title": "İNGILIS DILI",
+        "desc": "Hərtərəfli ingilis dili tədrisi"
+      },
+      "russian": {
+        "title": "RUS DILI",
+        "desc": "Rus dilini peşəkar səviyyədə öyrənin"
+      },
+      "arabic": {
+        "title": "ƏRAB DILI",
+        "desc": "Ərəb dilinin əsasları və qrammatikası"
+      },
+      "turkish": {
+        "title": "TÜRK DILI",
+        "desc": "Türk dilini asanlıqla öyrənin"
+      }
+    },
+    "view_all": "Hamısını gör",
+    "enroll": "Kursu əldə et",
+    "auth_required": "Zəhmət olmasa, kursu əldə etmək üçün qeydiyyatdan keçin"
+  },
+  "teachers": {
+    "title": "Müəllimlərimizlə tanış olun",
+    "subtitle": "Peşəkar komandamız",
+    "button": "Daha çox",
+    "view_profile": "Profili gör",
+    "specialty": "İxtisas",
+    "experience": "Təcrübə",
+    "students": "Tələbə",
+    "courses": "Kurs"
+  },
+  "testimonials": {
+    "title": "Tələbələrimiz deyir",
+    "subtitle": "Uğur hekayələri"
+  },
+  "contact": {
+    "title": "Əlaqə",
+    "subtitle": "Bizimlə əlaqə saxlayın",
+    "form": {
+      "name": "Adınız",
+      "email": "Email",
+      "phone": "Telefon",
+      "message": "Mesajınız",
+      "submit": "Göndər",
+      "success": "Mesajınız uğurla göndərildi!"
+    },
+    "info": {
+      "address": "Ünvan",
+      "phone": "Telefon",
+      "email": "Email",
+      "working_hours": "İş saatları"
+    }
+  },
+  "footer": {
+    "follow_us": "Bizi izləyin",
+    "copyright": "© 2026 Sizin Akademiyanız. Bütün hüquqlar qorunur.",
+    "links": {
+      "about": "Haqqımızda",
+      "courses": "Kurslar",
+      "teachers": "Müəllimlər",
+      "contact": "Əlaqə",
+      "privacy": "Məxfilik Siyasəti",
+      "terms": "İstifadə Şərtləri"
+    },
+    "termsDialog": {
+      "title": "İstifadə Şərtləri",
+      "close": "Bağla",
+      "sections": {
+        "general": {
+          "title": "Ümumi Müddəalar",
+          "body": "Bu online təhsil platformasına qoşularaq aşağıdakı şərtləri qəbul etmiş olursunuz."
+        },
+        "userResponsibility": {
+          "title": "İstifadəçi Məsuliyyəti",
+          "body": "İstifadəçilər platformanı yalnız təhsil məqsədləri üçün istifadə etməlidirlər. Hər hansı qanunsuz fəaliyyət qadağandır."
+        },
+        "privacy": {
+          "title": "Məxfilik",
+          "body": "Şəxsi məlumatlarınız qorunur və üçüncü şəxslərlə paylaşılmır."
+        },
+        "teacherResponsibility": {
+          "title": "Müəllim Məsuliyyəti",
+          "body": "Müəllimlər keyfiyyətli təhsil materialları təqdim etməlidirlər."
+        },
+        "studentResponsibility": {
+          "title": "Tələbə Məsuliyyəti",
+          "body": "Tələbələr dərslərdə fəal iştirak etməli və platforma qaydalarına riayət etməlidirlər."
+        }
+      }
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Daxil ol",
+      "subtitle": "Hesabınıza daxil olun",
+      "email": "Email",
+      "password": "Şifrə",
+      "submit": "Daxil ol",
+      "no_account": "Hesabınız yoxdur?",
+      "register": "Qeydiyyatdan keç",
+      "forgot_password": "Şifrəni unutdunuz?"
+    },
+    "register": {
+      "title": "Qeydiyyat",
+      "subtitle": "Yeni hesab yaradın",
+      "name": "Ad",
+      "surname": "Soyad",
+      "email": "Email",
+      "phone": "Telefon",
+      "password": "Şifrə",
+      "confirm_password": "Şifrəni təsdiqlə",
+      "accept_terms": "İstifadə şərtləri ilə razıyam",
+      "accept_terms_error": "İstifadə şərtlərini qəbul etməlisiniz",
+      "submit": "Qeydiyyatdan keç",
+      "have_account": "Artıq hesabınız var?",
+      "login": "Daxil ol"
+    },
+    "role": {
+      "student": "Tələbə",
+      "teacher": "Müəllim"
+    }
+  },
+  "student": {
+    "dashboard": {
+      "title": "Tələbə Paneli",
+      "my_courses": "Mənim Kurslarım",
+      "progress": "İrakət",
+      "certificates": "Sertifikatlarım",
+      "tests": "Testlərim"
+    }
+  },
+  "teacher": {
+    "dashboard": {
+      "title": "Müəllim Paneli",
+      "statistics": "Statistika",
+      "my_students": "Tələbələrim",
+      "my_courses": "Kurslarım",
+      "upload_video": "Video Yüklə",
+      "create_test": "Test Yarat",
+      "edit_content": "Məzmunu Dəyiş"
+    },
+    "profile": {
+      "title": "Profil",
+      "edit": "Redaktə et",
+      "save": "Yadda saxla",
+      "bio": "Haqqımda",
+      "education": "Təhsil",
+      "experience": "Təcrübə",
+      "specialties": "İxtisaslar"
+    },
+    "upload": {
+      "title": "Video Yüklə",
+      "course": "Kurs",
+      "title_label": "Başlıq",
+      "description": "Təsvir",
+      "video_file": "Video faylı",
+      "thumbnail": "Miniatura",
+      "upload": "Yüklə",
+      "drag_drop": "Videonu bura sürükləyin və ya klikləyin"
+    },
+    "test": {
+      "title": "Test Yarat",
+      "test_title": "Test başlığı",
+      "course": "Kurs",
+      "duration": "Müddət (dəqiqə)",
+      "questions": "Suallar",
+      "add_question": "Sual əlavə et",
+      "question": "Sual",
+      "options": "Variantlar",
+      "correct_answer": "Düzgün cavab",
+      "save": "Yadda saxla"
+    }
+  },
+  "test": {
+    "title": "Testlər",
+    "start": "Testə başla",
+    "submit": "Təsdiqlə",
+    "next": "Növbəti",
+    "prev": "Əvvəlki",
+    "finish": "Bitir",
+    "time_left": "Qalan vaxt",
+    "score": "Nəticə",
+    "correct": "Düzgün",
+    "wrong": "Səhv",
+    "total": "Ümumi"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "hash": "dbe2a665",
+  "configHash": "358f603d",
+  "lockfileHash": "19bd7911",
+  "browserHash": "ccfe84c5",
+  "optimized": {
+    "react-native-web": {
+      "src": "../../node_modules/react-native-web/dist/index.js",
+      "file": "react-native-web.js",
+      "fileHash": "b1863744",
+      "needsInterop": false
+    }
+  },
+  "chunks": {}
+}
