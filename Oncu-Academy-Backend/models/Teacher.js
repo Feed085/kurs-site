@@ -113,12 +113,26 @@ const TeacherSchema = new mongoose.Schema({
 
 // Kaydetmeden önce şifreyi şifrele
 TeacherSchema.pre('save', async function (next) {
+  console.log('Teacher pre-save hook çalışıyor');
+  console.log('isModified("password"):', this.isModified('password'));
+  
   if (!this.isModified('password')) {
+    console.log('Password değişmemiş, hash yapılmayacak');
     return next();
   }
 
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
+  try {
+    console.log('Password hash\'leme başlanıyor');
+    const salt = await bcrypt.genSalt(10);
+    console.log('Salt oluşturuldu');
+    this.password = await bcrypt.hash(this.password, salt);
+    console.log('Password hash\'lendi başarıyla');
+    next();
+  } catch (error) {
+    console.error('Password hash\'leme hatası:', error.message);
+    console.error('Hata Stack:', error.stack);
+    next(error);
+  }
 });
 
 // Öğretmen için JWT oluştur JWT Secret

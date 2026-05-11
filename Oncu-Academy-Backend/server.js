@@ -23,6 +23,20 @@ const categoryRoutes = require('./routes/categories');
 const publicRoutes = require('./routes/public');
 const AdminExamLeaveSession = require('./models/AdminExamLeaveSession');
 
+// Global Error Logging Middleware
+app.use((req, res, next) => {
+  console.log(`\n[${new Date().toISOString()}] ${req.method} ${req.path}`);
+  console.log('Headers:', req.headers);
+  
+  const originalJson = res.json;
+  res.json = function(data) {
+    console.log('Response:', JSON.stringify(data, null, 2));
+    return originalJson.call(this, data);
+  };
+  
+  next();
+});
+
 app.use('/api/student/auth', authRoutes);
 app.use('/api/student', studentRoutes);
 app.use('/api/teacher/auth', teacherAuthRoutes);
@@ -34,6 +48,24 @@ app.use('/api/admin/auth', adminAuthRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/public', publicRoutes);
+
+// Global Error Handling Middleware
+app.use((err, req, res, next) => {
+  console.error('\n=== GLOBAL ERROR HANDLER ===');
+  console.error('URL:', req.path);
+  console.error('Method:', req.method);
+  console.error('Hata Mesajı:', err.message);
+  console.error('Hata Adı:', err.name);
+  console.error('Hata Stack:', err.stack);
+  console.error('Tam Hata:', JSON.stringify(err, Object.getOwnPropertyNames(err), 2));
+  
+  const statusCode = err.statusCode || 500;
+  res.status(statusCode).json({
+    success: false,
+    message: err.message || 'Sunucu Hatası',
+    error: process.env.NODE_ENV === 'development' ? err : {}
+  });
+});
 
 // Test Route
 app.get('/', (req, res) => {
