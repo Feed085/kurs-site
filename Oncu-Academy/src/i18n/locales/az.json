@@ -328,5 +328,43 @@
     "primary": "İbtidai sinif",
     "geography": "Coğrafiya",
     "history": "Tarix"
+  },
+  "brand": {
+    "name": "Sizin Akademiyanız",
+    "map_title": "Sizin Akademiyanız xəritəsi"
+  },
+  "results": {
+    "title": "Nəticələrimiz",
+    "image_alt": "Nəticə {{index}}",
+    "close": "Bağla"
+  },
+  "home": {
+    "categories_all": "Hamısı",
+    "teacher_avg_rating": "Orta reytinq",
+    "teacher_course_count": "Kurs sayı",
+    "teacher_student_base": "Tələbə bazası",
+    "teacher_team_desc": "Təcrübəli müəllimlərimiz fərqli sahələri bir komanda kimi birləşdirir.",
+    "teacher_not_found": "Müəllim məlumatı tapılmadı.",
+    "teacher_students": "tələbə",
+    "teacher_courses": "kurs",
+    "teacher_years": "il",
+    "contact_start_msg": "Bir mesajla başlayın",
+    "contact_send_question": "Sualınızı göndərin",
+    "contact_form_desc": "Qısa formu doldurun, biz də sizə uyğun proqramı WhatsApp üzərindən paylaşaq.",
+    "contact_whatsapp_note": "Mesajınız birbaşa WhatsApp-a yönləndirilir və cavab itmir.",
+    "contact_go_to_form": "Formaya keç",
+    "contact_quick_form": "Qısa forma",
+    "contact_want_advice": "Məsləhət istəyirsiniz?",
+    "contact_whatsapp_send": "WhatsApp-da göndər",
+    "contact_whatsapp_greeting": "Salam, Sizin Akademiyanız ilə əlaqə saxlamaq istəyirəm.",
+    "contact_whatsapp_name": "Ad: {{name}}",
+    "contact_whatsapp_course": "Kurs: {{course}}",
+    "contact_whatsapp_selection": "Seçim: {{selection}}",
+    "contact_whatsapp_message": "Mesaj: {{message}}"
+  },
+  "footer_extra": {
+    "description": "Təhsilin gələcəyi. Peşəkar müəllimlərlə, müasir tədris metodları ilə uğura gedən yol.",
+    "quick_links": "Sürətli Keçidlər",
+    "social_follow_desc": "Bizi sosial şəbəkələrdə izləyərək ən son yeniliklərdən xəbərdar olun."
   }
 }

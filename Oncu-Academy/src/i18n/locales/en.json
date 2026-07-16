@@ -328,5 +328,43 @@
     "primary": "Primary School",
     "geography": "Geography",
     "history": "History"
+  },
+  "brand": {
+    "name": "Your Academy",
+    "map_title": "Your Academy Map"
+  },
+  "results": {
+    "title": "Our Results",
+    "image_alt": "Result {{index}}",
+    "close": "Close"
+  },
+  "home": {
+    "categories_all": "All",
+    "teacher_avg_rating": "Average rating",
+    "teacher_course_count": "Course count",
+    "teacher_student_base": "Student base",
+    "teacher_team_desc": "Our experienced teachers unite different fields as one team.",
+    "teacher_not_found": "No teacher information found.",
+    "teacher_students": "students",
+    "teacher_courses": "courses",
+    "teacher_years": "years",
+    "contact_start_msg": "Start with a message",
+    "contact_send_question": "Send your question",
+    "contact_form_desc": "Fill out the short form, and we will share a suitable program via WhatsApp.",
+    "contact_whatsapp_note": "Your message is forwarded directly to WhatsApp and the reply is not lost.",
+    "contact_go_to_form": "Go to form",
+    "contact_quick_form": "Quick form",
+    "contact_want_advice": "Want advice?",
+    "contact_whatsapp_send": "Send on WhatsApp",
+    "contact_whatsapp_greeting": "Hello, I would like to contact Your Academy.",
+    "contact_whatsapp_name": "Name: {{name}}",
+    "contact_whatsapp_course": "Course: {{course}}",
+    "contact_whatsapp_selection": "Selection: {{selection}}",
+    "contact_whatsapp_message": "Message: {{message}}"
+  },
+  "footer_extra": {
+    "description": "The future of education. The path to success with professional teachers and modern teaching methods.",
+    "quick_links": "Quick Links",
+    "social_follow_desc": "Follow us on social media to stay up to date with the latest news."
   }
 }

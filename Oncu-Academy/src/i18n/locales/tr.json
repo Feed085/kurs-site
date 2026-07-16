@@ -328,5 +328,43 @@
     "primary": "Sınıf Öğretmenliği",
     "geography": "Coğrafya",
     "history": "Tarih"
+  },
+  "brand": {
+    "name": "Akademiniz",
+    "map_title": "Akademiniz Harita"
+  },
+  "results": {
+    "title": "Sonuçlarımız",
+    "image_alt": "Sonuç {{index}}",
+    "close": "Kapat"
+  },
+  "home": {
+    "categories_all": "Hepsi",
+    "teacher_avg_rating": "Ortalama puan",
+    "teacher_course_count": "Kurs sayısı",
+    "teacher_student_base": "Öğrenci tabanı",
+    "teacher_team_desc": "Deneyimli öğretmenlerimiz farklı alanları bir ekip olarak birleştirir.",
+    "teacher_not_found": "Öğretmen bilgisi bulunamadı.",
+    "teacher_students": "öğrenci",
+    "teacher_courses": "kurs",
+    "teacher_years": "yıl",
+    "contact_start_msg": "Bir mesajla başlayın",
+    "contact_send_question": "Sorunuzu gönderin",
+    "contact_form_desc": "Kısa formu doldurun, size uygun programı WhatsApp üzerinden paylaşalım.",
+    "contact_whatsapp_note": "Mesajınız doğrudan WhatsApp'a yönlendirilir ve yanıt kaybolmaz.",
+    "contact_go_to_form": "Forma geç",
+    "contact_quick_form": "Kısa form",
+    "contact_want_advice": "Danışmanlık ister misiniz?",
+    "contact_whatsapp_send": "WhatsApp'ından gönder",
+    "contact_whatsapp_greeting": "Merhaba, Akademiniz ile iletişime geçmek istiyorum.",
+    "contact_whatsapp_name": "Ad: {{name}}",
+    "contact_whatsapp_course": "Kurs: {{course}}",
+    "contact_whatsapp_selection": "Seçim: {{selection}}",
+    "contact_whatsapp_message": "Mesaj: {{message}}"
+  },
+  "footer_extra": {
+    "description": "Eğitimin geleceği. Profesyonel öğretmenlerle, modern öğretim yöntemleri ile başarıya giden yol.",
+    "quick_links": "Hızlı Bağlantılar",
+    "social_follow_desc": "Bizi sosyal medyada takip ederek en son haberlerden haberdar olun."
   }
 }
