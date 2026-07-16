@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { ArrowLeft, Search, Film, Video, PlayCircle, Layers3 } from 'lucide-react';
 
@@ -9,6 +10,7 @@ import { formatVideoDuration } from '@/lib/utils';
 import { API_BASE_URL } from '@/services/publicApi';
 
 export default function TeacherVideos() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [courses, setCourses] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -83,7 +85,7 @@ export default function TeacherVideos() {
   }, [flattenedVideos, searchQuery, selectedCourseId]);
 
   if (isLoading) {
-    return <div className="min-h-screen pt-24 text-center">Yüklənir...</div>;
+    return <div className="min-h-screen pt-24 text-center">{t('common.loading')}</div>;
   }
 
   return (
@@ -96,9 +98,9 @@ export default function TeacherVideos() {
 
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between mb-8">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#D4AF37]">Video dərslər</p>
-            <h1 className="text-2xl lg:text-3xl font-black text-gray-900 mt-2">Mənim Video Dərslərim</h1>
-            <p className="text-gray-600 mt-1">Kurs və başlığa görə süzün, sonra kurs redaktəsinə keçin.</p>
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#D4AF37]">{t('teacher.videos.subtitle')}</p>
+            <h1 className="text-2xl lg:text-3xl font-black text-gray-900 mt-2">{t('teacher.videos.title')}</h1>
+            <p className="text-gray-600 mt-1">{t('teacher.videos.description')}</p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
             <div className="relative w-full sm:w-80">
@@ -183,7 +185,7 @@ export default function TeacherVideos() {
         {filteredVideos.length === 0 && (
           <div className="text-center py-20 bg-white rounded-3xl border border-dashed border-gray-200">
             <Video className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-500 font-medium">Uyğun video dərs tapılmadı.</p>
+            <p className="text-gray-500 font-medium">{t('common.no_results')}</p>
           </div>
         )}
       </div>

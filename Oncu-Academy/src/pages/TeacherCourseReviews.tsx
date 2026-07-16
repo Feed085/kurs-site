@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { ArrowLeft, Search, MessageCircle, Star, Filter, X } from 'lucide-react';
 
@@ -8,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { API_BASE_URL } from '@/services/publicApi';
 
 export default function TeacherCourseReviews() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [courses, setCourses] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -111,7 +113,7 @@ export default function TeacherCourseReviews() {
   };
 
   if (isLoading) {
-    return <div className="min-h-screen pt-24 text-center">Yüklənir...</div>;
+    return <div className="min-h-screen pt-24 text-center">{t('common.loading')}</div>;
   }
 
   return (
@@ -124,9 +126,9 @@ export default function TeacherCourseReviews() {
 
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between mb-8">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#D4AF37]">Kurs rəyləri</p>
-            <h1 className="text-2xl lg:text-3xl font-black text-gray-900 mt-2">Kurs Reyləri Paneli</h1>
-            <p className="text-gray-600 mt-1">Hansı kursa aid olduğunu görün, axtarın və minimum bal ilə süzün.</p>
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#D4AF37]">{t('testimonials.title', { defaultValue: 'Kurs rəyləri' })}</p>
+            <h1 className="text-2xl lg:text-3xl font-black text-gray-900 mt-2">{t('teachers.course_reviews_panel')}</h1>
+            <p className="text-gray-600 mt-1">{t('teachers.course_reviews_desc')}</p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
             <div className="relative w-full sm:w-72">
@@ -146,7 +148,7 @@ export default function TeacherCourseReviews() {
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
           <div className="bg-white rounded-3xl p-4 shadow-sm border border-gray-100">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400">Cəmi rəy</p>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400">{t('teachers.total_reviews')}</p>
             <div className="mt-2 text-2xl font-black text-gray-900">{totalReviews}</div>
           </div>
           <div className="bg-white rounded-3xl p-4 shadow-sm border border-gray-100">
@@ -259,7 +261,7 @@ export default function TeacherCourseReviews() {
         {filteredReviews.length === 0 && (
           <div className="text-center py-20 bg-white rounded-3xl border border-dashed border-gray-200">
             <MessageCircle className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-500 font-medium">Uyğun kurs rəyi tapılmadı.</p>
+            <p className="text-gray-500 font-medium">{t('common.no_results')}</p>
           </div>
         )}
       </div>

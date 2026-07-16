@@ -210,7 +210,7 @@ export default function StudentDashboard() {
                       <div className="flex items-center gap-4">
                         <div className="flex-1">
                           <div className="flex items-center justify-between text-xs mb-1">
-                            <span className="text-gray-500">İrəliləyiş</span>
+                            <span className="text-gray-500">{t('student.progress')}</span>
                             <span className="font-medium text-[#D4AF37]">{course.progress ?? 0}%</span>
                           </div>
                           <Progress value={course.progress ?? 0} className="h-2" />
@@ -232,7 +232,7 @@ export default function StudentDashboard() {
                      <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
                         <BookOpen className="w-8 h-8 text-gray-300" />
                      </div>
-                     <p className="text-gray-500">Hələ ki, heç bir kursunuz yoxdur.</p>
+                     <p className="text-gray-500">{t('student.no_courses_yet')}</p>
                      <Button 
                        variant="link" 
                        onClick={() => navigate('/courses')}
@@ -248,8 +248,8 @@ export default function StudentDashboard() {
             <div id="my-tests-section" className="bg-white rounded-3xl p-6 shadow-sm">
               <div className="flex flex-col gap-4 mb-6 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <h2 className="text-xl font-bold text-gray-900">Mənim Testlərim</h2>
-                  <p className="text-sm text-gray-500 mt-1">Kurslarınızla bağlı normal testlər burada göstərilir.</p>
+                  <h2 className="text-xl font-bold text-gray-900">{t('student.my_tests')}</h2>
+                  <p className="text-sm text-gray-500 mt-1">{t('student.my_tests_desc')}</p>
                 </div>
                 <input
                   value={testSearch}
@@ -263,7 +263,7 @@ export default function StudentDashboard() {
               {hasExamPanelTests ? (
                 <div className="mb-4 flex flex-col gap-3 rounded-2xl border border-[#D4AF37]/20 bg-[#FFF9E7] p-4 sm:flex-row sm:items-center sm:justify-between">
                   <div>
-                    <div className="text-sm font-bold text-[#A87A1F]">İmtahan panelində aktiv testləriniz var</div>
+                    <div className="text-sm font-bold text-[#A87A1F]">{t('student.active_tests_in_exam_panel')}</div>
                     <p className="mt-1 text-sm text-gray-600">
                       {apiStats.adminApprovedAssignedTestsCount} admin imtahanı normal testlərdən ayrı saxlanılır.
                     </p>
@@ -295,7 +295,7 @@ export default function StudentDashboard() {
                     <div className="flex-1 min-w-0">
                       <h3 className="font-bold text-gray-900 truncate">{test.title}</h3>
                       {hasAttempted && !canRetake ? (
-                        <p className="mt-1 text-xs font-semibold text-[#A87A1F]">Test tamamlanıb</p>
+                        <p className="mt-1 text-xs font-semibold text-[#A87A1F]">{t('student.test_completed')}</p>
                       ) : null}
                       <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-500">
                         {test.course?.title ? <span>{test.course.title}</span> : null}

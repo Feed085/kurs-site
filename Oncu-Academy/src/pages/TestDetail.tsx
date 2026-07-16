@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Progress } from '@/components/ui/progress';
@@ -185,6 +186,7 @@ const getLeaveSessionTimeLeftSeconds = (session: AdminExamLeaveSessionData | nul
 };
 
 export default function TestDetail() {
+  const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
@@ -685,7 +687,7 @@ export default function TestDetail() {
     return (
       <div className="min-h-screen bg-[#F3F3F3] pt-20 lg:pt-24 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Məlumat yüklənir...</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">{t('common.loading_data')}</h1>
           <Button onClick={() => navigate(-1)}>
             Geri qayıt
           </Button>
@@ -718,7 +720,7 @@ export default function TestDetail() {
       const token = localStorage.getItem('rim_auth_token');
 
       if (!token) {
-        toast.error('Sessiya tapılmadı');
+        toast.error(t('common.not_found'));
         return;
       }
 
@@ -759,7 +761,7 @@ export default function TestDetail() {
     setEntryBlock(null);
     clearLeaveSession();
     setSubmitError(null);
-    toast.success('Test başladı! Uğurlar!');
+    toast.success(t('test.started'));
   };
 
   const unlockAdminExam = async () => {
@@ -892,7 +894,7 @@ export default function TestDetail() {
         <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-amber-100 text-amber-700">
           <Flag className="h-8 w-8" />
         </div>
-        <h2 className="text-2xl font-black text-slate-900">Saytdan kənarlaşdığınız üçün imtahan dayandırıldı</h2>
+        <h2 className="text-2xl font-black text-slate-900">{t('test.out_of_focus_suspended')}</h2>
         <p className="mt-3 text-sm leading-6 text-slate-600 sm:text-base">
           İmtahana davam etmək üçün aşağıdakı manual kodu müəllimə verin. Müəllim paneldən son qərarı verdikdən sonra sistem reaksiya verəcək.
         </p>
@@ -911,7 +913,7 @@ export default function TestDetail() {
           ) : (
             <div className="flex flex-col items-center justify-center gap-3 py-8 text-slate-500">
               <Loader2 className="h-8 w-8 animate-spin" />
-              <p className="text-sm font-medium">{isLeaveSessionLoading ? 'Manual kod hazırlanır...' : 'Manual kod gözlənilir...'}</p>
+              <p className="text-sm font-medium">{isLeaveSessionLoading ? t('test.manual_code_preparing') : t('test.manual_code_waiting')}</p>
             </div>
           )}
         </div>
@@ -938,7 +940,7 @@ export default function TestDetail() {
     return (
       <div className="min-h-screen bg-[#F3F3F3] pt-20 lg:pt-24 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Məlumat yüklənir...</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">{t('common.loading_data')}</h1>
           <Button onClick={() => navigate(-1)}>
             Geri qayıt
           </Button>
@@ -964,7 +966,7 @@ export default function TestDetail() {
           <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-rose-100 text-rose-600">
             <XCircle className="h-10 w-10" />
           </div>
-          <h1 className="text-2xl font-black text-slate-900">İmtahan bağlanıb</h1>
+          <h1 className="text-2xl font-black text-slate-900">{t('test.exam_closed')}</h1>
           <p className="mt-3 text-sm leading-6 text-slate-600 sm:text-base">{blockedMessage}</p>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
             <Button variant="outline" onClick={() => navigate('/exam-panel')}>
@@ -991,7 +993,7 @@ export default function TestDetail() {
     return (
       <div className="min-h-screen bg-[#F3F3F3] pt-20 lg:pt-24 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Məlumat yüklənir...</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">{t('common.loading_data')}</h1>
           <Button onClick={() => navigate(-1)}>
             Geri qayıt
           </Button>
@@ -1033,7 +1035,7 @@ export default function TestDetail() {
               </div>
               <div className="bg-gray-50 rounded-2xl p-4 text-center">
                 <div className="text-2xl font-black text-[#A87A1F]">{test.duration}</div>
-                <div className="text-sm text-gray-500">Dəqiqə</div>
+                <div className="text-sm text-gray-500">{t('common.minute')}</div>
               </div>
               <div className="bg-gray-50 rounded-2xl p-4 text-center">
                 <div className="text-2xl font-black text-[#F59E0B]">100</div>
@@ -1048,7 +1050,7 @@ export default function TestDetail() {
                     <div className="flex items-start gap-3">
                       <CalendarDays className="mt-0.5 h-5 w-5 text-slate-500" />
                       <div>
-                        <div className="text-sm font-bold text-slate-900">Başlama vaxtı</div>
+                        <div className="text-sm font-bold text-slate-900">{t('test.start_time')}</div>
                         <div className="mt-1 text-sm text-slate-600">{formatDateTime(startsAtValue)}</div>
                         {!hasStarted && startsAtTime ? (
                           <div className="mt-2 text-xs font-black uppercase tracking-[0.14em] text-amber-600">
@@ -1075,8 +1077,8 @@ export default function TestDetail() {
                     <div className="flex items-start gap-3">
                       <KeyRound className="mt-0.5 h-5 w-5 text-violet-600" />
                       <div className="w-full">
-                        <div className="text-sm font-bold text-violet-900">İmtahan şifrəsi tələb olunur</div>
-                        <p className="mt-1 text-sm text-violet-700">Admin tərəfindən verilən şifrəni daxil etdikdən sonra suallar açılacaq.</p>
+                        <div className="text-sm font-bold text-violet-900">{t('test.exam_password_required')}</div>
+                        <p className="mt-1 text-sm text-violet-700">{t('test.exam_password_description')}</p>
                         <Input
                           value={accessCode}
                           onChange={(event) => setAccessCode(event.target.value)}
@@ -1112,9 +1114,9 @@ export default function TestDetail() {
             <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-4 mb-8">
               <h3 className="font-bold text-yellow-800 mb-2">Qaydalar:</h3>
               <ul className="text-sm text-yellow-700 space-y-1">
-                <li>• Qapalı suallar üçün yalnız bir seçim edin</li>
-                <li>• Açıq suallar (əgər varsa) müəllim tərəfindən sonra yoxlanacaq</li>
-                <li>• Vaxt bitdikdə test avtomatik bağlanacaq</li>
+                <li>{t('test.rules.rule1')}</li>
+                <li>{t('test.rules.rule2')}</li>
+                <li>{t('test.rules.rule3')}</li>
               </ul>
             </div>
 
@@ -1191,20 +1193,20 @@ export default function TestDetail() {
                 {hasPending 
                   ? 'Bəzi suallar açıq tiplidir. Müəllim yoxladıqdan sonra yekun nəticəni görə bilərsiniz!' 
                   : isPassed 
-                    ? 'Test uğurla tamamladınız!' 
+                    ? t('test.passed') 
                     : 'Növbəti dəfə daha yaxşı nəticə göstərəcəyinizə əminik!'}
               </p>
 
               <div className="grid grid-cols-2 gap-4 mb-8">
                 <div className="bg-gray-50 rounded-2xl p-4">
                   <div className="text-2xl font-black text-[#A87A1F]">{percentage.toFixed(0)}%</div>
-                  <div className="text-sm text-gray-500">Mövcud Nəticə</div>
+                  <div className="text-sm text-gray-500">{t('test.current_result')}</div>
                 </div>
                 <div className="bg-gray-50 rounded-2xl p-4">
                   <div className="text-2xl font-black text-yellow-500">
                     {resultData.answers.filter((a:any) => a.status === 'pending').length}
                   </div>
-                  <div className="text-sm text-gray-500">Gözləyən Suallar</div>
+                  <div className="text-sm text-gray-500">{t('test.pending_questions')}</div>
                 </div>
               </div>
 
@@ -1232,15 +1234,15 @@ export default function TestDetail() {
                             <div className="flex-1 flex items-start gap-2 text-red-600 bg-red-100/50 px-3 py-2 rounded-lg">
                               <XCircle className="w-4 h-4 shrink-0 mt-0.5" />
                               <div>
-                                <span className="font-medium block text-xs uppercase tracking-wider mb-0.5">Sizin cavabınız</span>
-                                <span>{q.answerType === 'multiple_choice' ? formatMultipleChoiceAnswer(q, a.answer) : (a.answer || 'Cavab verilməyib')}</span>
+                                <span className="font-medium block text-xs uppercase tracking-wider mb-0.5">{t('test.your_answer')}</span>
+                                <span>{q.answerType === 'multiple_choice' ? formatMultipleChoiceAnswer(q, a.answer) : (a.answer || t('test.no_answer_given'))}</span>
                               </div>
                             </div>
                             <div className="flex-1 flex items-start gap-2 text-[#D4AF37] bg-[#D4AF37]/10 px-3 py-2 rounded-lg">
                               <CheckCircle className="w-4 h-4 shrink-0 mt-0.5" />
                               <div>
-                                <span className="font-medium block text-xs uppercase tracking-wider mb-0.5">Düzgün cavab</span>
-                                <span>{q.answerType === 'multiple_choice' ? formatMultipleChoiceAnswer(q, String(getMultipleChoiceCorrectAnswerIndex(q) ?? '')) : (q.correctAnswer || 'Ekspertiza tələb olunur')}</span>
+                                <span className="font-medium block text-xs uppercase tracking-wider mb-0.5">{t('test.correct_answer')}</span>
+                                <span>{q.answerType === 'multiple_choice' ? formatMultipleChoiceAnswer(q, String(getMultipleChoiceCorrectAnswerIndex(q) ?? '')) : (q.correctAnswer || t('test.expertise_required'))}</span>
                               </div>
                             </div>
                           </div>
@@ -1275,8 +1277,8 @@ export default function TestDetail() {
     return (
       <div className="min-h-screen bg-[#F3F3F3] pt-20 lg:pt-24 flex items-center justify-center">
         <div className="text-center px-4">
-          <h1 className="text-2xl font-bold text-gray-900 mb-3">İmtahan sualları yüklənmədi</h1>
-          <p className="text-sm text-gray-500 mb-6">Səhifəni yeniləyin və ya imtahan panelinə geri qayıdın.</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-3">{t('test.questions_not_loaded')}</h1>
+          <p className="text-sm text-gray-500 mb-6">{t('test.refresh_page_hint')}</p>
           <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
             <Button variant="outline" onClick={() => navigate('/exam-panel')}>
               İmtahan panelinə qayıt

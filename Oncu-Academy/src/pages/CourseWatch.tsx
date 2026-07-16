@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { ChevronLeft, PlayCircle, Clock, CheckCircle2, FileText } from 'lucide-react';
@@ -15,6 +16,7 @@ const loadVideoDuration = (videoUrl: string) => new Promise<number>((resolve) =>
 });
 
 export default function CourseWatch() {
+  const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
   
@@ -160,14 +162,14 @@ export default function CourseWatch() {
   };
 
   if (isLoading) {
-    return <div className="min-h-screen flex items-center justify-center">Yüklənir...</div>;
+    return <div className="min-h-screen flex items-center justify-center">{t('common.loading')}</div>;
   }
 
   if (!course) {
     return (
       <div className="page-shell min-h-screen bg-[#F3F3F3] pt-[calc(var(--site-header-height)+1rem)] sm:pt-[calc(var(--site-header-height)+1.5rem)] flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Kurs tapılmadı</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">{t('common.not_found')}</h1>
           <Button onClick={() => navigate(-1)}>
             Geri qayıt
           </Button>
@@ -211,7 +213,7 @@ export default function CourseWatch() {
             
             <div className="bg-white rounded-3xl p-6 lg:p-8 mt-6 shadow-sm border border-gray-100">
               <h1 className="text-2xl lg:text-3xl font-black text-gray-900 mb-2 truncate">
-                {activeLesson?.title || 'Dərs tapılmadı'}
+                {activeLesson?.title || t('common.not_found')}
               </h1>
               <p className="text-gray-500 font-medium mb-6">
                 {course.title} — Məruzəçi: <span className="text-gray-900">{course.instructor?.name} {course.instructor?.surname}</span>

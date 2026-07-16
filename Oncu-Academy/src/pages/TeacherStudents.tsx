@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { API_BASE_URL } from '@/services/publicApi';
 
@@ -15,6 +16,7 @@ import {
 } from 'lucide-react';
 
 export default function TeacherStudents() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
@@ -37,7 +39,7 @@ export default function TeacherStudents() {
           setStudents(data.data);
         }
       } catch (err) {
-        toast.error('Tələbə məlumatları yüklənmədi');
+        toast.error(t('common.error'));
       } finally {
         setIsLoading(false);
       }
@@ -55,7 +57,7 @@ export default function TeacherStudents() {
   });
 
   if (isLoading) {
-    return <div className="min-h-screen pt-24 text-center">Yüklənir...</div>;
+    return <div className="min-h-screen pt-24 text-center">{t('common.loading')}</div>;
   }
 
   return (
@@ -77,7 +79,7 @@ export default function TeacherStudents() {
                 <Users className="w-8 h-8 text-[#D4AF37]" />
                 Tələbələrim
               </h1>
-              <p className="text-gray-600 mt-1">Sizin kurslarınıza qeydiyyatdan keçmiş {students.length} tələbə</p>
+              <p className="text-gray-600 mt-1">{t('teachers.students_count', { count: students.length })}</p>
             </div>
             <div className="flex w-full gap-3 md:w-auto">
               <div className="relative w-full md:w-72">
@@ -160,9 +162,9 @@ export default function TeacherStudents() {
             <table className="w-full text-left">
               <thead>
                 <tr className="bg-gray-50/50 border-b border-gray-100">
-                  <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Tələbə</th>
+                  <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">{t('teachers.students')}</th>
                   <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Kurs</th>
-                  <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Əlaqə</th>
+                  <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">{t('teachers.contact')}</th>
                   <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Qeydiyyat</th>
                 </tr>
               </thead>
@@ -210,7 +212,7 @@ export default function TeacherStudents() {
           {filteredStudents.length === 0 && (
             <div className="py-20 text-center">
               <Users className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-500 font-medium">Heç bir tələbə tapılmadı.</p>
+              <p className="text-gray-500 font-medium">{t('common.no_results')}</p>
             </div>
           )}
         </div>

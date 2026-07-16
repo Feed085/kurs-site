@@ -70,11 +70,11 @@ export default function Register() {
     if (step < 3) {
       // Basic validation for steps
       if (step === 1 && (!formData.name || !formData.surname)) {
-        toast.error('Zəhmət olmasa ad və soyadınızı daxil edin');
+        toast.error(t('auth.toast.name_required'));
         return;
       }
       if (step === 2 && (!formData.email || !formData.phone)) {
-        toast.error('Zəhmət olmasa email və telefon nömrənizi daxil edin');
+        toast.error(t('auth.toast.email_phone_required'));
         return;
       }
       
@@ -84,12 +84,12 @@ export default function Register() {
 
     // On the last step, perform registration
     if (formData.password !== formData.confirmPassword) {
-      toast.error('Şifrələr uyğun gəlmir');
+      toast.error(t('auth.toast.password_mismatch'));
       return;
     }
 
     if (formData.password.length < 6) {
-      toast.error('Şifrə ən azı 6 simvoldan ibarət olmalıdır');
+      toast.error(t('auth.toast.password_too_short'));
       return;
     }
 
@@ -108,10 +108,10 @@ export default function Register() {
     });
 
     if (success) {
-      toast.success('Qeydiyyat uğurla tamamlandı!');
+      toast.success(t('auth.toast.register_success'));
       navigate('/dashboard');
     } else {
-      toast.error('Qeydiyyat zamanı xəta baş verdi');
+      toast.error(t('auth.toast.register_error'));
     }
   };
 
@@ -139,7 +139,7 @@ export default function Register() {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="Ad"
+                    placeholder={t('auth.register.name_placeholder')}
                     className="pl-11 h-12 rounded-xl border-gray-200 focus:border-[#D4AF37] focus:ring-[#D4AF37]"
                   />
                 </div>
@@ -155,7 +155,7 @@ export default function Register() {
                     name="surname"
                     value={formData.surname}
                     onChange={handleChange}
-                    placeholder="Soyad"
+                    placeholder={t('auth.register.surname_placeholder')}
                     className="pl-11 h-12 rounded-xl border-gray-200 focus:border-[#D4AF37] focus:ring-[#D4AF37]"
                   />
                 </div>
@@ -268,7 +268,7 @@ export default function Register() {
                       className="text-[#D4AF37] hover:text-[#B88A1B] font-bold appearance-none bg-transparent p-0 m-0 cursor-pointer outline-none mb-0 leading-none align-baseline"
                       style={{ fontSize: 'inherit' }}
                     >
-                      İstifadə şərtləri
+                                            {t('auth.register.terms_link')}
                     </button>
                   </DialogTrigger>
                   <DialogContent className="sm:max-w-2xl max-h-[80vh] overflow-y-auto w-[90vw]">
@@ -303,7 +303,7 @@ export default function Register() {
                   htmlFor="acceptTerms"
                   className="cursor-pointer text-gray-500 font-medium pl-1 text-[inherit]"
                 >
-                   ilə razıyam
+                   {t('auth.register.terms_agree')}
                 </Label>
               </div>
             </div>
@@ -320,7 +320,7 @@ export default function Register() {
         {/* Logo */}
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 text-2xl font-black text-gray-900">
-            Sizin Akademiyanız
+            {t('brand.name')}
           </Link>
           <h2 className="mt-6 text-3xl font-black text-gray-900">
             {t('auth.register.title')}
@@ -358,7 +358,7 @@ export default function Register() {
                   className="flex-1 h-12 rounded-xl border-gray-200"
                 >
                   <ArrowLeft className="w-4 h-4 mr-2" />
-                  Geri
+                  {t('auth.register.back')}
                 </Button>
               )}
               <Button
@@ -371,7 +371,7 @@ export default function Register() {
                 ) : step === 3 ? (
                   t('auth.register.submit')
                 ) : (
-                  'Davam et'
+                  t('auth.register.step_continue')
                 )}
               </Button>
             </div>

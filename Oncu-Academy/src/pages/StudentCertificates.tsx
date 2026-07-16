@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { API_BASE_URL } from '@/services/publicApi';
 import { 
@@ -10,6 +11,7 @@ import {
 } from 'lucide-react';
 
 export default function StudentCertificates() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const [certificates, setCertificates] = useState<any[]>([]);
@@ -70,7 +72,7 @@ export default function StudentCertificates() {
                 Sertifikatlarım
               </h1>
               <p className="text-gray-500 mt-1">
-                Uğurla tamamladığınız kursların sertifikatları
+                {t('certificates.description')}
               </p>
             </div>
           </div>
@@ -79,7 +81,7 @@ export default function StudentCertificates() {
         {/* Certificates Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {isLoading ? (
-            <div className="text-center py-16 text-gray-500 md:col-span-2">Yüklənir...</div>
+            <div className="text-center py-16 text-gray-500 md:col-span-2">{t('common.loading')}</div>
           ) : certificates.length === 0 ? (
              <div className="text-center py-16 bg-white rounded-3xl shadow-sm border border-gray-100 md:col-span-2">
              <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">

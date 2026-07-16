@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { ArrowLeft, Search, Filter, FileText, Clock, Layers3, ArrowRight } from 'lucide-react';
 
@@ -22,6 +23,7 @@ type CourseTest = {
 };
 
 export default function TeacherTests() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [tests, setTests] = useState<CourseTest[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -89,7 +91,7 @@ export default function TeacherTests() {
   }, [searchQuery, selectedCourseId, tests]);
 
   if (isLoading) {
-    return <div className="min-h-screen pt-24 text-center">Yüklənir...</div>;
+    return <div className="min-h-screen pt-24 text-center">{t('common.loading')}</div>;
   }
 
   return (
@@ -102,9 +104,9 @@ export default function TeacherTests() {
 
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between mb-8">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#D4AF37]">Kurs testləri</p>
-            <h1 className="text-2xl lg:text-3xl font-black text-gray-900 mt-2">Mənim Testlərim</h1>
-            <p className="text-gray-600 mt-1">Kurslara bağlı testləri axtarın, kursa görə süzün və nəticələrə keçin. Ayrı müəllim imtahanları isə imtahan panelində idarə olunur.</p>
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#D4AF37]">{t('teacher.tests.subtitle')}</p>
+            <h1 className="text-2xl lg:text-3xl font-black text-gray-900 mt-2">{t('teacher.tests.title')}</h1>
+            <p className="text-gray-600 mt-1">{t('teacher.tests.description')}</p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
             <div className="relative w-full sm:w-80">
@@ -169,7 +171,7 @@ export default function TeacherTests() {
                 </div>
 
                 <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">{test.title}</h3>
-                <p className="text-sm text-gray-500 mb-4 line-clamp-2">{course?.title || 'Naməlum kurs'}</p>
+                <p className="text-sm text-gray-500 mb-4 line-clamp-2">{course?.title || t('common.unknown_course')}</p>
 
                 <div className="flex flex-wrap gap-2 text-xs text-gray-500 mb-5">
                   <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gray-50 border border-gray-100">
@@ -206,7 +208,7 @@ export default function TeacherTests() {
         {filteredTests.length === 0 && (
           <div className="text-center py-20 bg-white rounded-3xl border border-dashed border-gray-200">
             <FileText className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-500 font-medium">Uyğun kurs testi tapılmadı.</p>
+            <p className="text-gray-500 font-medium">{t('common.no_results')}</p>
           </div>
         )}
       </div>

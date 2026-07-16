@@ -221,10 +221,10 @@ export default function StudentExamAnswerKeyDetail() {
                   className="max-h-72 rounded-2xl border border-slate-100 object-cover"
                 />
               ) : (
-                <p>Sual məzmunu tapılmadı.</p>
+                <p>{t('student.exam_answer_key.question_content_not_found')}</p>
               )
             ) : (
-              <p>{question.content || 'Sual məzmunu tapılmadı.'}</p>
+              <p>{question.content || t('student.exam_answer_key.question_content_not_found')}</p>
             )}
           </div>
 
@@ -255,11 +255,11 @@ export default function StudentExamAnswerKeyDetail() {
 
           <div className="grid gap-4 lg:grid-cols-2">
             <div className="rounded-2xl border border-slate-100 bg-slate-50/80 p-4">
-              <div className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Sizin cavabınız</div>
+              <div className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">{t('student.exam_answer_key.your_answer')}</div>
               <div className="mt-2 text-sm font-medium text-slate-900">{studentAnswerLabel}</div>
             </div>
             <div className="rounded-2xl border border-[#D4AF37]/20 bg-[#D4AF37]/10 p-4">
-              <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#A87A1F]/80">Düzgün cavab</div>
+              <div className="text-xs font-semibold uppercase tracking-[0.2em] text-[#A87A1F]/80">{t('student.exam_answer_key.correct_answer')}</div>
               <div className="mt-2 text-sm font-medium text-slate-900">{correctAnswerLabel}</div>
             </div>
           </div>
@@ -324,7 +324,7 @@ export default function StudentExamAnswerKeyDetail() {
 
                     <div className="rounded-3xl bg-white px-5 py-4 text-right shadow-inner shadow-slate-100/80">
                       <div className="text-3xl font-black text-slate-900">{formatPercentage(safeNumber(result.scorePercentage))}</div>
-                      <div className="text-xs font-medium text-slate-500">Yekun nəticə</div>
+                      <div className="text-xs font-medium text-slate-500">{t('student.exam_answer_key.final_result')}</div>
                     </div>
                   </div>
                 </CardHeader>
@@ -345,8 +345,8 @@ export default function StudentExamAnswerKeyDetail() {
 
                   <div>
                     <div className="mb-2 flex items-center justify-between text-xs font-medium text-slate-500">
-                      <span>Bal göstəricisi</span>
-                      <span>{summary.correctCount} düzgün · {summary.pendingCount} gözləmədə</span>
+                      <span>{t('student.exam_answer_key.score_indicator')}</span>
+                      <span>{t('student.exam_answer_key.score_summary', { correct: summary.correctCount, pending: summary.pendingCount })}</span>
                     </div>
                     <Progress value={Math.max(0, Math.min(100, safeNumber(result.scorePercentage)))} className="h-2" />
                   </div>
@@ -354,15 +354,15 @@ export default function StudentExamAnswerKeyDetail() {
                   <div className="grid gap-4 sm:grid-cols-3">
                     <div className="rounded-2xl bg-emerald-50 px-4 py-4 text-center">
                       <div className="text-2xl font-black text-emerald-700">{summary.correctCount}</div>
-                      <div className="text-xs text-emerald-700/80">Düzgün</div>
+                      <div className="text-xs text-emerald-700/80">{t('student.exam_answer_key.correct')}</div>
                     </div>
                     <div className="rounded-2xl bg-rose-50 px-4 py-4 text-center">
                       <div className="text-2xl font-black text-rose-700">{summary.incorrectCount}</div>
-                      <div className="text-xs text-rose-700/80">Yanlış</div>
+                      <div className="text-xs text-rose-700/80">{t('student.exam_answer_key.wrong')}</div>
                     </div>
                     <div className="rounded-2xl bg-amber-50 px-4 py-4 text-center">
                       <div className="text-2xl font-black text-amber-700">{summary.pendingCount}</div>
-                      <div className="text-xs text-amber-700/80">Gözləmədə</div>
+                      <div className="text-xs text-amber-700/80">{t('student.exam_answer_key.pending')}</div>
                     </div>
                   </div>
                 </CardContent>
@@ -370,8 +370,8 @@ export default function StudentExamAnswerKeyDetail() {
 
               <section className="space-y-4">
                 <div>
-                  <h2 className="text-2xl font-black text-slate-900">Sual və cavab xülasəsi</h2>
-                  <p className="mt-1 text-sm text-slate-500">Hər sual üzrə verdiyiniz cavabı və düzgün nəticəni aşağıda görə bilərsiniz.</p>
+                  <h2 className="text-2xl font-black text-slate-900">{t('student.exam_answer_key.summary_title')}</h2>
+                  <p className="mt-1 text-sm text-slate-500">{t('student.exam_answer_key.summary_desc')}</p>
                 </div>
 
                 {(testDetail.questions || []).length > 0 ? (

@@ -39,7 +39,7 @@ const loadGoogleScript = () => {
   if (existingScript) {
     return new Promise<void>((resolve, reject) => {
       existingScript.addEventListener('load', () => resolve(), { once: true });
-      existingScript.addEventListener('error', () => reject(new Error('Google girişi yüklənmədi')), { once: true });
+      existingScript.addEventListener('error', () => reject(new Error('Google login error')), { once: true });
     });
   }
 
@@ -50,7 +50,7 @@ const loadGoogleScript = () => {
     script.async = true;
     script.defer = true;
     script.onload = () => resolve();
-    script.onerror = () => reject(new Error('Google girişi yüklənmədi'));
+    script.onerror = () => reject(new Error('Google login error'));
     document.head.appendChild(script);
   });
 };
@@ -89,19 +89,20 @@ export default function Login() {
             const credential = response.credential;
 
             if (!credential) {
-              toast.error('Google məlumatı alınmadı');
+              toast.error(t('auth.toast.google_error'));
               return;
             }
 
             const success = await loginWithGoogle(credential, role);
 
             if (success) {
-              toast.success('Uğurla daxil oldunuz!');
+              toast.success(t('auth.toast.login_success'));
+
               navigate(role === 'student' ? '/dashboard' : '/teacher/dashboard');
               return;
             }
 
-            toast.error('Giriş məlumatları yanlışdır və ya hesab tapılmadı');
+            toast.error(t('auth.toast.login_error'));
           },
         });
 
@@ -117,7 +118,7 @@ export default function Login() {
         }
       } catch (error) {
         if (isMounted) {
-          toast.error(error instanceof Error ? error.message : 'Google girişi yüklənmədi');
+          toast.error(error instanceof Error ? error.message : t('auth.toast.google_load_error'));
         }
       }
     };
@@ -135,14 +136,14 @@ export default function Login() {
     // Həm tələbə, həm müəllim girişi API-ya göndərilir
     const success = await login(formData.email, formData.password, role);
     if (success) {
-      toast.success('Uğurla daxil oldunuz!');
+      toast.success(t('auth.toast.login_success'));
       if (role === 'student') {
         navigate('/dashboard');
       } else {
         navigate('/teacher/dashboard');
       }
     } else {
-      toast.error('Giriş məlumatları yanlışdır və ya hesab tapılmadı');
+      toast.error(t('auth.toast.login_error'));
     }
   };
 
@@ -159,7 +160,7 @@ export default function Login() {
         {/* Logo */}
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 text-2xl font-black text-gray-900">
-            Sizin Akademiyanız
+            {t('brand.name')}
           </Link>
           <h2 className="mt-6 text-3xl font-black text-gray-900">
             {t('auth.login.title')}
@@ -253,7 +254,7 @@ export default function Login() {
                   type="checkbox"
                   className="w-4 h-4 rounded border-gray-300 text-[#D4AF37] focus:ring-[#D4AF37]"
                 />
-                <span className="text-sm text-gray-600">Məni xatırla</span>
+                <span className="text-sm text-gray-600">{t('auth.login.remember_me')}</span>
               </label>
               <Link
                 to="/forgot-password"
@@ -283,7 +284,7 @@ export default function Login() {
               <div className="w-full border-t border-gray-200" />
             </div>
             <div className="relative flex justify-center">
-              <span className="bg-white px-4 text-sm text-gray-500">və ya</span>
+              <span className="bg-white px-4 text-sm text-gray-500">{t('auth.login.or')}</span>
             </div>
           </div>
 

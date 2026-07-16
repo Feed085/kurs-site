@@ -70,7 +70,7 @@ export default function UploadVideo() {
           setTeacherCourses(data.data);
         }
       } catch (err) {
-        toast.error('Kurslar yüklənmədi');
+        toast.error(t('common.error_prefix') + ' ' + (err instanceof Error ? err.message : ''));
       }
     };
     fetchCourses();
@@ -100,9 +100,9 @@ export default function UploadVideo() {
       const file = files[0];
       if (file.type.startsWith('video/')) {
         setVideoFile(file);
-        toast.success('Video seçildi!');
+        toast.success(t('common.success'));
       } else {
-        toast.error('Zəhmət olmasa video faylı seçin');
+        toast.error(t('common.error'));
       }
     }
   }, []);
@@ -112,9 +112,9 @@ export default function UploadVideo() {
     if (file) {
       if (file.type.startsWith('video/')) {
         setVideoFile(file);
-        toast.success('Video seçildi!');
+        toast.success(t('common.success'));
       } else {
-        toast.error('Zəhmət olmasa video faylı seçin');
+        toast.error(t('common.error'));
       }
     }
   };
@@ -123,11 +123,11 @@ export default function UploadVideo() {
     e.preventDefault();
     
     if (!videoFile) {
-      toast.error('Zəhmət olmasa video faylı seçin');
+      toast.error(t('common.error'));
       return;
     }
     if (!formData.title || !formData.courseId) {
-      toast.error('Zəhmət olmasa bütün sahələri doldurun');
+      toast.error(t('common.error'));
       return;
     }
 
@@ -176,7 +176,7 @@ export default function UploadVideo() {
       // Mövcud kursu çəkib, modullarını yeniləyəcəyik
       const courseReq = await fetch(`${API_BASE_URL}/courses/${formData.courseId}`);
       const courseData = await courseReq.json();
-      if (!courseData.success) throw new Error('Kurs tapılmadı');
+      if (!courseData.success) throw new Error(t('common.not_found'));
 
       let durationLabel = '0:00';
       try {
@@ -208,9 +208,9 @@ export default function UploadVideo() {
       if (!updateData.success) throw new Error('Kurs güncəllənə bilmədi');
 
       setIsUploaded(true);
-      toast.success('Video dərsi uğurla əlavə edildi!');
+      toast.success(t('common.save'));
     } catch(err: any) {
-      toast.error('Xəta: ' + err.message);
+      toast.error(t('common.error_prefix') + err.message);
     } finally {
       setIsUploading(false);
     }
@@ -224,7 +224,7 @@ export default function UploadVideo() {
             <CheckCircle className="w-12 h-12 text-green-600" />
           </div>
           <h1 className="text-2xl font-black text-gray-900 mb-4">
-            Video uğurla yükləndi!
+            {t('common.save')}
           </h1>
           <p className="text-gray-600 mb-8">
             Video'nuz təsdiqləndikdən sonra dərc olunacaq.
@@ -351,7 +351,7 @@ export default function UploadVideo() {
                 required
                 className="w-full h-12 px-4 rounded-xl border border-gray-200 focus:border-[#D4AF37] focus:ring-[#D4AF37] outline-none"
               >
-                <option value="">Kurs seçin</option>
+                <option value="">{t('common.select', { defaultValue: 'Select...' })}</option>
                 {teacherCourses.map(course => (
                   <option key={course._id} value={course._id}>
                     {course.title}
@@ -399,7 +399,7 @@ export default function UploadVideo() {
               <div className="flex flex-col items-center gap-2 w-full px-4">
                 <div className="flex items-center gap-3">
                   <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  <span>Yüklənir... {uploadProgress}%</span>
+                  <span>{t('common.loading')} {uploadProgress}%</span>
                 </div>
                 {uploadProgress > 0 && uploadProgress < 100 && (
                   <div className="w-full h-1 bg-white/20 rounded-full overflow-hidden">

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { API_BASE_URL } from '@/services/publicApi';
 import { 
@@ -12,6 +13,7 @@ import {
 } from 'lucide-react';
 
 export default function StudentCompletedTests() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const [completedTests, setCompletedTests] = useState<any[]>([]);
@@ -75,7 +77,7 @@ export default function StudentCompletedTests() {
         {/* List of Completed Tests */}
         <div className="space-y-4">
           {isLoading ? (
-            <div className="text-center py-16 text-gray-500">Yüklənir...</div>
+            <div className="text-center py-16 text-gray-500">{t('common.loading')}</div>
           ) : completedTests.length === 0 ? (
              <div className="text-center py-16 bg-white rounded-3xl shadow-sm border border-gray-100">
              <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">

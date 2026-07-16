@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -55,6 +56,7 @@ const loadVideoDuration = (videoUrl: string) => new Promise<number>((resolve) =>
 });
 
 export default function TeacherCourseEdit() {
+  const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
   const [course, setCourse] = useState<any>(null);
@@ -109,7 +111,7 @@ export default function TeacherCourseEdit() {
 
           setLessons(lessonsWithDuration);
         } else {
-          toast.error('Kurs tapılmadı', { id: 'course-not-found' });
+          toast.error(t('common.not_found'), { id: 'course-not-found' });
         }
 
         const testsData = await testsRes.json();
@@ -302,17 +304,18 @@ export default function TeacherCourseEdit() {
       
       const data = await res.json();
       if(data.success) {
-        toast.success('Kurs məlumatları uğurla yeniləndi');
+        toast.success(t('common.save'));
         setCourse({ ...course, image: finalImageUrl, imageFile: undefined });
       } else {
-        toast.error('Xəta: ' + data.message);
+        toast.error(t('common.error_prefix') + data.message);
       }
     } catch(err) {
-      toast.error('Server problemi');
+      toast.error(t('common.server_error'));
     } finally {
       setIsLoading(false);
     }
   };
+
 
   const handleDeleteCourse = async () => {
     if (!course) {
@@ -320,7 +323,7 @@ export default function TeacherCourseEdit() {
     }
 
     const confirmed = window.confirm(
-      'Bu kursu silmək istədiyinizə əminsiniz? Bu əməliyyat geri alına bilməz və bağlı testlər də silinəcək.'
+      t('common.delete') + '?'
     );
 
     if (!confirmed) {
@@ -330,7 +333,7 @@ export default function TeacherCourseEdit() {
     try {
       const token = localStorage.getItem('rim_auth_token');
       if (!token) {
-        toast.error('Sessiyanız bitib, yenidən giriş edin');
+        toast.error(t('auth.toast.login_error'));
         navigate('/login');
         return;
       }
@@ -347,26 +350,27 @@ export default function TeacherCourseEdit() {
       const data = await res.json();
 
       if (data.success) {
-        toast.success('Kurs silindi');
+        toast.success(t('common.delete'));
         navigate('/teacher/dashboard', { replace: true });
       } else {
-        throw new Error(data.message || 'Kurs silinmədi');
+        throw new Error(data.message || t('common.error'));
       }
     } catch (error: any) {
-      toast.error(error.message || 'Kurs silinmədi');
+      toast.error(error.message || t('common.error'));
     } finally {
       setIsDeleting(false);
     }
   };
 
+
   if (isLoading) {
-    return <div className="min-h-screen pt-24 text-center">Yüklənir...</div>;
+    return <div className="min-h-screen pt-24 text-center">{t('common.loading')}</div>;
   }
 
   if (!course) {
     return (
       <div className="min-h-screen pt-24 flex items-center justify-center">
-        <p>Kurs tapılmadı</p>
+        <p>{t('common.not_found')}</p>
       </div>
     );
   }
@@ -423,7 +427,7 @@ export default function TeacherCourseEdit() {
               </h2>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Kursun Adı</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('courses.course_title', { defaultValue: 'Kursun Adı' })}</label>
                   <Input 
                     value={course.title}
                     onChange={(e) => setCourse({ ...course, title: e.target.value })}
@@ -456,7 +460,7 @@ export default function TeacherCourseEdit() {
                   </Select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Haqqında</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('courses.about', { defaultValue: 'Haqqında' })}</label>
                   <Textarea 
                     value={course.description}
                     onChange={(e) => setCourse({ ...course, description: e.target.value })}
@@ -492,7 +496,7 @@ export default function TeacherCourseEdit() {
                       </div>
                       <div>
                         <h4 className="text-sm font-bold text-gray-900">{lesson.title}</h4>
-                        <p className="text-xs text-gray-500">Müddət: {formatVideoDuration(lesson.duration)}</p>
+                        <p className="text-xs text-gray-500">{t('courses.duration_label', { defaultValue: 'Müddət' })}: {formatVideoDuration(lesson.duration)}</p>
                       </div>
                     </div>
                     <div className="flex gap-2">
@@ -573,7 +577,7 @@ export default function TeacherCourseEdit() {
             <div className="bg-white rounded-3xl p-6 lg:p-8 shadow-sm border border-gray-100">
               <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between mb-6">
                 <div>
-                  <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#D4AF37]">Rəylər</p>
+                  <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#D4AF37]">{t('teacher.reviews', { defaultValue: 'Rəylər' })}</p>
                   <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2 mt-2">
                     <MessageCircle className="w-5 h-5 text-[#D4AF37]" />
                     Kurs rəyləri
@@ -589,7 +593,7 @@ export default function TeacherCourseEdit() {
                       />
                     ))}
                   </div>
-                  <div className="text-xs text-gray-500">{(course.reviews || []).length} rəy</div>
+                  <div className="text-xs text-gray-500">{(course.reviews || []).length} {t('teacher.reviews', { defaultValue: 'rəy' })}</div>
                 </div>
               </div>
 
@@ -696,7 +700,7 @@ export default function TeacherCourseEdit() {
           {/* Sidebar */}
           <div className="space-y-6">
             <div className="bg-white rounded-3xl p-6 lg:p-8 shadow-sm border border-gray-100">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Kurs Şəkli</h3>
+              <h3 className="text-lg font-bold text-gray-900 mb-4">{t('courses.course_image', { defaultValue: 'Kurs Şəkli' })}</h3>
               <div className="aspect-video w-full rounded-2xl overflow-hidden bg-gray-100 relative group cursor-pointer mb-4">
                 <img 
                   src={course.image} 
@@ -721,7 +725,7 @@ export default function TeacherCourseEdit() {
                   }}
                 />
               </div>
-              <p className="text-xs text-center text-gray-500">Şəkli dəyişmək üçün üzərinə klikləyin</p>
+              <p className="text-xs text-center text-gray-500">{t('test.edit.click_to_change_image', { defaultValue: 'Şəkli dəyişmək üçün üzərinə klikləyin' })}</p>
             </div>
 
           </div>
@@ -751,11 +755,11 @@ export default function TeacherCourseEdit() {
       <Dialog open={isEditorOpen} onOpenChange={setIsEditorOpen}>
         <DialogContent className="sm:max-w-[500px] rounded-3xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-xl font-bold italic">Video Dərsi Redaktə Et</DialogTitle>
+            <DialogTitle className="text-xl font-bold italic">{t('courses.edit_video_lesson', { defaultValue: 'Video Dərsi Redaktə Et' })}</DialogTitle>
           </DialogHeader>
           <div className="grid gap-6 py-4">
             <div className="grid gap-2">
-              <Label htmlFor="title" className="text-sm font-bold text-gray-700">Video Başlığı</Label>
+              <Label htmlFor="title" className="text-sm font-bold text-gray-700">{t('courses.video_title', { defaultValue: 'Video Başlığı' })}</Label>
               <Input
                 id="title"
                 value={editingLesson?.title || ''}
@@ -766,7 +770,7 @@ export default function TeacherCourseEdit() {
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="description" className="text-sm font-bold text-gray-700">Açıqlama</Label>
+              <Label htmlFor="description" className="text-sm font-bold text-gray-700">{t('courses.description', { defaultValue: 'Açıqlama' })}</Label>
               <Textarea
                 id="description"
                 value={editingLesson?.description || ''}

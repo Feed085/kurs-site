@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { 
   ArrowLeft, 
@@ -96,6 +97,7 @@ const formatMultipleChoiceAnswer = (question: any, answer: string) => {
 };
 
 export default function TeacherTestResults() {
+  const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -190,7 +192,7 @@ export default function TeacherTestResults() {
           toast.success('Cavab qiymətləndirildi');
           fetchResults(); // refresh data
        } else {
-          toast.error('Xəta baş verdi');
+          toast.error(t('common.error'));
        }
     } catch (error) {
        toast.error('Server xətası');
@@ -240,7 +242,7 @@ export default function TeacherTestResults() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#F3F3F3] pt-[calc(var(--site-header-height)+1.5rem)] flex items-center justify-center">
-        <p>Yüklənir...</p>
+        <p>{t('common.loading')}</p>
       </div>
     );
   }
@@ -248,7 +250,7 @@ export default function TeacherTestResults() {
   if (!test) {
     return (
       <div className="min-h-screen bg-[#F3F3F3] pt-[calc(var(--site-header-height)+1.5rem)] flex items-center justify-center">
-        <p>Test tapılmadı</p>
+        <p>{t('common.not_found')}</p>
       </div>
     );
   }
@@ -359,7 +361,7 @@ export default function TeacherTestResults() {
         {filteredResults.length === 0 && (
           <div className="text-center py-20 bg-white rounded-3xl border border-dashed border-gray-200">
             <User className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-500 font-medium">Bu test üzrə nəticə tapılmadı</p>
+            <p className="text-gray-500 font-medium">{t('common.no_results')}</p>
             <p className="text-[10px] text-gray-400 mt-2 italic">Test ID: {id}</p>
           </div>
         )}
@@ -380,19 +382,19 @@ export default function TeacherTestResults() {
               <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
                 <div className="bg-gray-50 rounded-2xl p-4 text-center">
                   <div className="text-2xl font-black text-[#D4AF37]">{selectedResult.answers.filter((a:any)=>a.isCorrect).length}</div>
-                  <div className="text-xs text-gray-500 font-bold uppercase tracking-wider">Doğru</div>
+                  <div className="text-xs text-gray-500 font-bold uppercase tracking-wider">{t('test.stats.correct')}</div>
                 </div>
                 <div className="bg-gray-50 rounded-2xl p-4 text-center">
                   <div className="text-2xl font-black text-red-500">{selectedResult.answers.filter((a:any)=>!a.isCorrect && a.status === 'graded').length}</div>
-                  <div className="text-xs text-gray-500 font-bold uppercase tracking-wider">Yanlış</div>
+                  <div className="text-xs text-gray-500 font-bold uppercase tracking-wider">{t('test.stats.incorrect')}</div>
                 </div>
                 <div className="bg-gray-50 rounded-2xl p-4 text-center">
                   <div className="text-2xl font-black text-yellow-500">{selectedResult.answers.filter((a:any)=>a.status === 'pending').length}</div>
-                  <div className="text-xs text-gray-500 font-bold uppercase tracking-wider">Gözləyən</div>
+                  <div className="text-xs text-gray-500 font-bold uppercase tracking-wider">{t('test.stats.pending')}</div>
                 </div>
                 <div className="bg-gray-50 rounded-2xl p-4 text-center">
                   <div className="text-2xl font-black text-gray-600">{Math.max((test.questions || []).length - selectedResult.answers.length, 0)}</div>
-                  <div className="text-xs text-gray-500 font-bold uppercase tracking-wider">Boş</div>
+                  <div className="text-xs text-gray-500 font-bold uppercase tracking-wider">{t('test.stats.empty')}</div>
                 </div>
               </div>
 
@@ -448,7 +450,7 @@ export default function TeacherTestResults() {
                            {q.answerType === 'open_ended' ? (
                               <div className="ml-7 mt-3">
                                  <div className="bg-white p-3 rounded-lg border border-gray-100 text-sm mb-3">
-                                    <span className="text-xs text-gray-400 block mb-1 uppercase font-bold">Tələbənin Cavabı:</span>
+                                    <span className="text-xs text-gray-400 block mb-1 uppercase font-bold">{t('test.student_answer_label')}</span>
                                     {studentAnsObj?.answer || 'Cavab verilməyib'}
                                  </div>
                                  <div className="flex justify-between items-center bg-gray-50 p-2 rounded-lg">
@@ -459,7 +461,7 @@ export default function TeacherTestResults() {
                                     ) : isNumericOpenEndedQuestion(q) ? (
                                       <span className={isCorrect ? "text-sm font-bold text-green-600 flex items-center gap-1" : "text-sm font-bold text-red-600 flex items-center gap-1"}>
                                         {isCorrect ? <CheckCircle className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
-                                        {isCorrect ? 'Avtomatik doğru' : 'Avtomatik yanlış'}
+                                        {isCorrect ? t('common.auto_correct') : t('common.auto_wrong')}
                                       </span>
                                     ) : isTeacherReviewablePending ? (
                                        <span className="text-sm font-bold text-yellow-600 flex items-center gap-1">
@@ -499,12 +501,12 @@ export default function TeacherTestResults() {
                               <div className="grid gap-2 ml-7 mt-2">
                                 <div className="grid gap-2 sm:grid-cols-2">
                                   <div className="rounded-lg border border-gray-100 bg-white p-3 text-sm">
-                                    <span className="mb-1 block text-xs font-bold uppercase tracking-[0.14em] text-gray-400">Seçilən şık</span>
-                                    <span className="font-medium text-gray-900">{hasAnswer ? formatMultipleChoiceAnswer(q, studentAnsObj?.answer || '') : 'Cavab verilməyib'}</span>
+                                    <span className="mb-1 block text-xs font-bold uppercase tracking-[0.14em] text-gray-400">{t('test.selected_option')}</span>
+                                    <span className="font-medium text-gray-900">{hasAnswer ? formatMultipleChoiceAnswer(q, studentAnsObj?.answer || '') : t('test.no_answer_given')}</span>
                                   </div>
                                   <div className="rounded-lg border border-gray-100 bg-white p-3 text-sm">
-                                    <span className="mb-1 block text-xs font-bold uppercase tracking-[0.14em] text-gray-400">Düzgün şık</span>
-                                    <span className="font-medium text-gray-900">{correctAnswerIndex !== null ? formatMultipleChoiceAnswer(q, String(correctAnswerIndex)) : 'Təyin edilməyib'}</span>
+                                    <span className="mb-1 block text-xs font-bold uppercase tracking-[0.14em] text-gray-400">{t('test.correct_option')}</span>
+                                    <span className="font-medium text-gray-900">{correctAnswerIndex !== null ? formatMultipleChoiceAnswer(q, String(correctAnswerIndex)) : t('test.not_assigned')}</span>
                                   </div>
                                 </div>
                                 {q.options.map((option: string, optIdx: number) => {
@@ -535,10 +537,10 @@ export default function TeacherTestResults() {
                                        </div>
                                        {option}
                                        {isActualCorrect && (
-                                         <span className="ml-auto text-[10px] font-black uppercase opacity-70">Doğru</span>
+                                         <span className="ml-auto text-[10px] font-black uppercase opacity-70">{t('test.stats.correct')}</span>
                                        )}
                                        {!isActualCorrect && isSelected && (
-                                         <span className="ml-auto text-[10px] font-black uppercase opacity-60">Seçilib</span>
+                                         <span className="ml-auto text-[10px] font-black uppercase opacity-60">{t('test.selected')}</span>
                                        )}
                                      </div>
                                    )

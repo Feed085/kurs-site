@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -23,6 +24,7 @@ import {
 } from '@/components/ui/select';
 
 export default function CreateCourse() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [isSaving, setIsSaving] = useState(false);
   const [categories, setCategories] = useState<any[]>([]);
@@ -178,7 +180,7 @@ export default function CreateCourse() {
         throw new Error(courseData.message);
       }
     } catch (error: any) {
-      toast.error(error.message || 'Xəta baş verdi');
+      toast.error(error.message || t('common.error'));
     } finally {
       setIsSaving(false);
     }
@@ -238,7 +240,7 @@ export default function CreateCourse() {
                         )}
                         {!isCategoriesLoading && categories.length === 0 && (
                           <SelectItem value="empty" disabled className="py-2.5 px-4 rounded-lg">
-                            Kateqoriya tapılmadı
+                            {t('common.not_found')}
                           </SelectItem>
                         )}
                         {!isCategoriesLoading && categories.map((cat: any) => (

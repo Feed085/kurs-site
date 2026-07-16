@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -50,6 +51,7 @@ const getMultipleChoiceCorrectAnswerIndex = (question: any) => {
 };
 
 export default function TeacherTestEdit() {
+  const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
   const [test, setTest] = useState<any>(null);
@@ -76,7 +78,7 @@ export default function TeacherTestEdit() {
           }));
           setTest({ ...data.data, allowRetake: data.data.allowRetake ?? false, questions: normalizedQuestions });
         } else {
-          toast.error('Test tapılmadı');
+          toast.error(t('common.not_found'));
         }
       } catch (err) {
         toast.error('Server xətası');
@@ -100,7 +102,7 @@ export default function TeacherTestEdit() {
         let finalContent = q.content;
 
         if (q.answerType === 'open_ended' && q.openEndedAnswerType === 'number' && !q.openEndedNumericAnswer?.trim()) {
-          toast.error('Rəqəm cavabı üçün dəyər daxil edin');
+          toast.error(t('common.error'));
           setIsSaving(false);
           return;
         }
@@ -152,10 +154,10 @@ export default function TeacherTestEdit() {
 
       const data = await res.json();
       if (data.success) {
-        toast.success('Test uğurla yeniləndi');
+        toast.success(t('common.save'));
         setTimeout(() => navigate(-1), 1000);
       } else {
-        toast.error('Xəta: ' + data.message);
+        toast.error(t('common.error_prefix') + data.message);
       }
     } catch (err) {
       toast.error('Server xətası');
@@ -186,7 +188,7 @@ export default function TeacherTestEdit() {
         toast.success('Test silindi');
         navigate('/teacher/tests', { replace: true });
       } else {
-        toast.error('Xəta: ' + data.message);
+        toast.error(t('common.error_prefix') + data.message);
       }
     } catch (err) {
       toast.error('Server xətası');
@@ -250,7 +252,7 @@ export default function TeacherTestEdit() {
   if (loading) {
      return (
        <div className="min-h-screen pt-24 flex items-center justify-center bg-[#F3F3F3]">
-         <p className="text-gray-500 font-bold">Yüklənir...</p>
+         <p className="text-gray-500 font-bold">{t('common.loading')}</p>
        </div>
      );
   }
@@ -260,8 +262,8 @@ export default function TeacherTestEdit() {
       <div className="min-h-screen pt-24 flex items-center justify-center bg-[#F3F3F3]">
         <div className="text-center">
           <FileText className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-          <h2 className="text-xl font-bold text-gray-900">Test tapılmadı</h2>
-          <Button onClick={() => navigate(-1)} variant="link">Geri qayıt</Button>
+          <h2 className="text-xl font-bold text-gray-900">{t('common.not_found')}</h2>
+          <Button onClick={() => navigate(-1)} variant="link">{t('test.edit.go_back')}</Button>
         </div>
       </div>
     );
@@ -325,7 +327,7 @@ export default function TeacherTestEdit() {
         <div className="bg-white rounded-3xl p-6 lg:p-8 shadow-sm border border-gray-100 mb-8 space-y-6">
            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">Testin Başlığı</label>
+                <label className="block text-sm font-bold text-gray-700 mb-2">{t('test.edit.test_title')}</label>
                 <Input 
                   value={test.title}
                   onChange={(e) => setTest({ ...test, title: e.target.value })}
@@ -333,7 +335,7 @@ export default function TeacherTestEdit() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">Müddət (Dəqiqə)</label>
+                <label className="block text-sm font-bold text-gray-700 mb-2">{t('test.edit.duration_min')}</label>
                 <Input 
                   type="number"
                   value={test.duration}
@@ -350,8 +352,8 @@ export default function TeacherTestEdit() {
                 className="mt-0.5 border-[#A87A1F] data-[state=checked]:border-[#A87A1F] data-[state=checked]:bg-[#A87A1F]"
               />
               <div>
-                <p className="font-semibold text-gray-900">Tələbə testi təkrar yaza bilsin</p>
-                <p className="text-sm text-gray-500">Söndürülərsə test yalnız bir dəfə yazıla bilər.</p>
+                <p className="font-semibold text-gray-900">{t('test.edit.allow_retake')}</p>
+                <p className="text-sm text-gray-500">{t('test.edit.allow_retake_desc')}</p>
               </div>
            </div>
         </div>
@@ -433,7 +435,7 @@ export default function TeacherTestEdit() {
               <div className="space-y-6">
                 {question.questionType === 'text' ? (
                   <div>
-                    <label className="block text-sm font-medium text-gray-500 mb-2">Sualın mətni</label>
+                    <label className="block text-sm font-medium text-gray-500 mb-2">{t('test.edit.question_text')}</label>
                     <Input 
                       value={question.content}
                       onChange={(e) => updateQuestionField(question.id, 'content', e.target.value)}
@@ -447,13 +449,13 @@ export default function TeacherTestEdit() {
                           <>
                             <img src={question.content} alt="Sual" className="block w-full h-auto max-h-[520px] object-contain" />
                             <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                               <p className="text-white text-xs font-bold">Şəkli dəyişmək üçün klikləyin</p>
+                               <p className="text-white text-xs font-bold">{t('test.edit.click_to_change_image')}</p>
                             </div>
                           </>
                         ) : (
                           <div className="flex min-h-[260px] flex-col items-center justify-center p-8 text-gray-400">
                              <ImageIcon className="w-10 h-10 mb-2 opacity-20" />
-                             <p className="text-sm font-bold">Sualın şəklini yükləyin</p>
+                             <p className="text-sm font-bold">{t('test.edit.upload_question_image')}</p>
                           </div>
                         )}
                         <input 
@@ -559,9 +561,9 @@ export default function TeacherTestEdit() {
                             onCheckedChange={(checked) => updateQuestionField(question.id, 'openEndedAnswerType', checked === true ? 'number' : 'text')}
                             className="border-blue-300 data-[state=checked]:border-[#D4AF37] data-[state=checked]:bg-[#D4AF37]"
                           />
-                          <span className="font-bold text-blue-700">Cavabı yalnız rəqəm olan sual</span>
+                          <span className="font-bold text-blue-700">{t('test.edit.numeric_answer_question')}</span>
                         </label>
-                        <p className="text-blue-700/80">Ondalık cavablar da qəbul edilir.</p>
+                        <p className="text-blue-700/80">{t('test.edit.numeric_answer_desc')}</p>
                         {question.openEndedAnswerType === 'number' && (
                           <div className="relative max-w-sm">
                             <Input

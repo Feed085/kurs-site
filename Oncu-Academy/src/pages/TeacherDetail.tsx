@@ -68,14 +68,14 @@ export default function TeacherDetail() {
   }, [location.hash]);
 
   if (isLoading) {
-    return <div className="min-h-screen flex items-center justify-center">Yüklənir...</div>;
+    return <div className="min-h-screen flex items-center justify-center">{t('common.loading')}</div>;
   }
 
   if (!teacher) {
     return (
       <div className="page-shell min-h-screen bg-[#F3F3F3] pt-[calc(var(--site-header-height)+1rem)] sm:pt-[calc(var(--site-header-height)+1.5rem)] flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Müəllim tapılmadı</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">{t('common.not_found')}</h1>
           <Button onClick={() => navigate('/teachers')}>
             Müəllimlərə qayıt
           </Button>
@@ -152,7 +152,7 @@ export default function TeacherDetail() {
                         />
                       ))}
                     </div>
-                    <p className="mt-1 text-xs font-medium text-gray-500">{teacherReviewCount} rəy</p>
+                    <p className="mt-1 text-xs font-medium text-gray-500">{teacherReviewCount} {t('teacher.reviews', { defaultValue: 'rəy' })}</p>
                   </div>
                 </div>
               </div>
@@ -247,18 +247,18 @@ export default function TeacherDetail() {
             {activeTab === 'about' && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-3">Təhsil</h3>
+                  <h3 className="text-lg font-bold text-gray-900 mb-3">{t('teachers.education', { defaultValue: 'Təhsil' })}</h3>
                   <div className="flex items-start gap-3 p-4 bg-gray-50 rounded-2xl">
                     <Award className="w-5 h-5 text-[#D4AF37] mt-0.5" />
                     <div>
                       <p className="font-medium text-gray-900">{teacher.education}</p>
-                      <p className="text-sm text-gray-500">Ali təhsil</p>
+                      <p className="text-sm text-gray-500">{t('teachers.higher_education', { defaultValue: 'Ali təhsil' })}</p>
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-3">Təcrübə</h3>
+                  <h3 className="text-lg font-bold text-gray-900 mb-3">{t('teachers.experience')}</h3>
                   <p className="text-gray-600 leading-relaxed">{teacher.experience ?? 0} il</p>
                 </div>
 
@@ -277,7 +277,7 @@ export default function TeacherDetail() {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-3">Sosial Şəbəkələr</h3>
+                  <h3 className="text-lg font-bold text-gray-900 mb-3">{t('teachers.social_networks')}</h3>
                   <div className="flex gap-3">
                     {teacher.socialLinks?.facebook && (
                       <a
@@ -334,7 +334,7 @@ export default function TeacherDetail() {
                   />
                 ) : !isAuthenticated ? (
                   <div className="bg-gray-50 border border-dashed border-gray-200 rounded-2xl p-6 text-center mb-8">
-                    <p className="text-gray-600 mb-4">Rəy yazmaq üçün qeydiyyatdan keçməlisiniz.</p>
+                    <p className="text-gray-600 mb-4">{t('common.login_to_review', { defaultValue: 'Rəy yazmaq üçün qeydiyyatdan keçməlisiniz.' })}</p>
                     <Button 
                       onClick={() => navigate('/login')}
                       variant="outline"

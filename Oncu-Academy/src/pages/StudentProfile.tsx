@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -17,6 +18,7 @@ import { toast } from 'sonner';
 import { API_BASE_URL } from '@/services/publicApi';
 
 export default function StudentProfile() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [, setStudent] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -113,7 +115,7 @@ export default function StudentProfile() {
         setIsEditing(false);
         toast.success('Profil yeniləndi!');
       } else {
-        toast.error('Xəta: ' + d.message);
+        toast.error(t('common.error_prefix') + d.message);
       }
     } catch(err) {
       toast.error('Serverlə əlaqə qurula bilmədi');
@@ -139,7 +141,7 @@ export default function StudentProfile() {
   };
 
   if (isLoading) {
-    return <div className="min-h-screen pt-24 text-center text-gray-500 font-medium animate-pulse">Yüklənir...</div>;
+    return <div className="min-h-screen pt-24 text-center text-gray-500 font-medium animate-pulse">{t('common.loading')}</div>;
   }
 
   return (
@@ -231,7 +233,7 @@ export default function StudentProfile() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="bg-white rounded-3xl p-6 shadow-sm">
-             <h3 className="text-xl font-bold text-gray-900 mb-6">Şəxsi Məlumatlar</h3>
+             <h3 className="text-xl font-bold text-gray-900 mb-6">{t('student.personal_info')}</h3>
              {isEditing ? (
                 <div className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
@@ -256,7 +258,7 @@ export default function StudentProfile() {
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                      <div>
-                       <label className="block text-sm font-medium text-gray-700 mb-2">Mobil nömrə</label>
+                       <label className="block text-sm font-medium text-gray-700 mb-2">{t('student.mobile_number')}</label>
                        <Input
                          name="phone"
                          value={formData.phone}
@@ -266,22 +268,22 @@ export default function StudentProfile() {
                        />
                      </div>
                      <div>
-                       <label className="block text-sm font-medium text-gray-700 mb-2">Təhsil Səviyyəsi</label>
+                       <label className="block text-sm font-medium text-gray-700 mb-2">{t('student.education_level')}</label>
                        <select 
                           name="educationLevel" 
                           value={formData.educationLevel}
                           onChange={handleChange}
                           className="flex h-10 w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm ring-offset-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-950 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                        >
-                          <option value="Orta təhsil">Orta təhsil</option>
+                          <option value="Orta təhsil">{t('student.middle_education')}</option>
                           <option value="Bakalavr">Bakalavr</option>
                           <option value="Magistr">Magistr</option>
-                          <option value="Digər">Digər</option>
+                          <option value="Digər">{t('student.other')}</option>
                        </select>
                      </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">E-poçt (Dəyişdirilə bilməz)</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('student.email_readonly')}</label>
                     <Input
                       name="email"
                       type="email"
@@ -296,22 +298,22 @@ export default function StudentProfile() {
                   <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-2xl">
                     <Mail className="w-5 h-5 text-gray-400" />
                     <div>
-                      <p className="text-xs text-gray-500 font-bold uppercase">E-poçt (Sistem profili)</p>
+                      <p className="text-xs text-gray-500 font-bold uppercase">{t('student.email_system')}</p>
                       <p className="text-sm font-bold text-gray-900">{formData.email}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-2xl">
                     <Phone className="w-5 h-5 text-gray-400" />
                     <div>
-                      <p className="text-xs text-gray-500 font-bold uppercase">Mobil Nömrə</p>
-                      <p className="text-sm font-bold text-gray-900">{formData.phone || 'Qeyd edilməyib'}</p>
+                      <p className="text-xs text-gray-500 font-bold uppercase">{t('student.mobile_number')}</p>
+                      <p className="text-sm font-bold text-gray-900">{formData.phone || t('student.not_set')}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-2xl">
                     <GraduationCap className="w-5 h-5 text-gray-400" />
                     <div>
-                      <p className="text-xs text-gray-500 font-bold uppercase">Təhsil Səviyyəsi</p>
-                      <p className="text-sm font-bold text-gray-900">{formData.educationLevel || 'Qeyd edilməyib'}</p>
+                      <p className="text-xs text-gray-500 font-bold uppercase">{t('student.education_level')}</p>
+                      <p className="text-sm font-bold text-gray-900">{formData.educationLevel || t('student.not_set')}</p>
                     </div>
                   </div>
                 </div>
@@ -323,7 +325,7 @@ export default function StudentProfile() {
              <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-sm z-10 mb-6">
                 <GraduationCap className="w-10 h-10 text-[#A87A1F]" />
              </div>
-             <h3 className="text-2xl font-black text-gray-900 z-10 mb-2">Akademik Karyeranız</h3>
+             <h3 className="text-2xl font-black text-gray-900 z-10 mb-2">{t('student.academic_career')}</h3>
              <p className="text-gray-600 mb-6 z-10">
                 Kurslara baxın, sınaqlarda iştirak edin və özünüzü inkişaf etdirərək sertifikatlar qazanın.
              </p>

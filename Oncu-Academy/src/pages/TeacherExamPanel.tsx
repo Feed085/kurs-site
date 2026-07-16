@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   ArrowRight,
   ArrowLeft,
@@ -379,6 +380,7 @@ const leaveSessionStatusMeta: Record<TeacherLeaveSessionStatus, { label: string;
 const normalizeManualCodeInput = (value: string) => value.trim().replace(/\s+/g, '').toUpperCase();
 
 export default function TeacherExamPanel() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { user } = useAuth();
@@ -532,7 +534,7 @@ export default function TeacherExamPanel() {
     const normalizedManualCode = normalizeManualCodeInput(rawValue);
 
     if (!normalizedManualCode) {
-      setQrScannerError('Manual kod daxil edin');
+      setQrScannerError(t('common.error'));
       return;
     }
 
@@ -719,7 +721,7 @@ export default function TeacherExamPanel() {
     const draftId = draft._id || draft.id;
 
     if (!draftId) {
-      toast.error('Redaktə ediləcək imtahan tapılmadı');
+      toast.error(t('common.not_found'));
       return;
     }
 
@@ -774,16 +776,16 @@ export default function TeacherExamPanel() {
       const payload = await response.json();
 
       if (!response.ok || payload?.success === false) {
-        throw new Error(payload?.message || 'Qiymətləndirmə qeydə alınmadı');
+        throw new Error(payload?.message || t('common.error'));
       }
 
-      toast.success('Qiymətləndirmə qeydə alındı');
+      toast.success(t('common.success'));
 
       if (selectedReviewExamId) {
         await loadReviewExamData(selectedReviewExamId);
       }
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Qiymətləndirmə qeydə alınmadı';
+      const message = error instanceof Error ? error.message : t('common.error');
       toast.error(message);
     } finally {
       setEvaluatingQuestionId(null);
@@ -794,7 +796,7 @@ export default function TeacherExamPanel() {
     event.preventDefault();
 
     if (!title.trim()) {
-      toast.error('İmtahan başlığı daxil edin');
+      toast.error(t('common.error'));
       return;
     }
 
@@ -824,7 +826,7 @@ export default function TeacherExamPanel() {
       const payload = await response.json();
 
       if (!response.ok || payload?.success === false) {
-        throw new Error(payload?.message || (editingDraftId ? 'İmtahan layihəsi yenilənmədi' : 'İmtahan layihəsi yaradılmadı'));
+        throw new Error(payload?.message || (editingDraftId ? t('common.error') : t('common.error')));
       }
 
       const savedDraftId = String(payload?.data?._id || payload?.data?.id || editingDraftId || '');
@@ -839,22 +841,22 @@ export default function TeacherExamPanel() {
         const submitPayload = await submitResponse.json();
 
         if (!submitResponse.ok || submitPayload?.success === false) {
-          throw new Error(submitPayload?.message || 'İmtahan dəyişiklikdən sonra yenidən adminə göndərilmədi');
+          throw new Error(submitPayload?.message || t('common.error'));
         }
       }
 
       toast.success(
         isResubmittingEditedDraft
-          ? 'İmtahan yeniləndi və yenidən adminə göndərildi'
+          ? t('common.success')
           : editingDraftId
-            ? 'İmtahan layihəsi yeniləndi'
-            : 'İmtahan layihəsi yaradıldı'
+            ? t('common.success')
+            : t('common.success')
       );
       resetDraftForm();
       await loadPanelData();
       handleTabChange('drafts');
     } catch (error) {
-      const message = error instanceof Error ? error.message : (editingDraftId ? 'İmtahan layihəsi yenilənmədi' : 'İmtahan layihəsi yaradılmadı');
+      const message = error instanceof Error ? error.message : t('common.error');
       toast.error(message);
     } finally {
       setIsSavingDraft(false);
@@ -874,19 +876,19 @@ export default function TeacherExamPanel() {
       const payload = await response.json();
 
       if (!response.ok || payload?.success === false) {
-        throw new Error(payload?.message || 'İmtahan adminə göndərilmədi');
+        throw new Error(payload?.message || t('common.error'));
       }
 
-      toast.success('İmtahan adminə göndərildi');
+      toast.success(t('common.success'));
       await loadPanelData();
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'İmtahan adminə göndərilmədi';
+      const message = error instanceof Error ? error.message : t('common.error');
       toast.error(message);
     }
   };
 
   const handleDeleteDraft = async (draftId: string) => {
-    if (!window.confirm('İmtahan layihəsini silmək istədiyinizə əminsinizmi?')) {
+    if (!window.confirm(t('common.confirm'))) {
       return;
     }
 
@@ -902,23 +904,23 @@ export default function TeacherExamPanel() {
       const payload = await response.json();
 
       if (!response.ok || payload?.success === false) {
-        throw new Error(payload?.message || 'İmtahan layihəsi silinmədi');
+        throw new Error(payload?.message || t('common.error'));
       }
 
       if (editingDraftId === draftId) {
         resetDraftForm();
       }
 
-      toast.success('İmtahan layihəsi silindi');
+      toast.success(t('common.success'));
       await loadPanelData();
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'İmtahan layihəsi silinmədi';
+      const message = error instanceof Error ? error.message : t('common.error');
       toast.error(message);
     }
   };
 
   if (isLoading) {
-    return <div className="min-h-screen pt-24 text-center text-slate-600">Yüklənir...</div>;
+    return <div className="min-h-screen pt-24 text-center text-slate-600">{t('common.loading')}</div>;
   }
 
   return (
@@ -927,11 +929,11 @@ export default function TeacherExamPanel() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-center gap-3 py-4">
             {[
-              { key: 'drafts', label: 'İmtahanlar', count: panelData.drafts.length },
-              { key: 'create', label: 'İmtahan yarat' },
-              { key: 'review', label: 'Yoxla', count: reviewLinkedExams.length },
-              { key: 'results', label: 'Nəticələr', count: resultExams.length },
-              ...(isQrTabAvailable ? [{ key: 'qr', label: 'Sessiya kodu' }] : []),
+              { key: 'drafts', label: t('exam.drafts'), count: panelData.drafts.length },
+              { key: 'create', label: t('exam.create') },
+              { key: 'review', label: t('exam.review'), count: reviewLinkedExams.length },
+              { key: 'results', label: t('exam.results'), count: resultExams.length },
+              ...(isQrTabAvailable ? [{ key: 'qr', label: t('exam.session_code') }] : []),
             ].map((tab) => {
               const isActive = activeTab === tab.key;
 
@@ -972,13 +974,13 @@ export default function TeacherExamPanel() {
             <div className="max-w-3xl">
               <span className="inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/20 bg-[#D4AF37]/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[#A87A1F]">
                 <Sparkles className="h-3.5 w-3.5" />
-                Müəllim imtahan paneli
+                {t('teacher.panel')}
               </span>
               <h1 className="mt-4 text-3xl font-black tracking-tight text-slate-900 lg:text-5xl">
-                Ayrı imtahan layihələriniz
+                {t('teacher.draft_exams')}
               </h1>
               <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600 lg:text-base">
-                Bu panel kurs testlərindən ayrıdır. Burada yaratdığınız imtahanlar adminə göndərilir, sonra istifadə olunmuş imtahanların yoxlanış və nəticələrini izləyə bilirsiniz.
+                {t('teacher.panel_description')}
               </p>
             </div>
 
@@ -987,7 +989,7 @@ export default function TeacherExamPanel() {
               <Input
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
-                placeholder="İmtahan axtarın"
+                placeholder={t('common.search')}
                 className="h-12 rounded-2xl border-slate-200 bg-white pl-11 text-slate-700 shadow-sm placeholder:text-slate-400"
               />
             </div>
@@ -996,10 +998,10 @@ export default function TeacherExamPanel() {
 
         <section className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {[
-            { title: 'Layihə imtahan', value: metrics.totalDrafts, icon: ClipboardList, tone: 'from-[#FFF6D8] via-white to-white' },
-            { title: 'Adminə göndərildi', value: metrics.submittedDrafts, icon: Send, tone: 'from-[#EAF4FF] via-white to-white' },
-            { title: 'Yoxlanılacaq', value: metrics.pendingLinkedReviews, icon: TimerReset, tone: 'from-[#FFF2E2] via-white to-white' },
-            { title: 'İstifadə olundu', value: metrics.usedDrafts, icon: CheckCheck, tone: 'from-[#EEF8F1] via-white to-white' },
+            { title: t('metrics.draft_exams'), value: metrics.totalDrafts, icon: ClipboardList, tone: 'from-[#FFF6D8] via-white to-white' },
+            { title: t('metrics.submitted_to_admin'), value: metrics.submittedDrafts, icon: Send, tone: 'from-[#EAF4FF] via-white to-white' },
+            { title: t('metrics.pending_reviews'), value: metrics.pendingLinkedReviews, icon: TimerReset, tone: 'from-[#FFF2E2] via-white to-white' },
+            { title: t('metrics.used_exams'), value: metrics.usedDrafts, icon: CheckCheck, tone: 'from-[#EEF8F1] via-white to-white' },
           ].map((metric) => {
             const MetricIcon = metric.icon;
 
@@ -1023,15 +1025,15 @@ export default function TeacherExamPanel() {
           <section className="mt-8 rounded-[2rem] border border-white/80 bg-white/95 p-6 shadow-sm">
             <div className="flex flex-col gap-4 border-b border-slate-100 pb-5 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#A87A1F]">Mənim İmtahanlarım</p>
-                <h2 className="mt-2 text-2xl font-black tracking-tight text-slate-900">Müəllimin yaratdığı layihələr</h2>
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#A87A1F]">{t('teacher.my_exams')}</p>
+                <h2 className="mt-2 text-2xl font-black tracking-tight text-slate-900">{t('teacher.created_drafts')}</h2>
               </div>
               <Button type="button" onClick={() => {
                 resetDraftForm();
                 handleTabChange('create');
               }} className="w-full rounded-2xl bg-[#D4AF37] text-slate-950 hover:bg-[#B88A1B] sm:w-auto">
                 <Plus className="h-4 w-4" />
-                İmtahan yarat
+                {t('exam.create')}
               </Button>
             </div>
 
@@ -1050,11 +1052,11 @@ export default function TeacherExamPanel() {
                         <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-bold ${status.className}`}>
                           {status.label}
                         </span>
-                        <h3 className="mt-3 text-xl font-black tracking-tight text-slate-900">{draft.title || 'Adsız imtahan'}</h3>
+                        <h3 className="mt-3 text-xl font-black tracking-tight text-slate-900">{draft.title || t('common.untitled')}</h3>
                         <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-sm text-slate-500">
                           <span className="inline-flex items-center gap-1.5">
                             <FileText className="h-4 w-4 text-[#A87A1F]" />
-                            {(draft.questions || []).length} sual
+                            {(draft.questions || []).length} {t('common.question_count')}
                           </span>
                           <span>{formatDate(draft.createdAt)}</span>
                         </div>
@@ -1069,7 +1071,7 @@ export default function TeacherExamPanel() {
                             className="rounded-2xl border-slate-200 text-slate-700 hover:border-[#D4AF37]/40 hover:bg-[#FFF8E1] hover:text-slate-900"
                           >
                             <Pencil className="h-4 w-4" />
-                            Düzənlə
+                            {t('common.edit')}
                           </Button>
                         )}
                         <Button
@@ -1079,7 +1081,7 @@ export default function TeacherExamPanel() {
                           className="rounded-2xl bg-[#D4AF37] text-slate-950 hover:bg-[#B88A1B] disabled:cursor-not-allowed disabled:opacity-60"
                         >
                           <Send className="h-4 w-4" />
-                          Adminə göndər
+                          {t('common.submit')}
                         </Button>
                         {canDelete && (
                           <Button
@@ -1089,7 +1091,7 @@ export default function TeacherExamPanel() {
                             className="rounded-2xl border-rose-200 text-rose-600 hover:border-rose-300 hover:bg-rose-50 hover:text-rose-700"
                           >
                             <Trash2 className="h-4 w-4" />
-                            Sil
+                            {t('common.delete')}
                           </Button>
                         )}
                       </div>
@@ -1107,8 +1109,8 @@ export default function TeacherExamPanel() {
               {filteredDrafts.length === 0 ? (
                 <div className="rounded-[1.75rem] border border-dashed border-slate-200 bg-slate-50/80 px-6 py-16 text-center xl:col-span-2">
                   <ClipboardList className="mx-auto h-10 w-10 text-slate-300" />
-                  <h3 className="mt-4 text-xl font-black tracking-tight text-slate-900">Layihə imtahan yoxdur</h3>
-                  <p className="mt-2 text-sm text-slate-500">İlk ayrıca imtahan layihənizi yaratmaq üçün “İmtahan yarat” sekməsinə keçin.</p>
+                  <h3 className="mt-4 text-xl font-black tracking-tight text-slate-900">{t('teacher.no_drafts')}</h3>
+                  <p className="mt-2 text-sm text-slate-500">{t('teacher.create_first_hint')}</p>
                 </div>
               ) : null}
               {filteredDrafts.length > 4 ? (
@@ -1119,8 +1121,8 @@ export default function TeacherExamPanel() {
                     className="text-sm font-semibold text-[#A87A1F] hover:underline"
                   >
                     {showAllDrafts
-                      ? 'Az göstər'
-                      : `Daha çoxu... (${filteredDrafts.length - 4} layihə daha)`}
+                      ? t('common.show_less')
+                      : t('common.show_more', { count: filteredDrafts.length - 4 })}
                   </button>
                 </div>
               ) : null}            </div>
@@ -1130,16 +1132,16 @@ export default function TeacherExamPanel() {
         {activeTab === 'create' && (
           <section className="mt-8 rounded-[2rem] border border-white/80 bg-white/95 p-6 shadow-sm lg:p-8">
             <div className="border-b border-slate-100 pb-5">
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#A87A1F]">{editingDraftId ? 'İmtahanı düzənlə' : 'İmtahan yarat'}</p>
-              <h2 className="mt-2 text-2xl font-black tracking-tight text-slate-900">{editingDraftId ? 'Müəllim imtahan layihəsini yenilə' : 'Yeni müəllim imtahanı'}</h2>
-              <p className="mt-2 text-sm text-slate-600">Bu forma kurs testindən ayrıdır. Burada yaratdığınız imtahan müəllim layihəsi kimi saxlanır və sonra adminə göndərilir.</p>
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#A87A1F]">{editingDraftId ? t('exam.edit') : t('exam.create')}</p>
+              <h2 className="mt-2 text-2xl font-black tracking-tight text-slate-900">{editingDraftId ? t('exam.update_exam') : t('exam.new_exam')}</h2>
+              <p className="mt-2 text-sm text-slate-600">{t('exam.create_description')}</p>
             </div>
 
             <form onSubmit={handleSaveDraft} className="mt-6 space-y-6">
               <div className="rounded-[1.75rem] border border-slate-200 bg-slate-50/60 p-5">
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-slate-700">İmtahan başlığı</label>
-                  <Input value={title} onChange={(event) => setTitle(event.target.value)} placeholder="Məsələn, Riyaziyyat yekun imtahanı" className="rounded-2xl border-slate-200 bg-white" />
+                  <label className="mb-2 block text-sm font-medium text-slate-700">{t('exam.title')}</label>
+                  <Input value={title} onChange={(event) => setTitle(event.target.value)} placeholder={t('exam.title_placeholder')} className="rounded-2xl border-slate-200 bg-white" />
                 </div>
               </div>
 
@@ -1154,17 +1156,17 @@ export default function TeacherExamPanel() {
               <div className="flex flex-col gap-3 sm:flex-row sm:justify-between">
                 <Button type="button" variant="outline" onClick={addQuestion} className="rounded-2xl border-slate-200">
                   <Plus className="h-4 w-4" />
-                  Sual əlavə et
+                  {t('exam.add_question')}
                 </Button>
                 <div className="flex flex-col gap-3 sm:flex-row">
                   {editingDraftId ? (
                     <Button type="button" variant="outline" onClick={resetDraftForm} className="rounded-2xl border-slate-200">
-                      Ləğv et
+                      {t('common.cancel')}
                     </Button>
                   ) : null}
                   <Button type="submit" disabled={isSavingDraft} className="rounded-2xl bg-[#D4AF37] text-slate-950 hover:bg-[#B88A1B] disabled:cursor-not-allowed disabled:opacity-60">
                     {isSavingDraft ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
-                    {editingDraftId ? 'Dəyişiklikləri yadda saxla' : 'Layihəni yarat'}
+                    {editingDraftId ? t('common.save') : t('common.create')}
                   </Button>
                 </div>
               </div>
@@ -1177,9 +1179,9 @@ export default function TeacherExamPanel() {
             {!selectedReviewExamId ? (
               <>
                 <div className="border-b border-slate-100 pb-5">
-                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#A87A1F]">Yoxlanacaq imtahanlar</p>
-                  <h2 className="mt-2 text-2xl font-black tracking-tight text-slate-900">Ekspertiza gözləyən imtahan kartları</h2>
-                  <p className="mt-2 text-sm text-slate-500">İmtahana daxil olun, sonra tələbəni seçib açıq sualları birbaşa burada qiymətləndirin.</p>
+                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#A87A1F]">{t('teacher.review_exams')}</p>
+                  <h2 className="mt-2 text-2xl font-black tracking-tight text-slate-900">{t('teacher.pending_expertise')}</h2>
+                  <p className="mt-2 text-sm text-slate-500">{t('teacher.review_description')}</p>
                 </div>
 
                 <div className="mt-6 grid grid-cols-1 gap-4 xl:grid-cols-2">
@@ -1188,9 +1190,9 @@ export default function TeacherExamPanel() {
                       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                         <div>
                           <h3 className="text-xl font-black tracking-tight text-slate-900">{exam.title}</h3>
-                          <p className="mt-2 text-sm text-slate-500">{exam.pendingReviewCount} ekspertiza cavabı gözləyən tələbə</p>
+                          <p className="mt-2 text-sm text-slate-500">{t('teacher.pending_count', { count: exam.pendingReviewCount })}</p>
                           {exam.sourceDraftTitles?.length ? (
-                            <p className="mt-2 text-xs text-slate-400">Mənbə: {exam.sourceDraftTitles.join(', ')}</p>
+                            <p className="mt-2 text-xs text-slate-400">{t('teacher.source')}: {exam.sourceDraftTitles.join(', ')}</p>
                           ) : null}
                         </div>
                         <Button
@@ -1204,7 +1206,7 @@ export default function TeacherExamPanel() {
                           className="rounded-2xl bg-[#D4AF37] text-slate-950 hover:bg-[#B88A1B]"
                         >
                           <Users className="h-4 w-4" />
-                          Tələbələri aç
+                          {t('teacher.open_students')}
                         </Button>
                       </div>
                     </article>
@@ -1213,8 +1215,8 @@ export default function TeacherExamPanel() {
                   {reviewLinkedExams.length === 0 ? (
                     <div className="rounded-[1.75rem] border border-dashed border-slate-200 bg-slate-50/80 px-6 py-16 text-center xl:col-span-2">
                       <ClipboardList className="mx-auto h-10 w-10 text-slate-300" />
-                      <h3 className="mt-4 text-xl font-black tracking-tight text-slate-900">Yoxlanacaq imtahan yoxdur</h3>
-                      <p className="mt-2 text-sm text-slate-500">Müəllim ekspertizası tələb edən açıq suallar burada görünəcək.</p>
+                      <h3 className="mt-4 text-xl font-black tracking-tight text-slate-900">{t('teacher.no_reviews')}</h3>
+                      <p className="mt-2 text-sm text-slate-500">{t('teacher.no_reviews_description')}</p>
                     </div>
                   ) : null}
                 </div>
@@ -1225,11 +1227,11 @@ export default function TeacherExamPanel() {
                   <div>
                     <button type="button" onClick={handleBackToStudentList} className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-slate-900">
                       <ArrowLeft className="h-4 w-4" />
-                      Tələbə siyahısına qayıt
+                      {t('common.back_to_list')}
                     </button>
-                    <p className="mt-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#A87A1F]">Ekspertiza sualları</p>
+                    <p className="mt-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#A87A1F]">{t('teacher.expertise_questions')}</p>
                     <h2 className="mt-2 text-2xl font-black tracking-tight text-slate-900">{selectedReviewResult.student?.name} {selectedReviewResult.student?.surname}</h2>
-                    <p className="mt-2 text-sm text-slate-500">Yalnız müəllim yoxlaması tələb olunan açıq suallar göstərilir.</p>
+                    <p className="mt-2 text-sm text-slate-500">{t('teacher.open_questions_hint')}</p>
                   </div>
                 </div>
 
@@ -1243,22 +1245,22 @@ export default function TeacherExamPanel() {
                         <div className="flex items-start justify-between gap-4">
                           <div className="min-w-0 flex-1">
                             <div className="inline-flex rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-700">
-                              Sual {index + 1}
+                              {t('common.question')} {index + 1}
                             </div>
                             <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-4">
-                              <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">Sual</p>
+                              <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">{t('common.question')}</p>
                               {question?.questionType === 'image' ? (
                                 <div className="mt-3 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
                                   <img src={question.content} alt={`Sual ${index + 1}`} className="max-h-[420px] w-full object-contain" />
                                 </div>
                               ) : (
-                                <p className="mt-3 text-sm leading-6 text-slate-800">{question?.content || 'Sual mətni tapılmadı, amma cavab ekspertiza gözləyir.'}</p>
+                                <p className="mt-3 text-sm leading-6 text-slate-800">{question?.content || t('teacher.missing_question_text')}</p>
                               )}
                             </div>
 
                             <div className="mt-4 rounded-2xl border border-slate-200 bg-white p-4">
-                              <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">Tələbənin cavabı</p>
-                              <p className="mt-3 whitespace-pre-wrap text-sm leading-6 text-slate-800">{answer.answer || 'Cavab verilməyib'}</p>
+                              <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">{t('teacher.student_answer')}</p>
+                              <p className="mt-3 whitespace-pre-wrap text-sm leading-6 text-slate-800">{answer.answer || t('teacher.no_answer')}</p>
                             </div>
                           </div>
                         </div>
@@ -1271,7 +1273,7 @@ export default function TeacherExamPanel() {
                             className="rounded-2xl bg-emerald-600 text-white hover:bg-emerald-700 disabled:opacity-60"
                           >
                             <CheckCircle className="h-4 w-4" />
-                            Doğru
+                            {t('common.correct')}
                           </Button>
                           <Button
                             type="button"
@@ -1280,7 +1282,7 @@ export default function TeacherExamPanel() {
                             className="rounded-2xl bg-rose-600 text-white hover:bg-rose-700 disabled:opacity-60"
                           >
                             <XCircle className="h-4 w-4" />
-                            Yanlış
+                            {t('common.incorrect')}
                           </Button>
                         </div>
                       </article>
@@ -1290,8 +1292,8 @@ export default function TeacherExamPanel() {
                   {selectedReviewPendingAnswers.length === 0 ? (
                     <div className="rounded-[1.75rem] border border-dashed border-slate-200 bg-slate-50/80 px-6 py-16 text-center">
                       <CheckCheck className="mx-auto h-10 w-10 text-slate-300" />
-                      <h3 className="mt-4 text-xl font-black tracking-tight text-slate-900">Ekspertiza tamamlandı</h3>
-                      <p className="mt-2 text-sm text-slate-500">Bu tələbə üçün müəllim yoxlaması tələb olunan açıq sual qalmayıb.</p>
+                      <h3 className="mt-4 text-xl font-black tracking-tight text-slate-900">{t('teacher.expertise_completed')}</h3>
+                      <p className="mt-2 text-sm text-slate-500">{t('teacher.no_pending_questions')}</p>
                     </div>
                   ) : null}
                 </div>
@@ -1302,16 +1304,16 @@ export default function TeacherExamPanel() {
                   <div>
                     <button type="button" onClick={handleBackToReviewExamList} className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-slate-900">
                       <ArrowLeft className="h-4 w-4" />
-                      İmtahan kartlarına qayıt
+                      {t('common.back_to_list')}
                     </button>
-                    <p className="mt-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#A87A1F]">Tələbə siyahısı</p>
-                    <h2 className="mt-2 text-2xl font-black tracking-tight text-slate-900">{reviewExam?.title || 'İmtahan'}</h2>
-                    <p className="mt-2 text-sm text-slate-500">Ekspertiza tələb edən tələbə cavablarını seçin.</p>
+                    <p className="mt-4 text-sm font-semibold uppercase tracking-[0.18em] text-[#A87A1F]">{t('teacher.student_list')}</p>
+                    <h2 className="mt-2 text-2xl font-black tracking-tight text-slate-900">{reviewExam?.title || t('exam.exam')}</h2>
+                    <p className="mt-2 text-sm text-slate-500">{t('teacher.select_student_hint')}</p>
                   </div>
                 </div>
 
                 {isReviewLoading ? (
-                  <div className="py-16 text-center text-slate-500">Yüklənir...</div>
+                  <div className="py-16 text-center text-slate-500">{t('common.loading')}</div>
                 ) : (
                   <div className="mt-6 grid grid-cols-1 gap-4 xl:grid-cols-2">
                     {pendingReviewResults.map((result) => {
@@ -1322,8 +1324,8 @@ export default function TeacherExamPanel() {
                           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                             <div>
                               <h3 className="text-xl font-black tracking-tight text-slate-900">{result.student?.name} {result.student?.surname}</h3>
-                              <p className="mt-2 text-sm text-slate-500">{getPendingAnswerCount(result, reviewExam?.questions || [], user?.id || '', reviewExam?.sourceTeacherIds || [])} ekspertiza sualı gözləyir</p>
-                              <p className="mt-1 text-xs text-slate-400">{result.student?.email || 'E-poçt yoxdur'}</p>
+                              <p className="mt-2 text-sm text-slate-500">{t('teacher.exam_panel.expertise_questions_pending', { count: getPendingAnswerCount(result, reviewExam?.questions || [], user?.id || '', reviewExam?.sourceTeacherIds || []) })}</p>
+                              <p className="mt-1 text-xs text-slate-400">{result.student?.email || t('teacher.exam_panel.no_email')}</p>
                             </div>
                             <Button
                               type="button"
@@ -1341,8 +1343,8 @@ export default function TeacherExamPanel() {
                     {pendingReviewResults.length === 0 ? (
                       <div className="rounded-[1.75rem] border border-dashed border-slate-200 bg-slate-50/80 px-6 py-16 text-center xl:col-span-2">
                         <Users className="mx-auto h-10 w-10 text-slate-300" />
-                        <h3 className="mt-4 text-xl font-black tracking-tight text-slate-900">Gözləyən tələbə yoxdur</h3>
-                        <p className="mt-2 text-sm text-slate-500">Bu imtahandakı bütün ekspertiza sualları artıq yoxlanılıb.</p>
+                        <h3 className="mt-4 text-xl font-black tracking-tight text-slate-900">{t('teacher.exam_panel.no_pending_students')}</h3>
+                        <p className="mt-2 text-sm text-slate-500">{t('teacher.exam_panel.all_questions_checked')}</p>
                       </div>
                     ) : null}
                   </div>
@@ -1355,8 +1357,8 @@ export default function TeacherExamPanel() {
         {activeTab === 'results' && (
           <section className="mt-8 rounded-[2rem] border border-white/80 bg-white/95 p-6 shadow-sm">
             <div className="border-b border-slate-100 pb-5">
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#A87A1F]">Nəticələr</p>
-              <h2 className="mt-2 text-2xl font-black tracking-tight text-slate-900">İstifadə olunmuş imtahanlar</h2>
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#A87A1F]">{t('teacher.exam_panel.results_label')}</p>
+              <h2 className="mt-2 text-2xl font-black tracking-tight text-slate-900">{t('teacher.exam_panel.used_exams')}</h2>
             </div>
 
             <div className="mt-6 grid grid-cols-1 gap-4 xl:grid-cols-2">
@@ -1377,7 +1379,7 @@ export default function TeacherExamPanel() {
                         <span>{formatDate(exam.latestCompletedAt || exam.createdAt)}</span>
                       </div>
                       {exam.sourceDraftTitles?.length ? (
-                        <p className="mt-2 text-xs text-slate-400">Mənbə: {exam.sourceDraftTitles.join(', ')}</p>
+                        <p className="mt-2 text-xs text-slate-400">{t('teacher.exam_panel.source')}: {exam.sourceDraftTitles.join(', ')}</p>
                       ) : null}
                     </div>
 
@@ -1397,8 +1399,8 @@ export default function TeacherExamPanel() {
               {resultExams.length === 0 ? (
                 <div className="rounded-[1.75rem] border border-dashed border-slate-200 bg-slate-50/80 px-6 py-16 text-center xl:col-span-2">
                   <FileText className="mx-auto h-10 w-10 text-slate-300" />
-                  <h3 className="mt-4 text-xl font-black tracking-tight text-slate-900">Nəticə görünmür</h3>
-                  <p className="mt-2 text-sm text-slate-500">Admin müəllim layihələrinizdən istifadə etdikcə yekun nəticələr burada görünəcək.</p>
+                  <h3 className="mt-4 text-xl font-black tracking-tight text-slate-900">{t('teacher.exam_panel.no_result_visible')}</h3>
+                  <p className="mt-2 text-sm text-slate-500">{t('teacher.exam_panel.results_appear_desc')}</p>
                 </div>
               ) : null}
             </div>
@@ -1409,14 +1411,14 @@ export default function TeacherExamPanel() {
           <section className="mt-8 rounded-[2rem] border border-white/80 bg-white/95 p-6 shadow-sm">
             <div className="border-b border-slate-100 pb-5">
               <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#A87A1F]">Sessiya kodu</p>
-              <h2 className="mt-2 text-2xl font-black tracking-tight text-slate-900">Admin imtahan leave session qərarı</h2>
-              <p className="mt-2 text-sm text-slate-500">Tələbənin overlay-də görünən qısa manual kodu daxil edin. Preview kartı açıldıqdan sonra son qərarı müəllim panelindən verin.</p>
+              <h2 className="mt-2 text-2xl font-black tracking-tight text-slate-900">{t('teacher.exam_panel.leave_session_decision')}</h2>
+              <p className="mt-2 text-sm text-slate-500">{t('teacher.exam_panel.leave_session_desc')}</p>
             </div>
 
             {!isQrTabAvailable ? (
               <div className="mt-6 rounded-[1.75rem] border border-dashed border-slate-200 bg-slate-50/80 px-6 py-16 text-center">
                 <XCircle className="mx-auto h-10 w-10 text-slate-300" />
-                <h3 className="mt-4 text-xl font-black tracking-tight text-slate-900">Bu bölmə yalnız müəllim üçündür</h3>
+                <h3 className="mt-4 text-xl font-black tracking-tight text-slate-900">{t('teacher.exam_panel.teacher_only')}</h3>
               </div>
             ) : (
               <div className="mt-6 grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,0.85fr)_minmax(320px,1.15fr)]">
@@ -1438,13 +1440,13 @@ export default function TeacherExamPanel() {
                   ) : null}
 
                   <div className="mt-4 space-y-3 text-sm text-slate-500">
-                    <p>1. Tələbənin overlay-də görünən qısa manual kodu alın.</p>
-                    <p>2. Kodu yoxlayın və preview kartında tələbə ilə imtahan məlumatını təsdiqləyin.</p>
-                    <p>3. Son qərarı Davam et və ya İmtahanı dayandır düyməsi ilə verin.</p>
+                    <p>{t('teacher.exam_panel.step_1')}</p>
+                    <p>{t('teacher.exam_panel.step_2')}</p>
+                    <p>{t('teacher.exam_panel.step_3')}</p>
                   </div>
 
                   <div className="mt-6 space-y-3 rounded-2xl border border-slate-200 bg-white p-4">
-                    <p className="text-sm font-semibold text-slate-700">Qısa ehtiyat kodu daxil et</p>
+                    <p className="text-sm font-semibold text-slate-700">{t('teacher.exam_panel.enter_backup_code')}</p>
                     <Input
                       value={manualQrValue}
                       onChange={(event) => setManualQrValue(event.target.value.toUpperCase())}
@@ -1485,8 +1487,8 @@ export default function TeacherExamPanel() {
                     <div className="flex flex-wrap items-start justify-between gap-3">
                       <div>
                         <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-400">Leave session preview</p>
-                        <h3 className="mt-2 text-lg font-black text-slate-900">{scannedStudentFullName || 'Tələbə məlumatı yoxdur'}</h3>
-                        <p className="mt-1 text-sm text-slate-500">{scannedLeaveSession.test?.title || 'İmtahan məlumatı yoxdur'}</p>
+                        <h3 className="mt-2 text-lg font-black text-slate-900">{scannedStudentFullName || t('teacher.exam_panel.no_student_info')}</h3>
+                        <p className="mt-1 text-sm text-slate-500">{scannedLeaveSession.test?.title || t('teacher.exam_panel.no_exam_info')}</p>
                       </div>
                       {scannedLeaveSessionStatusMeta ? (
                         <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-bold ${scannedLeaveSessionStatusMeta.className}`}>
@@ -1509,7 +1511,7 @@ export default function TeacherExamPanel() {
                         <div className="mt-1 text-sm font-semibold text-slate-700">{scannedLeaveSession.test?.title || '-'}</div>
                       </div>
                       <div className="rounded-2xl bg-white px-4 py-3">
-                        <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">Sessiya vaxtı</div>
+                        <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">{t('teacher.exam_panel.session_time')}</div>
                         <div className="mt-1 text-sm font-semibold text-slate-700">{formatDateTime(scannedLeaveSession.createdAt)}</div>
                       </div>
                       <div className="rounded-2xl bg-white px-4 py-3 sm:col-span-2">
@@ -1545,8 +1547,8 @@ export default function TeacherExamPanel() {
                 ) : (
                   <div className="rounded-[1.75rem] border border-dashed border-slate-200 bg-slate-50/80 px-6 py-16 text-center">
                     <ClipboardList className="mx-auto h-10 w-10 text-slate-300" />
-                    <h3 className="mt-4 text-xl font-black tracking-tight text-slate-900">Preview gözlənilir</h3>
-                    <p className="mt-2 text-sm text-slate-500">Manual kod yoxlanandan sonra tələbənin leave session kartı burada açılacaq.</p>
+                    <h3 className="mt-4 text-xl font-black tracking-tight text-slate-900">{t('teacher.exam_panel.preview_pending')}</h3>
+                    <p className="mt-2 text-sm text-slate-500">{t('teacher.exam_panel.preview_desc')}</p>
                   </div>
                 )}
               </div>

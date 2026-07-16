@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   ArrowRight,
   BookOpen,
@@ -81,6 +82,7 @@ const getTestEndTime = (test: PanelTestSummary) => {
 };
 
 export default function StudentExamPanelPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useAuth();
@@ -517,7 +519,7 @@ export default function StudentExamPanelPage() {
           {activeTests.length > 0
             ? activeTests.map((test) => renderActiveTestCard(test))
             : renderEmptyState(
-                'Aktiv test tapılmadı',
+                t('common.not_found'),
                 'Admin tərəfindən yeni imtahan təyin ediləndə bu bölmədə görünəcək.',
                 'Testlərə bax',
                 '/tests',

@@ -142,12 +142,12 @@ export default function CreateTest() {
 
     const title = testData.title.trim();
     if (!title) {
-      toast.error('Test başlığını daxil edin.');
+      toast.error(t('common.error'));
       return;
     }
 
     if (!testData.courseId) {
-      toast.error('Test üçün kurs seçin.');
+      toast.error(t('common.error'));
       return;
     }
 

@@ -74,7 +74,7 @@ export default function TeacherDashboard() {
   }, [logout, navigate]);
 
   if (isLoading) {
-    return <div className="min-h-screen pt-24 text-center">Yüklənir...</div>;
+    return <div className="min-h-screen pt-24 text-center">{t('common.loading')}</div>;
   }
 
   if (loadError || !dashboardData) {
@@ -82,8 +82,8 @@ export default function TeacherDashboard() {
       <div className="page-shell min-h-screen bg-[#F3F3F3] pt-[calc(var(--site-header-height)+1rem)] sm:pt-[calc(var(--site-header-height)+1.5rem)]">
         <div className="page-section mx-auto max-w-3xl py-10">
           <div className="rounded-3xl bg-white p-8 text-center shadow-sm">
-            <h1 className="text-2xl font-black text-gray-900">Müəllim paneli açılmadı</h1>
-            <p className="mt-3 text-gray-600">{loadError || 'Dashboard məlumatları hazır deyil.'}</p>
+            <h1 className="text-2xl font-black text-gray-900">{t('teachers.dashboard_not_loaded')}</h1>
+            <p className="mt-3 text-gray-600">{loadError || t('teachers.dashboard_data_not_ready')}</p>
             <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
               <Button onClick={() => window.location.reload()} className="rounded-xl bg-[#D4AF37] hover:bg-[#B88A1B]">
                 Yenidən yoxla
@@ -267,7 +267,7 @@ export default function TeacherDashboard() {
                       <div className="flex items-start justify-between mb-2">
                         <h3 className="font-bold text-gray-900">{course.title}</h3>
                       </div>
-                      <p className="text-sm text-gray-500 mb-3">{course.studentCount} tələbə</p>
+                      <p className="text-sm text-gray-500 mb-3">{course.studentCount} {t('teachers.students', { defaultValue: 'Tələbələr' })}</p>
                       <div className="flex items-center gap-4">
                         <div className="flex-1">
                           <div className="flex items-center justify-between text-xs mb-1">
@@ -295,8 +295,8 @@ export default function TeacherDashboard() {
                 {myCourses.length === 0 && (
                   <div className="rounded-3xl border border-dashed border-gray-200 bg-gray-50/70 px-6 py-14 text-center">
                     <BookOpen className="mx-auto mb-4 h-12 w-12 text-gray-300" />
-                    <h3 className="text-lg font-bold text-gray-900">Uyğun kurs tapılmadı</h3>
-                    <p className="mt-2 text-sm text-gray-500">Hələ heç bir kurs əlavə edilməyib.</p>
+                    <h3 className="text-lg font-bold text-gray-900">{t('common.no_results')}</h3>
+                    <p className="mt-2 text-sm text-gray-500">{t('teachers.no_courses_added_yet')}</p>
                   </div>
                 )}
               </div>
@@ -352,18 +352,18 @@ export default function TeacherDashboard() {
                     <span className="font-medium text-gray-700">Kurs Reytinqi</span>
                   </div>
                   <div className="text-2xl font-black text-gray-900">{courseRating.toFixed(1)}/5</div>
-                  <div className="text-sm text-gray-500">{stats.courseReviewCount || 0} rəy</div>
+                  <div className="text-sm text-gray-500">{stats.courseReviewCount || 0} {t('teacher.reviews', { defaultValue: 'rəy' })}</div>
                 </div>
 
                 <div className="p-4 bg-gradient-to-br from-[#8B5CF6]/10 to-[#EC4899]/10 rounded-2xl">
                   <div className="flex items-center gap-3 mb-2">
                     <Star className="w-5 h-5 text-[#8B5CF6]" />
-                    <span className="font-medium text-gray-700">Müəllim Reytinqi</span>
+                    <span className="font-medium text-gray-700">{t('teachers.teacher_rating')}</span>
                   </div>
                   <div className="text-2xl font-black text-gray-900">
                     {Number(stats.teacherRating || 0).toFixed(1)}/5
                   </div>
-                  <div className="text-sm text-gray-500">{stats.teacherReviewCount || 0} rəy</div>
+                  <div className="text-sm text-gray-500">{stats.teacherReviewCount || 0} {t('teacher.reviews', { defaultValue: 'rəy' })}</div>
                 </div>
               </div>
             </div>

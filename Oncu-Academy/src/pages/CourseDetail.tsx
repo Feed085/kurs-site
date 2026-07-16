@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { 
   Star, 
@@ -22,6 +23,7 @@ import { WHATSAPP_PHONE } from '@/lib/contactInfo';
 
 
 export default function CourseDetail() {
+  const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
   const [course, setCourse] = useState<any>(null);
@@ -76,7 +78,7 @@ export default function CourseDetail() {
     const email = user?.email?.trim();
 
     if (!email) {
-      toast.error('WhatsApp mesajı üçün email tapılmadı');
+      toast.error(t('common.not_found'));
       return;
     }
 
@@ -93,7 +95,7 @@ export default function CourseDetail() {
     return (
       <div className="page-shell min-h-screen bg-[#F3F3F3] pt-[calc(var(--site-header-height)+1rem)] sm:pt-[calc(var(--site-header-height)+1.5rem)] flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Kurs tapılmadı</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">{t('common.not_found')}</h1>
           <Button onClick={() => navigate(-1)}>
             Geri qayıt
           </Button>

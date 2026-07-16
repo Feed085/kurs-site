@@ -138,7 +138,7 @@ export default function TeacherProfile() {
         setIsEditing(false);
         toast.success('Profil yeniləndi!');
       } else {
-        toast.error('Xəta: ' + d.message);
+        toast.error(t('common.error_prefix') + d.message);
       }
     } catch(err) {
       toast.error('Sunucu ilə əlaqə qurula bilmədi');
@@ -164,7 +164,7 @@ export default function TeacherProfile() {
   };
 
   if (isLoading) {
-    return <div className="min-h-screen pt-24 text-center">Yüklənir...</div>;
+    return <div className="min-h-screen pt-24 text-center">{t('common.loading')}</div>;
   }
 
   return (
@@ -208,7 +208,7 @@ export default function TeacherProfile() {
               <h1 className="text-3xl lg:text-4xl font-black text-gray-900 mb-2">
                 {formData.name} {formData.surname}
               </h1>
-              <p className="text-[#D4AF37] font-bold text-lg mb-4">{formData.specialties || 'Sahə qeyd edilməyib'}</p>
+              <p className="text-[#D4AF37] font-bold text-lg mb-4">{formData.specialties || t('teachers.specialty_not_set')}</p>
               
               <div className="flex flex-wrap justify-center md:justify-start gap-4">
                 <div className="flex items-center gap-2 text-sm text-gray-500 font-medium">
@@ -277,7 +277,7 @@ export default function TeacherProfile() {
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">E-poçt</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">{t('auth.email')}</label>
                       <Input
                         name="email"
                         type="email"
@@ -297,7 +297,7 @@ export default function TeacherProfile() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Məkan</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('teachers.location')}</label>
                     <Input
                       name="location"
                       value={formData.location}
@@ -309,12 +309,12 @@ export default function TeacherProfile() {
                 </div>
               ) : (
                 <div className="space-y-4">
-                  <h3 className="text-xl font-bold text-gray-900">Əlaqə Məlumatları</h3>
+                  <h3 className="text-xl font-bold text-gray-900">{t('teachers.contact_info')}</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-2xl">
                       <Mail className="w-5 h-5 text-gray-400" />
                       <div>
-                        <p className="text-xs text-gray-500 font-bold uppercase">E-poçt</p>
+                        <p className="text-xs text-gray-500 font-bold uppercase">{t('auth.email')}</p>
                         <p className="text-sm font-bold text-gray-900">{formData.email}</p>
                       </div>
                     </div>
@@ -328,7 +328,7 @@ export default function TeacherProfile() {
                     <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-2xl">
                       <MapPin className="w-5 h-5 text-gray-400" />
                       <div>
-                        <p className="text-xs text-gray-500 font-bold uppercase">Məkan</p>
+                        <p className="text-xs text-gray-500 font-bold uppercase">{t('teachers.location')}</p>
                         <p className="text-sm font-bold text-gray-900">{formData.location}</p>
                       </div>
                     </div>
@@ -385,7 +385,7 @@ export default function TeacherProfile() {
                     </div>
                     <div>
                       <p className="font-medium text-gray-900 leading-relaxed italic">{formData.experience || 0}</p>
-                      <p className="text-sm text-gray-500 mt-1">Tədris təcrübəsi</p>
+                      <p className="text-sm text-gray-500 mt-1">{t('teachers.teaching_experience')}</p>
                     </div>
                   </div>
                 )}
@@ -448,7 +448,7 @@ export default function TeacherProfile() {
                 <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
                   <div className="flex items-center gap-3">
                     <Users className="w-5 h-5 text-[#D4AF37]" />
-                    <span className="text-gray-600">Tələbələr</span>
+                    <span className="text-gray-600">{t('teachers.students')}</span>
                   </div>
                   <span className="font-bold text-gray-900">{teacher?.studentCount}</span>
                 </div>
@@ -462,7 +462,7 @@ export default function TeacherProfile() {
                 <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
                   <div className="flex items-center gap-3">
                     <BookOpen className="w-5 h-5 text-[#F59E0B]" />
-                    <span className="text-gray-600">Testlər</span>
+                    <span className="text-gray-600">{t('test.title', { defaultValue: 'Testlər' })}</span>
                   </div>
                   <span className="font-bold text-gray-900">{teacher?.testCount}</span>
                 </div>
@@ -478,7 +478,7 @@ export default function TeacherProfile() {
 
             {/* Social Links */}
             <div className="bg-white rounded-3xl p-6 shadow-sm">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Sosial Şəbəkələr</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">{t('teachers.social_networks')}</h2>
               {isEditing ? (
                 <div className="space-y-4">
                   <div>
@@ -487,7 +487,7 @@ export default function TeacherProfile() {
                       name="facebook"
                       value={formData.facebook}
                       onChange={handleChange}
-                      placeholder="URL daxil edin"
+                      placeholder={t('common.url_placeholder')}
                       className="rounded-xl"
                     />
                   </div>
@@ -497,7 +497,7 @@ export default function TeacherProfile() {
                       name="instagram"
                       value={formData.instagram}
                       onChange={handleChange}
-                      placeholder="URL daxil edin"
+                      placeholder={t('common.url_placeholder')}
                       className="rounded-xl"
                     />
                   </div>
@@ -507,7 +507,7 @@ export default function TeacherProfile() {
                       name="linkedin"
                       value={formData.linkedin}
                       onChange={handleChange}
-                      placeholder="URL daxil edin"
+                      placeholder={t('common.url_placeholder')}
                       className="rounded-xl"
                     />
                   </div>
