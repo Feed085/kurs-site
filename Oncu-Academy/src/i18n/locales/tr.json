@@ -366,5 +366,9 @@
     "description": "Eğitimin geleceği. Profesyonel öğretmenlerle, modern öğretim yöntemleri ile başarıya giden yol.",
     "quick_links": "Hızlı Bağlantılar",
     "social_follow_desc": "Bizi sosyal medyada takip ederek en son haberlerden haberdar olun."
+  },
+  "loader": {
+    "preparing": "Hazırlanıyor",
+    "loading_desc": "Platform tam yüklenince ekran açılacak."
   }
 }

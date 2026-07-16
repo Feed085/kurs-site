@@ -151,7 +151,7 @@ export default function Navbar() {
                 ? 'text-white'
                 : 'text-gray-900'
             }`}>
-              Sizin Akademiyanız
+              {t('brand.name')}
             </span>
           </Link>
 
@@ -411,15 +411,15 @@ export default function Navbar() {
                 <div className="p-6 border-b border-gray-100 bg-white/50">
                   <div className="flex items-center gap-3">
                     <div>
-                      <h4 className="font-bold text-xl text-gray-900 leading-none">Sizin Akademiyanız</h4>
-                      <p className="text-[10px] text-[#D4AF37] font-bold uppercase tracking-widest mt-1">Gələcəyi bizimlə qurun</p>
+                      <h4 className="font-bold text-xl text-gray-900 leading-none">{t('brand.name')}</h4>
+                      <p className="text-[10px] text-[#D4AF37] font-bold uppercase tracking-widest mt-1">{t('hero.badge')}</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Mobile Navigation Links */}
                 <div className="flex-1 overflow-y-auto p-6 space-y-3">
-                  <div className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-4 pl-1">Naviqasiya</div>
+                  <div className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-4 pl-1">{t('nav.home')}</div>
                   {navItems.map((item) => (
                     <Link
                       key={item.href}

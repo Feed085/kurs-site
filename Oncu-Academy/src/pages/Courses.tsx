@@ -215,7 +215,7 @@ export default function CoursesPage() {
                   <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-gray-500">
                     <div className="flex items-center gap-1">
                       <Users className="w-3.5 h-3.5" />
-                      <span>{course.instructor ? `${course.instructor.name} ${course.instructor.surname || ''}` : 'Sizin Akademiyanız'}</span>
+                      <span>{course.instructor ? `${course.instructor.name} ${course.instructor.surname || ''}` : t('brand.name')}</span>
                     </div>
                     <div className="flex items-center gap-1">
                       <Filter className="w-3.5 h-3.5" />
@@ -234,7 +234,7 @@ export default function CoursesPage() {
                         className="w-8 h-8 rounded-full object-cover"
                       />
                       <span className="text-xs font-medium text-gray-600 truncate max-w-[120px]">
-                        {course.instructor ? `${course.instructor.name} ${course.instructor.surname || ''}` : 'Sizin Akademiyanız'}
+                        {course.instructor ? `${course.instructor.name} ${course.instructor.surname || ''}` : t('brand.name')}
                       </span>
                     </div>
                     {/* Price info if available */}

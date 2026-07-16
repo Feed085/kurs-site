@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Suspense, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Toaster } from 'sonner';
 import { AuthProvider, useAuth } from '@/contexts/AuthContext';
 import Navbar from '@/components/common/Navbar';
@@ -401,6 +402,7 @@ function AppRoutes() {
 }
 
 function InitialSiteLoader({ onComplete }: { onComplete: () => void }) {
+  const { t } = useTranslation();
   const [phase, setPhase] = useState<'visible' | 'exiting' | 'hidden'>('visible');
 
   useEffect(() => {
@@ -457,9 +459,9 @@ function InitialSiteLoader({ onComplete }: { onComplete: () => void }) {
         </div>
 
         <div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.38em] text-[#A87A1F]">Sizin Akademiyanız</p>
-          <h1 className="mt-3 text-3xl font-black tracking-[0.08em] text-slate-900 sm:text-4xl">Hazırlanır</h1>
-          <p className="mt-2 max-w-sm text-sm text-slate-600">Platforma tam yüklənən kimi ekran açılacaq.</p>
+          <p className="text-[11px] font-bold uppercase tracking-[0.38em] text-[#A87A1F]">{t('brand.name')}</p>
+          <h1 className="mt-3 text-3xl font-black tracking-[0.08em] text-slate-900 sm:text-4xl">{t('loader.preparing')}</h1>
+          <p className="mt-2 max-w-sm text-sm text-slate-600">{t('loader.loading_desc')}</p>
         </div>
       </div>
     </div>

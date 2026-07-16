@@ -746,6 +746,7 @@ function HomeStory() {
 }
 
 function HomeStats() {
+  const { t } = useTranslation();
   const sectionRef = useRef<HTMLElement>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
@@ -794,7 +795,7 @@ function HomeStats() {
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div data-reveal className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-black leading-tight text-white sm:text-4xl lg:text-5xl">
-            Nəticələrimiz
+            {t('results.title')}
           </h2>
         </div>
 
@@ -809,7 +810,7 @@ function HomeStats() {
             >
               <img
                 src={image}
-                alt={`Nəticə ${index + 1}`}
+                alt={t('results.image_alt', { index: index + 1 })}
                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-70" />
@@ -826,7 +827,7 @@ function HomeStats() {
           >
             <button
               type="button"
-              aria-label="Bağla"
+              aria-label={t('results.close')}
               onClick={() => setSelectedImage(null)}
               className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/10 text-2xl text-white transition hover:bg-white/20"
             >
@@ -921,7 +922,7 @@ function HomeCourses({
                 : 'bg-white text-gray-600 hover:bg-gray-100'
             }`}
           >
-            Hamısı
+            {t('home.categories_all')}
           </button>
 
           {isLoading && categories.length === 0
@@ -990,7 +991,7 @@ function HomeCourses({
                   <p className="text-xs uppercase tracking-[0.35em] text-white/45">
                     {featuredCourse.instructor
                       ? `${featuredCourse.instructor.name} ${featuredCourse.instructor.surname}`
-                      : 'Sizin Akademiyanız'}
+                      : t('brand.name')}
                   </p>
                   <h3 className="text-3xl font-black leading-tight sm:text-4xl">
                     {featuredCourse.title}
@@ -1063,7 +1064,7 @@ function HomeCourses({
                           <span className="truncate text-sm text-gray-700">
                             {course.instructor
                               ? `${course.instructor.name} ${course.instructor.surname || ''}`
-                              : 'Sizin Akademiyanız'}
+                              : t('brand.name')}
                           </span>
                         </div>
                         <ArrowRight className="h-5 w-5 text-[#A87A1F] transition-transform group-hover:translate-x-1" />
@@ -1149,23 +1150,23 @@ function HomeTeachers({
             <div className="mt-8 grid gap-3 sm:grid-cols-3">
               <div className="rounded-2xl bg-white/10 p-4">
                 <Users className="h-5 w-5 text-[#F7E27D]" />
-                <p className="mt-3 text-sm font-semibold text-white">Orta reytinq</p>
+                <p className="mt-3 text-sm font-semibold text-white">{t('home.teacher_avg_rating')}</p>
                 <p className="mt-1 text-2xl font-black text-white">{summary.rating}</p>
               </div>
               <div className="rounded-2xl bg-white/10 p-4">
                 <BookOpen className="h-5 w-5 text-[#F7E27D]" />
-                <p className="mt-3 text-sm font-semibold text-white">Kurs sayı</p>
+                <p className="mt-3 text-sm font-semibold text-white">{t('home.teacher_course_count')}</p>
                 <p className="mt-1 text-2xl font-black text-white">{formatNumber(summary.courses)}</p>
               </div>
               <div className="rounded-2xl bg-white/10 p-4">
                 <GraduationCap className="h-5 w-5 text-[#F7E27D]" />
-                <p className="mt-3 text-sm font-semibold text-white">Tələbə bazası</p>
+                <p className="mt-3 text-sm font-semibold text-white">{t('home.teacher_student_base')}</p>
                 <p className="mt-1 text-2xl font-black text-white">{formatNumber(summary.students)}</p>
               </div>
             </div>
 
             <div className="mt-6 rounded-[1.75rem] border border-white/10 bg-white/5 p-5 text-sm leading-7 text-white/70">
-              Təcrübəli müəllimlərimiz fərqli sahələri bir komanda kimi birləşdirir.
+              {t('home.teacher_team_desc')}
             </div>
 
             <Button
@@ -1228,14 +1229,14 @@ function HomeTeachers({
                       <div className="flex flex-wrap items-center gap-3 text-xs text-white/60">
                         <span className="inline-flex items-center gap-1.5">
                           <Users className="h-3.5 w-3.5 text-[#D4AF37]" />
-                          {formatNumber(teacher.studentCount)} tələbə
+                          {formatNumber(teacher.studentCount)} {t('home.teacher_students')}
                         </span>
                         <span className="inline-flex items-center gap-1.5">
                           <BookOpen className="h-3.5 w-3.5 text-[#A87A1F]" />
-                          {formatNumber(teacher.courseCount)} kurs
+                          {formatNumber(teacher.courseCount)} {t('home.teacher_courses')}
                         </span>
                         <span className="inline-flex items-center gap-1.5 text-[#F7E27D]">
-                          {teacher.experience} il
+                          {teacher.experience} {t('home.teacher_years')}
                         </span>
                       </div>
 
@@ -1258,7 +1259,7 @@ function HomeTeachers({
 
         {visibleTeachers.length > 0 ? null : (
           <div data-reveal className="mt-8 rounded-[1.75rem] border border-white/10 bg-white/5 p-8 text-center text-white/60">
-            Müəllim məlumatı tapılmadı.
+            {t('home.teacher_not_found')}
           </div>
         )}
       </div>
@@ -1443,7 +1444,7 @@ function HomeContact({
     {
       icon: MapPin,
       label: t('contact.info.address'),
-      value: 'Sizin ünvanınız',
+      value: t('contact.info.address_value'),
     },
     {
       icon: Phone,
@@ -1496,13 +1497,13 @@ function HomeContact({
             <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6 text-white shadow-2xl shadow-black/20 sm:p-8">
               <div className="flex items-center gap-4">
                 <div>
-                  <p className="text-xs uppercase tracking-[0.35em] text-white/40">Bir mesajla başlayın</p>
-                  <h3 className="text-2xl font-bold">Sualınızı göndərin</h3>
+                  <p className="text-xs uppercase tracking-[0.35em] text-white/40">{t('home.contact_start_msg')}</p>
+                  <h3 className="text-2xl font-bold">{t('home.contact_send_question')}</h3>
                 </div>
               </div>
 
               <p className="mt-5 text-sm leading-7 text-white/70">
-                Qısa formu doldurun, biz də sizə uyğun proqramı WhatsApp üzərindən paylaşaq.
+                {t('home.contact_form_desc')}
               </p>
 
               <div className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -1525,14 +1526,14 @@ function HomeContact({
 
               <div className="mt-6 flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-white/70">
                 <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#F7E27D]" />
-                Mesajınız birbaşa WhatsApp-a yönləndirilir və cavab itmir.
+                {t('home.contact_whatsapp_note')}
               </div>
 
               <Button
                 onClick={scrollToForm}
                 className="mt-6 w-full rounded-2xl bg-[#D4AF37] text-gray-950 hover:bg-[#B88A1B] hover:text-white"
               >
-                Formaya keç
+                {t('home.contact_go_to_form')}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
@@ -1541,8 +1542,8 @@ function HomeContact({
           <div data-reveal className="rounded-[2rem] bg-[#F8F1E4] p-6 shadow-[0_30px_80px_-30px_rgba(15,23,42,0.6)] sm:p-8 lg:p-10">
             <div className="flex items-center justify-between gap-4">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#8B5E17]">Qısa forma</p>
-                <h3 className="mt-2 text-2xl font-black text-gray-950">Məsləhət istəyirsiniz?</h3>
+                <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[#8B5E17]">{t('home.contact_quick_form')}</p>
+                <h3 className="mt-2 text-2xl font-black text-gray-950">{t('home.contact_want_advice')}</h3>
               </div>
               <div className="hidden h-14 w-14 items-center justify-center rounded-2xl bg-[#D4AF37]/15 text-[#A87A1F] sm:flex">
                 <Send className="h-6 w-6" />
@@ -1556,7 +1557,7 @@ function HomeContact({
                   name="name"
                   value={formData.name}
                   onChange={onChange}
-                  placeholder="Adınızı daxil edin"
+                  placeholder={t('contact.form.name_placeholder')}
                   required
                   className="h-12 rounded-2xl border-gray-200 bg-white/90 text-gray-900 placeholder:text-gray-400 focus:border-[#D4AF37]"
                 />
@@ -1564,7 +1565,7 @@ function HomeContact({
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700">Kurs seçin</label>
+                  <label className="mb-2 block text-sm font-medium text-gray-700">{t('contact.form.select_course')}</label>
                   <select
                     name="courseId"
                     value={formData.courseId}
@@ -1573,7 +1574,7 @@ function HomeContact({
                     className="h-12 w-full rounded-2xl border border-gray-200 bg-white/90 px-4 text-gray-900 outline-none transition focus:border-[#D4AF37]"
                   >
                     <option value="" disabled>
-                      Kurs seçin
+                      {t('contact.form.select_course')}
                     </option>
                     {availableCourses.map((course) => (
                       <option key={course.id} value={course.id}>
@@ -1583,7 +1584,7 @@ function HomeContact({
                   </select>
                 </div>
                 <div>
-                  <label className="mb-2 block text-sm font-medium text-gray-700">Nə ilə maraqlanırsınız?</label>
+                  <label className="mb-2 block text-sm font-medium text-gray-700">{t('contact.form.interest_label')}</label>
                   <select
                     name="selectionType"
                     value={formData.selectionType}
@@ -1592,10 +1593,10 @@ function HomeContact({
                     className="h-12 w-full rounded-2xl border border-gray-200 bg-white/90 px-4 text-gray-900 outline-none transition focus:border-[#D4AF37]"
                   >
                     <option value="" disabled>
-                      Seçin
+                      {t('contact.form.select')}
                     </option>
-                    <option value="course">Kursun özü</option>
-                    <option value="test">İçindəki testlərdən biri</option>
+                    <option value="course">{t('contact.form.interest_course')}</option>
+                    <option value="test">{t('contact.form.interest_test')}</option>
                   </select>
                 </div>
               </div>
@@ -1606,7 +1607,7 @@ function HomeContact({
                   name="message"
                   value={formData.message}
                   onChange={onChange}
-                  placeholder="Mesajınızı yazın..."
+                  placeholder={t('contact.form.message_placeholder')}
                   required
                   rows={6}
                   className="min-h-[112px] rounded-2xl border-gray-200 bg-white/90 text-gray-900 placeholder:text-gray-400 focus:border-[#D4AF37]"
@@ -1621,11 +1622,11 @@ function HomeContact({
                 {isSubmitting ? (
                   <>
                     <CheckCircle2 className="mr-2 h-5 w-5" />
-                    WhatsApp-a yönləndirilir...
+                    {t('contact.form.redirecting')}
                   </>
                 ) : (
                   <>
-                    WhatsApp-da göndər
+                    {t('home.contact_whatsapp_send')}
                     <Send className="ml-2 h-4 w-4" />
                   </>
                 )}
@@ -1636,8 +1637,8 @@ function HomeContact({
           <div data-reveal className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 p-1 shadow-2xl shadow-black/20 lg:col-span-2">
             <div className="aspect-[16/7] overflow-hidden rounded-[1.75rem] bg-gray-900/40">
               <iframe
-                title="Sizin Akademiyanız xəritəsi"
-                src="https://www.google.com/maps?q=Sizin%20%C3%BCnvan%C4%B1n%C4%B1z&z=16&output=embed"
+                title={t('brand.map_title')}
+                src={`https://www.google.com/maps?q=${encodeURIComponent(t('contact.info.address_value'))}&z=16&output=embed`}
                 className="h-full w-full border-0"
                 loading="lazy"
                 allowFullScreen
@@ -1652,6 +1653,7 @@ function HomeContact({
 }
 
 function Home() {
+  const { t } = useTranslation();
   const [stats, setStats] = useState<PublicStats>({
     experience: 15,
     students: 5000,
@@ -1804,18 +1806,18 @@ function Home() {
     const selectedCourse = courses.find((course) => course.id === formData.courseId);
     const selectionTypeLabel =
       formData.selectionType === 'course'
-        ? 'Kursun özü'
+        ? t('contact.form.interest_course')
         : formData.selectionType === 'test'
-          ? 'İçindəki testlərdən biri'
+          ? t('contact.form.interest_test')
           : '-';
 
     const message = [
-      'Salam, Sizin Akademiyanız ilə əlaqə saxlamaq istəyirəm.',
+      t('home.contact_whatsapp_greeting'),
       '',
-      `Ad: ${formData.name || '-'}`,
-      `Kurs: ${selectedCourse?.title || '-'}`,
-      `Seçim: ${selectionTypeLabel}`,
-      `Mesaj: ${formData.message || '-'}`,
+      t('home.contact_whatsapp_name', { name: formData.name || '-' }),
+      t('home.contact_whatsapp_course', { course: selectedCourse?.title || '-' }),
+      t('home.contact_whatsapp_selection', { selection: selectionTypeLabel }),
+      t('home.contact_whatsapp_message', { message: formData.message || '-' }),
     ].join('\n');
 
     const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(message)}`;

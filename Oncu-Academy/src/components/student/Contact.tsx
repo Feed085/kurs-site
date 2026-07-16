@@ -74,16 +74,16 @@ export default function Contact() {
     const message = [
       t('contact.message.greeting'),
       '',
-      `Ad: ${formData.name || '-'}`,
-      `Kurs: ${selectedCourse?.title || '-'}`,
-      `Seçim: ${selectionTypeLabel}`,
-      `Mesaj: ${formData.message || '-'}`,
+      t('home.contact_whatsapp_name', { name: formData.name || '-' }),
+      t('home.contact_whatsapp_course', { course: selectedCourse?.title || '-' }),
+      t('home.contact_whatsapp_selection', { selection: selectionTypeLabel }),
+      t('home.contact_whatsapp_message', { message: formData.message || '-' }),
     ].join('\n');
 
     const whatsappUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(message)}`;
 
     setIsSubmitted(true);
-    toast.success('WhatsApp-a yönləndirilirsiniz');
+    toast.success(t('contact.form.redirecting'));
     setFormData({ name: '', courseId: '', selectionType: '', message: '' });
     window.location.href = whatsappUrl;
   };

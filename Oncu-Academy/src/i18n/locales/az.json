@@ -366,5 +366,9 @@
     "description": "Təhsilin gələcəyi. Peşəkar müəllimlərlə, müasir tədris metodları ilə uğura gedən yol.",
     "quick_links": "Sürətli Keçidlər",
     "social_follow_desc": "Bizi sosial şəbəkələrdə izləyərək ən son yeniliklərdən xəbərdar olun."
+  },
+  "loader": {
+    "preparing": "Hazırlanır",
+    "loading_desc": "Platforma tam yüklənən kimi ekran açılacaq."
   }
 }

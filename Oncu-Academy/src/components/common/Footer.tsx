@@ -74,16 +74,16 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link to="/" className="flex items-center mb-6">
-              <span className="font-bold text-xl lg:text-2xl italic tracking-tight">Sizin Akademiyanız</span>
+              <span className="font-bold text-xl lg:text-2xl italic tracking-tight">{t('brand.name')}</span>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
-              Təhsilin gələcəyi. Peşəkar müəllimlərlə, müasir tədris metodları ilə uğura gedən yol.
+              {t('footer_extra.description')}
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-bold text-lg mb-6">Sürətli Keçidlər</h3>
+            <h3 className="font-bold text-lg mb-6">{t('footer_extra.quick_links')}</h3>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.href}>
@@ -105,7 +105,7 @@ export default function Footer() {
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-[#D4AF37] flex-shrink-0 mt-0.5" />
                 <span className="text-gray-400 text-sm">
-                  Sizin ünvanınız
+                  {t('contact.info.address_value')}
                 </span>
               </li>
               <li className="flex items-center gap-3">
@@ -129,7 +129,7 @@ export default function Footer() {
           <div>
             <h3 className="font-bold text-lg mb-6">{t('footer.follow_us')}</h3>
             <p className="text-gray-400 text-sm mb-4">
-              Bizi sosial şəbəkələrdə izləyərək ən son yeniliklərdən xəbərdar olun.
+              {t('footer_extra.social_follow_desc')}
             </p>
             <div className="flex gap-3">
               {socialLinks.map((social) => (
