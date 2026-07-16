@@ -40,6 +40,24 @@
         "title": "24/7 Support",
         "desc": "Support team always by your side"
       }
+    },
+    "home_items": {
+      "result": {
+        "title": "Results",
+        "desc": "Courses focus on admission and exam preparation."
+      },
+      "video_lessons": {
+        "title": "Video Lessons",
+        "desc": "Lessons are conducted in an engaging and active format."
+      },
+      "plan": {
+        "title": "Plan",
+        "desc": "Stages are simple, measurable, and clear."
+      },
+      "teachers": {
+        "title": "Professional Teachers",
+        "desc": "Teaching is conducted by experienced and certified instructors."
+      }
     }
   },
   "stats": {
@@ -97,7 +115,21 @@
     },
     "view_all": "See All",
     "enroll": "Get Course",
-    "auth_required": "Please register to buy the course"
+    "auth_required": "Please register to buy the course",
+    "free": "Free",
+    "rating": "Rating",
+    "rating_desc": "User rating",
+    "learning_path": "Learning path",
+    "learning_path_desc": "Structured program flow",
+    "price": "Price",
+    "price_desc": "Open and simple packages",
+    "not_found": "No courses found for the selected category.",
+    "view_lessons": "View Lessons",
+    "search": "Search courses...",
+    "category": "Category",
+    "badge": "Our Courses",
+    "topics_count": "{{count}} topics",
+    "instructor": "Instructor"
   },
   "teachers": {
     "title": "Meet Our Teachers",
@@ -107,7 +139,12 @@
     "specialty": "Specialty",
     "experience": "Experience",
     "students": "Student",
-    "courses": "Course"
+    "courses": "Course",
+    "search": "Search teachers...",
+    "not_found": "No teachers found",
+    "years_abbr": "years",
+    "team_badge": "Our Team",
+    "loading_categories": "Loading categories..."
   },
   "testimonials": {
     "title": "Our Students Say",
@@ -117,18 +154,28 @@
     "title": "Contact",
     "subtitle": "Get in touch with us",
     "form": {
+      "title": "Write to us",
       "name": "Your Name",
       "email": "Email",
       "phone": "Phone",
       "message": "Your Message",
       "submit": "Send",
-      "success": "Your message has been sent successfully!"
+      "success": "Your message has been sent successfully!",
+      "name_placeholder": "Enter your name",
+      "select_course": "Select course",
+      "interest_label": "What are you interested in?",
+      "select": "Select",
+      "interest_course": "The course itself",
+      "interest_test": "One of the tests inside",
+      "message_placeholder": "Type your message...",
+      "redirecting": "Redirecting to WhatsApp..."
     },
     "info": {
       "address": "Address",
       "phone": "Phone",
       "email": "Email",
-      "working_hours": "Working Hours"
+      "working_hours": "Working Hours",
+      "address_value": "Your address"
     }
   },
   "footer": {
@@ -262,6 +309,24 @@
     "score": "Score",
     "correct": "Correct",
     "wrong": "Wrong",
-    "total": "Total"
+    "total": "Total",
+    "back": "Go Back",
+    "badge": "Online Tests",
+    "description": "Test your knowledge and track progress. Solve tests in various subjects.",
+    "search": "Search tests...",
+    "questions_count": "{{count}} questions",
+    "duration_value": "{{count}} min",
+    "not_found": "No tests found",
+    "empty_desc": "Change search criteria and try again"
+  },
+  "subjects": {
+    "az_lang": "Azerbaijani Lang & Lit",
+    "en_lang": "English",
+    "physics": "Physics",
+    "math": "Mathematics",
+    "chemistry": "Chemistry",
+    "primary": "Primary School",
+    "geography": "Geography",
+    "history": "History"
   }
 }

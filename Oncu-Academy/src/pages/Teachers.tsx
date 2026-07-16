@@ -183,7 +183,7 @@ export default function Teachers() {
         }));
 
   const availableCategories = [
-    { id: 'all', slug: 'all', name: 'Hamısı', description: '', color: '#D4AF37', icon: 'Tag', order: 0, isActive: true },
+    { id: 'all', slug: 'all', name: t('courses.categories.all'), description: '', color: '#D4AF37', icon: 'Tag', order: 0, isActive: true },
     ...backendCategories
   ];
 
@@ -220,7 +220,7 @@ export default function Teachers() {
         <div className="mb-10 text-center sm:mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#D4AF37]/10 rounded-full mb-6">
             <span className="w-2 h-2 bg-[#D4AF37] rounded-full" />
-            <span className="text-sm font-medium text-[#D4AF37]">Komandamız</span>
+            <span className="text-sm font-medium text-[#D4AF37]">{t('teachers.team_badge')}</span>
           </div>
           <h1 className="text-3xl lg:text-4xl font-black text-gray-900 mb-4">
             {t('teachers.title')}
@@ -237,7 +237,7 @@ export default function Teachers() {
             <Input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Müəllim axtar..."
+              placeholder={t('teachers.search')}
               className="pl-12 h-12 rounded-xl bg-white border-0 shadow-sm"
             />
           </div>
@@ -246,13 +246,13 @@ export default function Teachers() {
               <SelectTrigger className="w-full !h-14 bg-white border-2 border-gray-100 rounded-2xl shadow-lg shadow-gray-200/50 focus:ring-0 focus:ring-offset-0 outline-none focus:border-[#D4AF37] text-gray-700 font-medium px-5">
                 <div className="flex items-center gap-2.5">
                   <Filter className="w-4 h-4 text-[#D4AF37]" />
-                  <SelectValue placeholder="Kateqoriya" />
+                  <SelectValue placeholder={t('courses.category')} />
                 </div>
               </SelectTrigger>
               <SelectContent className="bg-white border-none shadow-2xl rounded-2xl p-2 min-w-[220px]">
                 {isLoading && categories.length === 0 ? (
                   <SelectItem value="loading" disabled className="py-3 px-4 rounded-xl text-sm font-medium text-gray-400">
-                    Kateqoriyalar yüklənir...
+                    {t('teachers.loading_categories')}
                   </SelectItem>
                 ) : (
                   availableCategories.map((category) => (
@@ -261,7 +261,7 @@ export default function Teachers() {
                       value={category.id}
                       className="py-3 px-4 rounded-xl text-sm font-medium text-gray-600 cursor-pointer focus:bg-[#D4AF37]/10 focus:text-[#D4AF37] data-[state=checked]:text-[#D4AF37] data-[state=checked]:bg-[#D4AF37]/5 transition-colors mb-1 last:mb-0"
                     >
-                      {category.id === 'all' ? 'Hamısı' : category.name}
+                      {category.id === 'all' ? t('courses.categories.all') : category.name}
                     </SelectItem>
                   ))
                 )}
@@ -348,7 +348,7 @@ export default function Teachers() {
                       <span>{teacher.courseCount}</span>
                     </div>
                     <div className="flex items-center gap-1.5 text-sm text-gray-500">
-                      <span className="text-[#F59E0B]">{teacher.experience} il</span>
+                      <span className="text-[#F59E0B]">{teacher.experience} {t('teachers.years_abbr')}</span>
                     </div>
                   </div>
 
@@ -378,10 +378,10 @@ export default function Teachers() {
               <Search className="w-10 h-10 text-gray-400" />
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">
-              Müəllim tapılmadı
+              {t('teachers.not_found')}
             </h3>
             <p className="text-gray-500">
-              Axtarış kriteriyalarını dəyişib yenidən cəhd edin
+              {t('test.empty_desc')}
             </p>
           </div>
         )}

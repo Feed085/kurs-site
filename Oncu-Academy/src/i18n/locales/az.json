@@ -40,6 +40,24 @@
         "title": "7/24 Dəstək",
         "desc": "Hər zaman yanınızda olan dəstək komandası"
       }
+    },
+    "home_items": {
+      "result": {
+        "title": "Nəticə",
+        "desc": "Kurslar qəbul və imtahan məqsədinə yönəlir."
+      },
+      "video_lessons": {
+        "title": "Video dərslər",
+        "desc": "Dərslər izlənilən və aktiv formatda keçirilir."
+      },
+      "plan": {
+        "title": "Plan",
+        "desc": "Mərhələlər sadə, ölçülə bilən və aydındır."
+      },
+      "teachers": {
+        "title": "Peşəkar Müəllimlər",
+        "desc": "Təcrübəli və sertifikatlı müəllimlər tərəfindən tədris olunur."
+      }
     }
   },
   "stats": {
@@ -97,7 +115,21 @@
     },
     "view_all": "Hamısını gör",
     "enroll": "Kursu əldə et",
-    "auth_required": "Zəhmət olmasa, kursu əldə etmək üçün qeydiyyatdan keçin"
+    "auth_required": "Zəhmət olmasa, kursu əldə etmək üçün qeydiyyatdan keçin",
+    "free": "Ödənişsiz",
+    "rating": "Reytinq",
+    "rating_desc": "İstifadəçi dəyərləndirməsi",
+    "learning_path": "Öyrənmə xətti",
+    "learning_path_desc": "Mərhələli proqram axını",
+    "price": "Qiymət",
+    "price_desc": "Açıq və sadə paketlər",
+    "not_found": "Seçilmiş kateqoriya üzrə kurs tapılmadı.",
+    "view_lessons": "Dərslərə bax",
+    "search": "Kurs axtar...",
+    "category": "Kateqoriya",
+    "badge": "Kurslarımız",
+    "topics_count": "{{count}} mövzu",
+    "instructor": "Müəllim"
   },
   "teachers": {
     "title": "Müəllimlərimizlə tanış olun",
@@ -107,7 +139,12 @@
     "specialty": "İxtisas",
     "experience": "Təcrübə",
     "students": "Tələbə",
-    "courses": "Kurs"
+    "courses": "Kurs",
+    "search": "Müəllim axtar...",
+    "not_found": "Müəllim tapılmadı",
+    "years_abbr": "il",
+    "team_badge": "Komandamız",
+    "loading_categories": "Kateqoriyalar yüklənir..."
   },
   "testimonials": {
     "title": "Tələbələrimiz deyir",
@@ -117,18 +154,28 @@
     "title": "Əlaqə",
     "subtitle": "Bizimlə əlaqə saxlayın",
     "form": {
+      "title": "Bizə yazın",
       "name": "Adınız",
       "email": "Email",
       "phone": "Telefon",
       "message": "Mesajınız",
       "submit": "Göndər",
-      "success": "Mesajınız uğurla göndərildi!"
+      "success": "Mesajınız uğurla göndərildi!",
+      "name_placeholder": "Adınızı daxil edin",
+      "select_course": "Kurs seçin",
+      "interest_label": "Nə ilə maraqlanırsınız?",
+      "select": "Seçin",
+      "interest_course": "Kursun özü",
+      "interest_test": "İçindəki testlərdən biri",
+      "message_placeholder": "Mesajınızı yazın...",
+      "redirecting": "WhatsApp-a yönləndirilir..."
     },
     "info": {
       "address": "Ünvan",
       "phone": "Telefon",
       "email": "Email",
-      "working_hours": "İş saatları"
+      "working_hours": "İş saatları",
+      "address_value": "Sizin ünvanınız"
     }
   },
   "footer": {
@@ -189,7 +236,7 @@
       "phone": "Telefon",
       "password": "Şifrə",
       "confirm_password": "Şifrəni təsdiqlə",
-      "accept_terms": "İstifadə şərtləri ilə razıyam",
+      "accept_terms": "İstifadə şərtlərini qəbul edirəm",
       "accept_terms_error": "İstifadə şərtlərini qəbul etməlisiniz",
       "submit": "Qeydiyyatdan keç",
       "have_account": "Artıq hesabınız var?",
@@ -262,6 +309,24 @@
     "score": "Nəticə",
     "correct": "Düzgün",
     "wrong": "Səhv",
-    "total": "Ümumi"
+    "total": "Ümumi",
+    "back": "Geri qayıt",
+    "badge": "Online Testlər",
+    "description": "Biliklərini yoxla və irəliləyişini izlə. Müxtəlif fənlərdə testlər həll et.",
+    "search": "Test axtar...",
+    "questions_count": "{{count}} sual",
+    "duration_value": "{{count}} dəq",
+    "not_found": "Test tapılmadı",
+    "empty_desc": "Axtarış kriteriyalarını dəyişib yenidən cəhd edin"
+  },
+  "subjects": {
+    "az_lang": "Azərbaycan dili və ədəbiyyat",
+    "en_lang": "İngilis dili",
+    "physics": "Fizika",
+    "math": "Riyaziyyat",
+    "chemistry": "Kimya",
+    "primary": "İbtidai sinif",
+    "geography": "Coğrafiya",
+    "history": "Tarix"
   }
 }

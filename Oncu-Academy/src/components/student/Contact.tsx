@@ -99,7 +99,7 @@ export default function Contact() {
     {
       icon: MapPin,
       label: t('contact.info.address'),
-      value: 'Sizin ünvanınız',
+      value: t('contact.info.address_value'),
     },
     {
       icon: Phone,
@@ -135,7 +135,7 @@ export default function Contact() {
         <div ref={titleRef} className="text-center mb-8 lg:mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full mb-6">
             <span className="w-2 h-2 bg-[#D4AF37] rounded-full" />
-            <span className="text-sm font-medium text-gray-300">Əlaqə</span>
+            <span className="text-sm font-medium text-gray-300">{t('contact.title')}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4">
             {t('contact.title')}
@@ -150,7 +150,7 @@ export default function Contact() {
           {/* Contact Form */}
           <div className="contact-reveal rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-0 sm:p-8 sm:backdrop-blur-sm lg:p-10">
             <h3 className="text-xl font-bold text-white mb-6">
-              Bizə yazın
+              {t('contact.form.title')}
             </h3>
             
             <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
@@ -162,7 +162,7 @@ export default function Contact() {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder="Adınızı daxil edin"
+                  placeholder={t('contact.form.name_placeholder')}
                   required
                   className="bg-white/10 border-white/20 text-white placeholder:text-gray-500 focus:border-[#D4AF37] rounded-xl h-12"
                 />
@@ -171,7 +171,7 @@ export default function Contact() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Kurs seçin
+                    {t('contact.form.select_course')}
                   </label>
                   <select
                     name="courseId"
@@ -181,7 +181,7 @@ export default function Contact() {
                     className="h-12 w-full rounded-xl border border-white/20 bg-white/10 px-4 text-white outline-none transition focus:border-[#D4AF37]"
                   >
                     <option value="" disabled className="bg-[#0A0A0A] text-white">
-                      Kurs seçin
+                      {t('contact.form.select_course')}
                     </option>
                     {courses.map((course) => (
                       <option key={course.id} value={course.id} className="bg-[#0A0A0A] text-white">
@@ -192,7 +192,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Nə ilə maraqlanırsınız?
+                    {t('contact.form.interest_label')}
                   </label>
                   <select
                     name="selectionType"
@@ -202,10 +202,10 @@ export default function Contact() {
                     className="h-12 w-full rounded-xl border border-white/20 bg-white/10 px-4 text-white outline-none transition focus:border-[#D4AF37]"
                   >
                     <option value="" disabled className="bg-[#0A0A0A] text-white">
-                      Seçin
+                      {t('contact.form.select')}
                     </option>
-                    <option value="course" className="bg-[#0A0A0A] text-white">Kursun özü</option>
-                    <option value="test" className="bg-[#0A0A0A] text-white">İçindəki testlərdən biri</option>
+                    <option value="course" className="bg-[#0A0A0A] text-white">{t('contact.form.interest_course')}</option>
+                    <option value="test" className="bg-[#0A0A0A] text-white">{t('contact.form.interest_test')}</option>
                   </select>
                 </div>
               </div>
@@ -218,7 +218,7 @@ export default function Contact() {
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  placeholder="Mesajınızı yazın..."
+                  placeholder={t('contact.form.message_placeholder')}
                   required
                   rows={5}
                   className="bg-white/10 border-white/20 text-white placeholder:text-gray-500 focus:border-[#D4AF37] rounded-xl resize-none"
@@ -233,7 +233,7 @@ export default function Contact() {
                 {isSubmitted ? (
                   <>
                     <CheckCircle className="w-5 h-5 mr-2" />
-                    WhatsApp-a yönləndirilir
+                    {t('contact.form.redirecting')}
                   </>
                 ) : (
                   <>

@@ -27,11 +27,11 @@ export default function Tests() {
   });
 
   const categories = [
-    { key: 'all', label: 'Hamısı' },
+    { key: 'all', label: t('courses.categories.all') },
     { key: '1', label: 'SAT' },
     { key: '2', label: 'IELTS' },
-    { key: '3', label: 'İngilis Dili' },
-    { key: '4', label: 'Rus Dili' },
+    { key: '3', label: t('courses.items.english.title') },
+    { key: '4', label: t('courses.items.russian.title') },
   ];
 
   return (
@@ -45,7 +45,7 @@ export default function Tests() {
             className="text-gray-600 hover:text-[#D4AF37] hover:bg-[#D4AF37]/10 rounded-xl px-4 py-2 flex items-center gap-2 group transition-all"
           >
             <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-            Geri qayıt
+            {t('test.back')}
           </Button>
         </div>
 
@@ -53,13 +53,13 @@ export default function Tests() {
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#D4AF37]/10 rounded-full mb-6">
             <span className="w-2 h-2 bg-[#D4AF37] rounded-full" />
-            <span className="text-sm font-medium text-[#D4AF37]">Online Testlər</span>
+            <span className="text-sm font-medium text-[#D4AF37]">{t('test.badge')}</span>
           </div>
           <h1 className="text-3xl lg:text-4xl font-black text-gray-900 mb-4">
             {t('test.title')}
           </h1>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Biliklərini yoxla və irəliləyişini izlə. Müxtəlif fənlərdə testlər həll et.
+            {t('test.description')}
           </p>
         </div>
 
@@ -70,7 +70,7 @@ export default function Tests() {
             <Input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Test axtar..."
+              placeholder={t('test.search')}
               className="pl-12 h-12 rounded-xl bg-white border-0 shadow-sm"
             />
           </div>
@@ -115,11 +115,11 @@ export default function Tests() {
               <div className="flex items-center gap-4 mb-5">
                 <div className="flex items-center gap-2 text-sm text-gray-500">
                   <HelpCircle className="w-4 h-4" />
-                  <span>{test.questionCount} sual</span>
+                  <span>{t('test.questions_count', { count: test.questionCount })}</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-500">
                   <Clock className="w-4 h-4" />
-                  <span>{test.duration} dəq</span>
+                  <span>{t('test.duration_value', { count: test.duration })}</span>
                 </div>
               </div>
 
@@ -142,10 +142,10 @@ export default function Tests() {
               <Search className="w-10 h-10 text-gray-400" />
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">
-              Test tapılmadı
+              {t('test.not_found')}
             </h3>
             <p className="text-gray-500">
-              Axtarış kriteriyalarını dəyişib yenidən cəhd edin
+              {t('test.empty_desc')}
             </p>
           </div>
         )}

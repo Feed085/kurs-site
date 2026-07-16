@@ -40,6 +40,24 @@
         "title": "7/24 Destek",
         "desc": "Her zaman yanınızda olan destek ekibi"
       }
+    },
+    "home_items": {
+      "result": {
+        "title": "Sonuç",
+        "desc": "Kurslar kabul ve sınav hazırlık hedeflerine yöneliktir."
+      },
+      "video_lessons": {
+        "title": "Video Dersler",
+        "desc": "Dersler izlenebilir ve aktif formatta işlenir."
+      },
+      "plan": {
+        "title": "Plan",
+        "desc": "Aşamalar basit, ölçülebilir ve nettir."
+      },
+      "teachers": {
+        "title": "Profesyonel Öğretmenler",
+        "desc": "Deneyimli ve sertifikalı öğretmenler tarafından eğitim verilir."
+      }
     }
   },
   "stats": {
@@ -97,7 +115,21 @@
     },
     "view_all": "Hepsini Gör",
     "enroll": "Kursu Satın Al",
-    "auth_required": "Lütfen kursu satın almak için üye olun"
+    "auth_required": "Lütfen kursu satın almak için üye olun",
+    "free": "Ücretsiz",
+    "rating": "Reyting",
+    "rating_desc": "Kullanıcı değerlendirmesi",
+    "learning_path": "Öğrenme rotası",
+    "learning_path_desc": "Aşamalı program akışı",
+    "price": "Fiyat",
+    "price_desc": "Açık ve sade paketler",
+    "not_found": "Seçilen kategoriye ait kurs bulunamadı.",
+    "view_lessons": "Dersleri incele",
+    "search": "Kurs ara...",
+    "category": "Kategori",
+    "badge": "Kurslarımız",
+    "topics_count": "{{count}} konu",
+    "instructor": "Öğretmen"
   },
   "teachers": {
     "title": "Öğretmenlerimizle Tanışın",
@@ -107,7 +139,12 @@
     "specialty": "Branş",
     "experience": "Deneyim",
     "students": "Öğrenci",
-    "courses": "Kurs"
+    "courses": "Kurs",
+    "search": "Öğretmen ara...",
+    "not_found": "Öğretmen bulunamadı",
+    "years_abbr": "yıl",
+    "team_badge": "Ekibimiz",
+    "loading_categories": "Kategoriler yükleniyor..."
   },
   "testimonials": {
     "title": "Öğrencilerimiz Ne Diyor?",
@@ -117,18 +154,28 @@
     "title": "İletişim",
     "subtitle": "Bizimle iletişime geçin",
     "form": {
+      "title": "Bize yazın",
       "name": "Adınız",
       "email": "E-posta",
       "phone": "Telefon",
       "message": "Mesajınız",
       "submit": "Gönder",
-      "success": "Mesajınız başarıyla gönderildi!"
+      "success": "Mesajınız başarıyla gönderildi!",
+      "name_placeholder": "Adınızı girin",
+      "select_course": "Kurs seçin",
+      "interest_label": "Ne ile ilgileniyorsunuz?",
+      "select": "Seçin",
+      "interest_course": "Kursun kendisi",
+      "interest_test": "İçindeki testlerden biri",
+      "message_placeholder": "Mesajınızı yazın...",
+      "redirecting": "WhatsApp'a yönlendiriliyor..."
     },
     "info": {
       "address": "Adres",
       "phone": "Telefon",
       "email": "E-posta",
-      "working_hours": "Çalışma Saatleri"
+      "working_hours": "Çalışma Saatleri",
+      "address_value": "Adresiniz"
     }
   },
   "footer": {
@@ -262,6 +309,24 @@
     "score": "Sonuç",
     "correct": "Doğru",
     "wrong": "Yanlış",
-    "total": "Toplam"
+    "total": "Toplam",
+    "back": "Geri Dön",
+    "badge": "Online Testler",
+    "description": "Bilgilerini test et ve ilerlemeni takip et. Farklı konularda testler çöz.",
+    "search": "Test ara...",
+    "questions_count": "{{count}} soru",
+    "duration_value": "{{count}} dk",
+    "not_found": "Test bulunamadı",
+    "empty_desc": "Arama kriterlerini değiştirip tekrar deneyin"
+  },
+  "subjects": {
+    "az_lang": "Azerbaycan Dili ve Ed.",
+    "en_lang": "İngilizce",
+    "physics": "Fizik",
+    "math": "Matematik",
+    "chemistry": "Kimya",
+    "primary": "Sınıf Öğretmenliği",
+    "geography": "Coğrafya",
+    "history": "Tarih"
   }
 }

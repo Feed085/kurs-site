@@ -98,7 +98,7 @@ export default function CoursesPage() {
         <div className="mb-10 text-center sm:mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#D4AF37]/10 rounded-full mb-6">
             <span className="w-2 h-2 bg-[#D4AF37] rounded-full" />
-            <span className="text-sm font-medium text-[#D4AF37]">Kurslarımız</span>
+            <span className="text-sm font-medium text-[#D4AF37]">{t('courses.badge')}</span>
           </div>
           <h1 className="text-3xl lg:text-4xl font-black text-gray-900 mb-4">
             {t('courses.title')}
@@ -115,7 +115,7 @@ export default function CoursesPage() {
             <Input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Kurs axtar..."
+              placeholder={t('courses.search')}
               className="pl-12 h-14 rounded-2xl bg-white border-2 border-gray-100 shadow-lg shadow-gray-200/50 focus:border-[#D4AF37] focus:ring-0 transition-all text-base placeholder:text-gray-400"
             />
           </div>
@@ -124,7 +124,7 @@ export default function CoursesPage() {
               <SelectTrigger className="w-full !h-14 bg-white border-2 border-gray-100 rounded-2xl shadow-lg shadow-gray-200/50 focus:ring-0 focus:ring-offset-0 outline-none focus:border-[#D4AF37] text-gray-700 font-medium px-5">
                 <div className="flex items-center gap-2.5">
                   <Filter className="w-4 h-4 text-[#D4AF37]" />
-                  <SelectValue placeholder="Kateqoriya" />
+                  <SelectValue placeholder={t('courses.category')} />
                 </div>
               </SelectTrigger>
               <SelectContent className="bg-white border-none shadow-2xl rounded-2xl p-2 min-w-[220px]">
@@ -132,12 +132,12 @@ export default function CoursesPage() {
                   value="all"
                   className="py-3 px-4 rounded-xl text-sm font-medium text-gray-600 cursor-pointer focus:bg-[#D4AF37]/10 focus:text-[#D4AF37] data-[state=checked]:text-[#D4AF37] data-[state=checked]:bg-[#D4AF37]/5 transition-colors mb-1 last:mb-0"
                 >
-                  Hamısı
+                  {t('courses.categories.all')}
                 </SelectItem>
 
                 {isLoading && visibleCategories.length === 0 ? (
                   <SelectItem value="loading" disabled className="py-3 px-4 rounded-xl text-sm font-medium text-gray-400">
-                    Kateqoriyalar yüklənir...
+                    {t('teachers.loading_categories')}
                   </SelectItem>
                 ) : (
                   visibleCategories.map((cat) => (
@@ -228,7 +228,7 @@ export default function CoursesPage() {
                     <div className="flex items-center gap-2">
                       <img
                         src={course.instructor?.avatar || 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirKVGVwei6Df8ct23tMACbeRpeM4981E21T/avatar/1149.jpg'}
-                        alt={course.instructor?.name || 'Müəllim'}
+                        alt={course.instructor?.name || t('courses.instructor')}
                         loading="lazy"
                         decoding="async"
                         className="w-8 h-8 rounded-full object-cover"
@@ -239,7 +239,7 @@ export default function CoursesPage() {
                     </div>
                     {/* Price info if available */}
                     <div className="text-sm font-bold text-[#D4AF37]">
-                      {course.price === 0 ? 'Ödənişsiz' : `${course.price} AZN`}
+                      {course.price === 0 ? t('courses.free') : `${course.price} AZN`}
                     </div>
                   </div>
 
@@ -248,7 +248,7 @@ export default function CoursesPage() {
                     onClick={() => navigate(`/courses/${course.id}`)}
                     className="w-full mt-4 bg-[#D4AF37] hover:bg-[#B88A1B] text-white rounded-xl group/btn"
                   >
-                    Dərslərə bax
+                    {t('courses.view_lessons')}
                     <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
                   </Button>
                 </div>
@@ -264,10 +264,10 @@ export default function CoursesPage() {
               <Search className="w-10 h-10 text-gray-400" />
             </div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">
-              Kurs tapılmadı
+              {t('courses.not_found')}
             </h3>
             <p className="text-gray-500">
-              Axtarış kriteriyalarını dəyişib yenidən cəhd edin
+              {t('test.empty_desc')}
             </p>
           </div>
         )}

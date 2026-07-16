@@ -1,4 +1,4 @@
-﻿import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
@@ -512,64 +512,64 @@ function HomeHero({ stats }: { stats: PublicStats }) {
   }, [prefersReducedMotion]);
 
   const quickStats = [
-    { value: stats.experience, suffix: '+', label: 'İllik təcrübə' },
-    { value: stats.students, suffix: '+', label: 'Tələbə' },
-    { value: stats.teachers, suffix: '+', label: 'Müəllim' },
+    { value: stats.experience, suffix: '+', label: t('stats.experience.label') },
+    { value: stats.students, suffix: '+', label: t('stats.students.label') },
+    { value: stats.teachers, suffix: '+', label: t('stats.teachers.label') },
   ];
 
   const floatingSubjects = [
     {
       icon: BookOpen,
-      label: 'Azərbaycan dili və ədəbiyyat',
+      label: t('subjects.az_lang'),
       position: 'top-[8%] left-[3%]',
       animation: 'float',
       delay: '0s',
     },
     {
       icon: Languages,
-      label: 'İngilis dili',
+      label: t('subjects.en_lang'),
       position: 'top-[14%] right-[4%]',
       animation: 'floatReverse',
       delay: '0.5s',
     },
     {
       icon: Atom,
-      label: 'Fizika',
+      label: t('subjects.physics'),
       position: 'top-[30%] left-[10%]',
       animation: 'float',
       delay: '0.9s',
     },
     {
       icon: Calculator,
-      label: 'Riyaziyyat',
+      label: t('subjects.math'),
       position: 'top-[24%] right-[18%]',
       animation: 'float',
       delay: '1s',
     },
     {
       icon: FlaskConical,
-      label: 'Kimya',
+      label: t('subjects.chemistry'),
       position: 'bottom-[24%] left-[8%]',
       animation: 'floatReverse',
       delay: '1.4s',
     },
     {
       icon: GraduationCap,
-      label: 'İbtidai sinif',
+      label: t('subjects.primary'),
       position: 'bottom-[18%] right-[6%]',
       animation: 'floatReverse',
       delay: '1.3s',
     },
     {
       icon: Globe,
-      label: 'Coğrafiya',
+      label: t('subjects.geography'),
       position: 'top-[60%] left-[20%]',
       animation: 'float',
       delay: '0.8s',
     },
     {
       icon: Landmark,
-      label: 'Tarix',
+      label: t('subjects.history'),
       position: 'bottom-[10%] right-[22%]',
       animation: 'floatReverse',
       delay: '1.7s',
@@ -678,23 +678,23 @@ function HomeStory() {
   const values = [
     {
       icon: Trophy,
-      title: 'Nəticə',
-      desc: 'Kurslar qəbul və imtahan məqsədinə yönəlir.',
+      title: t('features.home_items.result.title'),
+      desc: t('features.home_items.result.desc'),
     },
     {
       icon: MonitorPlay,
-      title: 'Video dərslər',
-      desc: 'Dərslər izlənilən və aktiv formatda keçirilir.',
+      title: t('features.home_items.video_lessons.title'),
+      desc: t('features.home_items.video_lessons.desc'),
     },
     {
       icon: Layers3,
-      title: 'Plan',
-      desc: 'Mərhələlər sadə, ölçülə bilən və aydındır.',
+      title: t('features.home_items.plan.title'),
+      desc: t('features.home_items.plan.desc'),
     },
     {
       icon: GraduationCap,
-      title: 'Peşəkar Müəllimlər',
-      desc: 'Təcrübəli və sertifikatlı müəllimlər tərəfindən tədris olunur.',
+      title: t('features.home_items.teachers.title'),
+      desc: t('features.home_items.teachers.desc'),
     },
   ];
 
@@ -876,7 +876,7 @@ function HomeCourses({
   const supportingCourses = filteredCourses.slice(1, 5);
   const supportingCourseKey = supportingCourses.map((course) => course.id).join('|');
 
-  const coursePrice = (course: PublicCourse) => (course.price === 0 ? 'Ödənişsiz' : `${course.price} AZN`);
+  const coursePrice = (course: PublicCourse) => (course.price === 0 ? t('courses.free') : `${course.price} AZN`);
 
   useSectionReveal(sectionRef, [isLoading, activeCategory, featuredCourse?.id, supportingCourseKey], {
     start: 'top 76%',
@@ -1002,22 +1002,22 @@ function HomeCourses({
 
                 <div className="grid gap-3 sm:grid-cols-3">
                   <div className="rounded-2xl bg-white/10 p-4 backdrop-blur-sm">
-                    <p className="text-[10px] uppercase tracking-[0.3em] text-white/45">Reytinq</p>
+                    <p className="text-[10px] uppercase tracking-[0.3em] text-white/45">{t('courses.rating')}</p>
                     <div className="mt-2 flex items-center gap-2 text-lg font-bold">
                       <Star className="h-5 w-5 fill-current text-[#F7E27D]" />
                       <span>{Number(featuredCourse.rating || 0).toFixed(1)}</span>
                     </div>
-                    <p className="mt-1 text-sm text-white/60">İstifadəçi dəyərləndirməsi</p>
+                    <p className="mt-1 text-sm text-white/60">{t('courses.rating_desc')}</p>
                   </div>
                   <div className="rounded-2xl bg-white/10 p-4 backdrop-blur-sm">
-                    <p className="text-[10px] uppercase tracking-[0.3em] text-white/45">Öyrənmə xətti</p>
-                    <p className="mt-2 text-lg font-bold">{featuredCourse.learningPoints.length} mövzu</p>
-                    <p className="mt-1 text-sm text-white/60">Mərhələli proqram axını</p>
+                    <p className="text-[10px] uppercase tracking-[0.3em] text-white/45">{t('courses.learning_path')}</p>
+                    <p className="mt-2 text-lg font-bold">{t('courses.topics_count', { count: featuredCourse.learningPoints.length })}</p>
+                    <p className="mt-1 text-sm text-white/60">{t('courses.learning_path_desc')}</p>
                   </div>
                   <div className="rounded-2xl bg-white/10 p-4 backdrop-blur-sm">
-                    <p className="text-[10px] uppercase tracking-[0.3em] text-white/45">Qiymət</p>
+                    <p className="text-[10px] uppercase tracking-[0.3em] text-white/45">{t('courses.price')}</p>
                     <p className="mt-2 text-lg font-bold">{coursePrice(featuredCourse)}</p>
-                    <p className="mt-1 text-sm text-white/60">Açıq və sadə paketlər</p>
+                    <p className="mt-1 text-sm text-white/60">{t('courses.price_desc')}</p>
                   </div>
                 </div>
               </div>
@@ -1057,7 +1057,7 @@ function HomeCourses({
                         <div className="flex min-w-0 items-center gap-2">
                           <img
                             src={course.instructor?.avatar || 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirKVGVwei6Df8ct23tMACbeRpeM4981E21T/avatar/1149.jpg'}
-                            alt={course.instructor?.name || 'Müəllim'}
+                            alt={course.instructor?.name || t('courses.instructor')}
                             className="h-8 w-8 rounded-full object-cover"
                           />
                           <span className="truncate text-sm text-gray-700">
@@ -1073,14 +1073,14 @@ function HomeCourses({
                 ))
               ) : (
                 <div className="rounded-[1.75rem] border border-dashed border-gray-300 bg-white/80 p-8 text-center text-gray-500">
-                  Seçilmiş kateqoriya üzrə kurs tapılmadı.
+                  {t('courses.not_found')}
                 </div>
               )}
             </div>
           </div>
         ) : (
           <div className="rounded-[1.75rem] border border-dashed border-gray-300 bg-white/80 p-8 text-center text-gray-500">
-            Seçilmiş kateqoriya üzrə kurs tapılmadı.
+            {t('courses.not_found')}
           </div>
         )}
       </div>
