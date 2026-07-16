@@ -66,13 +66,13 @@ export default function Contact() {
     const selectedCourse = courses.find((course) => course.id === formData.courseId);
     const selectionTypeLabel =
       formData.selectionType === 'course'
-        ? 'Kursun özü'
+        ? t('contact.form.interest_course')
         : formData.selectionType === 'test'
-          ? 'İçindəki testlərdən biri'
+          ? t('contact.form.interest_test')
           : '-';
 
     const message = [
-      'Salam, Sizin Akademiyanız ilə əlaqə saxlamaq istəyirəm.',
+      t('contact.message.greeting'),
       '',
       `Ad: ${formData.name || '-'}`,
       `Kurs: ${selectedCourse?.title || '-'}`,
@@ -250,7 +250,7 @@ export default function Contact() {
             {/* Map */}
             <div className="contact-reveal relative h-52 overflow-hidden rounded-3xl sm:h-64 lg:h-80">
               <iframe
-                src="https://www.google.com/maps?q=Sizin%20%C3%BCnvan%C4%B1n%C4%B1z&z=16&output=embed"
+                src={`https://www.google.com/maps?q=${encodeURIComponent(t('contact.info.address_value'))}&z=16&output=embed`}
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
