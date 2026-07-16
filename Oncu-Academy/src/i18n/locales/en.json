@@ -1,0 +1,267 @@
+{
+  "nav": {
+    "home": "Home",
+    "courses": "Courses",
+    "teachers": "Teachers",
+    "tests": "Tests",
+    "contact": "Contact",
+    "login": "Log In",
+    "register": "Register",
+    "logout": "Log Out",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "exam_panel": "Exam Panel"
+  },
+  "hero": {
+    "title": "Your Academy",
+    "subtitle": "Clear path in education, strong results",
+    "description": "We are with you at every stage with professional teachers, modern methods and personal approach.",
+    "cta": "Explore",
+    "cta_secondary": "Contact Us",
+    "badge": "Build your future with us"
+  },
+  "features": {
+    "title": "Why Your Academy?",
+    "subtitle": "3 main advantages at a glance",
+    "items": {
+      "teachers": {
+        "title": "Professional Teachers",
+        "desc": "Teaching by experienced and certified teachers"
+      },
+      "online": {
+        "title": "Online and Video Courses",
+        "desc": "Watch courses from anywhere, anytime"
+      },
+      "certificate": {
+        "title": "International Certificates",
+        "desc": "Get globally recognized certificates"
+      },
+      "support": {
+        "title": "24/7 Support",
+        "desc": "Support team always by your side"
+      }
+    }
+  },
+  "stats": {
+    "experience": {
+      "number": "15",
+      "label": "YEARS OF EXPERIENCE"
+    },
+    "students": {
+      "number": "5000+",
+      "label": "STUDENTS"
+    },
+    "teachers": {
+      "number": "50+",
+      "label": "TEACHERS"
+    },
+    "courses": {
+      "number": "100+",
+      "label": "COURSES"
+    }
+  },
+  "courses": {
+    "title": "Programs",
+    "subtitle": "Discover your future with us",
+    "categories": {
+      "all": "All",
+      "language": "Language Courses",
+      "exam": "Exam Preparation",
+      "computer": "Computer"
+    },
+    "items": {
+      "sat": {
+        "title": "SAT",
+        "desc": "Preparation for US university admission exam"
+      },
+      "ielts": {
+        "title": "IELTS",
+        "desc": "International English Language Certificate"
+      },
+      "english": {
+        "title": "ENGLISH LANGUAGE",
+        "desc": "Comprehensive English language teaching"
+      },
+      "russian": {
+        "title": "RUSSIAN LANGUAGE",
+        "desc": "Learn Russian at a professional level"
+      },
+      "arabic": {
+        "title": "ARABIC LANGUAGE",
+        "desc": "Basics and grammar of Arabic language"
+      },
+      "turkish": {
+        "title": "TURKISH LANGUAGE",
+        "desc": "Learn Turkish easily"
+      }
+    },
+    "view_all": "See All",
+    "enroll": "Get Course",
+    "auth_required": "Please register to buy the course"
+  },
+  "teachers": {
+    "title": "Meet Our Teachers",
+    "subtitle": "Our Professional Team",
+    "button": "More",
+    "view_profile": "View Profile",
+    "specialty": "Specialty",
+    "experience": "Experience",
+    "students": "Student",
+    "courses": "Course"
+  },
+  "testimonials": {
+    "title": "Our Students Say",
+    "subtitle": "Success Stories"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Get in touch with us",
+    "form": {
+      "name": "Your Name",
+      "email": "Email",
+      "phone": "Phone",
+      "message": "Your Message",
+      "submit": "Send",
+      "success": "Your message has been sent successfully!"
+    },
+    "info": {
+      "address": "Address",
+      "phone": "Phone",
+      "email": "Email",
+      "working_hours": "Working Hours"
+    }
+  },
+  "footer": {
+    "follow_us": "Follow Us",
+    "copyright": "© 2026 Your Academy. All rights reserved.",
+    "links": {
+      "about": "About Us",
+      "courses": "Courses",
+      "teachers": "Teachers",
+      "contact": "Contact",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Use"
+    },
+    "termsDialog": {
+      "title": "Terms of Use",
+      "close": "Close",
+      "sections": {
+        "general": {
+          "title": "General Provisions",
+          "body": "By joining this online education platform, you accept the following terms."
+        },
+        "userResponsibility": {
+          "title": "User Responsibility",
+          "body": "Users must use the platform only for educational purposes. Any illegal activity is prohibited."
+        },
+        "privacy": {
+          "title": "Privacy",
+          "body": "Your personal information is protected and not shared with third parties."
+        },
+        "teacherResponsibility": {
+          "title": "Teacher Responsibility",
+          "body": "Teachers must provide high-quality educational materials."
+        },
+        "studentResponsibility": {
+          "title": "Student Responsibility",
+          "body": "Students must actively participate in courses and follow the platform rules."
+        }
+      }
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Log In",
+      "subtitle": "Log in to your account",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Log In",
+      "no_account": "Don't have an account?",
+      "register": "Register",
+      "forgot_password": "Forgot password?"
+    },
+    "register": {
+      "title": "Register",
+      "subtitle": "Create a new account",
+      "name": "First Name",
+      "surname": "Last Name",
+      "email": "Email",
+      "phone": "Phone",
+      "password": "Password",
+      "confirm_password": "Confirm Password",
+      "accept_terms": "I agree to the terms of use",
+      "accept_terms_error": "You must accept the terms of use",
+      "submit": "Register",
+      "have_account": "Already have an account?",
+      "login": "Log In"
+    },
+    "role": {
+      "student": "Student",
+      "teacher": "Teacher"
+    }
+  },
+  "student": {
+    "dashboard": {
+      "title": "Student Dashboard",
+      "my_courses": "My Courses",
+      "progress": "Progress",
+      "certificates": "My Certificates",
+      "tests": "My Tests"
+    }
+  },
+  "teacher": {
+    "dashboard": {
+      "title": "Teacher Dashboard",
+      "statistics": "Statistics",
+      "my_students": "My Students",
+      "my_courses": "My Courses",
+      "upload_video": "Upload Video",
+      "create_test": "Create Test",
+      "edit_content": "Edit Content"
+    },
+    "profile": {
+      "title": "Profile",
+      "edit": "Edit",
+      "save": "Save",
+      "bio": "About Me",
+      "education": "Education",
+      "experience": "Experience",
+      "specialties": "Specialties"
+    },
+    "upload": {
+      "title": "Upload Video",
+      "course": "Course",
+      "title_label": "Title",
+      "description": "Description",
+      "video_file": "Video File",
+      "thumbnail": "Thumbnail",
+      "upload": "Upload",
+      "drag_drop": "Drag & drop your video here, or click to select"
+    },
+    "test": {
+      "title": "Create Test",
+      "test_title": "Test Title",
+      "course": "Course",
+      "duration": "Duration (minutes)",
+      "questions": "Questions",
+      "add_question": "Add Question",
+      "question": "Question",
+      "options": "Options",
+      "correct_answer": "Correct Answer",
+      "save": "Save"
+    }
+  },
+  "test": {
+    "title": "Tests",
+    "start": "Start Test",
+    "submit": "Submit",
+    "next": "Next",
+    "prev": "Previous",
+    "finish": "Finish",
+    "time_left": "Time Left",
+    "score": "Score",
+    "correct": "Correct",
+    "wrong": "Wrong",
+    "total": "Total"
+  }
+}

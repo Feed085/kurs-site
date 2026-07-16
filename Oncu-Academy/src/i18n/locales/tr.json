@@ -1,0 +1,267 @@
+{
+  "nav": {
+    "home": "Ana Sayfa",
+    "courses": "Kurslar",
+    "teachers": "Öğretmenler",
+    "tests": "Testler",
+    "contact": "İletişim",
+    "login": "Giriş Yap",
+    "register": "Kayıt Ol",
+    "logout": "Çıkış Yap",
+    "dashboard": "Panel",
+    "profile": "Profil",
+    "exam_panel": "Sınav Paneli"
+  },
+  "hero": {
+    "title": "Akademiniz",
+    "subtitle": "Eğitimde net yol, güçlü sonuç",
+    "description": "Profesyonel öğretmenler, modern yöntemler ve kişiye özel yaklaşım ile her aşamada yanınızdayız.",
+    "cta": "Keşfet",
+    "cta_secondary": "İletişime Geç",
+    "badge": "Geleceğinizi bizimle inşa edin"
+  },
+  "features": {
+    "title": "Neden Akademiniz?",
+    "subtitle": "Bir bakışta 3 temel avantaj",
+    "items": {
+      "teachers": {
+        "title": "Profesyonel Öğretmenler",
+        "desc": "Deneyimli ve sertifikalı öğretmenler tarafından eğitim"
+      },
+      "online": {
+        "title": "Online ve Video Dersler",
+        "desc": "İstediğiniz yerden, istediğiniz zaman ders izleyin"
+      },
+      "certificate": {
+        "title": "Uluslararası Sertifikalar",
+        "desc": "Dünya çapında tanınan sertifikalar edinin"
+      },
+      "support": {
+        "title": "7/24 Destek",
+        "desc": "Her zaman yanınızda olan destek ekibi"
+      }
+    }
+  },
+  "stats": {
+    "experience": {
+      "number": "15",
+      "label": "YILLIK TECRÜBE"
+    },
+    "students": {
+      "number": "5000+",
+      "label": "ÖĞRENCİ"
+    },
+    "teachers": {
+      "number": "50+",
+      "label": "ÖĞRETMEN"
+    },
+    "courses": {
+      "number": "100+",
+      "label": "KURS"
+    }
+  },
+  "courses": {
+    "title": "Programlar",
+    "subtitle": "Geleceğinizi bizimle keşfedin",
+    "categories": {
+      "all": "Hepsi",
+      "language": "Dil Kursları",
+      "exam": "Sınav Hazırlığı",
+      "computer": "Bilgisayar"
+    },
+    "items": {
+      "sat": {
+        "title": "SAT",
+        "desc": "ABD üniversitelerine kabul sınavına hazırlık"
+      },
+      "ielts": {
+        "title": "IELTS",
+        "desc": "Uluslararası İngilizce dil sertifikası"
+      },
+      "english": {
+        "title": "İNGİLİZCE",
+        "desc": "Kapsamlı İngilizce eğitimi"
+      },
+      "russian": {
+        "title": "RUSÇA",
+        "desc": "Rusçayı profesyonel düzeyde öğrenin"
+      },
+      "arabic": {
+        "title": "ARAPÇA",
+        "desc": "Arapça dilinin temelleri ve dil bilgisi"
+      },
+      "turkish": {
+        "title": "TÜRKÇE",
+        "desc": "Türkçeyi kolayca öğrenin"
+      }
+    },
+    "view_all": "Hepsini Gör",
+    "enroll": "Kursu Satın Al",
+    "auth_required": "Lütfen kursu satın almak için üye olun"
+  },
+  "teachers": {
+    "title": "Öğretmenlerimizle Tanışın",
+    "subtitle": "Profesyonel Ekibimiz",
+    "button": "Daha Fazla",
+    "view_profile": "Profili Gör",
+    "specialty": "Branş",
+    "experience": "Deneyim",
+    "students": "Öğrenci",
+    "courses": "Kurs"
+  },
+  "testimonials": {
+    "title": "Öğrencilerimiz Ne Diyor?",
+    "subtitle": "Başarı Hikayeleri"
+  },
+  "contact": {
+    "title": "İletişim",
+    "subtitle": "Bizimle iletişime geçin",
+    "form": {
+      "name": "Adınız",
+      "email": "E-posta",
+      "phone": "Telefon",
+      "message": "Mesajınız",
+      "submit": "Gönder",
+      "success": "Mesajınız başarıyla gönderildi!"
+    },
+    "info": {
+      "address": "Adres",
+      "phone": "Telefon",
+      "email": "E-posta",
+      "working_hours": "Çalışma Saatleri"
+    }
+  },
+  "footer": {
+    "follow_us": "Bizi Takip Edin",
+    "copyright": "© 2026 Akademiniz. Tüm hakları saklıdır.",
+    "links": {
+      "about": "Hakkımızda",
+      "courses": "Kurslar",
+      "teachers": "Öğretmenler",
+      "contact": "İletişim",
+      "privacy": "Gizlilik Politikası",
+      "terms": "Kullanım Koşulları"
+    },
+    "termsDialog": {
+      "title": "Kullanım Koşulları",
+      "close": "Kapat",
+      "sections": {
+        "general": {
+          "title": "Genel Hükümler",
+          "body": "Bu çevrimiçi eğitim platformuna katılarak aşağıdaki koşulları kabul etmiş olursunuz."
+        },
+        "userResponsibility": {
+          "title": "Kullanıcı Sorumluluğu",
+          "body": "Kullanıcılar platformu yalnızca eğitim amaçlı kullanmalıdır. Herhangi bir yasa dışı faaliyet yasaktır."
+        },
+        "privacy": {
+          "title": "Gizlilik",
+          "body": "Kişisel bilgileriniz korunur ve üçüncü şahıslarla paylaşılmaz."
+        },
+        "teacherResponsibility": {
+          "title": "Öğretmen Sorumluluğu",
+          "body": "Öğretmenler yüksek kaliteli eğitim materyalleri sunmalıdır."
+        },
+        "studentResponsibility": {
+          "title": "Öğrenci Sorumluluğu",
+          "body": "Öğrenciler derslere aktif olarak katılmalı ve platform kurallarına uymalıdır."
+        }
+      }
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Giriş Yap",
+      "subtitle": "Hesabınıza giriş yapın",
+      "email": "E-posta",
+      "password": "Şifre",
+      "submit": "Giriş Yap",
+      "no_account": "Hesabınız yok mu?",
+      "register": "Kayıt Ol",
+      "forgot_password": "Şifrenizi mi unuttunuz?"
+    },
+    "register": {
+      "title": "Kayıt Ol",
+      "subtitle": "Yeni hesap oluşturun",
+      "name": "Ad",
+      "surname": "Soyad",
+      "email": "E-posta",
+      "phone": "Telefon",
+      "password": "Şifre",
+      "confirm_password": "Şifreyi Onayla",
+      "accept_terms": "Kullanım koşullarını kabul ediyorum",
+      "accept_terms_error": "Kullanım koşullarını kabul etmelisiniz",
+      "submit": "Kayıt Ol",
+      "have_account": "Zaten bir hesabınız var mı?",
+      "login": "Giriş Yap"
+    },
+    "role": {
+      "student": "Öğrenci",
+      "teacher": "Öğretmen"
+    }
+  },
+  "student": {
+    "dashboard": {
+      "title": "Öğrenci Paneli",
+      "my_courses": "Kurslarım",
+      "progress": "İlerleme",
+      "certificates": "Sertifikalarım",
+      "tests": "Testlerim"
+    }
+  },
+  "teacher": {
+    "dashboard": {
+      "title": "Öğretmen Paneli",
+      "statistics": "İstatistikler",
+      "my_students": "Öğrencilerim",
+      "my_courses": "Kurslarım",
+      "upload_video": "Video Yükle",
+      "create_test": "Test Oluştur",
+      "edit_content": "İçeriği Düzenle"
+    },
+    "profile": {
+      "title": "Profil",
+      "edit": "Düzenle",
+      "save": "Kaydet",
+      "bio": "Hakkımda",
+      "education": "Eğitim",
+      "experience": "Deneyim",
+      "specialties": "Uzmanlıklar"
+    },
+    "upload": {
+      "title": "Video Yükle",
+      "course": "Kurs",
+      "title_label": "Başlık",
+      "description": "Açıklama",
+      "video_file": "Video Dosyası",
+      "thumbnail": "Küçük Resim",
+      "upload": "Yükle",
+      "drag_drop": "Videonuzu buraya sürükleyin veya seçmek için tıklayın"
+    },
+    "test": {
+      "title": "Test Oluştur",
+      "test_title": "Test Başlığı",
+      "course": "Kurs",
+      "duration": "Süre (dakika)",
+      "questions": "Sorular",
+      "add_question": "Soru Ekle",
+      "question": "Soru",
+      "options": "Seçenekler",
+      "correct_answer": "Doğru Cevap",
+      "save": "Kaydet"
+    }
+  },
+  "test": {
+    "title": "Testler",
+    "start": "Teste Başla",
+    "submit": "Gönder",
+    "next": "Sonraki",
+    "prev": "Önceki",
+    "finish": "Bitir",
+    "time_left": "Kalan Süre",
+    "score": "Sonuç",
+    "correct": "Doğru",
+    "wrong": "Yanlış",
+    "total": "Toplam"
+  }
+}

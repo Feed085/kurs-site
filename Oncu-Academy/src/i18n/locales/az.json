@@ -9,14 +9,16 @@
     "register": "Qeydiyyat",
     "logout": "Çıxış",
     "dashboard": "Panel",
-    "profile": "Profil"
+    "profile": "Profil",
+    "exam_panel": "İmtahan Paneli"
   },
   "hero": {
     "title": "Sizin Akademiyanız",
     "subtitle": "Təhsildə aydın yol, güclü nəticə",
     "description": "Peşəkar müəllimlər, müasir metodlar və fərdi yanaşma ilə hər mərhələdə yanınızdayıq.",
     "cta": "Kəşf Et",
-    "cta_secondary": "Müraciət et"
+    "cta_secondary": "Müraciət et",
+    "badge": "Gələcəyinizi bizimlə qurun"
   },
   "features": {
     "title": "Niyə Sizin Akademiyanız?",

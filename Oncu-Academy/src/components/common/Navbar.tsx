@@ -19,6 +19,7 @@ import { Menu, User, LogOut, BookOpen, Users, Phone, Home, ChevronDown, Settings
 import { cn } from '@/lib/utils';
 import { getPublicCourses, getPublicTeachers } from '@/services/publicApi';
 import type { PublicCourse, PublicTeacher } from '@/services/publicApi';
+import LanguageSelector from './LanguageSelector';
 
 
 export default function Navbar() {
@@ -294,6 +295,12 @@ export default function Navbar() {
 
           {/* Desktop Auth Buttons */}
           <div className="hidden lg:flex items-center gap-4">
+            <LanguageSelector
+              className={cn(
+                "hover:bg-[#D4AF37]/10 transition-colors",
+                isHomeTop ? "text-white" : isScrolled || isWatchPage ? "text-gray-900" : isDarkPage ? "text-white" : "text-gray-900"
+              )}
+            />
             {isAuthenticated ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -325,7 +332,7 @@ export default function Navbar() {
                       navigate('/exam-panel');
                     }}>
                       <FileText className="w-4 h-4 mr-2" />
-                      İmtahan Paneli
+                      {t('nav.exam_panel')}
                     </DropdownMenuItem>
                   )}
                   {user?.role === 'teacher' && (
@@ -334,7 +341,7 @@ export default function Navbar() {
                       navigate('/teacher/exam-panel');
                     }}>
                       <FileText className="w-4 h-4 mr-2" />
-                      İmtahan Paneli
+                      {t('nav.exam_panel')}
                     </DropdownMenuItem>
                   )}
                   {user?.role === 'teacher' && (
@@ -343,7 +350,7 @@ export default function Navbar() {
                       navigate('/teacher/profile');
                     }}>
                       <Settings className="w-4 h-4 mr-2" />
-                      Profil
+                      {t('nav.profile')}
                     </DropdownMenuItem>
                   )}
                   <DropdownMenuSeparator />
@@ -375,9 +382,17 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* Mobile Menu */}
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild className="lg:hidden">
+          {/* Mobile Menu & Language Selector */}
+          <div className="flex items-center gap-2 lg:hidden">
+            <LanguageSelector
+              className={cn(
+                "hover:bg-[#D4AF37]/10 transition-colors",
+                isHomeTop ? "text-white" : isScrolled || isWatchPage ? "text-gray-900" : isDarkPage ? "text-white" : "text-gray-900"
+              )}
+              align="end"
+            />
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild>
               <Button 
                 variant="ghost" 
                 size="icon"
@@ -455,7 +470,7 @@ export default function Navbar() {
                           }}
                         >
                           <User className="w-4 h-4 mr-2" />
-                          Panel
+                          {t('nav.dashboard')}
                         </Button>
                         {user?.role === 'student' && (
                           <Button
@@ -468,7 +483,7 @@ export default function Navbar() {
                             }}
                           >
                             <FileText className="w-4 h-4 mr-2" />
-                            İmtahan Paneli
+                            {t('nav.exam_panel')}
                           </Button>
                         )}
                         {user?.role === 'teacher' && (
@@ -482,7 +497,7 @@ export default function Navbar() {
                             }}
                           >
                             <FileText className="w-4 h-4 mr-2" />
-                            İmtahan Paneli
+                            {t('nav.exam_panel')}
                           </Button>
                         )}
                         {user?.role === 'teacher' && (
@@ -496,7 +511,7 @@ export default function Navbar() {
                             }}
                           >
                             <Settings className="w-4 h-4 mr-2" />
-                            Profil
+                            {t('nav.profile')}
                           </Button>
                         )}
                         <Button
@@ -508,7 +523,7 @@ export default function Navbar() {
                           }}
                         >
                           <LogOut className="w-4 h-4 mr-2" />
-                          Çıxış
+                          {t('nav.logout')}
                         </Button>
                       </div>
                     </div>
@@ -539,6 +554,7 @@ export default function Navbar() {
               </div>
             </SheetContent>
           </Sheet>
+          </div>
         </div>
       </div>
     </nav>

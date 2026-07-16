@@ -133,7 +133,7 @@ export default function Hero() {
         {/* Badge */}
         <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-lg sm:mb-8">
           <span className="w-2 h-2 bg-[#D4AF37] rounded-full animate-pulse" />
-          <span className="text-sm font-medium text-gray-700">Gələcəyinizi bizimlə qurun</span>
+          <span className="text-sm font-medium text-gray-700">{t('hero.badge')}</span>
         </div>
 
         {/* Main Title */}
@@ -186,9 +186,9 @@ export default function Hero() {
         {/* Stats Preview */}
         <div className="mx-auto mt-12 grid max-w-2xl grid-cols-1 gap-3 sm:mt-16 sm:grid-cols-3 sm:gap-6 lg:gap-8">
           {[
-            { value: `${heroStats.experience}+`, label: 'İllik Təcrübə' },
-            { value: `${heroStats.students}+`, label: 'Tələbə' },
-            { value: `${heroStats.teachers}+`, label: 'Müəllim' },
+            { value: `${heroStats.experience}+`, label: t('stats.experience.label') },
+            { value: `${heroStats.students}+`, label: t('stats.students.label') },
+            { value: `${heroStats.teachers}+`, label: t('stats.teachers.label') },
           ].map((stat, index) => (
             <div key={index} className="rounded-2xl bg-white/70 px-4 py-4 text-center shadow-sm sm:bg-transparent sm:px-0 sm:py-0 sm:shadow-none">
               <div className="text-2xl sm:text-3xl font-black text-gray-900">{stat.value}</div>
