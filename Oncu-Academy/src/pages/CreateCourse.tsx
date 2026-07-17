@@ -63,7 +63,7 @@ export default function CreateCourse() {
           });
         }
       } catch (error) {
-        console.error('Kateqoriyalar yüklənə bilmədi', error);
+        console.error(t('courses.categories_load_error', { defaultValue: 'Kateqoriyalar yüklənə bilmədi' }), error);
       } finally {
         setIsCategoriesLoading(false);
       }
@@ -261,7 +261,7 @@ export default function CreateCourse() {
                     <Textarea
                       value={formData.description}
                       onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                      placeholder="Kurs barədə ətraflı məlumat..."
+                      placeholder={t('courses.about_placeholder', { defaultValue: 'Kurs barədə ətraflı məlumat...' })}
                       required
                       className="rounded-xl min-h-[150px] resize-none"
                     />
@@ -276,7 +276,7 @@ export default function CreateCourse() {
                         required
                         value={formData.price}
                         onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                        placeholder="Məs: 50 (Ödənişsizsə 0 yazın)"
+                        placeholder={t('courses.price_placeholder', { defaultValue: 'Məs: 50 (Ödənişsizsə 0 yazın)' })}
                         className="rounded-xl h-12"
                       />
                     </div>
@@ -305,7 +305,7 @@ export default function CreateCourse() {
 
                   <div className="aspect-video w-full rounded-2xl overflow-hidden bg-gray-50 border-2 border-dashed border-gray-200 relative group cursor-pointer">
                   {formData.imageUrl ? (
-                    <img src={formData.imageUrl} alt="Preview" className="w-full h-full object-cover" />
+                    <img src={formData.imageUrl} alt={t('courses.preview', { defaultValue: 'Preview' })} className="w-full h-full object-cover" />
                   ) : (
                     <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
                       <ImageIcon className="w-10 h-10 mb-2" />
