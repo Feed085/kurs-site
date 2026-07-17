@@ -441,6 +441,11 @@
     "no_answer_key": "Cevap anahtarı yok",
     "answer_key_empty_desc": "Admin onaylı tamamlanmış test olduğunda anahtarlarını burada görebilirsiniz.",
     "welcome": "Merhaba, {{name}}.",
+    "stats": {
+      "active_courses": "aktif kurs",
+      "pending_results": "incelemede sonuç",
+      "total_results": "toplam sonuç"
+    },
     "metrics": {
       "active_exams": {
         "title": "Aktif sınavlar",

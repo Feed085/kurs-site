@@ -441,6 +441,11 @@
     "no_answer_key": "No answer key",
     "answer_key_empty_desc": "You can view keys here when you have completed admin-approved tests.",
     "welcome": "Hello, {{name}}.",
+    "stats": {
+      "active_courses": "active courses",
+      "pending_results": "pending results",
+      "total_results": "total results"
+    },
     "metrics": {
       "active_exams": {
         "title": "Active exams",

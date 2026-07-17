@@ -440,6 +440,11 @@
     "no_answer_key": "Cavab açarı yoxdur",
     "answer_key_empty_desc": "Tamamlanmış admin təsdiqli test olduqda açarlarını burada görə bilərsiniz.",
     "welcome": "Salam, {{name}}.",
+    "stats": {
+      "active_courses": "aktiv kurs",
+      "pending_results": "yoxlanışda nəticə",
+      "total_results": "ümumi nəticə"
+    },
     "metrics": {
       "active_exams": {
         "title": "Aktiv imtahanlar",
