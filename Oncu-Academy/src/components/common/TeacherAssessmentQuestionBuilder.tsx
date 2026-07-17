@@ -114,7 +114,7 @@ export default function TeacherAssessmentQuestionBuilder({
                   <div className="group relative max-w-2xl cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white transition-shadow hover:shadow-sm">
                   {question.content ? (
                     <>
-                      <img src={question.content} alt={`Sual ${questionIndex + 1}`} className="block h-auto max-h-[520px] w-full object-contain" />
+                      <img src={question.content} alt={t('test.edit.question_image_alt', { defaultValue: 'Sual {{number}}', number: questionIndex + 1 })} className="block h-auto max-h-[520px] w-full object-contain" />
                       <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
                         <p className="text-xs font-bold text-white">{t('test.edit.click_to_change_image', { defaultValue: 'Şəkli dəyişmək üçün klikləyin' })}</p>
                       </div>
@@ -211,7 +211,7 @@ export default function TeacherAssessmentQuestionBuilder({
                       <Input
                         value={option}
                         onChange={(event) => updateOption(question.id, optionIndex, event.target.value)}
-                        placeholder={`Variant ${String.fromCharCode(65 + optionIndex)}`}
+                        placeholder={t('test.edit.option_placeholder', { defaultValue: 'Variant {{letter}}', letter: String.fromCharCode(65 + optionIndex) })}
                         className={cn(
                           'h-12 rounded-xl border-gray-100 pl-12 focus:border-[#D4AF37]',
                           question.correctAnswer === optionIndex && 'border-[#D4AF37] ring-1 ring-[#D4AF37]'
@@ -240,7 +240,7 @@ export default function TeacherAssessmentQuestionBuilder({
                       inputMode="decimal"
                       value={question.openEndedNumericAnswer || ''}
                       onChange={(event) => updateQuestion(question.id, 'openEndedNumericAnswer', event.target.value)}
-                      placeholder="Məs: 3.5"
+                      placeholder={t('test.edit.numeric_example', { defaultValue: 'Məs: 3.5' })}
                       className="h-12 rounded-xl border-blue-200 focus:border-[#D4AF37]"
                     />
                   </div>

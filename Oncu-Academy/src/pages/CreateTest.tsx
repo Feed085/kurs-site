@@ -99,7 +99,7 @@ export default function CreateTest() {
 
   const removeQuestion = (id: string) => {
     if (questions.length === 1) {
-      toast.error('Ən azı bir sual olmalıdır.');
+      toast.error(t('test.min_one_question', { defaultValue: 'Ən azı bir sual olmalıdır.' }));
       return;
     }
 
