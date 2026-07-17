@@ -782,6 +782,31 @@
     "about": "Haqqında",
     "home": "Ana səhifə"
   },
+  "privacy": {
+    "title": "Məxfilik Siyasəti",
+    "intro_title": "Məlumatlarınızın qorunması bizim üçün vacibdir",
+    "intro_desc": "Sizin Akademiyanız onlayn təhsil platforması olaraq (bundan sonra \"Sizin Akademiyanız\" və ya \"Platforma\") şəxsi məlumatlarınızın təhlükəsizliyinə xüsusi həssaslıqla yanaşırıq. Bu Məxfilik Siyasəti hansı məlumatların toplandığını və necə istifadə olunduğunu izah edir.",
+    "section1": {
+      "title": "Toplanan Şəxsi Məlumatlar",
+      "desc": "Platformada qeydiyyatdan keçərkən, dərslərə abunə olarkən və ya əlaqə formundan istifadə edərkən sizdən ad, soyad, e-poçt ünvanı, təhsil/fəaliyyət məlumatlarınız, eləcə də sistemə giriş üçün IP ünvanları toplanıla bilər. Həmçinin, platforma identifikasiya məqsədilə profil şəklinizin və ya biometrik sifət təsdiqləmənizin göndərilməsini tələb edə bilər (müəllimlər üçün)."
+    },
+    "section2": {
+      "title": "Məlumatların Paylaşılması",
+      "desc": "Sizin şəxsi məlumatlarınız heç bir üçüncü tərəf kommersiya şirkətlərinə və ya reklam agentliklərinə satılmır. Məlumatlar yalnız Azərbaycan Respublikasının qanunvericiliyi tələb etdiyi hallarda müvafiq icra orqanlarına təqdim edilə bilər. Dərs zamanı paylaşılan məzmun və adınız eyni sinifdəki digər iştirakçılara görünə bilər."
+    },
+    "section3": {
+      "title": "Siyasətdə Dəyişikliklər və Razılıq",
+      "desc": "Sizin Akademiyanız bu məxfilik siyasətini əvvəlcədən bildiriş etmədən, texnoloji və qanunvericilik yeniliklərinə uyğunlaşdırmaq məqsədilə yeniləyə bilər. Platformadan istifadə edərək siz bu şərtlərlə tam razılaşdığınızı bəyan edirsiniz."
+    },
+    "section4": {
+      "title": "Məxfilik və Təhlükəsizlik",
+      "desc": "Məlumatlarınız yalnız xidmətin düzgün işləməsi, təhlükəsizliyin qorunması və sizə daha yaxşı tədris təcrübəsi təqdim edilməsi üçün istifadə olunur. Bu məlumatların qorunması üçün lazımi təhlükəsizlik tədbirləri görülür."
+    },
+    "changes_title": "Məxfilik siyasətində dəyişikliklər və razılıq",
+    "changes_desc": "Sizin Akademiyanız bu məxfilik siyasətini əvvəlcədən bildiriş etmədən, texnoloji və qanunvericilik yeniliklərinə uyğunlaşdırmaq məqsədilə yeniləyə bilər. Platformadan istifadə edərək siz bu şərtlərlə tam razılaşdığınızı bəyan edirsiniz. Məxfilik siyasəti ilə bağlı hər hansı sualınız yaranarsa, zəhmət olmasa",
+    "contact_link": "Əlaqə bölməsindən",
+    "contact_suffix": "müraciət edin."
+  },
   "exam": {
     "drafts": "İmtahanlar",
     "create": "İmtahan yarat",

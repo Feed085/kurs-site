@@ -783,6 +783,31 @@
     "about": "Hakkında",
     "home": "Ana Sayfa"
   },
+  "privacy": {
+    "title": "Gizlilik Politikası",
+    "intro_title": "Verilerinizin korunması bizim için önemlidir",
+    "intro_desc": "Sizin Akademiyanız bir online eğitim platformu olarak (bundan sonra \"Sizin Akademiyanız\" veya \"Platforma\" olarak anılacaktır) kişisel verilerinizin güvenliğine özel önem vermektedir. Bu Gizlilik Politikası hangi bilgilerin toplandığını ve nasıl kullanıldığını açıklar.",
+    "section1": {
+      "title": "Toplanan Kişisel Veriler",
+      "desc": "Platforma kayıt olurken, derslere abone olurken veya iletişim formunu kullanırken adınız, soyadınız, e-posta adresiniz, eğitim/faaliyet bilgileriniz ve sistem erişimi için IP adresleriniz toplanabilir. Ayrıca, platform kimlik doğrulama amacıyla profil fotoğrafınızın veya yüz tanıma doğrulamanızın gönderilmesini isteyebilir (öğretmenler için)."
+    },
+    "section2": {
+      "title": "Veri Paylaşımı",
+      "desc": "Kişisel verileriniz hiçbir üçüncü taraf ticari şirketlere veya reklam ajanslarına satılmaz. Veriler yalnızca Azerbaycan Cumhuriyeti mevzuatı gerektirdiği durumlarda ilgili icra kurumlarına sunulabilir. Ders sırasında paylaşılan içerik ve adınız aynı sınıftaki diğer katılımcılara görünebilir."
+    },
+    "section3": {
+      "title": "Politikada Değişiklikler ve Onay",
+      "desc": "Sizin Akademiyanız bu gizlilik politikasını teknolojik ve yasal yeniliklere uyum sağlamak amacıyla önceden bildirimde bulunmaksızın güncelleyebilir. Platformu kullanarak bu şartları tamamen kabul ettiğinizi beyan edersiniz."
+    },
+    "section4": {
+      "title": "Gizlilik ve Güvenlik",
+      "desc": "Verileriniz yalnız hizmetin düzgün çalışması, güvenliğin korunması ve size daha iyi bir eğitim deneyimi sunulması için kullanılır. Bu verilerin korunması için gerekli güvenlik önlemleri alınmaktadır."
+    },
+    "changes_title": "Gizlilik politikasında değişiklikler ve onay",
+    "changes_desc": "Sizin Akademiyanız bu gizlilik politikasını teknolojik ve yasal yeniliklere uyum sağlamak amacıyla önceden bildirimde bulunmaksızın güncelleyebilir. Platformu kullanarak bu şartları tamamen kabul ettiğinizi beyan edersiniz. Gizlilik politikası ile ilgili herhangi bir sorunuz olursa, lütfen",
+    "contact_link": "iletişim bölümünden",
+    "contact_suffix": "bizimle iletişime geçin."
+  },
   "exam": {
     "drafts": "Sınavlar",
     "create": "Sınav Oluştur",

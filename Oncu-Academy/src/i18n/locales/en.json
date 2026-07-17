@@ -774,6 +774,31 @@
     "about": "About",
     "home": "Home"
   },
+  "privacy": {
+    "title": "Privacy Policy",
+    "intro_title": "Protecting your data is important to us",
+    "intro_desc": "Your Academy as an online education platform (hereinafter \"Your Academy\" or \"Platform\") pays special attention to the security of your personal data. This Privacy Policy explains what information is collected and how it is used.",
+    "section1": {
+      "title": "Personal Data Collected",
+      "desc": "When registering on the platform, subscribing to lessons, or using the contact form, your name, surname, email address, education/activity information, and IP addresses for system access may be collected. Additionally, the platform may require submission of your profile photo or facial recognition verification for identification purposes (for teachers)."
+    },
+    "section2": {
+      "title": "Data Sharing",
+      "desc": "Your personal data is never sold to any third-party commercial companies or advertising agencies. Data may only be provided to relevant executive authorities when required by the legislation of the Republic of Azerbaijan. Content and name shared during lessons may be visible to other participants in the same class."
+    },
+    "section3": {
+      "title": "Policy Changes and Consent",
+      "desc": "Your Academy may update this privacy policy without prior notice to adapt to technological and legislative changes. By using the platform, you declare that you fully agree to these terms."
+    },
+    "section4": {
+      "title": "Privacy and Security",
+      "desc": "Your data is used only for proper service operation, security protection, and providing you with a better educational experience. Necessary security measures are taken to protect this data."
+    },
+    "changes_title": "Privacy policy changes and consent",
+    "changes_desc": "Your Academy may update this privacy policy without prior notice to adapt to technological and legislative changes. By using the platform, you declare that you fully agree to these terms. If you have any questions about the privacy policy, please",
+    "contact_link": "contact us through the",
+    "contact_suffix": "contact section."
+  },
   "exam": {
     "drafts": "Exams",
     "create": "Create Exam",
