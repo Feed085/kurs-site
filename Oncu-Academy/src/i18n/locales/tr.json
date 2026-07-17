@@ -740,7 +740,32 @@
     "contact_whatsapp_name": "Ad: {{name}}",
     "contact_whatsapp_course": "Kurs: {{course}}",
     "contact_whatsapp_selection": "Seçim: {{selection}}",
-    "contact_whatsapp_message": "Mesaj: {{message}}"
+    "contact_whatsapp_message": "Mesaj: {{message}}",
+    "demo_teachers": {
+      "teacher1_education": "Bakü Devlet Üniversitesi, Filoloji Fakültesi",
+      "teacher1_location": "Bakü, Azerbaycan",
+      "teacher1_bio": "İngiliz dili ve IELTS hazırlığı konusunda uzmanlaşmış öğretmen.",
+      "teacher1_specialty1": "İngiliz dili",
+      "teacher1_specialty2": "IELTS",
+      "teacher1_specialty3": "Konuşma",
+      "teacher2_education": "Azerbaycan Teknik Üniversitesi",
+      "teacher2_location": "Bakü, Azerbaycan",
+      "teacher2_bio": "Matematik ve SAT hazırlığında güçlü sonuçlar veren öğretmen.",
+      "teacher2_specialty1": "Matematik",
+      "teacher2_specialty2": "SAT",
+      "teacher2_specialty3": "Fizik",
+      "teacher3_education": "ADA Üniversitesi",
+      "teacher3_location": "Bakü, Azerbaycan",
+      "teacher3_bio": "Web geliştirme ve Python temellerinde pratik eğitim verir.",
+      "teacher3_specialty1": "Programlama",
+      "teacher3_specialty2": "Web Geliştirme",
+      "teacher3_specialty3": "Python",
+      "teacher4_education": "Moskova Devlet Üniversitesi",
+      "teacher4_location": "Bakü, Azerbaycan",
+      "teacher4_bio": "Rus dili ve edebiyatı konusunda deneyimli öğretmen.",
+      "teacher4_specialty1": "Rus dili",
+      "teacher4_specialty2": "Rus edebiyatı"
+    }
   },
   "footer_extra": {
     "description": "Eğitimin geleceği. Profesyonel öğretmenlerle, modern öğretim yöntemleri ile başarıya giden yol.",

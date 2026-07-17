@@ -731,7 +731,32 @@
     "contact_whatsapp_name": "Name: {{name}}",
     "contact_whatsapp_course": "Course: {{course}}",
     "contact_whatsapp_selection": "Selection: {{selection}}",
-    "contact_whatsapp_message": "Message: {{message}}"
+    "contact_whatsapp_message": "Message: {{message}}",
+    "demo_teachers": {
+      "teacher1_education": "Baku State University, Faculty of Philology",
+      "teacher1_location": "Baku, Azerbaijan",
+      "teacher1_bio": "Teacher specialized in English language and IELTS preparation.",
+      "teacher1_specialty1": "English language",
+      "teacher1_specialty2": "IELTS",
+      "teacher1_specialty3": "Speaking",
+      "teacher2_education": "Azerbaijan Technical University",
+      "teacher2_location": "Baku, Azerbaijan",
+      "teacher2_bio": "Teacher delivering strong results in mathematics and SAT preparation.",
+      "teacher2_specialty1": "Mathematics",
+      "teacher2_specialty2": "SAT",
+      "teacher2_specialty3": "Physics",
+      "teacher3_education": "ADA University",
+      "teacher3_location": "Baku, Azerbaijan",
+      "teacher3_bio": "Provides practical teaching in web development and Python basics.",
+      "teacher3_specialty1": "Programming",
+      "teacher3_specialty2": "Web Development",
+      "teacher3_specialty3": "Python",
+      "teacher4_education": "Moscow State University",
+      "teacher4_location": "Baku, Azerbaijan",
+      "teacher4_bio": "Experienced teacher in Russian language and literature.",
+      "teacher4_specialty1": "Russian language",
+      "teacher4_specialty2": "Russian literature"
+    }
   },
   "footer_extra": {
     "description": "The future of education. The path to success with professional teachers and modern teaching methods.",

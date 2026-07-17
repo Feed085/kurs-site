@@ -58,7 +58,7 @@ type ContactFormData = {
 
 const formatNumber = (value: number) => new Intl.NumberFormat('az-AZ').format(value);
 
-const demoTeachers: PublicTeacher[] = [
+const getDemoTeachers = (t: any): PublicTeacher[] => [
   {
     id: 'demo-teacher-1',
     name: 'Leyla',
@@ -66,12 +66,12 @@ const demoTeachers: PublicTeacher[] = [
     avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop',
     categories: ['ingilis-dili', 'ielts'],
     rating: 4.9,
-    education: 'Bakı Dövlət Universiteti, Filologiya fakültəsi',
+    education: t('home.demo_teachers.teacher1_education', { defaultValue: 'Bakı Dövlət Universiteti, Filologiya fakültəsi' }),
     experience: 15,
-    location: 'Bakı, Azərbaycan',
-    bio: 'İngilis dili və IELTS hazırlığı üzrə ixtisaslaşmış müəllim.',
-    specialties: ['İngilis dili', 'IELTS', 'Danışıq'],
-    specializedAreas: ['İngilis dili', 'IELTS'],
+    location: t('home.demo_teachers.teacher1_location', { defaultValue: 'Bakı, Azərbaycan' }),
+    bio: t('home.demo_teachers.teacher1_bio', { defaultValue: 'İngilis dili və IELTS hazırlığı üzrə ixtisaslaşmış müəllim.' }),
+    specialties: [t('home.demo_teachers.teacher1_specialty1', { defaultValue: 'İngilis dili' }), t('home.demo_teachers.teacher1_specialty2', { defaultValue: 'IELTS' }), t('home.demo_teachers.teacher1_specialty3', { defaultValue: 'Danışıq' })],
+    specializedAreas: [t('home.demo_teachers.teacher1_specialty1', { defaultValue: 'İngilis dili' }), t('home.demo_teachers.teacher1_specialty2', { defaultValue: 'IELTS' })],
     socialLinks: {
       instagram: 'https://instagram.com',
       linkedin: 'https://linkedin.com',
@@ -91,12 +91,12 @@ const demoTeachers: PublicTeacher[] = [
     avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop',
     categories: ['riyaziyyat', 'sat'],
     rating: 5.0,
-    education: 'Azərbaycan Texniki Universiteti',
+    education: t('home.demo_teachers.teacher2_education', { defaultValue: 'Azərbaycan Texniki Universiteti' }),
     experience: 20,
-    location: 'Bakı, Azərbaycan',
-    bio: 'Riyaziyyat və SAT hazırlığı üzrə güclü nəticələr verən müəllim.',
-    specialties: ['Riyaziyyat', 'SAT', 'Fizika'],
-    specializedAreas: ['Riyaziyyat', 'SAT'],
+    location: t('home.demo_teachers.teacher2_location', { defaultValue: 'Bakı, Azərbaycan' }),
+    bio: t('home.demo_teachers.teacher2_bio', { defaultValue: 'Riyaziyyat və SAT hazırlığı üzrə güclü nəticələr verən müəllim.' }),
+    specialties: [t('home.demo_teachers.teacher2_specialty1', { defaultValue: 'Riyaziyyat' }), t('home.demo_teachers.teacher2_specialty2', { defaultValue: 'SAT' }), t('home.demo_teachers.teacher2_specialty3', { defaultValue: 'Fizika' })],
+    specializedAreas: [t('home.demo_teachers.teacher2_specialty1', { defaultValue: 'Riyaziyyat' }), t('home.demo_teachers.teacher2_specialty2', { defaultValue: 'SAT' })],
     socialLinks: {
       facebook: 'https://facebook.com',
       linkedin: 'https://linkedin.com',
@@ -116,12 +116,12 @@ const demoTeachers: PublicTeacher[] = [
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop',
     categories: ['proqramlasdirma', 'python'],
     rating: 4.8,
-    education: 'ADA Universiteti',
+    education: t('home.demo_teachers.teacher3_education', { defaultValue: 'ADA Universiteti' }),
     experience: 7,
-    location: 'Bakı, Azərbaycan',
-    bio: 'Web development və Python əsasları üzrə praktiki tədris aparır.',
-    specialties: ['Proqramlaşdırma', 'Web Development', 'Python'],
-    specializedAreas: ['Proqramlaşdırma', 'Python'],
+    location: t('home.demo_teachers.teacher3_location', { defaultValue: 'Bakı, Azərbaycan' }),
+    bio: t('home.demo_teachers.teacher3_bio', { defaultValue: 'Web development və Python əsasları üzrə praktiki tədris aparır.' }),
+    specialties: [t('home.demo_teachers.teacher3_specialty1', { defaultValue: 'Proqramlaşdırma' }), t('home.demo_teachers.teacher3_specialty2', { defaultValue: 'Web Development' }), t('home.demo_teachers.teacher3_specialty3', { defaultValue: 'Python' })],
+    specializedAreas: [t('home.demo_teachers.teacher3_specialty1', { defaultValue: 'Proqramlaşdırma' }), t('home.demo_teachers.teacher3_specialty3', { defaultValue: 'Python' })],
     socialLinks: {
       instagram: 'https://instagram.com',
       facebook: 'https://facebook.com',
@@ -141,12 +141,12 @@ const demoTeachers: PublicTeacher[] = [
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
     categories: ['rus-dili'],
     rating: 4.8,
-    education: 'Moskva Dövlət Universiteti',
+    education: t('home.demo_teachers.teacher4_education', { defaultValue: 'Moskva Dövlət Universiteti' }),
     experience: 12,
-    location: 'Bakı, Azərbaycan',
-    bio: 'Rus dili və ədəbiyyatı üzrə təcrübəli müəllim.',
-    specialties: ['Rus dili', 'Rus ədəbiyyatı'],
-    specializedAreas: ['Rus dili', 'Rus ədəbiyyatı'],
+    location: t('home.demo_teachers.teacher4_location', { defaultValue: 'Bakı, Azərbaycan' }),
+    bio: t('home.demo_teachers.teacher4_bio', { defaultValue: 'Rus dili və ədəbiyyatı üzrə təcrübəli müəllim.' }),
+    specialties: [t('home.demo_teachers.teacher4_specialty1', { defaultValue: 'Rus dili' }), t('home.demo_teachers.teacher4_specialty2', { defaultValue: 'Rus ədəbiyyatı' })],
+    specializedAreas: [t('home.demo_teachers.teacher4_specialty1', { defaultValue: 'Rus dili' }), t('home.demo_teachers.teacher4_specialty2', { defaultValue: 'Rus ədəbiyyatı' })],
     socialLinks: {
       instagram: 'https://instagram.com',
     },
@@ -159,250 +159,6 @@ const demoTeachers: PublicTeacher[] = [
     teacherRating: 4.8,
   },
 ];
-
-const demoCourses: PublicCourse[] = [
-  {
-    id: 'demo-course-1',
-    _id: 'demo-course-1',
-    title: 'SAT Hazırlığı',
-    description: 'Riyaziyyat və ingilis dili üzrə tam hazırlıq proqramı.',
-    category: 'SAT',
-    image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&h=800&fit=crop',
-    price: 450,
-    rating: 4.9,
-    learningPoints: ['Riyaziyyat', 'Reading', 'Writing'],
-    includes: ['Canlı dərs', 'Testlər', 'Qrup dəstəyi'],
-    isActive: true,
-    createdAt: '2024-03-10',
-    instructor: {
-      id: 'demo-teacher-2',
-      _id: 'demo-teacher-2',
-      name: 'Elçin',
-      surname: 'Quliyev',
-      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop',
-      rating: 5.0,
-    },
-  },
-  {
-    id: 'demo-course-2',
-    _id: 'demo-course-2',
-    title: 'IELTS Intensive',
-    description: 'Listening, Reading, Writing və Speaking bölmələri ilə intensiv proqram.',
-    category: 'IELTS',
-    image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1200&h=800&fit=crop',
-    price: 350,
-    rating: 4.9,
-    learningPoints: ['Speaking', 'Writing', 'Reading'],
-    includes: ['Mövzu izahı', 'Sınaq imtahanları', 'Geribildirim'],
-    isActive: true,
-    createdAt: '2024-03-12',
-    instructor: {
-      id: 'demo-teacher-1',
-      _id: 'demo-teacher-1',
-      name: 'Leyla',
-      surname: 'Əhmədova',
-      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop',
-      rating: 4.9,
-    },
-  },
-  {
-    id: 'demo-course-3',
-    _id: 'demo-course-3',
-    title: 'Web Proqramlaşdırma',
-    description: 'HTML, CSS, JavaScript və React ilə web development əsasları.',
-    category: 'Programming',
-    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&h=800&fit=crop',
-    price: 500,
-    rating: 4.8,
-    learningPoints: ['HTML', 'CSS', 'React'],
-    includes: ['Kod nümunələri', 'Layihələr', 'Mentorluq'],
-    isActive: true,
-    createdAt: '2024-03-15',
-    instructor: {
-      id: 'demo-teacher-3',
-      _id: 'demo-teacher-3',
-      name: 'Rəşad',
-      surname: 'İbrahimov',
-      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop',
-      rating: 4.8,
-    },
-  },
-  {
-    id: 'demo-course-4',
-    _id: 'demo-course-4',
-    title: 'İngilis Dili - Başlanğıc',
-    description: 'İngilis dilini sıfırdan öyrənmək üçün rahat və aydın kurs.',
-    category: 'English',
-    image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200&h=800&fit=crop',
-    price: 280,
-    rating: 4.8,
-    learningPoints: ['Qrammatika', 'Söz ehtiyatı', 'Danışıq'],
-    includes: ['Məşğələ', 'Tapşırıqlar', 'Video izah'],
-    isActive: true,
-    createdAt: '2024-03-18',
-    instructor: {
-      id: 'demo-teacher-1',
-      _id: 'demo-teacher-1',
-      name: 'Leyla',
-      surname: 'Əhmədova',
-      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop',
-      rating: 4.9,
-    },
-  },
-];
-
-gsap.registerPlugin(ScrollTrigger);
-
-type RevealAnimationOptions = {
-  start?: string;
-  duration?: number;
-  stagger?: number;
-  y?: number;
-};
-
-function useSectionReveal(
-  sectionRef: { current: HTMLElement | null },
-  dependencies: readonly unknown[],
-  options: RevealAnimationOptions = {}
-) {
-  useLayoutEffect(() => {
-    const section = sectionRef.current;
-
-    if (!section || typeof window === 'undefined') {
-      return;
-    }
-
-    const targets = Array.from(section.querySelectorAll<HTMLElement>('[data-reveal]'));
-
-    if (targets.length === 0) {
-      return;
-    }
-
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const refreshScrollTrigger = () => {
-      window.requestAnimationFrame(() => {
-        ScrollTrigger.refresh();
-      });
-    };
-
-    const ctx = gsap.context(() => {
-      if (prefersReducedMotion) {
-        gsap.set(targets, {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          filter: 'none',
-        });
-
-        return;
-      }
-
-      gsap.fromTo(
-        targets,
-        {
-          opacity: 0,
-          y: options.y ?? 32,
-          scale: 0.985,
-          filter: 'blur(12px)',
-        },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          filter: 'blur(0px)',
-          duration: options.duration ?? 0.7,
-          stagger: options.stagger ?? 0.08,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: section,
-            start: options.start ?? 'top 78%',
-            toggleActions: 'play none none reverse',
-          },
-        }
-      );
-    }, section);
-
-    const resizeObserver = new ResizeObserver(() => {
-      refreshScrollTrigger();
-    });
-
-    resizeObserver.observe(section);
-    window.addEventListener('load', refreshScrollTrigger, { once: true });
-    refreshScrollTrigger();
-
-    return () => {
-      resizeObserver.disconnect();
-      window.removeEventListener('load', refreshScrollTrigger);
-      ctx.revert();
-    };
-  }, dependencies);
-}
-
-function AnimatedNumber({ value, suffix = '' }: { value: number; suffix?: string }) {
-  const [displayValue, setDisplayValue] = useState(0);
-  const numberRef = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    if (typeof window === 'undefined' || typeof IntersectionObserver === 'undefined') {
-      setDisplayValue(value);
-      return;
-    }
-
-    const node = numberRef.current;
-
-    if (!node) {
-      setDisplayValue(value);
-      return;
-    }
-
-    let animationFrame = 0;
-    let startTime: number | null = null;
-    let started = false;
-
-    const animate = (timestamp: number) => {
-      if (startTime === null) {
-        startTime = timestamp;
-      }
-
-      const elapsed = timestamp - startTime;
-      const progress = Math.min(elapsed / 650, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-
-      setDisplayValue(Math.round(value * eased));
-
-      if (progress < 1) {
-        animationFrame = window.requestAnimationFrame(animate);
-      }
-    };
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting || started) {
-          return;
-        }
-
-        started = true;
-        animationFrame = window.requestAnimationFrame(animate);
-        observer.disconnect();
-      },
-      { threshold: 0.35 }
-    );
-
-    observer.observe(node);
-
-    return () => {
-      observer.disconnect();
-      window.cancelAnimationFrame(animationFrame);
-    };
-  }, [value]);
-
-  return (
-    <span ref={numberRef}>
-      {displayValue}
-      {suffix}
-    </span>
-  );
-}
 
 function HomeHero({ stats }: { stats: PublicStats }) {
   const { t } = useTranslation();
@@ -668,6 +424,250 @@ function HomeHero({ stats }: { stats: PublicStats }) {
       </div>
     </section>
 
+  );
+}
+
+const demoCourses: PublicCourse[] = [
+  {
+    id: 'demo-course-1',
+    _id: 'demo-course-1',
+    title: 'SAT Hazırlığı',
+    description: 'Riyaziyyat və ingilis dili üzrə tam hazırlıq proqramı.',
+    category: 'SAT',
+    image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&h=800&fit=crop',
+    price: 450,
+    rating: 4.9,
+    learningPoints: ['Riyaziyyat', 'Reading', 'Writing'],
+    includes: ['Canlı dərs', 'Testlər', 'Qrup dəstəyi'],
+    isActive: true,
+    createdAt: '2024-03-10',
+    instructor: {
+      id: 'demo-teacher-2',
+      _id: 'demo-teacher-2',
+      name: 'Elçin',
+      surname: 'Quliyev',
+      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop',
+      rating: 5.0,
+    },
+  },
+  {
+    id: 'demo-course-2',
+    _id: 'demo-course-2',
+    title: 'IELTS Intensive',
+    description: 'Listening, Reading, Writing və Speaking bölmələri ilə intensiv proqram.',
+    category: 'IELTS',
+    image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1200&h=800&fit=crop',
+    price: 350,
+    rating: 4.9,
+    learningPoints: ['Speaking', 'Writing', 'Reading'],
+    includes: ['Mövzu izahı', 'Sınaq imtahanları', 'Geribildirim'],
+    isActive: true,
+    createdAt: '2024-03-12',
+    instructor: {
+      id: 'demo-teacher-1',
+      _id: 'demo-teacher-1',
+      name: 'Leyla',
+      surname: 'Əhmədova',
+      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop',
+      rating: 4.9,
+    },
+  },
+  {
+    id: 'demo-course-3',
+    _id: 'demo-course-3',
+    title: 'Web Proqramlaşdırma',
+    description: 'HTML, CSS, JavaScript və React ilə web development əsasları.',
+    category: 'Programming',
+    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&h=800&fit=crop',
+    price: 500,
+    rating: 4.8,
+    learningPoints: ['HTML', 'CSS', 'React'],
+    includes: ['Kod nümunələri', 'Layihələr', 'Mentorluq'],
+    isActive: true,
+    createdAt: '2024-03-15',
+    instructor: {
+      id: 'demo-teacher-3',
+      _id: 'demo-teacher-3',
+      name: 'Rəşad',
+      surname: 'İbrahimov',
+      avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop',
+      rating: 4.8,
+    },
+  },
+  {
+    id: 'demo-course-4',
+    _id: 'demo-course-4',
+    title: 'İngilis Dili - Başlanğıc',
+    description: 'İngilis dilini sıfırdan öyrənmək üçün rahat və aydın kurs.',
+    category: 'English',
+    image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200&h=800&fit=crop',
+    price: 280,
+    rating: 4.8,
+    learningPoints: ['Qrammatika', 'Söz ehtiyatı', 'Danışıq'],
+    includes: ['Məşğələ', 'Tapşırıqlar', 'Video izah'],
+    isActive: true,
+    createdAt: '2024-03-18',
+    instructor: {
+      id: 'demo-teacher-1',
+      _id: 'demo-teacher-1',
+      name: 'Leyla',
+      surname: 'Əhmədova',
+      avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop',
+      rating: 4.9,
+    },
+  },
+];
+
+gsap.registerPlugin(ScrollTrigger);
+
+type RevealAnimationOptions = {
+  start?: string;
+  duration?: number;
+  stagger?: number;
+  y?: number;
+};
+
+function useSectionReveal(
+  sectionRef: { current: HTMLElement | null },
+  dependencies: readonly unknown[],
+  options: RevealAnimationOptions = {}
+) {
+  useLayoutEffect(() => {
+    const section = sectionRef.current;
+
+    if (!section || typeof window === 'undefined') {
+      return;
+    }
+
+    const targets = Array.from(section.querySelectorAll<HTMLElement>('[data-reveal]'));
+
+    if (targets.length === 0) {
+      return;
+    }
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const refreshScrollTrigger = () => {
+      window.requestAnimationFrame(() => {
+        ScrollTrigger.refresh();
+      });
+    };
+
+    const ctx = gsap.context(() => {
+      if (prefersReducedMotion) {
+        gsap.set(targets, {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          filter: 'none',
+        });
+
+        return;
+      }
+
+      gsap.fromTo(
+        targets,
+        {
+          opacity: 0,
+          y: options.y ?? 32,
+          scale: 0.985,
+          filter: 'blur(12px)',
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          filter: 'blur(0px)',
+          duration: options.duration ?? 0.7,
+          stagger: options.stagger ?? 0.08,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: section,
+            start: options.start ?? 'top 78%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      );
+    }, section);
+
+    const resizeObserver = new ResizeObserver(() => {
+      refreshScrollTrigger();
+    });
+
+    resizeObserver.observe(section);
+    window.addEventListener('load', refreshScrollTrigger, { once: true });
+    refreshScrollTrigger();
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener('load', refreshScrollTrigger);
+      ctx.revert();
+    };
+  }, dependencies);
+}
+
+function AnimatedNumber({ value, suffix = '' }: { value: number; suffix?: string }) {
+  const [displayValue, setDisplayValue] = useState(0);
+  const numberRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || typeof IntersectionObserver === 'undefined') {
+      setDisplayValue(value);
+      return;
+    }
+
+    const node = numberRef.current;
+
+    if (!node) {
+      setDisplayValue(value);
+      return;
+    }
+
+    let animationFrame = 0;
+    let startTime: number | null = null;
+    let started = false;
+
+    const animate = (timestamp: number) => {
+      if (startTime === null) {
+        startTime = timestamp;
+      }
+
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / 650, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+
+      setDisplayValue(Math.round(value * eased));
+
+      if (progress < 1) {
+        animationFrame = window.requestAnimationFrame(animate);
+      }
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || started) {
+          return;
+        }
+
+        started = true;
+        animationFrame = window.requestAnimationFrame(animate);
+        observer.disconnect();
+      },
+      { threshold: 0.35 }
+    );
+
+    observer.observe(node);
+
+    return () => {
+      observer.disconnect();
+      window.cancelAnimationFrame(animationFrame);
+    };
+  }, [value]);
+
+  return (
+    <span ref={numberRef}>
+      {displayValue}
+      {suffix}
+    </span>
   );
 }
 
@@ -1750,12 +1750,12 @@ function Home() {
         const teacherList = await getPublicTeachers();
 
         if (isMounted) {
-          setTeachers(teacherList.length > 0 ? teacherList : demoTeachers);
+          setTeachers(teacherList.length > 0 ? teacherList : getDemoTeachers(t));
         }
       } catch (error) {
         console.error('Müəllimlər yüklənə bilmədi', error);
         if (isMounted) {
-          setTeachers(demoTeachers);
+          setTeachers(getDemoTeachers(t));
         }
       } finally {
         if (isMounted) {
