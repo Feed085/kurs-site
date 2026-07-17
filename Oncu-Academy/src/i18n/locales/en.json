@@ -377,6 +377,7 @@
   "student_exam": {
     "tabs": {
       "exams": {
+        "label": "📋 My Exams",
         "badge": "Exam review",
         "title": "Your exam panel",
         "description": "Track active tests approved by admin and view your latest results.",
@@ -384,6 +385,7 @@
         "actionPath": "/exam-panel/results"
       },
       "results": {
+        "label": "📊 My Results",
         "badge": "Completed results",
         "title": "Your result history",
         "description": "Final results of only admin-approved exams are collected here.",
@@ -391,6 +393,7 @@
         "actionPath": "/exam-panel"
       },
       "keys": {
+        "label": "📝 Answer Keys",
         "badge": "Answer keys",
         "title": "Open the keys",
         "description": "Review keys of completed and admin-approved exams on a separate page.",

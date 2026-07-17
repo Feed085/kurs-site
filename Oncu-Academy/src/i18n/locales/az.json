@@ -376,6 +376,7 @@
   "student_exam": {
     "tabs": {
       "exams": {
+        "label": "📋 İmtahanlarım",
         "badge": "İmtahan baxışı",
         "title": "İmtahan paneliniz",
         "description": "Admin tərəfindən təsdiqlənmiş aktiv testləri izləyin və son nəticələrinizə baxın.",
@@ -383,6 +384,7 @@
         "actionPath": "/exam-panel/results"
       },
       "results": {
+        "label": "📊 Nəticələrim",
         "badge": "Tamamlanmış nəticələr",
         "title": "Nəticə tarixçəniz",
         "description": "Yalnız admin təsdiqli imtahanların yekun nəticələri burada toplanır.",
@@ -390,6 +392,7 @@
         "actionPath": "/exam-panel"
       },
       "keys": {
+        "label": "📝 Cavab Açarları",
         "badge": "Cavab açarları",
         "title": "Açarları açın",
         "description": "Tamamlanan və admin tərəfindən təsdiqlənmiş imtahanların açarlarını ayrıca səhifədə yoxlayın.",

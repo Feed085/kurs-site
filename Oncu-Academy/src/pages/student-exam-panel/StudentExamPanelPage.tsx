@@ -43,7 +43,7 @@ import {
   getResultStatusMeta,
   isPendingReviewAnswer,
   safeNumber,
-  studentExamPanelTabs,
+  getStudentExamPanelTabs,
 } from '@/pages/student-exam-panel/shared';
 
 const getTestEndTime = (test: PanelTestSummary) => {
@@ -69,7 +69,8 @@ export default function StudentExamPanelPage() {
   const [loadError, setLoadError] = useState<string | null>(null);
   const [currentTime, setCurrentTime] = useState(() => Date.now());
 
-  const activeTab = studentExamPanelTabs.find((tab) => location.pathname === tab.path) ?? studentExamPanelTabs[0];
+  const tabs = getStudentExamPanelTabs(t);
+  const activeTab = tabs.find((tab) => location.pathname === tab.path) ?? tabs[0];
 
   const heroCopy: Record<TabKey, { badge: string; title: string; description: string; actionLabel: string; actionPath: string; }> = {
     exams: {

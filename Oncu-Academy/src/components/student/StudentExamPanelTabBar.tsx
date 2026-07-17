@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { studentExamPanelTabs } from '@/pages/student-exam-panel/shared';
+import { getStudentExamPanelTabs } from '@/pages/student-exam-panel/shared';
 
 type StudentExamPanelTabBarProps = {
   activePath: string;
@@ -9,12 +10,14 @@ type StudentExamPanelTabBarProps = {
 
 export default function StudentExamPanelTabBar({ activePath }: StudentExamPanelTabBarProps) {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+  const tabs = getStudentExamPanelTabs(t);
 
   return (
     <div className="border-b border-slate-200/80 bg-white/85 backdrop-blur-md">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-3 py-4 sm:grid-cols-3 sm:gap-2">
-          {studentExamPanelTabs.map((tab) => {
+          {tabs.map((tab) => {
             const TabIcon = tab.icon;
             const isActive = activePath === tab.path;
 

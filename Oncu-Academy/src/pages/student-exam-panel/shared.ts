@@ -127,6 +127,27 @@ export type PanelData = {
   stats?: PanelStats;
 };
 
+export const getStudentExamPanelTabs = (t: (key: string, options?: { defaultValue?: string }) => string): PanelTab[] => [
+  {
+    key: 'exams',
+    label: t('student_exam.tabs.exams.label', { defaultValue: '📋 İmtahanlarım' }),
+    icon: ClipboardList,
+    path: '/exam-panel',
+  },
+  {
+    key: 'results',
+    label: t('student_exam.tabs.results.label', { defaultValue: '📊 Nəticələrim' }),
+    icon: BarChart3,
+    path: '/exam-panel/results',
+  },
+  {
+    key: 'keys',
+    label: t('student_exam.tabs.keys.label', { defaultValue: '📝 Cavab Açarları' }),
+    icon: KeyRound,
+    path: '/exam-panel/keys',
+  },
+];
+
 export const studentExamPanelTabs: PanelTab[] = [
   {
     key: 'exams',
