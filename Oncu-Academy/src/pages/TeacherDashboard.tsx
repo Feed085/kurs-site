@@ -120,7 +120,7 @@ export default function TeacherDashboard() {
       onClick: () => navigate('/teacher/students'),
     },
     {
-      label: 'Aktiv Kurslar',
+      label: t('teacher.dashboard.active_courses', { defaultValue: 'Aktiv Kurslar' }),
       value: stats.courseCount,
       icon: BookOpen,
       color: '#A87A1F',
@@ -182,7 +182,7 @@ export default function TeacherDashboard() {
               className="w-full rounded-xl sm:w-auto"
             >
               <UserPlus className="w-4 h-4 mr-2" />
-              Profil
+              {t('teacher.dashboard.profile', { defaultValue: 'Profil' })}
             </Button>
             <Button
               onClick={() => navigate('/teacher/courses/create')}
@@ -190,7 +190,7 @@ export default function TeacherDashboard() {
               className="w-full rounded-xl border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37]/5 sm:w-auto"
             >
               <Plus className="w-4 h-4 mr-2" />
-              Kurs Yarat
+              {t('teacher.dashboard.create_course', { defaultValue: 'Kurs Yarat' })}
             </Button>
             <Button
               onClick={() => navigate('/teacher/upload')}
@@ -205,7 +205,7 @@ export default function TeacherDashboard() {
               className="w-full rounded-xl bg-[#D4AF37] hover:bg-[#B88A1B] sm:w-auto"
             >
               <Plus className="w-4 h-4 mr-2" />
-              Test Yarat
+              {t('teacher.dashboard.create_test', { defaultValue: 'Test Yarat' })}
             </Button>
             <Button
               onClick={() => navigate('/teacher/exam-panel')}
@@ -213,7 +213,7 @@ export default function TeacherDashboard() {
               className="w-full rounded-xl border-[#A87A1F] text-[#A87A1F] hover:bg-[#A87A1F]/5 sm:w-auto"
             >
               <FileText className="w-4 h-4 mr-2" />
-              İmtahan Paneli
+              {t('teacher.dashboard.exam_panel', { defaultValue: 'İmtahan Paneli' })}
             </Button>
           </div>
         </div>

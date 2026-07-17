@@ -90,34 +90,34 @@ export default function CreateCourse() {
     const trimmedPrice = formData.price.trim();
 
     if (!trimmedTitle) {
-      toast.error('Kurs başlığı məcburidir');
+      toast.error(t('courses.title_required', { defaultValue: 'Kurs başlığı məcburidir' }));
       return;
     }
 
     if (!formData.category) {
-      toast.error('Zəhmət olmasa əsas xanalara məlumat yazın');
+      toast.error(t('courses.fill_required_fields', { defaultValue: 'Zəhmət olmasa əsas xanalara məlumat yazın' }));
       return;
     }
 
     if (!trimmedDescription) {
-      toast.error('Haqqında bölməsi məcburidir');
+      toast.error(t('courses.description_required', { defaultValue: 'Haqqında bölməsi məcburidir' }));
       return;
     }
 
     if (!trimmedPrice) {
-      toast.error('Qiymət məcburidir');
+      toast.error(t('courses.price_required', { defaultValue: 'Qiymət məcburidir' }));
       return;
     }
 
     const priceValue = Number(trimmedPrice);
 
     if (!Number.isFinite(priceValue) || priceValue < 0) {
-      toast.error('Qiymət etibarlı rəqəm olmalıdır');
+      toast.error(t('courses.price_invalid', { defaultValue: 'Qiymət etibarlı rəqəm olmalıdır' }));
       return;
     }
 
     if (!formData.image) {
-      toast.error('Kover şəkli məcburidir');
+      toast.error(t('courses.cover_required', { defaultValue: 'Kover şəkli məcburidir' }));
       return;
     }
 
@@ -125,7 +125,7 @@ export default function CreateCourse() {
     try {
       const token = localStorage.getItem('rim_auth_token');
       if (!token) {
-        toast.error('Sessiyanız bitib, yenidən giriş edin');
+        toast.error(t('courses.session_expired', { defaultValue: 'Sessiyanız bitib, yenidən giriş edin' }));
         navigate('/login');
         return;
       }
@@ -145,7 +145,7 @@ export default function CreateCourse() {
 
         const uploadResult = await uploadRes.json();
         if (!uploadResult.success) {
-          throw new Error('Kover şəkli yüklənə bilmədi: ' + uploadResult.message);
+          throw new Error(t('courses.cover_upload_failed', { defaultValue: 'Kover şəkli yüklənə bilmədi' }) + ': ' + uploadResult.message);
         }
         uploadedImageUrl = uploadResult.data.url;
       }
@@ -172,7 +172,7 @@ export default function CreateCourse() {
       const courseData = await courseRes.json();
       
       if (courseData.success) {
-        toast.success('Yeni kurs uğurla yaradıldı!');
+        toast.success(t('courses.course_created', { defaultValue: 'Yeni kurs uğurla yaradıldı!' }));
         // Kurs yaradıldıqdan sonra gələcəkdə "Video idarə" pəncərəsinə yönləndiriləcək
         // Şimdilik dashboard-da görünsün
         navigate('/teacher/dashboard');
@@ -205,7 +205,7 @@ export default function CreateCourse() {
               <div className="bg-white rounded-3xl p-6 lg:p-8 shadow-sm border border-gray-100">
                 <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
                   <Layout className="w-5 h-5 text-[#D4AF37]" />
-                  Kursun Məlumatları
+                  {t('courses.course_info', { defaultValue: 'Kursun Məlumatları' })}
                 </h2>
 
                 <div className="space-y-4">
@@ -216,7 +216,7 @@ export default function CreateCourse() {
                       <Input
                         value={formData.title}
                         onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                        placeholder="Məs: IELTS Preparation Mastery"
+                        placeholder={t('courses.title_placeholder', { defaultValue: 'Məs: IELTS Preparation Mastery' })}
                         className="pl-12 h-12 rounded-xl"
                         required
                       />
@@ -224,18 +224,18 @@ export default function CreateCourse() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Kateqoriya</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('courses.category', { defaultValue: 'Kateqoriya' })}</label>
                     <Select value={formData.category} onValueChange={(val) => setFormData({ ...formData, category: val })}>
                       <SelectTrigger className="w-full h-12 rounded-xl bg-white border-gray-200">
                         <div className="flex items-center gap-3">
                           <Tag className="w-5 h-5 text-gray-400" />
-                          <SelectValue placeholder="Kateqoriya seçin" />
+                          <SelectValue placeholder={t('courses.select_category', { defaultValue: 'Kateqoriya seçin' })} />
                         </div>
                       </SelectTrigger>
                       <SelectContent className="bg-white border-gray-100 rounded-xl shadow-xl">
                         {isCategoriesLoading && (
                           <SelectItem value="loading" disabled className="py-2.5 px-4 rounded-lg">
-                            Kateqoriyalar yüklənir...
+                            {t('courses.categories_loading', { defaultValue: 'Kateqoriyalar yüklənir...' })}
                           </SelectItem>
                         )}
                         {!isCategoriesLoading && categories.length === 0 && (

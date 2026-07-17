@@ -152,11 +152,11 @@ export default function TeacherCourseReviews() {
             <div className="mt-2 text-2xl font-black text-gray-900">{totalReviews}</div>
           </div>
           <div className="bg-white rounded-3xl p-4 shadow-sm border border-gray-100">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400">Orta bal</p>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400">{t('teacher.reviews.average_rating', { defaultValue: 'Orta bal' })}</p>
             <div className="mt-2 text-2xl font-black text-gray-900">{averageRating.toFixed(1)}</div>
           </div>
           <div className="bg-white rounded-3xl p-4 shadow-sm border border-gray-100">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400">Aktiv filtr</p>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400">{t('teacher.reviews.active_filter', { defaultValue: 'Aktiv filtr' })}</p>
             <div className="mt-2 text-2xl font-black text-gray-900">{activeFiltersCount}</div>
           </div>
         </div>

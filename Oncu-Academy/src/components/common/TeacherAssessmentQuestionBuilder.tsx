@@ -38,7 +38,7 @@ export default function TeacherAssessmentQuestionBuilder({
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#D4AF37]/10">
                 <HelpCircle className="h-5 w-5 text-[#D4AF37]" />
               </div>
-              <span className="font-bold text-gray-900">Sual {questionIndex + 1}</span>
+              <span className="font-bold text-gray-900">{t('test.edit.question_number', { defaultValue: 'Sual' })} {questionIndex + 1}</span>
             </div>
             <button
               type="button"

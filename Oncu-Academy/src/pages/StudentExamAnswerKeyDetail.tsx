@@ -35,10 +35,10 @@ import {
   safeNumber,
 } from '@/pages/student-exam-panel/shared';
 
-const getAnswerStatusMeta = (answer?: PanelResultAnswer) => {
+const getAnswerStatusMeta = (answer?: PanelResultAnswer, t?: any) => {
   if (!answer?.answer?.trim()) {
     return {
-      label: 'Cavab yoxdur',
+      label: t ? t('student.exam_answer_key.no_answer', { defaultValue: 'Cavab yoxdur' }) : 'Cavab yoxdur',
       className: 'border-slate-200 bg-slate-50 text-slate-600',
       icon: XCircle,
     };
@@ -46,7 +46,7 @@ const getAnswerStatusMeta = (answer?: PanelResultAnswer) => {
 
   if (isPendingReviewAnswer(answer)) {
     return {
-      label: 'Yoxlanılır',
+      label: t ? t('student.exam_answer_key.reviewing', { defaultValue: 'Yoxlanılır' }) : 'Yoxlanılır',
       className: 'border-amber-200 bg-amber-50 text-amber-700',
       icon: Loader2,
     };
@@ -54,14 +54,14 @@ const getAnswerStatusMeta = (answer?: PanelResultAnswer) => {
 
   if (answer.isCorrect) {
     return {
-      label: 'Düzgün',
+      label: t ? t('student.exam_answer_key.correct', { defaultValue: 'Düzgün' }) : 'Düzgün',
       className: 'border-emerald-200 bg-emerald-50 text-emerald-700',
       icon: CheckCircle2,
     };
   }
 
   return {
-    label: 'Yanlış',
+    label: t ? t('student.exam_answer_key.incorrect', { defaultValue: 'Yanlış' }) : 'Yanlış',
     className: 'border-rose-200 bg-rose-50 text-rose-700',
     icon: XCircle,
   };
@@ -96,7 +96,7 @@ export default function StudentExamAnswerKeyDetail() {
       }
 
       if (!resultId) {
-        setLoadError('Cavab açarı tapılmadı.');
+        setLoadError(t('student.exam_answer_key.not_found', { defaultValue: 'Cavab açarı tapılmadı.' }));
         setIsLoading(false);
         return;
       }
@@ -120,13 +120,13 @@ export default function StudentExamAnswerKeyDetail() {
         const matchedResult = results.find((entry) => getEntityId(entry) === resultId);
 
         if (!matchedResult) {
-          throw new Error('Cavab açarı tapılmadı.');
+          throw new Error(t('student.exam_answer_key.not_found', { defaultValue: 'Cavab açarı tapılmadı.' }));
         }
 
         const testId = getEntityId(matchedResult.test);
 
         if (!testId || !adminAssignedTestIds.has(testId)) {
-          throw new Error('Bu cavab açarı yalnız admin tərəfindən təsdiqlənmiş imtahanlar üçün əlçatandır.');
+          throw new Error(t('student.exam_answer_key.admin_only', { defaultValue: 'Bu cavab açarı yalnız admin tərəfindən təsdiqlənmiş imtahanlar üçün əlçatandır.' }));
         }
 
         const detail = await fetchAuthorizedData<PanelTestDetail>(`/tests/${testId}`, token);
@@ -144,7 +144,7 @@ export default function StudentExamAnswerKeyDetail() {
 
         setResult(null);
         setTestDetail(null);
-        setLoadError(error instanceof Error ? error.message : 'Cavab açarı yüklənmədi.');
+        setLoadError(error instanceof Error ? error.message : t('student.exam_answer_key.load_error', { defaultValue: 'Cavab açarı yüklənmədi.' }));
       } finally {
         if (isMounted) {
           setIsLoading(false);
@@ -190,7 +190,7 @@ export default function StudentExamAnswerKeyDetail() {
     }
 
     const answer = getQuestionAnswer(result, question, index);
-    const answerStatusMeta = getAnswerStatusMeta(answer);
+    const answerStatusMeta = getAnswerStatusMeta(answer, t);
     const AnswerStatusIcon = answerStatusMeta.icon;
     const studentAnswerLabel = getStudentAnswerLabel(question, answer?.answer);
     const correctAnswerLabel = getCorrectAnswerLabel(question);
@@ -202,10 +202,10 @@ export default function StudentExamAnswerKeyDetail() {
         <CardHeader className="border-b border-slate-100 bg-slate-50/80">
           <div className="flex flex-wrap items-center gap-2">
             <Badge variant="outline" className="border-slate-200 bg-white text-slate-600">
-              Sual {index + 1}
+              {t('student.exam_answer_key.question', { defaultValue: 'Sual' })} {index + 1}
             </Badge>
             <Badge className="bg-[#D4AF37]/10 text-[#A87A1F] hover:bg-[#D4AF37]/10">
-              {question.answerType === 'multiple_choice' ? 'Qapalı sual' : 'Açıq sual'}
+              {question.answerType === 'multiple_choice' ? t('student.exam_answer_key.closed_question', { defaultValue: 'Qapalı sual' }) : t('student.exam_answer_key.open_question', { defaultValue: 'Açıq sual' })}
             </Badge>
             <Badge variant="outline" className={cn('border', answerStatusMeta.className)}>
               <AnswerStatusIcon className={cn('mr-1 h-3.5 w-3.5', isPendingReviewAnswer(answer) ? 'animate-spin' : '')} />
@@ -285,7 +285,7 @@ export default function StudentExamAnswerKeyDetail() {
               className="rounded-xl border-slate-200 bg-white text-slate-700"
             >
               <ArrowLeft className="h-4 w-4" />
-              Geri qayıt
+              {t('common.go_back', { defaultValue: 'Geri qayıt' })}
             </Button>
           </div>
 

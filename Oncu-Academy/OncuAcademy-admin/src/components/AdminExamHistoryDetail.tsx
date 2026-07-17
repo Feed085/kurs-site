@@ -114,11 +114,12 @@ const getMultipleChoiceCorrectAnswerIndex = (question: any) => {
   return null;
 };
 
-const formatMultipleChoiceAnswer = (question: any, answer: string) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const formatMultipleChoiceAnswer = (question: any, answer: string, t?: any) => {
   const answerIndex = normalizeMultipleChoiceAnswerIndex(answer);
 
   if (answerIndex === null) {
-    return answer || 'Cavab verilməyib';
+    return answer || t ? t('admin.no_answer_provided', { defaultValue: 'Cavab verilməyib' }) : 'Cavab verilməyib';
   }
 
   const optionText = question?.options?.[answerIndex] ?? '';
@@ -172,14 +173,16 @@ const isPendingReviewAnswer = (answer?: { answer?: string; status?: 'graded' | '
   return true;
 };
 
-const getOpenEndedReviewStatusLabel = (answer?: { answer?: string; status?: 'graded' | 'pending'; isCorrect?: boolean } | null) => (
-  isPendingReviewAnswer(answer) ? 'Təyin edilməyib' : 'Yoxlanılıb'
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getOpenEndedReviewStatusLabel = (answer?: { answer?: string; status?: 'graded' | 'pending'; isCorrect?: boolean } | null, t?: any) => (
+  isPendingReviewAnswer(answer) ? t ? t('admin.review_status_pending', { defaultValue: 'Təyin edilməyib' }) : 'Təyin edilməyib' : t ? t('admin.review_status_reviewed', { defaultValue: 'Yoxlanılıb' }) : 'Yoxlanılıb'
 );
 
-const getAnswerStatusMeta = (answer?: { answer?: string; status?: 'graded' | 'pending'; isCorrect?: boolean } | null) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getAnswerStatusMeta = (answer?: { answer?: string; status?: 'graded' | 'pending'; isCorrect?: boolean } | null, t?: any) => {
   if (!String(answer?.answer ?? '').trim()) {
     return {
-      label: 'Cavab yoxdur',
+      label: t ? (t as any)('admin.answer_status_no_answer', { defaultValue: 'Cavab yoxdur' }) : 'Cavab yoxdur',
       className: 'border-slate-200 bg-slate-50 text-slate-600',
       icon: XCircle,
     };
@@ -187,7 +190,7 @@ const getAnswerStatusMeta = (answer?: { answer?: string; status?: 'graded' | 'pe
 
   if (isPendingReviewAnswer(answer)) {
     return {
-      label: 'Yoxlanılır',
+      label: t ? (t as any)('admin.answer_status_reviewing', { defaultValue: 'Yoxlanılır' }) : 'Yoxlanılır',
       className: 'border-amber-200 bg-amber-50 text-amber-700',
       icon: Loader2,
     };
@@ -195,14 +198,14 @@ const getAnswerStatusMeta = (answer?: { answer?: string; status?: 'graded' | 'pe
 
   if (answer?.isCorrect) {
     return {
-      label: 'Düzgün',
+      label: t ? (t as any)('admin.answer_status_correct', { defaultValue: 'Düzgün' }) : 'Düzgün',
       className: 'border-emerald-200 bg-emerald-50 text-emerald-700',
       icon: CheckCircle2,
     };
   }
 
   return {
-    label: 'Yanlış',
+    label: t ? (t as any)('admin.answer_status_incorrect', { defaultValue: 'Yanlış' }) : 'Yanlış',
     className: 'border-rose-200 bg-rose-50 text-rose-700',
     icon: XCircle,
   };
@@ -254,7 +257,7 @@ export default function AdminExamHistoryDetail() {
           return;
         }
 
-        const message = error instanceof Error ? error.message : 'İmtahan nəticələri alınmadı';
+        const message = error instanceof Error ? error.message : t('admin.results_load_error', { defaultValue: 'İmtahan nəticələri alınmadı' });
         setLoadError(message);
         toast.error(message);
       } finally {
@@ -314,7 +317,7 @@ export default function AdminExamHistoryDetail() {
         {examData ? (
           <div className="flex flex-wrap gap-2 text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500">
             <span className="rounded-full bg-white px-3 py-1 shadow-sm">{examData.duration} {t('admin.d_qiq_', { defaultValue: t('admin.d_qiq_', { defaultValue: 'dəqiqə' }) })}</span>
-            <span className="rounded-full bg-white px-3 py-1 shadow-sm">{(examData.questions || []).length} sual</span>
+            <span className="rounded-full bg-white px-3 py-1 shadow-sm">{(examData.questions || []).length} {t('admin.question', { defaultValue: 'sual' })}</span>
             <span className="rounded-full bg-white px-3 py-1 shadow-sm">{results.length} {t('admin.i_tirak', { defaultValue: t('admin.i_tirak', { defaultValue: 'iştirak' }) })}</span>
           </div>
         ) : null}
@@ -401,7 +404,7 @@ export default function AdminExamHistoryDetail() {
                 </div>
 
                 <div className="flex flex-wrap gap-2 text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500">
-                  <span className="rounded-full bg-gray-50 px-3 py-1">{formatAttemptLabel(selectedResult.attemptNumber || 1)}</span>
+                  <span className="rounded-full bg-gray-50 px-3 py-1">{formatAttemptLabel(selectedResult.attemptNumber || 1, t)}</span>
                   <span className="rounded-full bg-gray-50 px-3 py-1">{Math.round(Number(selectedResult.scorePercentage || 0))}{t('admin.__n_tic_', { defaultValue: t('admin.__n_tic_', { defaultValue: '% nəticə' }) })}</span>
                   <span className="rounded-full bg-gray-50 px-3 py-1">{formatDateTime(selectedResult.completedAt || selectedResult.createdAt)}</span>
                 </div>
@@ -410,7 +413,7 @@ export default function AdminExamHistoryDetail() {
               <div className="mt-6 space-y-4">
                 {(examData.questions || []).map((question: AdminExamTestDetail['questions'][number], index: number) => {
                   const answer = getAnswerForQuestion(selectedResult, question, index);
-                  const answerStatusMeta = getAnswerStatusMeta(answer);
+                  const answerStatusMeta = getAnswerStatusMeta(answer, t);
                   const AnswerStatusIcon = answerStatusMeta.icon;
                   const selectedAnswerIndex = normalizeMultipleChoiceAnswerIndex(answer?.answer);
                   const correctAnswerIndex = getMultipleChoiceCorrectAnswerIndex(question);
@@ -419,8 +422,8 @@ export default function AdminExamHistoryDetail() {
                   return (
                     <article key={getQuestionLookupKey(question, index)} className="overflow-hidden rounded-[28px] border border-gray-100 bg-gray-50 shadow-sm">
                       <div className="flex flex-wrap items-center gap-2 border-b border-gray-100 bg-white px-5 py-4">
-                        <span className="rounded-full border border-gray-200 bg-white px-3 py-1 text-[11px] font-black uppercase tracking-[0.12em] text-gray-500">Sual {index + 1}</span>
-                        <span className="rounded-full bg-[#D4AF37]/10 px-3 py-1 text-[11px] font-black uppercase tracking-[0.12em] text-[#A87A1F]">{question.answerType === 'multiple_choice' ? 'Qapalı sual' : 'Açıq sual'}</span>
+                        <span className="rounded-full border border-gray-200 bg-white px-3 py-1 text-[11px] font-black uppercase tracking-[0.12em] text-gray-500">{t('admin.question', { defaultValue: 'Sual' })} {index + 1}</span>
+                        <span className="rounded-full bg-[#D4AF37]/10 px-3 py-1 text-[11px] font-black uppercase tracking-[0.12em] text-[#A87A1F]">{question.answerType === 'multiple_choice' ? t('admin.closed_question', { defaultValue: 'Qapalı sual' }) : t('admin.open_question', { defaultValue: 'Açıq sual' })}</span>
                         <span className={`inline-flex items-center gap-1 rounded-full border px-3 py-1 text-[11px] font-black uppercase tracking-[0.12em] ${answerStatusMeta.className}`}>
                           <AnswerStatusIcon className={`h-3.5 w-3.5 ${isPendingReviewAnswer(answer) ? 'animate-spin' : ''}`} />
                           {answerStatusMeta.label}
@@ -470,7 +473,7 @@ export default function AdminExamHistoryDetail() {
                             <div className="text-xs font-black uppercase tracking-[0.16em] text-gray-400">{t('admin.t_l_b_nin_cavab_', { defaultValue: t('admin.t_l_b_nin_cavab_', { defaultValue: 'Tələbənin cavabı' }) })}</div>
                             <div className="mt-2 break-words text-sm font-medium text-gray-900">
                               {question.answerType === 'multiple_choice'
-                                ? (hasAnswer ? formatMultipleChoiceAnswer(question, answer?.answer || '') : 'Cavab verilməyib')
+                                ? (hasAnswer ? formatMultipleChoiceAnswer(question, answer?.answer || '', t) : t('admin.no_answer_provided', { defaultValue: 'Cavab verilməyib' }))
                                 : (answer?.answer || t('admin.cavab_verilm_yib', { defaultValue: 'Cavab verilməyib' }))}
                             </div>
                           </div>
@@ -479,8 +482,8 @@ export default function AdminExamHistoryDetail() {
                             <div className="text-xs font-black uppercase tracking-[0.16em] text-[#A87A1F]">{t('admin.do_ru_cavab', { defaultValue: t('admin.do_ru_cavab', { defaultValue: 'Doğru cavab' }) })}</div>
                             <div className="mt-2 break-words text-sm font-medium text-gray-900">
                               {question.answerType === 'multiple_choice'
-                                ? (correctAnswerIndex !== null ? formatMultipleChoiceAnswer(question, String(correctAnswerIndex)) : 'Təyin edilməyib')
-                                : (question.correctAnswer?.trim() || getOpenEndedReviewStatusLabel(answer))}
+                                ? (correctAnswerIndex !== null ? formatMultipleChoiceAnswer(question, String(correctAnswerIndex), t) : t('admin.not_assigned', { defaultValue: 'Təyin edilməyib' }))
+                                : (question.correctAnswer?.trim() || getOpenEndedReviewStatusLabel(answer, t))}
                             </div>
                           </div>
                         </div>

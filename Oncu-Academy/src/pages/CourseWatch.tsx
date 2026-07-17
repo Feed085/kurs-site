@@ -171,7 +171,7 @@ export default function CourseWatch() {
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">{t('common.not_found')}</h1>
           <Button onClick={() => navigate(-1)}>
-            Geri qayıt
+            {t('common.go_back', { defaultValue: 'Geri qayıt' })}
           </Button>
         </div>
       </div>
@@ -188,7 +188,7 @@ export default function CourseWatch() {
           className="mb-4 text-gray-600 hover:text-gray-900 pl-0 hover:bg-transparent"
         >
           <ChevronLeft className="w-4 h-4 mr-1" />
-          Geri qayıt
+          {t('common.go_back', { defaultValue: 'Geri qayıt' })}
         </Button>
 
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
@@ -225,7 +225,7 @@ export default function CourseWatch() {
                   <span className="text-sm font-bold text-gray-900">{t('courses.about_video', { defaultValue: 'Video haqqında' })}</span>
                 </div>
                 <p className="text-sm leading-7 text-gray-700 whitespace-pre-line">
-                  {activeLessonDescription || 'Bu video üçün əlavə açıqlama əlavə edilməyib.'}
+                  {activeLessonDescription || t('courses.no_video_description', { defaultValue: 'Bu video üçün əlavə açıqlama əlavə edilməyib.' })}
                 </p>
               </div>
 
@@ -236,7 +236,7 @@ export default function CourseWatch() {
                 </div>
                 <Progress value={courseProgress.progress} className="h-2" />
                 <p className="text-xs text-gray-500 mt-2">
-                  İrəliləyiş yalnız videonu sırayla tamamladıqda artır.
+                  {t('courses.progress_note', { defaultValue: 'İrəliləyiş yalnız videonu sırayla tamamladıqda artır.' })}
                 </p>
               </div>
               
@@ -247,17 +247,17 @@ export default function CourseWatch() {
                   variant="outline"
                   className="rounded-xl border-gray-200 w-full sm:w-auto"
                 >
-                  Əvvəlki dərs
+                  {t('courses.previous_lesson', { defaultValue: 'Əvvəlki dərs' })}
                 </Button>
                 <div className="text-sm font-semibold text-gray-400">
-                  Dərs {activeLessonIndex + 1} / {flatLessons.length}
+                  {t('courses.lesson_number', { defaultValue: 'Dərs' })} {activeLessonIndex + 1} / {flatLessons.length}
                 </div>
                 <Button 
                   onClick={() => setActiveLessonIndex(prev => Math.min(flatLessons.length - 1, prev + 1))}
                   disabled={activeLessonIndex === flatLessons.length - 1 || flatLessons.length === 0}
                   className="bg-[#D4AF37] hover:bg-[#B88A1B] text-white rounded-xl w-full sm:w-auto"
                 >
-                  Növbəti dərs
+                  {t('courses.next_lesson', { defaultValue: 'Növbəti dərs' })}
                 </Button>
               </div>
             </div>
@@ -268,7 +268,7 @@ export default function CourseWatch() {
             <div className="sticky top-[calc(var(--site-header-height)+1rem)] flex h-auto flex-col overflow-hidden rounded-3xl border border-gray-100 bg-white p-5 shadow-sm xl:h-[calc(100dvh-var(--site-header-height)-2rem)] xl:p-6">
               <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-100">
                 <h2 className="text-lg font-bold text-gray-900">
-                  Dərs cədvəli
+                  {t('courses.lesson_schedule', { defaultValue: 'Dərs cədvəli' })}
                 </h2>
                 <span className="text-xs font-bold px-2.5 py-1 bg-gray-100 text-gray-600 rounded-lg">
                   {flatLessons.length} video

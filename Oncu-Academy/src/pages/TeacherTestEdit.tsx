@@ -81,7 +81,7 @@ export default function TeacherTestEdit() {
           toast.error(t('common.not_found'));
         }
       } catch (err) {
-        toast.error('Server xətası');
+        toast.error(t('common.server_error', { defaultValue: 'Server xətası' }));
       } finally {
         setLoading(false);
       }
@@ -201,11 +201,11 @@ export default function TeacherTestEdit() {
     const newQuestion: Question = {
       id: Date.now().toString(),
       questionType: 'text',
-      content: 'Yeni sual',
+      content: t('teacher.test_edit.new_question', { defaultValue: 'Yeni sual' }),
       answerType: 'multiple_choice',
       openEndedAnswerType: 'text',
       openEndedNumericAnswer: '',
-      options: ['Variant A', 'Variant B', 'Variant C', 'Variant D'],
+      options: [t('teacher.test_edit.variant_a', { defaultValue: 'Variant A' }), t('teacher.test_edit.variant_b', { defaultValue: 'Variant B' }), t('teacher.test_edit.variant_c', { defaultValue: 'Variant C' }), t('teacher.test_edit.variant_d', { defaultValue: 'Variant D' })],
       correctAnswer: 0
     };
     setTest({

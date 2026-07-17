@@ -58,12 +58,12 @@ export default function CreateTest() {
         const payload = await response.json();
 
         if (!response.ok || payload?.success === false) {
-          throw new Error(payload?.message || 'Kurslar yüklənmədi.');
+          throw new Error(payload?.message || t('test.courses_load_error', { defaultValue: 'Kurslar yüklənmədi.' }));
         }
 
         setTeacherCourses(payload.data || []);
       } catch (error) {
-        const message = error instanceof Error ? error.message : 'Kurslar yüklənmədi.';
+        const message = error instanceof Error ? error.message : t('test.courses_load_error', { defaultValue: 'Kurslar yüklənmədi.' });
         toast.error(message);
       }
     };
@@ -185,13 +185,13 @@ export default function CreateTest() {
       const payload = await response.json();
 
       if (!response.ok || payload?.success === false) {
-        throw new Error(payload?.message || 'Test yaradılmadı.');
+        throw new Error(payload?.message || t('test.create_error', { defaultValue: 'Test yaradılmadı.' }));
       }
 
       setIsSaved(true);
-      toast.success('Test uğurla yaradıldı.');
+      toast.success(t('test.create_success', { defaultValue: 'Test uğurla yaradıldı.' }));
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Server xətası baş verdi.';
+      const message = error instanceof Error ? error.message : t('test.server_error', { defaultValue: 'Server xətası baş verdi.' });
       toast.error(message);
     } finally {
       setIsSaving(false);
@@ -246,7 +246,7 @@ export default function CreateTest() {
                     name="title"
                     value={testData.title}
                     onChange={handleChange}
-                    placeholder="Məs: IELTS Listening Test 1"
+                    placeholder={t('test.title_placeholder', { defaultValue: 'Məs: IELTS Listening Test 1' })}
                     className="h-12 rounded-xl pl-12"
                   />
                 </div>
@@ -263,7 +263,7 @@ export default function CreateTest() {
                   <option value="">{t('test.select_your_course', { defaultValue: 'Öz kursunuzu seçin' })}</option>
                   {teacherCourses.map((course) => (
                     <option key={course._id || course.id} value={course._id || course.id}>
-                      {course.title || 'Adsız kurs'}
+                      {course.title || t('test.untitled_course', { defaultValue: 'Adsız kurs' })}
                     </option>
                   ))}
                 </select>

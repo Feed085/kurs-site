@@ -45,8 +45,8 @@ async function requestJson(path: string, init: RequestInit = {}) {
     }
 
     const message = typeof body === 'object' && body && 'message' in body
-      ? String((body as { message?: string }).message || 'İstek başarısız')
-      : 'İstek başarısız';
+      ? String((body as { message?: string }).message || 'Request failed')
+      : 'Request failed';
 
     throw new Error(message);
   }

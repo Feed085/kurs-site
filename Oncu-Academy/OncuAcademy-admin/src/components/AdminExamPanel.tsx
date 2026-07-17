@@ -142,11 +142,12 @@ const getMultipleChoiceCorrectAnswerIndex = (question: any) => {
   return null;
 };
 
-const formatMultipleChoiceAnswer = (question: any, answer: string) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const formatMultipleChoiceAnswer = (question: any, answer: string, t?: any) => {
   const answerIndex = normalizeMultipleChoiceAnswerIndex(answer);
 
   if (answerIndex === null) {
-    return answer || 'Cavab verilməyib';
+    return answer || t ? t('admin.no_answer_provided', { defaultValue: 'Cavab verilməyib' }) : 'Cavab verilməyib';
   }
 
   const optionText = question?.options?.[answerIndex] ?? '';
@@ -205,23 +206,23 @@ const getExamLifecycleStatus = (exam: PublishedExamItem): ExamLifecycleStatus =>
   return exam.isStudentVisible ? 'active' : 'planned';
 };
 
-const getExamStatusMeta = (status: ExamLifecycleStatus) => {
+const getExamStatusMeta = (status: ExamLifecycleStatus, t: any) => {
   if (status === 'planned') {
     return {
-      label: 'Planlanmış',
+      label: t('admin.exam_status_planned', { defaultValue: 'Planlanmış' }),
       className: 'bg-sky-50 text-sky-700 border-sky-100',
     };
   }
 
   if (status === 'completed') {
     return {
-      label: 'Tamamlanmış',
+      label: t('admin.exam_status_completed', { defaultValue: 'Tamamlanmış' }),
       className: 'bg-emerald-50 text-emerald-700 border-emerald-100',
     };
   }
 
   return {
-    label: 'Aktiv',
+    label: t('admin.exam_status_active', { defaultValue: 'Aktiv' }),
     className: 'bg-amber-50 text-amber-700 border-amber-100',
   };
 };
@@ -272,14 +273,16 @@ const isPendingReviewAnswer = (answer?: { answer?: string; status?: 'graded' | '
   return true;
 };
 
-const getOpenEndedReviewStatusLabel = (answer?: { answer?: string; status?: 'graded' | 'pending'; isCorrect?: boolean } | null) => (
-  isPendingReviewAnswer(answer) ? 'Təyin edilməyib' : 'Yoxlanılıb'
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getOpenEndedReviewStatusLabel = (answer?: { answer?: string; status?: 'graded' | 'pending'; isCorrect?: boolean } | null, t?: any) => (
+  isPendingReviewAnswer(answer) ? t ? t('admin.review_status_pending', { defaultValue: 'Təyin edilməyib' }) : 'Təyin edilməyib' : t ? t('admin.review_status_reviewed', { defaultValue: 'Yoxlanılıb' }) : 'Yoxlanılıb'
 );
 
-const getAnswerStatusMeta = (answer?: { answer?: string; status?: 'graded' | 'pending'; isCorrect?: boolean } | null) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getAnswerStatusMeta = (answer?: { answer?: string; status?: 'graded' | 'pending'; isCorrect?: boolean } | null, t?: any) => {
   if (!String(answer?.answer ?? '').trim()) {
     return {
-      label: 'Cavab yoxdur',
+      label: t ? (t as any)('admin.answer_status_no_answer', { defaultValue: 'Cavab yoxdur' }) : 'Cavab yoxdur',
       className: 'border-slate-200 bg-slate-50 text-slate-600',
       icon: XCircle,
     };
@@ -287,7 +290,7 @@ const getAnswerStatusMeta = (answer?: { answer?: string; status?: 'graded' | 'pe
 
   if (isPendingReviewAnswer(answer)) {
     return {
-      label: 'Yoxlanılır',
+      label: t ? (t as any)('admin.answer_status_reviewing', { defaultValue: 'Yoxlanılır' }) : 'Yoxlanılır',
       className: 'border-amber-200 bg-amber-50 text-amber-700',
       icon: Loader2,
     };
@@ -295,14 +298,14 @@ const getAnswerStatusMeta = (answer?: { answer?: string; status?: 'graded' | 'pe
 
   if (answer?.isCorrect) {
     return {
-      label: 'Düzgün',
+      label: t ? (t as any)('admin.answer_status_correct', { defaultValue: 'Düzgün' }) : 'Düzgün',
       className: 'border-emerald-200 bg-emerald-50 text-emerald-700',
       icon: CheckCircle2,
     };
   }
 
   return {
-    label: 'Yanlış',
+    label: t ? (t as any)('admin.answer_status_incorrect', { defaultValue: 'Yanlış' }) : 'Yanlış',
     className: 'border-rose-200 bg-rose-50 text-rose-700',
     icon: XCircle,
   };
@@ -344,7 +347,7 @@ const AdminExamPanel = () => {
         setPublishedExams(response.data?.publishedExams || []);
       }
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'İmtahan paneli yüklənmədi');
+      toast.error(error instanceof Error ? error.message : t('admin.panel_load_error', { defaultValue: 'İmtahan paneli yüklənmədi' }));
     } finally {
       setLoading(false);
     }
@@ -388,7 +391,7 @@ const AdminExamPanel = () => {
     return publishedExams
       .filter((exam) => {
         const status = getExamLifecycleStatus(exam);
-        const matchesSearch = !query || [exam.title, status, exam.isStudentVisible ? 'görünür' : 'gizlidir']
+        const matchesSearch = !query || [exam.title, status, exam.isStudentVisible ? t('admin.visible', { defaultValue: 'görünür' }) : t('admin.hidden', { defaultValue: 'gizlidir' })]
           .join(' ')
           .toLowerCase()
           .includes(query);
@@ -415,7 +418,7 @@ const AdminExamPanel = () => {
     event.preventDefault();
 
     if (selectedDraftIds.length === 0) {
-      toast.error(t('admin._n_az__bir_m__llim_i', { defaultValue: 'Ən azı bir müəllim imtahanı seçin' }));
+      toast.error(t('admin.select_min_one', { defaultValue: 'Ən azı bir müəllim imtahanı seçin' }));
       return;
     }
 
@@ -818,7 +821,7 @@ const AdminExamPanel = () => {
                 filteredPublishedExams.map((exam) => {
                   const examId = resolveEntityId(exam._id ?? exam.id);
                   const status = getExamLifecycleStatus(exam);
-                  const statusMeta = getExamStatusMeta(status);
+                  const statusMeta = getExamStatusMeta(status, t);
 
                   return (
                     <button

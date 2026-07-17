@@ -232,23 +232,6 @@ type AdminSession = {
 
 const ADMIN_LOGO_SRC = '/image.png';
 
-const adminMenuItems = [
-  { icon: LayoutDashboard, label: 'Panel', path: '/' },
-  { icon: FileText, label: 'Testler', path: '/tests' },
-  { icon: Shield, label: 'Imtahan Paneli', path: '/exam-panel' },
-  { icon: Users, label: 'Muellimlər', path: '/teachers' },
-  { icon: GraduationCap, label: 'Telebeler', path: '/students' },
-  { icon: Grid, label: 'Kateqoriyalar', path: '/categories' }
-];
-
-const adminRouteTitles: Record<string, string> = {
-  '/': 'Panel',
-  '/tests': 'Testler',
-  '/exam-panel': 'Imtahan Paneli',
-  '/teachers': 'Muellimlər',
-  '/students': 'Telebeler',
-  '/categories': 'Kateqoriyalar'
-};
 const loadAdminSession = (): AdminSession | null => {
   if (typeof window === 'undefined') {
     return null;
@@ -445,6 +428,15 @@ const AdminNavigation = ({ onNavigate }: { onNavigate?: () => void }) => {
     const { t } = useTranslation();
   const location = useLocation();
 
+  const adminMenuItems = [
+    { icon: LayoutDashboard, label: t('admin.menu.dashboard', { defaultValue: 'Panel' }), path: '/' },
+    { icon: FileText, label: t('admin.menu.tests', { defaultValue: 'Testler' }), path: '/tests' },
+    { icon: Shield, label: t('admin.menu.exam_panel', { defaultValue: 'Imtahan Paneli' }), path: '/exam-panel' },
+    { icon: Users, label: t('admin.menu.teachers', { defaultValue: 'Muellimlər' }), path: '/teachers' },
+    { icon: GraduationCap, label: t('admin.menu.students', { defaultValue: 'Telebeler' }), path: '/students' },
+    { icon: Grid, label: t('admin.menu.categories', { defaultValue: 'Kateqoriyalar' }), path: '/categories' }
+  ];
+
   return (
     <nav className="flex-1 space-y-2 px-4 py-4">
       {adminMenuItems.map((item) => {
@@ -612,7 +604,16 @@ const AdminShell = ({
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const pageTitle = adminRouteTitles[location.pathname] || 'Admin panel';
+  const adminRouteTitles: Record<string, string> = {
+    '/': t('admin.menu.dashboard', { defaultValue: 'Panel' }),
+    '/tests': t('admin.menu.tests', { defaultValue: 'Testler' }),
+    '/exam-panel': t('admin.menu.exam_panel', { defaultValue: 'Imtahan Paneli' }),
+    '/teachers': t('admin.menu.teachers', { defaultValue: 'Muellimlər' }),
+    '/students': t('admin.menu.students', { defaultValue: 'Telebeler' }),
+    '/categories': t('admin.menu.categories', { defaultValue: 'Kateqoriyalar' })
+  };
+
+  const pageTitle = adminRouteTitles[location.pathname] || t('admin.menu.default', { defaultValue: 'Admin panel' });
 
   useEffect(() => {
     setMobileMenuOpen(false);

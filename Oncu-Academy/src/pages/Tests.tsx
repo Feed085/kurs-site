@@ -28,8 +28,8 @@ export default function Tests() {
 
   const categories = [
     { key: 'all', label: t('courses.categories.all') },
-    { key: '1', label: 'SAT' },
-    { key: '2', label: 'IELTS' },
+    { key: '1', label: t('test.category_sat', { defaultValue: 'SAT' }) },
+    { key: '2', label: t('test.category_ielts', { defaultValue: 'IELTS' }) },
     { key: '3', label: t('courses.items.english.title') },
     { key: '4', label: t('courses.items.russian.title') },
   ];

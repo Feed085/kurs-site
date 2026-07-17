@@ -293,44 +293,6 @@ const mapStoredQuestionToDraftQuestion = (question: StoredDraftQuestion, index: 
   };
 };
 
-const formatDate = (value?: string | null) => {
-  if (!value) {
-    return 'Tarix yoxdur';
-  }
-
-  const parsedDate = new Date(value);
-
-  if (!Number.isFinite(parsedDate.getTime())) {
-    return 'Tarix yoxdur';
-  }
-
-  return new Intl.DateTimeFormat('az-AZ', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-  }).format(parsedDate);
-};
-
-const formatDateTime = (value?: string | null) => {
-  if (!value) {
-    return 'Tarix yoxdur';
-  }
-
-  const parsedDate = new Date(value);
-
-  if (!Number.isFinite(parsedDate.getTime())) {
-    return 'Tarix yoxdur';
-  }
-
-  return new Intl.DateTimeFormat('az-AZ', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  }).format(parsedDate);
-};
-
 const normalizeManualCodeInput = (value: string) => value.trim().replace(/\s+/g, '').toUpperCase();
 
 export default function TeacherExamPanel() {
@@ -338,6 +300,44 @@ export default function TeacherExamPanel() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { user } = useAuth();
+
+  const formatDate = (value?: string | null) => {
+    if (!value) {
+      return t('common.no_date', { defaultValue: 'Tarix yoxdur' });
+    }
+
+    const parsedDate = new Date(value);
+
+    if (!Number.isFinite(parsedDate.getTime())) {
+      return t('common.no_date', { defaultValue: 'Tarix yoxdur' });
+    }
+
+    return new Intl.DateTimeFormat('az-AZ', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    }).format(parsedDate);
+  };
+
+  const formatDateTime = (value?: string | null) => {
+    if (!value) {
+      return t('common.no_date', { defaultValue: 'Tarix yoxdur' });
+    }
+
+    const parsedDate = new Date(value);
+
+    if (!Number.isFinite(parsedDate.getTime())) {
+      return t('common.no_date', { defaultValue: 'Tarix yoxdur' });
+    }
+
+    return new Intl.DateTimeFormat('az-AZ', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(parsedDate);
+  };
 
   const draftStatusMeta: Record<string, { label: string; className: string }> = {
     draft: {
@@ -368,7 +368,7 @@ export default function TeacherExamPanel() {
       className: 'bg-amber-100 text-amber-700',
     },
     approved: {
-      label: 'Davam edir',
+      label: t('test.exam_panel.status_continuing', { defaultValue: 'Davam edir' }),
       className: 'bg-emerald-100 text-emerald-700',
     },
     expired: {
@@ -574,7 +574,7 @@ export default function TeacherExamPanel() {
       if (nextSession?.status === 'pending' || nextSession?.status === 'approved') {
         toast.success(payload?.message || t('test.exam_panel.code_found', { defaultValue: 'Manual kod tapıldı' }));
       } else {
-        toast.error(payload?.message || 'Leave session aktiv deyil');
+        toast.error(payload?.message || t('test.exam_panel.leave_session_inactive', { defaultValue: 'Leave session aktiv deyil' }));
       }
     } catch (error) {
       const message = error instanceof Error ? error.message : t('test.exam_panel.code_check_failed', { defaultValue: 'Manual kod yoxlanmadı' });
@@ -625,9 +625,9 @@ export default function TeacherExamPanel() {
 
       setScannedLeaveSession(nextSession?.sessionId ? nextSession : scannedLeaveSession);
       setQrScannerMessage(payload?.message || (action === 'approve' ? t('test.exam_panel.leave_approved', { defaultValue: 'Leave session təsdiqləndi' }) : t('test.exam_panel.leave_rejected', { defaultValue: 'Leave session rədd edildi' })));
-      toast.success(payload?.message || (action === 'approve' ? 'Leave session təsdiqləndi' : 'Leave session rədd edildi'));
+      toast.success(payload?.message || (action === 'approve' ? t('test.exam_panel.leave_approved', { defaultValue: 'Leave session təsdiqləndi' }) : t('test.exam_panel.leave_rejected', { defaultValue: 'Leave session rədd edildi' })));
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Qərar qeydə alınmadı';
+      const message = error instanceof Error ? error.message : t('test.exam_panel.decision_failed', { defaultValue: 'Qərar qeydə alınmadı' });
       setQrScannerError(message);
       setQrScannerMessage('');
       toast.error(message);
@@ -664,18 +664,18 @@ export default function TeacherExamPanel() {
       const resultsPayload = await resultsResponse.json();
 
       if (!examResponse.ok || examPayload?.success === false) {
-        throw new Error(examPayload?.message || 'İmtahan detalları yüklənmədi');
+        throw new Error(examPayload?.message || t('test.exam_panel.exam_details_load_error', { defaultValue: 'İmtahan detalları yüklənmədi' }));
       }
 
       if (!resultsResponse.ok || resultsPayload?.success === false) {
-        throw new Error(resultsPayload?.message || 'Tələbə nəticələri yüklənmədi');
+        throw new Error(resultsPayload?.message || t('test.exam_panel.student_results_load_error', { defaultValue: 'Tələbə nəticələri yüklənmədi' }));
       }
 
       setReviewExam(examPayload.data || null);
       setReviewResults(resultsPayload.data || []);
       setSelectedReviewExamId(examId);
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Yoxlama paneli yüklənmədi';
+      const message = error instanceof Error ? error.message : t('test.exam_panel.review_panel_load_error', { defaultValue: 'Yoxlama paneli yüklənmədi' });
       toast.error(message);
     } finally {
       setIsReviewLoading(false);
@@ -703,7 +703,7 @@ export default function TeacherExamPanel() {
 
   const removeQuestion = (questionId: string) => {
     if (questions.length === 1) {
-      toast.error('Ən azı bir sual olmalıdır');
+      toast.error(t('test.exam_panel.min_one_question', { defaultValue: 'Ən azı bir sual olmalıdır' }));
       return;
     }
 

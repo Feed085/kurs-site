@@ -163,9 +163,9 @@ export default function TeacherStudents() {
               <thead>
                 <tr className="bg-gray-50/50 border-b border-gray-100">
                   <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">{t('teachers.students')}</th>
-                  <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Kurs</th>
+                  <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">{t('common.course', { defaultValue: 'Kurs' })}</th>
                   <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">{t('teachers.contact')}</th>
-                  <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">Qeydiyyat</th>
+                  <th className="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">{t('teacher.students.registration', { defaultValue: 'Qeydiyyat' })}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">

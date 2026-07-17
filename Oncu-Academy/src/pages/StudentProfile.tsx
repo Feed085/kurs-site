@@ -58,7 +58,7 @@ export default function StudentProfile() {
            });
         }
       } catch (err) {
-        toast.error('Profil yüklənə bilmədi');
+        toast.error(t('student.profile.load_error', { defaultValue: 'Profil yüklənə bilmədi' }));
       } finally {
         setIsLoading(false);
       }
@@ -113,12 +113,12 @@ export default function StudentProfile() {
         setFormData((prev: any) => ({ ...prev, avatar: finalAvatarUrl }));
         setAvatarFile(null);
         setIsEditing(false);
-        toast.success('Profil yeniləndi!');
+        toast.success(t('student.profile.updated', { defaultValue: 'Profil yeniləndi!' }));
       } else {
         toast.error(t('common.error_prefix') + d.message);
       }
     } catch(err) {
-      toast.error('Serverlə əlaqə qurula bilmədi');
+      toast.error(t('common.server_error', { defaultValue: 'Serverlə əlaqə qurula bilmədi' }));
     } finally {
       setIsLoading(false);
     }
@@ -153,7 +153,7 @@ export default function StudentProfile() {
           className="text-gray-600 hover:text-gray-900 transition-colors mb-4 flex items-center gap-2"
         >
           <ArrowLeft className="w-5 h-5" />
-          İdarə Panelinə Qayıt
+          {t('student.profile.back_to_dashboard', { defaultValue: 'İdarə Panelinə Qayıt' })}
         </Button>
       </div>
 
@@ -192,17 +192,17 @@ export default function StudentProfile() {
                 {formData.name} {formData.surname}
               </h1>
               <p className="text-[#A87A1F] font-bold text-lg mb-4">
-                 Tələbə Profili
+                 {t('student.profile.title', { defaultValue: 'Tələbə Profili' })}
               </p>
               
               <div className="flex flex-wrap justify-center md:justify-start gap-4">
                 <div className="flex items-center gap-2 text-sm text-gray-500 font-medium">
                   <GraduationCap className="w-4 h-4" />
-                  {formData.educationLevel || 'Təhsil qeyd edilməyib'}
+                  {formData.educationLevel || t('student.profile.education_not_set', { defaultValue: 'Təhsil qeyd edilməyib' })}
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-500 font-medium">
                   <Phone className="w-4 h-4" />
-                  {formData.phone || 'Nömrə yoxdur'}
+                  {formData.phone || t('student.profile.phone_not_set', { defaultValue: 'Nömrə yoxdur' })}
                 </div>
               </div>
             </div>
@@ -217,12 +217,12 @@ export default function StudentProfile() {
                 {isEditing ? (
                   <>
                     <Save className="w-4 h-4 mr-2" />
-                    Yadda saxla
+                    {t('common.save', { defaultValue: 'Yadda saxla' })}
                   </>
                 ) : (
                   <>
                     <Edit2 className="w-4 h-4 mr-2" />
-                    Redaktə et
+                    {t('common.edit', { defaultValue: 'Redaktə et' })}
                   </>
                 )}
               </Button>
@@ -238,7 +238,7 @@ export default function StudentProfile() {
                 <div className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Ad</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">{t('common.name', { defaultValue: 'Ad' })}</label>
                       <Input
                         name="name"
                         value={formData.name}
@@ -247,7 +247,7 @@ export default function StudentProfile() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Soyad</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">{t('common.surname', { defaultValue: 'Soyad' })}</label>
                       <Input
                         name="surname"
                         value={formData.surname}

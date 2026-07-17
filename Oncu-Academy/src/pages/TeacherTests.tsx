@@ -120,11 +120,11 @@ export default function TeacherTests() {
             </div>
             <Button onClick={() => navigate('/teacher/test/create')} className="bg-[#D4AF37] hover:bg-[#B88A1B] rounded-xl">
               <FileText className="w-4 h-4 mr-2" />
-              Test Yarat
+              {t('teacher.tests.create_test', { defaultValue: 'Test Yarat' })}
             </Button>
             <Button onClick={() => navigate('/teacher/exam-panel')} variant="outline" className="rounded-xl border-[#A87A1F] text-[#A87A1F] hover:bg-[#A87A1F]/5">
               <ArrowRight className="w-4 h-4 mr-2" />
-              İmtahan Paneli
+              {t('teacher.tests.exam_panel', { defaultValue: 'İmtahan Paneli' })}
             </Button>
           </div>
         </div>

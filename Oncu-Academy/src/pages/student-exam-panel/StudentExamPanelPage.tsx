@@ -634,7 +634,7 @@ export default function StudentExamPanelPage() {
                           {statusMeta.label}
                         </Badge>
                         <Badge variant="outline" className="border-[#D4AF37]/30 bg-[#D4AF37]/10 text-[#A87A1F]">
-                          Admin təsdiqli
+                          {t('student_exam.admin_approved', { defaultValue: 'Admin təsdiqli' })}
                         </Badge>
                         <span className="text-xs font-medium text-slate-400">{formatDate(result.completedAt || result.createdAt)}</span>
                       </div>

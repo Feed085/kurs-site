@@ -53,7 +53,7 @@ export default function TeacherDetail() {
            setStats(response.stats || {});
         }
       } catch (err) {
-        toast.error('Müəllim yüklənə bilmədi');
+        toast.error(t('teacher.detail.load_error', { defaultValue: 'Müəllim yüklənə bilmədi' }));
       } finally {
         setIsLoading(false);
       }
@@ -77,7 +77,7 @@ export default function TeacherDetail() {
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">{t('common.not_found')}</h1>
           <Button onClick={() => navigate('/teachers')}>
-            Müəllimlərə qayıt
+            {t('teacher.detail.back_to_teachers', { defaultValue: 'Müəllimlərə qayıt' })}
           </Button>
         </div>
       </div>
@@ -99,7 +99,7 @@ export default function TeacherDetail() {
           className="absolute top-4 left-4 text-white hover:bg-white/20 z-10"
         >
           <ArrowLeft className="w-5 h-5 mr-2" />
-          Geri
+          {t('common.back', { defaultValue: 'Geri' })}
         </Button>
       </div>
 
@@ -132,7 +132,7 @@ export default function TeacherDetail() {
                   <div className="flex flex-wrap gap-4 mt-4">
                     <div className="flex items-center gap-2 text-sm text-gray-600">
                       <MapPin className="w-4 h-4" />
-                      {teacher.location || 'Bakı, Azərbaycan'}
+                      {teacher.location || t('teacher.detail.default_location', { defaultValue: 'Bakı, Azərbaycan' })}
                     </div>
                   </div>
                 </div>
@@ -189,9 +189,9 @@ export default function TeacherDetail() {
         <div className="bg-white rounded-3xl shadow-sm overflow-hidden">
           <div className="flex overflow-x-auto border-b border-gray-100">
             {[
-              { key: 'courses', label: 'Kurslar', icon: BookOpen },
-              { key: 'about', label: 'Haqqında', icon: User },
-              { key: 'reviews', label: 'Rəylər', icon: Star },
+              { key: 'courses', label: t('common.courses', { defaultValue: 'Kurslar' }), icon: BookOpen },
+              { key: 'about', label: t('common.about', { defaultValue: 'Haqqında' }), icon: User },
+              { key: 'reviews', label: t('common.reviews', { defaultValue: 'Rəylər' }), icon: Star },
             ].map((tab) => (
               <button
                 key={tab.key}

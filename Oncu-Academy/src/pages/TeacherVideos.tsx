@@ -164,7 +164,7 @@ export default function TeacherVideos() {
               <div className="flex flex-wrap gap-2 text-xs text-gray-500 mb-5">
                 <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gray-50 border border-gray-100">
                   <Layers3 className="w-3 h-3" />
-                  Modul: {video.moduleTitle}
+                  {t('teacher.videos.module', { defaultValue: 'Modul' })}: {video.moduleTitle}
                 </span>
                 <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gray-50 border border-gray-100">
                   <Video className="w-3 h-3" />
