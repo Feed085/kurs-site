@@ -436,7 +436,22 @@
     "open_key": "Açarı aç",
     "no_answer_key": "Cavab açarı yoxdur",
     "answer_key_empty_desc": "Tamamlanmış admin təsdiqli test olduqda açarlarını burada görə bilərsiniz.",
-    "welcome": "Salam, {{name}}."
+    "welcome": "Salam, {{name}}.",
+    "metrics": {
+      "active_exams": {
+        "title": "Aktiv imtahanlar",
+        "helper": "Admin təsdiqli aktiv testlər"
+      },
+      "completed_exams": {
+        "title": "Tamamlanan imtahanlar",
+        "helper": "Yalnız admin təsdiqli nəticələr"
+      },
+      "average": {
+        "title": "Ortalama",
+        "helper_has_results": "Yekunlaşdırılmış nəticələr üzrə",
+        "helper_no_results": "Hələ yekun nəticə yoxdur"
+      }
+    }
   },
   "teacher": {
     "dashboard": {

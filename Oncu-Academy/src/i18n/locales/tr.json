@@ -437,7 +437,22 @@
     "open_key": "Anahtarı aç",
     "no_answer_key": "Cevap anahtarı yok",
     "answer_key_empty_desc": "Admin onaylı tamamlanmış test olduğunda anahtarlarını burada görebilirsiniz.",
-    "welcome": "Merhaba, {{name}}."
+    "welcome": "Merhaba, {{name}}.",
+    "metrics": {
+      "active_exams": {
+        "title": "Aktif sınavlar",
+        "helper": "Admin onaylı aktif testler"
+      },
+      "completed_exams": {
+        "title": "Tamamlanan sınavlar",
+        "helper": "Sadece admin onaylı sonuçlar"
+      },
+      "average": {
+        "title": "Ortalama",
+        "helper_has_results": "Tamamlanan sonuçlara göre",
+        "helper_no_results": "Henüz nihai sonuç yok"
+      }
+    }
   },
   "teacher": {
     "dashboard": {

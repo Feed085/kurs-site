@@ -437,7 +437,22 @@
     "open_key": "Open key",
     "no_answer_key": "No answer key",
     "answer_key_empty_desc": "You can view keys here when you have completed admin-approved tests.",
-    "welcome": "Hello, {{name}}."
+    "welcome": "Hello, {{name}}.",
+    "metrics": {
+      "active_exams": {
+        "title": "Active exams",
+        "helper": "Admin-approved active tests"
+      },
+      "completed_exams": {
+        "title": "Completed exams",
+        "helper": "Only admin-approved results"
+      },
+      "average": {
+        "title": "Average",
+        "helper_has_results": "Based on completed results",
+        "helper_no_results": "No final results yet"
+      }
+    }
   },
   "teacher": {
     "dashboard": {
