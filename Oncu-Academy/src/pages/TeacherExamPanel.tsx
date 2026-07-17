@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { TeacherAssessmentQuestionBuilder } from '@/components/common/TeacherAssessmentQuestionBuilder';
+import TeacherAssessmentQuestionBuilder from '@/components/common/TeacherAssessmentQuestionBuilder';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -331,52 +331,6 @@ const formatDateTime = (value?: string | null) => {
   }).format(parsedDate);
 };
 
-const draftStatusMeta: Record<string, { label: string; className: string }> = {
-  draft: {
-    label: t('test.exam_panel.status_draft', { defaultValue: 'Layihə' }),
-    className: 'bg-slate-100 text-slate-600',
-  },
-  submitted_to_admin: {
-    label: t('test.exam_panel.status_pending', { defaultValue: 'Adminə göndərildi' }),
-    className: 'bg-[#FFF3CD] text-[#A87A1F]',
-  },
-  approved: {
-    label: t('test.exam_panel.status_approved', { defaultValue: 'Təsdiq olundu' }),
-    className: 'bg-sky-100 text-sky-700',
-  },
-  rejected: {
-    label: t('test.exam_panel.status_rejected', { defaultValue: 'Rədd edildi' }),
-    className: 'bg-rose-100 text-rose-700',
-  },
-  used: {
-    label: t('test.exam_panel.status_used', { defaultValue: 'İstifadə olundu' }),
-    className: 'bg-emerald-100 text-emerald-700',
-  },
-};
-
-const leaveSessionStatusMeta: Record<TeacherLeaveSessionStatus, { label: string; className: string }> = {
-  pending: {
-    label: t('test.exam_panel.status_waiting_decision', { defaultValue: 'Qərar gözləyir' }),
-    className: 'bg-amber-100 text-amber-700',
-  },
-  approved: {
-    label: 'Davam edir',
-    className: 'bg-emerald-100 text-emerald-700',
-  },
-  expired: {
-    label: t('test.exam_panel.status_expired', { defaultValue: 'Müddəti bitib' }),
-    className: 'bg-slate-200 text-slate-700',
-  },
-  finished: {
-    label: t('test.exam_panel.status_closed', { defaultValue: 'Bağlanıb' }),
-    className: 'bg-slate-200 text-slate-700',
-  },
-  rejected: {
-    label: t('test.exam_panel.status_suspended', { defaultValue: 'Dayandırılıb' }),
-    className: 'bg-rose-100 text-rose-700',
-  },
-};
-
 const normalizeManualCodeInput = (value: string) => value.trim().replace(/\s+/g, '').toUpperCase();
 
 export default function TeacherExamPanel() {
@@ -384,6 +338,52 @@ export default function TeacherExamPanel() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const { user } = useAuth();
+
+  const draftStatusMeta: Record<string, { label: string; className: string }> = {
+    draft: {
+      label: t('test.exam_panel.status_draft', { defaultValue: 'Layihə' }),
+      className: 'bg-slate-100 text-slate-600',
+    },
+    submitted_to_admin: {
+      label: t('test.exam_panel.status_pending', { defaultValue: 'Adminə göndərildi' }),
+      className: 'bg-[#FFF3CD] text-[#A87A1F]',
+    },
+    approved: {
+      label: t('test.exam_panel.status_approved', { defaultValue: 'Təsdiq olundu' }),
+      className: 'bg-sky-100 text-sky-700',
+    },
+    rejected: {
+      label: t('test.exam_panel.status_rejected', { defaultValue: 'Rədd edildi' }),
+      className: 'bg-rose-100 text-rose-700',
+    },
+    used: {
+      label: t('test.exam_panel.status_used', { defaultValue: 'İstifadə olundu' }),
+      className: 'bg-emerald-100 text-emerald-700',
+    },
+  };
+
+  const leaveSessionStatusMeta: Record<TeacherLeaveSessionStatus, { label: string; className: string }> = {
+    pending: {
+      label: t('test.exam_panel.status_waiting_decision', { defaultValue: 'Qərar gözləyir' }),
+      className: 'bg-amber-100 text-amber-700',
+    },
+    approved: {
+      label: 'Davam edir',
+      className: 'bg-emerald-100 text-emerald-700',
+    },
+    expired: {
+      label: t('test.exam_panel.status_expired', { defaultValue: 'Müddəti bitib' }),
+      className: 'bg-slate-200 text-slate-700',
+    },
+    finished: {
+      label: t('test.exam_panel.status_closed', { defaultValue: 'Bağlanıb' }),
+      className: 'bg-slate-200 text-slate-700',
+    },
+    rejected: {
+      label: t('test.exam_panel.status_suspended', { defaultValue: 'Dayandırılıb' }),
+      className: 'bg-rose-100 text-rose-700',
+    },
+  };
 
   const [panelData, setPanelData] = useState<TeacherExamPanelResponse>({ drafts: [], linkedExams: [] });
   const [searchQuery, setSearchQuery] = useState('');

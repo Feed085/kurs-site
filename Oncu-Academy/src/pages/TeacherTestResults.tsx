@@ -78,25 +78,27 @@ const getResultTimeValue = (result: any) => {
   return Number.isFinite(timeValue) ? timeValue : 0;
 };
 
-const getAttemptLabel = (attemptNumber: number) => {
-  return `${attemptNumber}-${t('teacher.test_results.attempt_suffix', { defaultValue: 'ci cəhd' })}`;
-};
-
-const formatMultipleChoiceAnswer = (question: any, answer: string) => {
-  const answerIndex = normalizeMultipleChoiceAnswerIndex(answer);
-    return answer || t('teacher.test_results.no_answer', { defaultValue: 'Cavab verilməyib' });
-
-  const optionText = question?.options?.[answerIndex] ?? '';
-  const optionLabel = String.fromCharCode(65 + answerIndex);
-  return optionText ? `${optionLabel}: ${optionText}` : optionLabel;
-};
-
 export default function TeacherTestResults() {
   const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
-  
+
+  const getAttemptLabel = (attemptNumber: number) => {
+    return `${attemptNumber}-${t('teacher.test_results.attempt_suffix', { defaultValue: 'ci cəhd' })}`;
+  };
+
+  const formatMultipleChoiceAnswer = (question: any, answer: string) => {
+    const answerIndex = normalizeMultipleChoiceAnswerIndex(answer);
+    if (answerIndex === null) {
+      return answer || t('teacher.test_results.no_answer', { defaultValue: 'Cavab verilməyib' });
+    }
+
+    const optionText = question?.options?.[answerIndex] ?? '';
+    const optionLabel = String.fromCharCode(65 + answerIndex);
+    return optionText ? `${optionLabel}: ${optionText}` : optionLabel;
+  };
+
   const [test, setTest] = useState<any>(null);
   const [results, setResults] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState('');

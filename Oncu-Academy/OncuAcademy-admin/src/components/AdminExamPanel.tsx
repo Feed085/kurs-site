@@ -90,78 +90,7 @@ const resolveEntityId = (value: unknown) => {
 
   return String(value);
 };
-type DraftItem = NonNullable<ExamPanelResponse['data']>['drafts'][number];
-type PublishedExamItem = NonNullable<ExamPanelResponse['data']>['publishedExams'][number];
-type AdminExamResultResponse = Awaited<ReturnType<typeof adminApi.getTestResults>>;
-type AdminExamTestDetail = NonNullable<AdminExamResultResponse['data']>['test'];
-type AdminExamResultItem = NonNullable<AdminExamResultResponse['data']>['results'][number];
-type AdminExamPanelTab = 'create' | 'history';
-type HistoryStatusFilter = 'all' | 'planned' | 'active' | 'completed';
-type ExamLifecycleStatus = Exclude<HistoryStatusFilter, 'all'>;
 
-const ADMIN_EXAM_ACCESS_CODES_STORAGE_KEY = 'rim_admin_exam_access_codes';
-
-const formatDateTime = (value?: string | null) => {
-  if (!value) {
-    return '-';
-  }
-
-  const parsedDate = new Date(value);
-
-  if (!Number.isFinite(parsedDate.getTime())) {
-    return '-';
-  }
-
-  return new Intl.DateTimeFormat('az-AZ', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
-  }).format(parsedDate);
-};
-
-const toDateInputValue = (value?: string | null) => {
-  if (!value) {
-    return '';
-  }
-
-  const date = new Date(value);
-
-  if (!Number.isFinite(date.getTime())) {
-    return '';
-  }
-
-  return date.toISOString().slice(0, 10);
-};
-
-const resolveEntityId = (value: unknown) => {
-  if (value === null || value === undefined) {
-    return '';
-  }
-
-  if (typeof value === 'string' || typeof value === 'number') {
-    return String(value);
-  }
-
-  if (typeof value === 'object') {
-    const objectValue = value as { _id?: unknown; id?: unknown; toString?: () => string };
-
-    if (objectValue._id !== undefined && objectValue._id !== null) {
-      return resolveEntityId(objectValue._id);
-    }
-
-    if (objectValue.id !== undefined && objectValue.id !== null) {
-      return resolveEntityId(objectValue.id);
-    }
-
-    if (typeof objectValue.toString === 'function') {
-      return objectValue.toString();
-    }
-  }
-
-  return String(value);
-};
 
 const normalizeMultipleChoiceAnswerIndex = (value: unknown) => {
   const parsedValue = Number(String(value).trim());

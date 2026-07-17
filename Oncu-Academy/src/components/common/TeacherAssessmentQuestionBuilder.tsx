@@ -22,7 +22,6 @@ export default function TeacherAssessmentQuestionBuilder({
   removeQuestion,
 }: TeacherAssessmentQuestionBuilderProps) {
   const { t } = useTranslation();
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   return (
     <div className="space-y-4">

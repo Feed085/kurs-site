@@ -327,10 +327,10 @@ export default function CourseDetail() {
                     />
                   </div>
                 ) : (
-                    {t('courses.review_after_enrollment', { defaultValue: 'Kursa qeydiyyat təsdiqlənəndən sonra rəy yaza bilərsiniz.' })}
+                  <p>{t('courses.review_after_enrollment', { defaultValue: 'Kursa qeydiyyat təsdiqlənəndən sonra rəy yaza bilərsiniz.' })}</p>
                 )
               ) : !isAuthenticated ? (
-                  {t('courses.login_for_review', { defaultValue: 'Rəy yazmaq üçün tələbə hesabı ilə daxil olun.' })}
+                <p>{t('courses.login_for_review', { defaultValue: 'Rəy yazmaq üçün tələbə hesabı ilə daxil olun.' })}</p>
               ) : null}
 
               <CourseReviewsList reviews={courseReviews} rating={course.rating || 0} />

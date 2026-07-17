@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, CheckCircle, Clock, FileText, Plus, Save } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { TeacherAssessmentQuestionBuilder } from '@/components/common/TeacherAssessmentQuestionBuilder';
+import TeacherAssessmentQuestionBuilder from '@/components/common/TeacherAssessmentQuestionBuilder';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';

@@ -46,30 +46,6 @@ import {
   studentExamPanelTabs,
 } from '@/pages/student-exam-panel/shared';
 
-const heroCopy: Record<TabKey, { badge: string; title: string; description: string; actionLabel: string; actionPath: string; }> = {
-  exams: {
-    badge: t('student_exam.tabs.exams.badge', { defaultValue: 'İmtahan baxışı' }),
-    title: t('student_exam.tabs.exams.title', { defaultValue: 'İmtahan paneliniz' }),
-    description: t('student_exam.tabs.exams.description', { defaultValue: 'Admin tərəfindən təsdiqlənmiş aktiv testləri izləyin və son nəticələrinizə baxın.' }),
-    actionLabel: t('student_exam.tabs.exams.actionLabel', { defaultValue: 'Nəticələrim' }),
-    actionPath: '/exam-panel/results',
-  },
-  results: {
-    badge: t('student_exam.tabs.results.badge', { defaultValue: 'Tamamlanmış nəticələr' }),
-    title: t('student_exam.tabs.results.title', { defaultValue: 'Nəticə tarixçəniz' }),
-    description: t('student_exam.tabs.results.description', { defaultValue: 'Yalnız admin təsdiqli imtahanların yekun nəticələri burada toplanır.' }),
-    actionLabel: t('student_exam.tabs.results.actionLabel', { defaultValue: 'İmtahanlara qayıt' }),
-    actionPath: '/exam-panel',
-  },
-  keys: {
-    badge: t('student_exam.tabs.keys.badge', { defaultValue: 'Cavab açarları' }),
-    title: t('student_exam.tabs.keys.title', { defaultValue: 'Açarları açın' }),
-    description: t('student_exam.tabs.keys.description', { defaultValue: 'Tamamlanan və admin tərəfindən təsdiqlənmiş imtahanların açarlarını ayrıca səhifədə yoxlayın.' }),
-    actionLabel: t('student_exam.tabs.keys.actionLabel', { defaultValue: 'Nəticələrim' }),
-    actionPath: '/exam-panel/results',
-  },
-};
-
 const getTestEndTime = (test: PanelTestSummary) => {
   const startsAtTime = test.startsAt ? new Date(test.startsAt).getTime() : null;
   const durationMinutes = Number(test.duration || 0);
@@ -94,6 +70,31 @@ export default function StudentExamPanelPage() {
   const [currentTime, setCurrentTime] = useState(() => Date.now());
 
   const activeTab = studentExamPanelTabs.find((tab) => location.pathname === tab.path) ?? studentExamPanelTabs[0];
+
+  const heroCopy: Record<TabKey, { badge: string; title: string; description: string; actionLabel: string; actionPath: string; }> = {
+    exams: {
+      badge: t('student_exam.tabs.exams.badge', { defaultValue: 'İmtahan baxışı' }),
+      title: t('student_exam.tabs.exams.title', { defaultValue: 'İmtahan paneliniz' }),
+      description: t('student_exam.tabs.exams.description', { defaultValue: 'Admin tərəfindən təsdiqlənmiş aktiv testləri izləyin və son nəticələrinizə baxın.' }),
+      actionLabel: t('student_exam.tabs.exams.actionLabel', { defaultValue: 'Nəticələrim' }),
+      actionPath: '/exam-panel/results',
+    },
+    results: {
+      badge: t('student_exam.tabs.results.badge', { defaultValue: 'Tamamlanmış nəticələr' }),
+      title: t('student_exam.tabs.results.title', { defaultValue: 'Nəticə tarixçəniz' }),
+      description: t('student_exam.tabs.results.description', { defaultValue: 'Yalnız admin təsdiqli imtahanların yekun nəticələri burada toplanır.' }),
+      actionLabel: t('student_exam.tabs.results.actionLabel', { defaultValue: 'İmtahanlara qayıt' }),
+      actionPath: '/exam-panel',
+    },
+    keys: {
+      badge: t('student_exam.tabs.keys.badge', { defaultValue: 'Cavab açarları' }),
+      title: t('student_exam.tabs.keys.title', { defaultValue: 'Açarları açın' }),
+      description: t('student_exam.tabs.keys.description', { defaultValue: 'Tamamlanan və admin tərəfindən təsdiqlənmiş imtahanların açarlarını ayrıca səhifədə yoxlayın.' }),
+      actionLabel: t('student_exam.tabs.keys.actionLabel', { defaultValue: 'Nəticələrim' }),
+      actionPath: '/exam-panel/results',
+    },
+  };
+
   const hero = heroCopy[activeTab.key];
 
   useEffect(() => {

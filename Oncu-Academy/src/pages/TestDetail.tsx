@@ -41,17 +41,6 @@ const getMultipleChoiceCorrectAnswerIndex = (question: any) => {
   return null;
 };
 
-const formatMultipleChoiceAnswer = (question: any, answer: string) => {
-  const answerIndex = normalizeMultipleChoiceAnswerIndex(answer);
-  if (answerIndex === null) {
-    return answer || t('test.not_answered', { defaultValue: 'Cavab verilməyib' });
-  }
-
-  const optionText = question?.options?.[answerIndex] ?? '';
-  const optionLabel = String.fromCharCode(65 + answerIndex);
-  return optionText ? `${optionLabel}: ${optionText}` : optionLabel;
-};
-
 const getExamTimeLeftSeconds = (nextTest: any, fallbackPanelTest: any, now = Date.now()) => {
   const durationSeconds = Math.max(0, Math.floor(Number(nextTest?.duration || 0) * 60));
   const startsAtValue = nextTest?.accessStatus?.startsAt || nextTest?.startsAt || fallbackPanelTest?.startsAt || null;
@@ -193,6 +182,17 @@ export default function TestDetail() {
   const panelTest = (location.state as { panelTest?: any } | null)?.panelTest || null;
   const leaveSessionStorageKey = id ? `oncu-admin-exam-leave-session-${id}` : null;
   const isCreatingLeaveSessionRef = useRef(false);
+
+  const formatMultipleChoiceAnswer = (question: any, answer: string) => {
+    const answerIndex = normalizeMultipleChoiceAnswerIndex(answer);
+    if (answerIndex === null) {
+      return answer || t('test.not_answered', { defaultValue: 'Cavab verilməyib' });
+    }
+
+    const optionText = question?.options?.[answerIndex] ?? '';
+    const optionLabel = String.fromCharCode(65 + answerIndex);
+    return optionText ? `${optionLabel}: ${optionText}` : optionLabel;
+  };
   const isPollingLeaveSessionRef = useRef(false);
   const createLeaveSessionRef = useRef<((options?: { keepalive?: boolean; suppressUi?: boolean }) => Promise<void>) | null>(null);
   const lastSubmissionStatusRef = useRef<TestSubmissionStatus>('completed');

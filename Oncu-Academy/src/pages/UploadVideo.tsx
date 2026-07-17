@@ -15,29 +15,29 @@ import { toast } from 'sonner';
 import { API_BASE_URL } from '@/services/publicApi';
 import { formatVideoDuration } from '@/lib/utils';
 
-const getVideoDuration = (file: File) => new Promise<number>((resolve, reject) => {
-  const objectUrl = URL.createObjectURL(file);
-  const video = document.createElement('video');
-
-  video.preload = 'metadata';
-  video.src = objectUrl;
-
-  video.onloadedmetadata = () => {
-    const duration = Number.isFinite(video.duration) ? video.duration : 0;
-    URL.revokeObjectURL(objectUrl);
-    resolve(duration);
-  };
-
-  video.onerror = () => {
-    URL.revokeObjectURL(objectUrl);
-    reject(new Error(t('teacher.upload.video_duration_error', { defaultValue: 'Video müddəti oxuna bilmədi' })));
-  };
-});
-
 export default function UploadVideo() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  
+
+  const getVideoDuration = (file: File) => new Promise<number>((resolve, reject) => {
+    const objectUrl = URL.createObjectURL(file);
+    const video = document.createElement('video');
+
+    video.preload = 'metadata';
+    video.src = objectUrl;
+
+    video.onloadedmetadata = () => {
+      const duration = Number.isFinite(video.duration) ? video.duration : 0;
+      URL.revokeObjectURL(objectUrl);
+      resolve(duration);
+    };
+
+    video.onerror = () => {
+      URL.revokeObjectURL(objectUrl);
+      reject(new Error(t('teacher.upload.video_duration_error', { defaultValue: 'Video müddəti oxuna bilmədi' })));
+    };
+  });
+
   useEffect(() => {
     window.scrollTo({
       top: 150,
