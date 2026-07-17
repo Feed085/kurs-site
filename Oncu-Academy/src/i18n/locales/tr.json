@@ -322,7 +322,92 @@
     "no_duration": "Süre yok",
     "no_course_tests": "Şu anda kurs testiniz yok.",
     "close_to_goals": "Hedeflerinize yakınsınız!",
-    "close_to_goals_desc": "Kursları tamamlayarak sertifikalarınızı edinin ve bilginizi resmileştirin."
+    "close_to_goals_desc": "Kursları tamamlayarak sertifikalarınızı edinin ve bilginizi resmileştirin.",
+    "certificates": {
+      "load_error": "Sertifikatlar yüklenirken hata oluştu",
+      "title": "Sertifikatlarım",
+      "empty_title": "Henüz sertifikatınız yok",
+      "empty_desc": "Kursları başarıyla tamamlayarak sertifikatlarınızı edinebilirsiniz.",
+      "course_certificate": "Kurs Sertifikası",
+      "your_academy": "Akademiniz"
+    },
+    "completed_tests": {
+      "unknown_test": "Bilinmeyen Test",
+      "load_error": "Tamamlanan testler yüklenirken hata oluştu",
+      "title": "Tamamlanan Testler",
+      "desc": "Şu ana kadar tamamladığınız testlerin sonuçları",
+      "empty_title": "Henüz hiç test tamamlanmadı",
+      "empty_desc": "Normal kurs testleri burada görünür. Admin sınav sonuçları ayrıca sınav panelinde saklanır.",
+      "view_exam_results": "Sınav sonuçlarına bak",
+      "unknown_course": "Bilinmeyen Kurs",
+      "questions": "soru",
+      "checking": "Kontrol ediliyor",
+      "passed": "Geçti",
+      "failed": "Kaldısınız"
+    },
+    "certificate_score_grade": "Sonuç (Derece):",
+    "has_pending_questions": "Bekleyen sorular var",
+    "correct_short": "Doğru:",
+    "wrong_short": "Yanlış:",
+    "profile": {
+      "load_error": "Profil yüklenemedi",
+      "updated": "Profil güncellendi!",
+      "back_to_dashboard": "Panele Dön",
+      "title": "Öğrenci Profili",
+      "education_not_set": "Eğitim belirtilmedi",
+      "phone_not_set": "Telefon numarası yok"
+    },
+    "personal_info": "Kişisel Bilgiler",
+    "exam_answer_key": {
+      "no_answer": "Cevap yok",
+      "reviewing": "Kontrol ediliyor",
+      "correct": "Doğru",
+      "incorrect": "Yanlış",
+      "not_found": "Cevap anahtarı bulunamadı.",
+      "admin_only": "Bu cevap anahtarı sadece admin tarafından onaylanan sınavlar için erişilebilir.",
+      "load_error": "Cevap anahtarı yüklenemedi.",
+      "question": "Soru",
+      "closed_question": "Kapalı soru",
+      "open_question": "Açık soru",
+      "question_content_not_found": "Soru içeriği bulunamadı",
+      "your_answer": "Sizin cevabınız",
+      "correct_answer": "Doğru cevap"
+    }
+  },
+  "student_exam": {
+    "tabs": {
+      "exams": {
+        "badge": "Sınav incelemesi",
+        "title": "Sınav paneliniz",
+        "description": "Admin tarafından onaylanan aktif testleri takip edin ve son sonuçlarınızı görün.",
+        "actionLabel": "Sonuçlarım",
+        "actionPath": "/exam-panel/results"
+      },
+      "results": {
+        "badge": "Tamamlanmış sonuçlar",
+        "title": "Sonuç geçmişiniz",
+        "description": "Sadece admin onaylı sınavların nihai sonuçları burada toplanır.",
+        "actionLabel": "Sınavlara dön",
+        "actionPath": "/exam-panel"
+      },
+      "keys": {
+        "badge": "Cevap anahtarları",
+        "title": "Anahtarları açın",
+        "description": "Tamamlanan ve admin tarafından onaylanan sınavların anahtarlarını ayrı bir sayfada inceleyin.",
+        "actionLabel": "Sonuçlarım",
+        "actionPath": "/exam-panel/results"
+      }
+    },
+    "partial_load_error": "Bazı veriler yüklenemedi. Panel mevcut verilerle gösteriliyor.",
+    "panel_load_error": "Panel yüklenemedi.",
+    "default_student_name": "Öğrenci",
+    "no_course_info": "Kurs bilgisi yok",
+    "no_instructor_info": "Öğretmen bilgisi yok",
+    "retake_exam": "Tekrar et",
+    "open_details": "Detayları aç",
+    "start_exam": "Sınava başla",
+    "scheduled": "Planlandı",
+    "active": "Aktif"
   },
   "teacher": {
     "dashboard": {

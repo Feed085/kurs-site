@@ -322,7 +322,92 @@
     "no_duration": "No duration",
     "no_course_tests": "You have no course tests at the moment.",
     "close_to_goals": "You're close to your goals!",
-    "close_to_goals_desc": "Complete courses to earn certificates and formalize your knowledge."
+    "close_to_goals_desc": "Complete courses to earn certificates and formalize your knowledge.",
+    "certificates": {
+      "load_error": "Error loading certificates",
+      "title": "My Certificates",
+      "empty_title": "You don't have any certificates yet",
+      "empty_desc": "Complete courses successfully to earn your certificates.",
+      "course_certificate": "Course Certificate",
+      "your_academy": "Your Academy"
+    },
+    "completed_tests": {
+      "unknown_test": "Unknown Test",
+      "load_error": "Error loading completed tests",
+      "title": "Completed Tests",
+      "desc": "Results of tests you have completed so far",
+      "empty_title": "No tests completed yet",
+      "empty_desc": "Regular course tests appear here. Admin exam results are stored separately in the exam panel.",
+      "view_exam_results": "View exam results",
+      "unknown_course": "Unknown Course",
+      "questions": "questions",
+      "checking": "Checking",
+      "passed": "Passed",
+      "failed": "Failed"
+    },
+    "certificate_score_grade": "Score (Grade):",
+    "has_pending_questions": "Has pending questions",
+    "correct_short": "Correct:",
+    "wrong_short": "Wrong:",
+    "profile": {
+      "load_error": "Could not load profile",
+      "updated": "Profile updated!",
+      "back_to_dashboard": "Back to Dashboard",
+      "title": "Student Profile",
+      "education_not_set": "Education not set",
+      "phone_not_set": "No phone number"
+    },
+    "personal_info": "Personal Information",
+    "exam_answer_key": {
+      "no_answer": "No answer",
+      "reviewing": "Reviewing",
+      "correct": "Correct",
+      "incorrect": "Incorrect",
+      "not_found": "Answer key not found.",
+      "admin_only": "This answer key is only accessible for admin-approved exams.",
+      "load_error": "Answer key could not be loaded.",
+      "question": "Question",
+      "closed_question": "Closed question",
+      "open_question": "Open question",
+      "question_content_not_found": "Question content not found",
+      "your_answer": "Your answer",
+      "correct_answer": "Correct answer"
+    }
+  },
+  "student_exam": {
+    "tabs": {
+      "exams": {
+        "badge": "Exam review",
+        "title": "Your exam panel",
+        "description": "Track active tests approved by admin and view your latest results.",
+        "actionLabel": "My Results",
+        "actionPath": "/exam-panel/results"
+      },
+      "results": {
+        "badge": "Completed results",
+        "title": "Your result history",
+        "description": "Final results of only admin-approved exams are collected here.",
+        "actionLabel": "Back to exams",
+        "actionPath": "/exam-panel"
+      },
+      "keys": {
+        "badge": "Answer keys",
+        "title": "Open the keys",
+        "description": "Review keys of completed and admin-approved exams on a separate page.",
+        "actionLabel": "My Results",
+        "actionPath": "/exam-panel/results"
+      }
+    },
+    "partial_load_error": "Some data failed to load. Panel is shown with available data.",
+    "panel_load_error": "Panel could not be loaded.",
+    "default_student_name": "Student",
+    "no_course_info": "No course information",
+    "no_instructor_info": "No instructor information",
+    "retake_exam": "Retake",
+    "open_details": "Open details",
+    "start_exam": "Start exam",
+    "scheduled": "Scheduled",
+    "active": "Active"
   },
   "teacher": {
     "dashboard": {

@@ -321,7 +321,92 @@
     "no_duration": "Müddət yoxdur",
     "no_course_tests": "Hazırda kurs testiniz yoxdur.",
     "close_to_goals": "Hədəflərinizə yaxınsınız!",
-    "close_to_goals_desc": "Kursları tamamlayaraq sertifikatlarınızı əldə edin və biliklərinizi rəsmiləşdirin."
+    "close_to_goals_desc": "Kursları tamamlayaraq sertifikatlarınızı əldə edin və biliklərinizi rəsmiləşdirin.",
+    "certificates": {
+      "load_error": "Sertifikatlar gətirilərkən xəta baş verdi",
+      "title": "Sertifikatlarım",
+      "empty_title": "Sertifikatınız mövcud deyil",
+      "empty_desc": "Kursları uğurla tamamlayaraq sertifikatlarınızı əldə edə bilərsiniz.",
+      "course_certificate": "Kurs Sertifikatı",
+      "your_academy": "Sizin Akademiyanız"
+    },
+    "completed_tests": {
+      "unknown_test": "Bilinməyən Test",
+      "load_error": "Tamamlanan testlər gətirilərkən xəta baş verdi",
+      "title": "Tamamlanan Testlər",
+      "desc": "İndiyə qədər bitirdiyiniz testlərin nəticələri",
+      "empty_title": "Hələ heç bir test tamamlanmayıb",
+      "empty_desc": "Normal kurs testləri burada görünür. Admin imtahan nəticələri ayrıca imtahan panelində saxlanılır.",
+      "view_exam_results": "İmtahan nəticələrinə bax",
+      "unknown_course": "Bilinməyən Kurs",
+      "questions": "sual",
+      "checking": "Yoxlanılır",
+      "passed": "Keçdi",
+      "failed": "Kəsildi"
+    },
+    "certificate_score_grade": "Nəticə (Dərəcə):",
+    "has_pending_questions": "Gözləmədəki suallar var",
+    "correct_short": "Doğru:",
+    "wrong_short": "Səhv:",
+    "profile": {
+      "load_error": "Profil yüklənə bilmədi",
+      "updated": "Profil yeniləndi!",
+      "back_to_dashboard": "İdarə Panelinə Qayıt",
+      "title": "Tələbə Profili",
+      "education_not_set": "Təhsil qeyd edilməyib",
+      "phone_not_set": "Nömrə yoxdur"
+    },
+    "personal_info": "Şəxsi Məlumatlar",
+    "exam_answer_key": {
+      "no_answer": "Cavab yoxdur",
+      "reviewing": "Yoxlanılır",
+      "correct": "Düzgün",
+      "incorrect": "Yanlış",
+      "not_found": "Cavab açarı tapılmadı.",
+      "admin_only": "Bu cavab açarı yalnız admin tərəfindən təsdiqlənmiş imtahanlar üçün əlçatandır.",
+      "load_error": "Cavab açarı yüklənmədi.",
+      "question": "Sual",
+      "closed_question": "Qapalı sual",
+      "open_question": "Açıq sual",
+      "question_content_not_found": "Sual məzmunu tapılmadı",
+      "your_answer": "Sizin cavabınız",
+      "correct_answer": "Düzgün cavab"
+    }
+  },
+  "student_exam": {
+    "tabs": {
+      "exams": {
+        "badge": "İmtahan baxışı",
+        "title": "İmtahan paneliniz",
+        "description": "Admin tərəfindən təsdiqlənmiş aktiv testləri izləyin və son nəticələrinizə baxın.",
+        "actionLabel": "Nəticələrim",
+        "actionPath": "/exam-panel/results"
+      },
+      "results": {
+        "badge": "Tamamlanmış nəticələr",
+        "title": "Nəticə tarixçəniz",
+        "description": "Yalnız admin təsdiqli imtahanların yekun nəticələri burada toplanır.",
+        "actionLabel": "İmtahanlara qayıt",
+        "actionPath": "/exam-panel"
+      },
+      "keys": {
+        "badge": "Cavab açarları",
+        "title": "Açarları açın",
+        "description": "Tamamlanan və admin tərəfindən təsdiqlənmiş imtahanların açarlarını ayrıca səhifədə yoxlayın.",
+        "actionLabel": "Nəticələrim",
+        "actionPath": "/exam-panel/results"
+      }
+    },
+    "partial_load_error": "Məlumatların bir hissəsi yüklənmədi. Panel mövcud verilənlərlə göstərilir.",
+    "panel_load_error": "Panel yüklənə bilmədi.",
+    "default_student_name": "Tələbə",
+    "no_course_info": "Kurs məlumatı yoxdur",
+    "no_instructor_info": "Müəllim məlumatı yoxdur",
+    "retake_exam": "Təkrar et",
+    "open_details": "Detalları aç",
+    "start_exam": "İmtahana başla",
+    "scheduled": "Planlanıb",
+    "active": "Aktiv"
   },
   "teacher": {
     "dashboard": {
@@ -599,7 +684,11 @@
     "years": "il",
     "reviews": "Rəylər",
     "no_date": "Tarix yoxdur",
-    "rating": "Reytinq"
+    "rating": "Reytinq",
+    "go_back": "Geri qayıt",
+    "date": "Tarix:",
+    "download": "Yüklə",
+    "instructor": "Təlimçi:"
   },
   "exam": {
     "drafts": "İmtahanlar",
