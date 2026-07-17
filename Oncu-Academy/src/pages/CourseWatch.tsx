@@ -222,7 +222,7 @@ export default function CourseWatch() {
               <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4 mb-6">
                 <div className="flex items-center gap-2 mb-3">
                   <FileText className="w-4 h-4 text-[#D4AF37]" />
-                  <span className="text-sm font-bold text-gray-900">Video haqqında</span>
+                  <span className="text-sm font-bold text-gray-900">{t('courses.about_video', { defaultValue: 'Video haqqında' })}</span>
                 </div>
                 <p className="text-sm leading-7 text-gray-700 whitespace-pre-line">
                   {activeLessonDescription || 'Bu video üçün əlavə açıqlama əlavə edilməyib.'}
@@ -231,7 +231,7 @@ export default function CourseWatch() {
 
               <div className="rounded-2xl border border-[#D4AF37]/15 bg-[#D4AF37]/5 p-4 mb-6">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-semibold text-gray-700">Kurs irəliləyişi</span>
+                  <span className="text-sm font-semibold text-gray-700">{t('courses.course_progress', { defaultValue: 'Kurs irəliləyişi' })}</span>
                   <span className="text-sm font-black text-[#D4AF37]">{courseProgress.progress}%</span>
                 </div>
                 <Progress value={courseProgress.progress} className="h-2" />
@@ -277,7 +277,7 @@ export default function CourseWatch() {
               
               <div className="flex-1 overflow-y-auto space-y-2 pr-2 custom-scrollbar">
                 {flatLessons.length === 0 ? (
-                  <div className="text-center text-sm text-gray-400 py-4">Bu kursda hələ heç bir dərs yoxdur.</div>
+                  <div className="text-center text-sm text-gray-400 py-4">{t('courses.no_lessons', { defaultValue: 'Bu kursda hələ heç bir dərs yoxdur.' })}</div>
                 ) : (
                   flatLessons.map((lesson, index) => (
                     <button

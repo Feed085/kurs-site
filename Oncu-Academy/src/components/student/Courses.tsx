@@ -48,7 +48,7 @@ export default function Courses() {
         setCourses(loadedCourses);
         setCategories(loadedCategories.length > 0 ? loadedCategories : buildFallbackCourseCategories(loadedCourses));
       } catch (err) {
-        console.error('Kurslar yüklənə bilmədi', err);
+        console.error(t('courses.load_error', { defaultValue: 'Kurslar yüklənə bilmədi' }), err);
       } finally {
         if (isMounted) {
           setIsLoading(false);
@@ -123,7 +123,7 @@ export default function Courses() {
         <div ref={titleRef} className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#D4AF37]/10 rounded-full mb-6">
             <span className="w-2 h-2 bg-[#D4AF37] rounded-full" />
-            <span className="text-sm font-medium text-[#D4AF37]">Kurslarımız</span>
+            <span className="text-sm font-medium text-[#D4AF37]">{t('common.our_courses', { defaultValue: 'Kurslarımız' })}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 mb-4">
             {t('courses.title')}
@@ -143,7 +143,7 @@ export default function Courses() {
                 : 'bg-white text-gray-600 hover:bg-gray-100'
             }`}
           >
-            Hamısı
+            {t('common.all', { defaultValue: 'Hamısı' })}
           </button>
 
           {isLoading && courseCategories.length === 0 ? (
@@ -220,15 +220,15 @@ export default function Courses() {
                     <div className="flex items-center gap-2">
                       <img
                         src={course.instructor?.avatar || 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirKVGVwei6Df8ct23tMACbeRpeM4981E21T/avatar/1149.jpg'}
-                        alt={course.instructor?.name || 'Müəllim'}
+                        alt={course.instructor?.name || t('common.teacher', { defaultValue: 'Müəllim' })}
                         className="w-8 h-8 rounded-full object-cover"
                       />
                       <span className="text-xs font-medium text-gray-600 truncate max-w-[120px]">
-                        {course.instructor ? `${course.instructor.name} ${course.instructor.surname || ''}` : 'Sizin Akademiyanız'}
+                        {course.instructor ? `${course.instructor.name} ${course.instructor.surname || ''}` : t('brand.name', { defaultValue: 'Sizin Akademiyanız' })}
                       </span>
                     </div>
                     <div className="text-sm font-bold text-[#D4AF37]">
-                      {course.price === 0 ? 'Ödənişsiz' : `${course.price} AZN`}
+                      {course.price === 0 ? t('courses.free', { defaultValue: 'Ödənişsiz' }) : `${course.price} AZN`}
                     </div>
                   </div>
                 </div>
@@ -239,7 +239,7 @@ export default function Courses() {
 
         {!isLoading && filteredCourses.length === 0 && (
           <div className="text-center py-10 text-gray-500">
-            Seçilmiş kateqoriya üzrə kurs tapılmadı.
+            {t('courses.no_courses_in_category', { defaultValue: 'Seçilmiş kateqoriya üzrə kurs tapılmadı.' })}
           </div>
         )}
 

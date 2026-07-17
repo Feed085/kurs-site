@@ -71,13 +71,13 @@ export default function TeacherStudents() {
             className="mb-4 p-0 h-auto hover:bg-transparent text-gray-500 hover:text-gray-900 group"
           >
             <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-            Geri qayıt
+            {t('common.go_back', { defaultValue: 'Geri qayıt' })}
           </Button>
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
               <h1 className="text-2xl lg:text-3xl font-black text-gray-900 flex items-center gap-3">
                 <Users className="w-8 h-8 text-[#D4AF37]" />
-                Tələbələrim
+                {t('teacher.students.my_students', { defaultValue: 'Tələbələrim' })}
               </h1>
               <p className="text-gray-600 mt-1">{t('teachers.students_count', { count: students.length })}</p>
             </div>
@@ -85,7 +85,7 @@ export default function TeacherStudents() {
               <div className="relative w-full md:w-72">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <Input
-                  placeholder="Tələbə və ya kurs axtar..."
+                  placeholder={t('teacher.students.search_placeholder', { defaultValue: 'Tələbə və ya kurs axtar...' })}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-10 rounded-xl border-gray-200 bg-white"
@@ -105,7 +105,7 @@ export default function TeacherStudents() {
                 : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-100'
             }`}
           >
-            Hamısı
+            {t('common.all', { defaultValue: 'Hamısı' })}
             <span className={`px-2 py-0.5 rounded-lg text-[10px] font-bold ${
               selectedCourse === null ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-500'
             }`}>

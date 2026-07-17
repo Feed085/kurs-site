@@ -91,7 +91,7 @@ export default function Stats() {
           });
         }
       } catch (error) {
-        console.error('Ana səhifə statistikası yüklənmədi', error);
+        console.error(t('stats.load_error', { defaultValue: 'Ana səhifə statistikası yüklənmədi' }), error);
       }
     };
 

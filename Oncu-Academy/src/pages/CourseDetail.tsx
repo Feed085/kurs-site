@@ -44,7 +44,7 @@ export default function CourseDetail() {
           setTeacher(data.data.instructor);
           
           if (user && user.role === 'student') {
-            // Hələlik enrollment yoxdur API kimi. Amma activeCourses yoxlanıla bilər
+            // There is no enrollment API yet. But activeCourses can be checked
             const studentCheck = await fetch(`${API_BASE_URL}/student/me`, {
                headers: { 'Authorization': `Bearer ${localStorage.getItem('rim_auth_token')}` }
             });
@@ -56,7 +56,7 @@ export default function CourseDetail() {
           }
         }
       } catch (err) {
-        toast.error('Kurs yüklənə bilmədi');
+        toast.error(t('courses.load_error', { defaultValue: 'Kurs yüklənə bilmədi' }));
       }
     };
     fetchCourse();
@@ -64,7 +64,7 @@ export default function CourseDetail() {
 
   const handleRequest = () => {
     if (!isAuthenticated) {
-      toast.error('Müraciət etmək üçün daxil olun');
+      toast.error(t('courses.login_required', { defaultValue: 'Müraciət etmək üçün daxil olun' }));
       navigate('/login');
       return;
     }
@@ -97,7 +97,7 @@ export default function CourseDetail() {
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">{t('common.not_found')}</h1>
           <Button onClick={() => navigate(-1)}>
-            Geri qayıt
+            {t('common.go_back', { defaultValue: 'Geri qayıt' })}
           </Button>
         </div>
       </div>
@@ -114,8 +114,8 @@ export default function CourseDetail() {
   const studentCount = Number(course.studentCount || 0);
   const teacherExperience = Number(teacher?.experience || 0);
   const teacherExperienceLabel = teacherExperience > 0
-    ? `${teacherExperience} il təcrübə`
-    : 'Təcrübə qeyd edilməyib';
+    ? `${teacherExperience} ${t('common.years_experience', { defaultValue: 'il təcrübə' })}`
+    : t('teachers.no_experience', { defaultValue: 'Təcrübə qeyd edilməyib' });
   const currentReview = courseReviews.find((review: any) => {
     const reviewUserId = review?.user?._id || review?.user?.id || review?.user;
     return reviewUserId && reviewUserId.toString() === user?.id;
@@ -139,9 +139,9 @@ export default function CourseDetail() {
           <div className="lg:w-2/3">
             {/* Breadcrumbs */}
             <div className="mb-6 flex flex-wrap items-center gap-2 text-sm text-gray-400">
-              <Link to="/" className="hover:text-white transition-colors">Ana səhifə</Link>
+              <Link to="/" className="hover:text-white transition-colors">{t('common.home', { defaultValue: 'Ana səhifə' })}</Link>
               <ChevronRight className="w-4 h-4" />
-              <Link to="/courses" className="hover:text-white transition-colors">Kurslar</Link>
+              <Link to="/courses" className="hover:text-white transition-colors">{t('common.courses', { defaultValue: 'Kurslar' })}</Link>
               <ChevronRight className="w-4 h-4" />
               <span className="text-white font-medium">{course.title}</span>
             </div>
@@ -170,24 +170,24 @@ export default function CourseDetail() {
                   ))}
                 </div>
                 <span className="text-white font-bold">{Number(course.rating || 0).toFixed(1)}</span>
-                <span className="text-gray-500">({courseReviews.length} rəy)</span>
+                <span className="text-gray-500">({courseReviews.length} {t('common.reviews_count', { defaultValue: 'rəy' })})</span>
               </div>
               
               <div className="flex items-center gap-2 text-gray-300">
                 <Users className="w-5 h-5 text-[#D4AF37]" />
-                <span className="font-medium text-sm">{studentCount} Tələbə</span>
+                <span className="font-medium text-sm">{studentCount} {t('common.student', { defaultValue: 'Tələbə' })}</span>
               </div>
 
               <div className="flex items-center gap-2 text-gray-300">
                 <Calendar className="w-5 h-5 text-[#A87A1F]" />
-                <span className="font-medium text-sm">Yenilənmə tarixi: {new Date(course.updatedAt || course.createdAt).toLocaleDateString('az-AZ')}</span>
+                <span className="font-medium text-sm">{t('courses.last_updated', { defaultValue: 'Yenilənmə tarixi' })}: {new Date(course.updatedAt || course.createdAt).toLocaleDateString('az-AZ')}</span>
               </div>
             </div>
             
             {/* Mobile Price View */}
             <div className="mt-8 flex items-start justify-between rounded-3xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm lg:hidden sm:p-6">
               <div>
-                <p className="text-gray-400 text-sm mb-1">Kurs haqqında</p>
+                <p className="text-gray-400 text-sm mb-1">{t('courses.about_course', { defaultValue: 'Kurs haqqında' })}</p>
                 <div className="text-2xl font-black text-white sm:text-3xl">{course.title}</div>
               </div>
             </div>
@@ -205,7 +205,7 @@ export default function CourseDetail() {
             <section className="rounded-3xl border border-gray-100 bg-white p-5 shadow-sm sm:p-6 lg:p-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
                 <CheckCircle2 className="w-6 h-6 text-[#D4AF37]" />
-                Bu kursda nə öyrənəcəksiniz?
+                {t('courses.what_you_will_learn', { defaultValue: 'Bu kursda nə öyrənəcəksiniz?' })}
               </h2>
               {learningPoints.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -218,7 +218,7 @@ export default function CourseDetail() {
                 </div>
               ) : (
                 <p className="text-sm text-gray-500 leading-relaxed">
-                  Bu kurs üçün öyrənmə hədəfləri hələ əlavə edilməyib.
+                  {t('courses.no_learning_goals', { defaultValue: 'Bu kurs üçün öyrənmə hədəfləri hələ əlavə edilməyib.' })}
                 </p>
               )}
             </section>
@@ -226,7 +226,7 @@ export default function CourseDetail() {
             <section className="rounded-3xl border border-gray-100 bg-white p-5 shadow-sm sm:p-6 lg:p-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
                 <ShieldCheck className="w-6 h-6 text-[#D4AF37]" />
-                Kurs daxildir
+                {t('courses.course_includes', { defaultValue: 'Kurs daxildir' })}
               </h2>
               {courseIncludes.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -239,7 +239,7 @@ export default function CourseDetail() {
                 </div>
               ) : (
                 <p className="text-sm text-gray-500 leading-relaxed">
-                  Bu kurs üçün daxil olan üstünlüklər hələ əlavə edilməyib.
+                  {t('courses.no_includes', { defaultValue: 'Bu kurs üçün daxil olan üstünlüklər hələ əlavə edilməyib.' })}
                 </p>
               )}
             </section>
@@ -248,7 +248,7 @@ export default function CourseDetail() {
 
             {/* Instructor */}
             <section className="rounded-3xl border border-gray-100 bg-white p-5 shadow-sm sm:p-6 lg:p-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-8">Təlimçi</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-8">{t('courses.instructor', { defaultValue: 'Təlimçi' })}</h2>
               <div className="flex flex-col sm:flex-row gap-8">
                 <div className="shrink-0 flex flex-col items-center">
                   <div className="relative mb-4">
@@ -264,8 +264,8 @@ export default function CourseDetail() {
                     </div>
                   </div>
                   <div className="text-center">
-                    <div className="text-sm font-bold text-gray-900">{Number(teacher?.rating || 0).toFixed(1)} Reytinq</div>
-                    <div className="text-xs text-gray-500">Müəllim</div>
+                    <div className="text-sm font-bold text-gray-900">{Number(teacher?.rating || 0).toFixed(1)} {t('common.rating', { defaultValue: 'Reytinq' })}</div>
+                    <div className="text-xs text-gray-500">{t('teacher.role', { defaultValue: 'Müəllim' })}</div>
                   </div>
                 </div>
                 <div className="flex-1">
@@ -286,7 +286,7 @@ export default function CourseDetail() {
                     onClick={() => navigate(`/teachers/${teacher?._id}`)}
                     className="rounded-xl border-gray-200 hover:border-[#D4AF37] hover:text-[#D4AF37]"
                   >
-                    Profilə bax
+                    {t('teacher.view_profile', { defaultValue: 'Profilə bax' })}
                   </Button>
                 </div>
               </div>
@@ -295,10 +295,10 @@ export default function CourseDetail() {
             <section className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
               <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between mb-8">
                 <div>
-                  <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#D4AF37]">Rəylər</p>
-                  <h2 className="text-2xl font-bold text-gray-900 mt-2">Kurs haqqında fikirlər</h2>
+                  <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#D4AF37]">{t('common.reviews', { defaultValue: 'Rəylər' })}</p>
+                  <h2 className="text-2xl font-bold text-gray-900 mt-2">{t('courses.course_reviews_title', { defaultValue: 'Kurs haqqında fikirlər' })}</h2>
                   <p className="text-gray-500 mt-2">
-                    Orta reytinq {Number(course.rating || 0).toFixed(1)} və {courseReviews.length} rəy.
+                    {t('courses.average_rating', { rating: Number(course.rating || 0).toFixed(1), reviews: courseReviews.length, defaultValue: `Orta reytinq ${Number(course.rating || 0).toFixed(1)} və ${courseReviews.length} rəy.` })}
                   </p>
                 </div>
                 <div className="rounded-3xl bg-gray-50 border border-gray-100 px-5 py-4 text-right">
@@ -311,7 +311,7 @@ export default function CourseDetail() {
                       />
                     ))}
                   </div>
-                  <div className="text-sm text-gray-500">{courseReviews.length} rəy</div>
+                  <div className="text-sm text-gray-500">{courseReviews.length} {t('common.reviews_count', { defaultValue: 'rəy' })}</div>
                 </div>
               </div>
 
@@ -327,14 +327,10 @@ export default function CourseDetail() {
                     />
                   </div>
                 ) : (
-                  <div className="mb-10 rounded-3xl border border-dashed border-gray-200 bg-gray-50 p-6 text-gray-600">
-                    Kursa qeydiyyat təsdiqlənəndən sonra rəy yaza bilərsiniz.
-                  </div>
+                    {t('courses.review_after_enrollment', { defaultValue: 'Kursa qeydiyyat təsdiqlənəndən sonra rəy yaza bilərsiniz.' })}
                 )
               ) : !isAuthenticated ? (
-                <div className="mb-10 rounded-3xl border border-dashed border-gray-200 bg-gray-50 p-6 text-gray-600">
-                  Rəy yazmaq üçün tələbə hesabı ilə daxil olun.
-                </div>
+                  {t('courses.login_for_review', { defaultValue: 'Rəy yazmaq üçün tələbə hesabı ilə daxil olun.' })}
               ) : null}
 
               <CourseReviewsList reviews={courseReviews} rating={course.rating || 0} />
@@ -362,9 +358,9 @@ export default function CourseDetail() {
                     {user?.role === 'teacher' ? (
                       <div className="bg-red-50 text-red-600 p-6 rounded-[24px] border border-red-100 text-center animate-in fade-in duration-500">
                         <ShieldCheck className="w-8 h-8 mx-auto mb-3 opacity-80" />
-                        <h4 className="font-black text-sm uppercase tracking-wider mb-1">Giriş Məhduddur</h4>
+                        <h4 className="font-black text-sm uppercase tracking-wider mb-1">{t('courses.access_restricted', { defaultValue: 'Giriş Məhduddur' })}</h4>
                         <p className="text-xs font-medium opacity-80 leading-relaxed italic">
-                          Müəllim hesabı ilə tələbə kurslarına müraciət etmək mümkün deyil.
+                          {t('courses.teacher_access_error', { defaultValue: 'Müəllim hesabı ilə tələbə kurslarına müraciət etmək mümkün deyil.' })}
                         </p>
                       </div>
                     ) : enrollmentStatus === 'approved' ? (
@@ -373,27 +369,27 @@ export default function CourseDetail() {
                         className="w-full h-14 bg-[#D4AF37] hover:bg-[#B88A1B] text-white font-black rounded-2xl flex items-center justify-center gap-3 shadow-xl shadow-[#D4AF37]/20"
                       >
                         <PlayCircle className="w-5 h-5" />
-                        Kursa daxil ol
+                        {t('courses.enter_course', { defaultValue: 'Kursa daxil ol' })}
                       </Button>
                     ) : enrollmentStatus === 'pending' ? (
                       <div className="space-y-3">
                         <div className="bg-orange-50 text-orange-600 p-4 rounded-2xl text-sm font-bold flex items-center gap-3">
                            <Loader2 className="w-5 h-5 animate-spin" />
-                           Müraciətiniz gözləmədədir...
+                           {t('courses.request_pending', { defaultValue: 'Müraciətiniz gözləmədədir...' })}
                         </div>
                         <Button 
                           onClick={openWhatsApp}
                           className="w-full h-14 bg-[#25D366] hover:bg-[#128C7E] text-white font-black rounded-2xl flex items-center justify-center gap-3 shadow-xl shadow-green-200"
                         >
                           <MessageCircle className="w-5 h-5" />
-                          WhatsApp ilə əlaqə saxla
+                          {t('courses.contact_whatsapp', { defaultValue: 'WhatsApp ilə əlaqə saxla' })}
                         </Button>
                       </div>
                     ) : (
                       <>
                         <div className="flex items-center gap-4 mb-2">
                            <span className="text-4xl font-black text-gray-900">
-                             {course.price > 0 ? `${course.price} AZN` : 'Pulsuz!'}
+                             {course.price > 0 ? `${course.price} AZN` : t('courses.free_exclamation', { defaultValue: 'Pulsuz!' })}
                            </span>
                         </div>
                         <Button 
@@ -406,11 +402,9 @@ export default function CourseDetail() {
                           ) : (
                              <ShoppingBag className="w-5 h-5" />
                           )}
-                          Müraciət göndər
+                          {t('courses.send_request', { defaultValue: 'Müraciət göndər' })}
                         </Button>
-                        <p className="text-center text-xs text-gray-400 mt-2 italic px-4 leading-relaxed">
-                          Müraciətdən sonra WhatsApp vasitəsilə adminlə əlaqə saxlayaraq ödənişi tamamlayın.
-                        </p>
+                          {t('courses.payment_instruction', { defaultValue: 'Müraciətdən sonra WhatsApp vasitəsilə adminlə əlaqə saxlayaraq ödənişi tamamlayın.' })}
                       </>
                     )}
                   </div>

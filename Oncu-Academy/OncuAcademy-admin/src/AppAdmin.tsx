@@ -1,4 +1,4 @@
-import { useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
+﻿import { useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
 import { BrowserRouter, Link, Route, Routes, useLocation } from 'react-router-dom';
 import * as Dialog from '@radix-ui/react-dialog';
 import {
@@ -31,6 +31,7 @@ import AdminLoginScreen from './components/AdminLoginScreen';
 import AdminExamPanel from './components/AdminExamPanel';
 import AdminExamHistoryDetail from './components/AdminExamHistoryDetail';
 import { adminApi, ADMIN_SESSION_TOKEN_KEY, ADMIN_SESSION_USER_KEY } from './services/api';
+import { useTranslation } from "react-i18next";
 
 type ModalProps = {
   isOpen: boolean;
@@ -233,22 +234,21 @@ const ADMIN_LOGO_SRC = '/image.png';
 
 const adminMenuItems = [
   { icon: LayoutDashboard, label: 'Panel', path: '/' },
-  { icon: FileText, label: 'Testlər', path: '/tests' },
-  { icon: Shield, label: 'İmtahan Paneli', path: '/exam-panel' },
-  { icon: Users, label: 'Müəllimlər', path: '/teachers' },
-  { icon: GraduationCap, label: 'Tələbələr', path: '/students' },
+  { icon: FileText, label: 'Testler', path: '/tests' },
+  { icon: Shield, label: 'Imtahan Paneli', path: '/exam-panel' },
+  { icon: Users, label: 'Muellimlər', path: '/teachers' },
+  { icon: GraduationCap, label: 'Telebeler', path: '/students' },
   { icon: Grid, label: 'Kateqoriyalar', path: '/categories' }
 ];
 
 const adminRouteTitles: Record<string, string> = {
   '/': 'Panel',
-  '/tests': 'Testlər',
-  '/exam-panel': 'İmtahan Paneli',
-  '/teachers': 'Müəllimlər',
-  '/students': 'Tələbələr',
+  '/tests': 'Testler',
+  '/exam-panel': 'Imtahan Paneli',
+  '/teachers': 'Muellimlər',
+  '/students': 'Telebeler',
   '/categories': 'Kateqoriyalar'
 };
-
 const loadAdminSession = (): AdminSession | null => {
   if (typeof window === 'undefined') {
     return null;
@@ -274,6 +274,7 @@ const loadAdminSession = (): AdminSession | null => {
 };
 
 const Modal = ({ isOpen, onClose, title, children, contentClassName, bodyClassName }: ModalProps) => {
+    const { t } = useTranslation();
   if (!isOpen) return null;
 
   return (
@@ -305,11 +306,11 @@ const formatDate = (value?: string) => {
   }).format(new Date(value));
 };
 
-const formatAttemptLabel = (attemptNumber: number) => {
-  if (attemptNumber === 1) return '1-ci cəhd';
-  if (attemptNumber === 2) return '2-ci cəhd';
-  if (attemptNumber === 3) return '3-cü cəhd';
-  return `${attemptNumber}-ci cəhd`;
+const formatAttemptLabel = (attemptNumber: number, t: any) => {
+  if (attemptNumber === 1) return t('admin.1_ci_c_hd', { defaultValue: '1-ci cÉ™hd' });
+  if (attemptNumber === 2) return t('admin.2_ci_c_hd', { defaultValue: '2-ci cÉ™hd' });
+  if (attemptNumber === 3) return t('admin.3_c__c_hd', { defaultValue: '3-cÃ¼ cÉ™hd' });
+  return `${attemptNumber}-ci cÉ™hd`;
 };
 
 const normalizeMultipleChoiceAnswerIndex = (value: unknown) => {
@@ -395,10 +396,10 @@ const getMultipleChoiceCorrectAnswerIndex = (question: any) => {
   return null;
 };
 
-const formatMultipleChoiceAnswer = (question: any, answer: string) => {
+const formatMultipleChoiceAnswer = (question: any, answer: string, t?: any) => {
   const answerIndex = normalizeMultipleChoiceAnswerIndex(answer);
   if (answerIndex === null) {
-    return answer || 'Cavab verilməyib';
+    return answer || (t ? t('admin.cavab_verilm_yib', { defaultValue: 'Cavab verilmÉ™yib' }) : 'Cavab verilmÉ™yib');
   }
 
   const optionText = question?.options?.[answerIndex] ?? '';
@@ -423,22 +424,25 @@ const resolveCategoryName = (categoryId: string, categories: CategoryItem[]) => 
   return categories.find((category) => category.id === categoryId)?.name || categoryId || '---';
 };
 
-const AdminBrand = ({ compact = false, onNavigate }: { compact?: boolean; onNavigate?: () => void }) => (
+const AdminBrand = ({ compact = false, onNavigate }: { compact?: boolean; onNavigate?: () => void }) => {
+  const { t } = useTranslation();
+  return (
   <Link to="/" onClick={onNavigate} className="flex items-center gap-3">
     <img
       src={ADMIN_LOGO_SRC}
-      alt="Sizin Akademiyanız"
+      alt={t('admin.sizin_akademiyan_z', { defaultValue: 'Sizin AkademiyanÄ±z' })}
       className="h-10 w-10 rounded-2xl object-cover ring-1 ring-black/5"
     />
     <div className="flex flex-col leading-none">
       <span className={`font-black uppercase italic tracking-tight text-gray-900 ${compact ? 'text-lg' : 'text-xl'}`}>
-          Sizin Akademiyanız
-        </span>
+          {t('admin.sizin_akademiyan_z', { defaultValue: 'Sizin AkademiyanÄ±z' })}</span>
     </div>
   </Link>
-);
+  );
+};
 
 const AdminNavigation = ({ onNavigate }: { onNavigate?: () => void }) => {
+    const { t } = useTranslation();
   const location = useLocation();
 
   return (
@@ -467,6 +471,7 @@ const AdminNavigation = ({ onNavigate }: { onNavigate?: () => void }) => {
 };
 
 const Sidebar = ({ onLogout, adminUser }: { onLogout: () => void; adminUser: AdminUser }) => {
+    const { t } = useTranslation();
   return (
     <aside className="fixed inset-y-0 left-0 z-50 hidden h-screen w-56 flex-col overflow-y-auto border-r border-gray-100 bg-white lg:flex">
       <div className="flex h-24 items-center px-8">
@@ -482,7 +487,7 @@ const Sidebar = ({ onLogout, adminUser }: { onLogout: () => void; adminUser: Adm
         </div>
         <button onClick={onLogout} className="flex w-full items-center gap-4 rounded-2xl px-6 py-4 font-bold text-red-500 transition-all hover:bg-red-50">
           <LogOut className="h-5 w-5" />
-          <span className="text-sm">Çıxış</span>
+          <span className="text-sm">{t('admin.__x__', { defaultValue: t('admin.__x__', { defaultValue: 'Ã‡Ä±xÄ±ÅŸ' }) })}</span>
         </button>
       </div>
     </aside>
@@ -500,6 +505,7 @@ const MobileMenu = ({
   onLogout: () => void;
   adminUser: AdminUser;
 }) => {
+    const { t } = useTranslation();
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
@@ -536,7 +542,7 @@ const MobileMenu = ({
               className="flex w-full items-center gap-4 rounded-2xl px-6 py-4 font-bold text-red-500 transition-all hover:bg-red-50"
             >
               <LogOut className="h-5 w-5" />
-              <span className="text-sm">Çıxış</span>
+              <span className="text-sm">{t('admin.__x__', { defaultValue: t('admin.__x__', { defaultValue: 'Ã‡Ä±xÄ±ÅŸ' }) })}</span>
             </button>
           </div>
         </Dialog.Content>
@@ -554,6 +560,7 @@ const MobileTopBar = ({
   onOpenMenu: () => void;
   onLogout: () => void;
 }) => {
+    const { t } = useTranslation();
   return (
     <header className="sticky top-0 z-40 border-b border-gray-100 bg-white/95 backdrop-blur lg:hidden">
       <div className="flex min-h-[var(--admin-topbar-height)] items-center gap-3 px-4 py-3">
@@ -561,7 +568,7 @@ const MobileTopBar = ({
           type="button"
           onClick={onOpenMenu}
           className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-gray-100 bg-white text-gray-700 shadow-sm transition-colors hover:border-[#D4AF37] hover:text-[#D4AF37]"
-          aria-label="Menyunu aç"
+          aria-label={t('admin.menyunu_a_', { defaultValue: 'Menyunu aÃ§' })}
         >
           <Menu className="h-5 w-5" />
         </button>
@@ -569,13 +576,12 @@ const MobileTopBar = ({
         <div className="flex min-w-0 flex-1 items-center gap-3">
           <img
             src={ADMIN_LOGO_SRC}
-            alt="Sizin Akademiyanız"
+            alt={t('admin.sizin_akademiyan_z', { defaultValue: 'Sizin AkademiyanÄ±z' })}
             className="h-10 w-10 rounded-2xl object-cover ring-1 ring-black/5"
           />
           <div className="min-w-0">
             <p className="truncate text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
-              Sizin Akademiyanız
-            </p>
+              {t('admin.sizin_akademiyan_z', { defaultValue: t('admin.sizin_akademiyan_z', { defaultValue: 'Sizin AkademiyanÄ±z' }) })}</p>
             <h1 className="truncate text-sm font-black text-gray-900">{title}</h1>
           </div>
         </div>
@@ -584,7 +590,7 @@ const MobileTopBar = ({
           type="button"
           onClick={onLogout}
           className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-gray-50 text-gray-500 transition-colors hover:bg-red-50 hover:text-red-500"
-          aria-label="Çıxış"
+          aria-label={t('admin.__x__', { defaultValue: 'Ã‡Ä±xÄ±ÅŸ' })}
         >
           <LogOut className="h-5 w-5" />
         </button>
@@ -602,6 +608,7 @@ const AdminShell = ({
   adminUser: AdminUser;
   children: React.ReactNode;
 }) => {
+    const { t } = useTranslation();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -612,7 +619,7 @@ const AdminShell = ({
   }, [location.pathname]);
 
   useEffect(() => {
-    document.title = `${pageTitle} — Sizin Akademiyanız Admin`;
+    document.title = `${pageTitle} â€” Sizin AkademiyanÄ±z Admin`;
   }, [pageTitle]);
 
   return (
@@ -638,6 +645,7 @@ const AdminShell = ({
 };
 
 const Dashboard = () => {
+    const { t } = useTranslation();
   const [dashboard, setDashboard] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -649,10 +657,10 @@ const Dashboard = () => {
       if (response.success) {
         setDashboard(response.data);
       } else {
-        toast.error(response.message || 'Dashboard məlumatları alınmadı');
+        toast.error(response.message || t('admin.dashboard_m_lumatlar', { defaultValue: 'Dashboard mÉ™lumatlarÄ± alÄ±nmadÄ±' }));
       }
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Dashboard məlumatları alınmadı');
+      toast.error(error instanceof Error ? error.message : 'Dashboard mÉ™lumatlarÄ± alÄ±nmadÄ±');
     } finally {
       setLoading(false);
     }
@@ -669,15 +677,14 @@ const Dashboard = () => {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-3xl font-black text-gray-900">Admin panel</h1>
-          <p className="mt-1 text-gray-500">Kurs, tələbə və müəllim axınına canlı baxış.</p>
+          <p className="mt-1 text-gray-500">{t('admin.kurs__t_l_b__v__m__l', { defaultValue: t('admin.kurs__t_l_b__v__m__l', { defaultValue: 'Kurs, tÉ™lÉ™bÉ™ vÉ™ mÃ¼É™llim axÄ±nÄ±na canlÄ± baxÄ±ÅŸ.' }) })}</p>
         </div>
         <button
           onClick={loadDashboard}
           className="inline-flex items-center gap-2 rounded-2xl border border-gray-200 bg-white px-5 py-3 text-sm font-bold text-gray-700 shadow-sm transition-all hover:border-[#D4AF37] hover:text-[#D4AF37]"
         >
           <RefreshCw className="h-4 w-4" />
-          Yenilə
-        </button>
+          {t('admin.yenil_', { defaultValue: t('admin.yenil_', { defaultValue: 'YenilÉ™' }) })}</button>
       </div>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
@@ -721,10 +728,9 @@ const Dashboard = () => {
 
       <div className="rounded-[32px] border border-gray-100 bg-white p-6 shadow-sm sm:p-8">
         <div className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <h3 className="text-xl font-black text-gray-900">Ən aktiv kurslar</h3>
+          <h3 className="text-xl font-black text-gray-900">{t('admin._n_aktiv_kurslar', { defaultValue: t('admin._n_aktiv_kurslar', { defaultValue: 'Æn aktiv kurslar' }) })}</h3>
           <span className="rounded-full bg-gray-50 px-3 py-1 text-xs font-bold uppercase tracking-widest text-gray-500">
-            Canlı
-          </span>
+            {t('admin.canl_', { defaultValue: t('admin.canl_', { defaultValue: 'CanlÄ±' }) })}</span>
         </div>
         <div className="space-y-5">
           {(dashboard?.topCourses || []).map((course) => (
@@ -735,19 +741,18 @@ const Dashboard = () => {
                 </div>
                 <div>
                   <h4 className="font-bold text-gray-900">{course.title}</h4>
-                  <p className="text-xs text-gray-500">{course.instructorName} · {course.category}</p>
+                  <p className="text-xs text-gray-500">{course.instructorName} Â· {course.category}</p>
                 </div>
               </div>
               <div className="text-right">
-                <div className="font-bold text-gray-900">{formatNumber(course.studentCount)} tələbə</div>
+                <div className="font-bold text-gray-900">{formatNumber(course.studentCount)} {t('admin.t_l_b_', { defaultValue: t('admin.t_l_b_', { defaultValue: 'tÉ™lÉ™bÉ™' }) })}</div>
                 <div className="text-[10px] font-black uppercase text-[#D4AF37]">Aktiv</div>
               </div>
             </div>
           ))}
           {!loading && dashboard && dashboard.topCourses.length === 0 && (
             <div className="rounded-2xl border border-dashed border-gray-200 p-8 text-center text-sm text-gray-400">
-              Hələ aktiv kurs yoxdur.
-            </div>
+              {t('admin.h_l__aktiv_kurs_yoxd', { defaultValue: t('admin.h_l__aktiv_kurs_yoxd', { defaultValue: 'HÉ™lÉ™ aktiv kurs yoxdur.' }) })}</div>
           )}
         </div>
       </div>
@@ -760,8 +765,8 @@ const Dashboard = () => {
                 <Users className="h-6 w-6 text-[#D4AF37]" />
               </div>
               <div>
-                <h3 className="text-xl font-black text-gray-900">Son müəllimlər</h3>
-                <p className="text-sm text-gray-500">Backend-dən gələn ən son qeydiyyatlar</p>
+                <h3 className="text-xl font-black text-gray-900">{t('admin.son_m__lliml_r', { defaultValue: t('admin.son_m__lliml_r', { defaultValue: 'Son mÃ¼É™llimlÉ™r' }) })}</h3>
+                <p className="text-sm text-gray-500">{t('admin.backend_d_n_g_l_n__n', { defaultValue: t('admin.backend_d_n_g_l_n__n', { defaultValue: 'Backend-dÉ™n gÉ™lÉ™n É™n son qeydiyyatlar' }) })}</p>
               </div>
             </div>
           </div>
@@ -774,15 +779,14 @@ const Dashboard = () => {
                     <div className="text-sm text-gray-500">{teacher.email}</div>
                   </div>
                   <div className="text-left text-sm font-bold text-gray-900 sm:text-right">
-                    {teacher.courseCount} kurs · {teacher.testCount} test
+                    {teacher.courseCount} kurs Â· {teacher.testCount} test
                   </div>
                 </div>
               </div>
             ))}
             {!loading && dashboard && dashboard.latestTeachers.length === 0 && (
               <div className="rounded-2xl border border-dashed border-gray-200 p-8 text-center text-sm text-gray-400">
-                Hələ müəllim yoxdur.
-              </div>
+                {t('admin.h_l__m__llim_yoxdur_', { defaultValue: t('admin.h_l__m__llim_yoxdur_', { defaultValue: 'HÉ™lÉ™ mÃ¼É™llim yoxdur.' }) })}</div>
             )}
           </div>
         </div>
@@ -794,8 +798,8 @@ const Dashboard = () => {
                 <GraduationCap className="h-6 w-6 text-blue-500" />
               </div>
               <div>
-                <h3 className="text-xl font-black text-gray-900">Son tələbələr</h3>
-                <p className="text-sm text-gray-500">Yeni qoşulan tələbələr</p>
+                <h3 className="text-xl font-black text-gray-900">{t('admin.son_t_l_b_l_r', { defaultValue: t('admin.son_t_l_b_l_r', { defaultValue: 'Son tÉ™lÉ™bÉ™lÉ™r' }) })}</h3>
+                <p className="text-sm text-gray-500">{t('admin.yeni_qo_ulan_t_l_b_l', { defaultValue: t('admin.yeni_qo_ulan_t_l_b_l', { defaultValue: 'Yeni qoÅŸulan tÉ™lÉ™bÉ™lÉ™r' }) })}</p>
               </div>
             </div>
           </div>
@@ -808,15 +812,14 @@ const Dashboard = () => {
                     <div className="text-sm text-gray-500">{student.email}</div>
                   </div>
                   <div className="text-left text-sm font-bold text-gray-900 sm:text-right">
-                    {student.activeCoursesCount} kurs · {student.assignedTestsCount} test
+                    {student.activeCoursesCount} kurs Â· {student.assignedTestsCount} test
                   </div>
                 </div>
               </div>
             ))}
             {!loading && dashboard && dashboard.latestStudents.length === 0 && (
               <div className="rounded-2xl border border-dashed border-gray-200 p-8 text-center text-sm text-gray-400">
-                Hələ tələbə yoxdur.
-              </div>
+                {t('admin.h_l__t_l_b__yoxdur_', { defaultValue: t('admin.h_l__t_l_b__yoxdur_', { defaultValue: 'HÉ™lÉ™ tÉ™lÉ™bÉ™ yoxdur.' }) })}</div>
             )}
           </div>
         </div>
@@ -826,6 +829,7 @@ const Dashboard = () => {
 };
 
 const Teachers = () => {
+    const { t } = useTranslation();
   const [teachers, setTeachers] = useState<TeacherItem[]>([]);
   const [categories, setCategories] = useState<CategoryItem[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -860,7 +864,7 @@ const Teachers = () => {
         setCategories(categoriesResponse.data);
       }
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Müəllim məlumatları alınmadı');
+      toast.error(error instanceof Error ? error.message : 'MÃ¼É™llim mÉ™lumatlarÄ± alÄ±nmadÄ±');
     } finally {
       setLoading(false);
     }
@@ -908,19 +912,19 @@ const Teachers = () => {
         setNewTeacher({ name: '', surname: '', email: '', password: '', category: '', phoneNumber: '' });
         setIsModalOpen(false);
         setEditingTeacherId(null);
-        toast.success('Müəllim hesabı yaradıldı');
+        toast.success(t('admin.m__llim_hesab__yarad', { defaultValue: 'MÃ¼É™llim hesabÄ± yaradÄ±ldÄ±' }));
         await loadData();
       } else {
-        toast.error(response.message || 'Müəllim əməliyyatı uğursuz oldu');
+        toast.error(response.message || t('admin.m__llim__m_liyyat__u', { defaultValue: 'MÃ¼É™llim É™mÉ™liyyatÄ± uÄŸursuz oldu' }));
       }
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Serverlə əlaqə qurula bilmədi');
+      toast.error(error instanceof Error ? error.message : 'ServerlÉ™ É™laqÉ™ qurula bilmÉ™di');
     }
   };
 
   const copyCredentials = async (text: string) => {
     await navigator.clipboard.writeText(text);
-    toast.success('Kopyalandı');
+    toast.success(t('admin.kopyaland_', { defaultValue: 'KopyalandÄ±' }));
   };
 
   const openCreateModal = () => {
@@ -951,13 +955,13 @@ const Teachers = () => {
     try {
       const response = await adminApi.deleteTeacher(teacher.id);
       if (response.success) {
-        toast.success('Müəllim silindi');
+        toast.success(t('admin.m__llim_silindi', { defaultValue: 'MÃ¼É™llim silindi' }));
         await loadData();
       } else {
-        toast.error(response.message || 'Müəllim silinmədi');
+        toast.error(response.message || t('admin.m__llim_silinm_di', { defaultValue: 'MÃ¼É™llim silinmÉ™di' }));
       }
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Müəllim silinmədi');
+      toast.error(error instanceof Error ? error.message : 'MÃ¼É™llim silinmÉ™di');
     }
   };
 
@@ -965,16 +969,15 @@ const Teachers = () => {
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-black text-gray-900">Müəllimlər</h1>
-          <p className="mt-1 text-gray-500">Yalnız müəllim hesabları burada göstərilir.</p>
+          <h1 className="text-3xl font-black text-gray-900">{t('admin.m__lliml_r', { defaultValue: t('admin.m__lliml_r', { defaultValue: 'MÃ¼É™llimlÉ™r' }) })}</h1>
+          <p className="mt-1 text-gray-500">{t('admin.yaln_z_m__llim_hesab', { defaultValue: t('admin.yaln_z_m__llim_hesab', { defaultValue: 'YalnÄ±z mÃ¼É™llim hesablarÄ± burada gÃ¶stÉ™rilir.' }) })}</p>
         </div>
         <button
           onClick={openCreateModal}
           className="inline-flex items-center gap-2 rounded-2xl bg-[#D4AF37] px-6 py-3 font-bold text-white shadow-lg shadow-[#D4AF37]/20 transition-all active:scale-95 hover:bg-[#B88A1B]"
         >
           <Plus className="h-5 w-5" />
-          Yeni Müəllim
-        </button>
+          {t('admin.yeni_m__llim', { defaultValue: t('admin.yeni_m__llim', { defaultValue: 'Yeni MÃ¼É™llim' }) })}</button>
       </div>
 
       <div className="rounded-[32px] border border-gray-100 bg-white p-6 shadow-sm">
@@ -984,7 +987,7 @@ const Teachers = () => {
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             type="text"
-            placeholder="Müəllim adı, email və ya kateqoriya ilə axtar..."
+            placeholder={t('admin.m__llim_ad___email_v', { defaultValue: 'MÃ¼É™llim adÄ±, email vÉ™ ya kateqoriya ilÉ™ axtar...' })}
             className="w-full rounded-xl border border-gray-100 bg-white py-3 pl-12 pr-4 text-sm outline-none transition-all focus:border-[#D4AF37] focus:ring-0"
           />
         </div>
@@ -994,9 +997,8 @@ const Teachers = () => {
         <div className="animate-in slide-in-from-top-4 rounded-[32px] bg-[#D4AF37] p-5 text-white shadow-xl shadow-[#D4AF37]/20 duration-500 sm:p-8">
           <h3 className="mb-4 flex items-center gap-2 text-xl font-black">
             <Check className="h-6 w-6" />
-            Hesab yaradıldı
-          </h3>
-          <p className="mb-6 text-sm opacity-90">Aşağıdakı giriş məlumatlarını müəllimə göndərin:</p>
+            {t('admin.hesab_yarad_ld_', { defaultValue: t('admin.hesab_yarad_ld_', { defaultValue: 'Hesab yaradÄ±ldÄ±' }) })}</h3>
+          <p className="mb-6 text-sm opacity-90">{t('admin.a_a__dak__giri__m_lu', { defaultValue: t('admin.a_a__dak__giri__m_lu', { defaultValue: 'AÅŸaÄŸÄ±dakÄ± giriÅŸ mÉ™lumatlarÄ±nÄ± mÃ¼É™llimÉ™ gÃ¶ndÉ™rin:' }) })}</p>
           <div className="space-y-4 rounded-2xl border border-white/10 bg-white/10 p-6 backdrop-blur-md">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
               <span className="text-xs font-black uppercase tracking-widest opacity-60">Email</span>
@@ -1008,7 +1010,7 @@ const Teachers = () => {
               </div>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-              <span className="text-xs font-black uppercase tracking-widest opacity-60">Şifrə</span>
+              <span className="text-xs font-black uppercase tracking-widest opacity-60">{t('admin._ifr_', { defaultValue: t('admin._ifr_', { defaultValue: 'ÅifrÉ™' }) })}</span>
               <div className="flex items-center gap-3">
                 <span className="font-mono font-bold tracking-wider">{createdInfo.password}</span>
                 <button onClick={() => copyCredentials(createdInfo.password)} className="rounded-lg p-2 transition-colors hover:bg-white/10">
@@ -1018,26 +1020,25 @@ const Teachers = () => {
             </div>
           </div>
           <button onClick={() => setCreatedInfo(null)} className="mt-6 text-xs font-black uppercase tracking-widest hover:underline">
-            Bağla
-          </button>
+            {t('admin.ba_la', { defaultValue: t('admin.ba_la', { defaultValue: 'BaÄŸla' }) })}</button>
         </div>
       )}
 
       <div className="rounded-[32px] border border-gray-100 bg-white shadow-sm">
         <div className="space-y-3 p-3 sm:p-4">
           {loading && (
-            <div className="rounded-2xl border border-gray-100 p-6 text-center text-gray-400">Müəllimlər yüklənir...</div>
+            <div className="rounded-2xl border border-gray-100 p-6 text-center text-gray-400">{t('admin.m__lliml_r_y_kl_nir_', { defaultValue: t('admin.m__lliml_r_y_kl_nir_', { defaultValue: 'MÃ¼É™llimlÉ™r yÃ¼klÉ™nir...' }) })}</div>
           )}
           {!loading && filteredTeachers.map((teacher) => (
             <div key={teacher.id} className="rounded-2xl border border-gray-100 p-4 transition-colors hover:bg-gray-50/50 sm:p-5">
               <div className="grid gap-4 xl:grid-cols-[minmax(0,1.5fr)_minmax(0,1.2fr)_minmax(0,0.9fr)_auto] xl:items-center">
                 <div className="min-w-0">
                   <div className="truncate font-bold text-gray-900">{teacher.name} {teacher.surname}</div>
-                  <div className="truncate text-sm text-gray-500">Müəllim hesabı</div>
+                  <div className="truncate text-sm text-gray-500">{t('admin.m__llim_hesab_', { defaultValue: t('admin.m__llim_hesab_', { defaultValue: 'MÃ¼É™llim hesabÄ±' }) })}</div>
                 </div>
                 <div className="min-w-0 text-sm text-gray-500">
                   <div className="truncate font-medium text-gray-700">{teacher.email}</div>
-                  <div className="truncate text-xs text-gray-400">Əlaqə emaili</div>
+                  <div className="truncate text-xs text-gray-400">{t('admin._laq__emaili', { defaultValue: t('admin._laq__emaili', { defaultValue: 'ÆlaqÉ™ emaili' }) })}</div>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <span className="rounded-full bg-blue-50 px-3 py-1 text-[10px] font-black uppercase text-blue-600">
@@ -1056,8 +1057,7 @@ const Teachers = () => {
                     className="inline-flex items-center gap-2 rounded-xl border border-gray-100 px-4 py-2 text-xs font-black uppercase tracking-widest text-gray-600 transition-colors hover:border-[#D4AF37] hover:text-[#D4AF37]"
                   >
                     <Edit3 className="h-3.5 w-3.5" />
-                    Düzəlt
-                  </button>
+                    {t('admin.d_z_lt', { defaultValue: t('admin.d_z_lt', { defaultValue: 'DÃ¼zÉ™lt' }) })}</button>
                   <button
                     onClick={() => handleDeleteTeacher(teacher)}
                     className="inline-flex items-center gap-2 rounded-xl border border-gray-100 px-4 py-2 text-xs font-black uppercase tracking-widest text-red-500 transition-colors hover:border-red-200 hover:bg-red-50"
@@ -1071,8 +1071,7 @@ const Teachers = () => {
           ))}
           {!loading && filteredTeachers.length === 0 && (
             <div className="rounded-2xl border border-dashed border-gray-200 p-8 text-center italic text-gray-400">
-              Hələ ki, heç bir müəllim hesabı yaradılmayıb.
-            </div>
+              {t('admin.h_l__ki__he__bir_m__', { defaultValue: t('admin.h_l__ki__he__bir_m__', { defaultValue: 'HÉ™lÉ™ ki, heÃ§ bir mÃ¼É™llim hesabÄ± yaradÄ±lmayÄ±b.' }) })}</div>
           )}
         </div>
       </div>
@@ -1080,7 +1079,7 @@ const Teachers = () => {
       <Modal
         isOpen={isModalOpen}
         onClose={() => { setIsModalOpen(false); setEditingTeacherId(null); }}
-        title={editingTeacherId ? 'Müəllim Redaktə Et' : 'Yeni Müəllim Hesabı'}
+        title={editingTeacherId ? 'MÃ¼É™llim RedaktÉ™ Et' : 'Yeni MÃ¼É™llim HesabÄ±'}
       >
         <form onSubmit={handleCreate} className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
           <div className="col-span-1 space-y-1.5">
@@ -1091,7 +1090,7 @@ const Teachers = () => {
               onChange={(event) => setNewTeacher({ ...newTeacher, name: event.target.value })}
               type="text"
               className="w-full rounded-xl border border-gray-100 bg-gray-50 px-3 py-2.5 text-sm font-bold outline-none transition-all focus:border-[#D4AF37] focus:bg-white sm:rounded-2xl sm:px-4 sm:py-3"
-              placeholder="Məryəm"
+              placeholder={t('admin.m_ry_m', { defaultValue: 'MÉ™ryÉ™m' })}
             />
           </div>
           <div className="col-span-1 space-y-1.5">
@@ -1102,7 +1101,7 @@ const Teachers = () => {
               onChange={(event) => setNewTeacher({ ...newTeacher, surname: event.target.value })}
               type="text"
               className="w-full rounded-xl border border-gray-100 bg-gray-50 px-3 py-2.5 text-sm font-bold outline-none transition-all focus:border-[#D4AF37] focus:bg-white sm:rounded-2xl sm:px-4 sm:py-3"
-              placeholder="Ələkbərli"
+              placeholder={t('admin._l_kb_rli', { defaultValue: 'ÆlÉ™kbÉ™rli' })}
             />
           </div>
           <div className="col-span-2 space-y-1.5">
@@ -1134,21 +1133,21 @@ const Teachers = () => {
               onChange={(event) => setNewTeacher({ ...newTeacher, category: event.target.value })}
               className="w-full rounded-xl border border-gray-100 bg-gray-50 px-3 py-2.5 text-sm font-bold outline-none transition-all focus:border-[#D4AF37] focus:bg-white sm:rounded-2xl sm:px-4 sm:py-3"
             >
-              <option value="">Kateqoriya seçin...</option>
+              <option value="">{t('admin.kateqoriya_se_in___', { defaultValue: t('admin.kateqoriya_se_in___', { defaultValue: 'Kateqoriya seÃ§in...' }) })}</option>
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>{category.name}</option>
               ))}
             </select>
           </div>
           <div className="col-span-2 space-y-1.5">
-            <label className="text-[10px] font-black uppercase tracking-[0.16em] text-gray-500 italic sm:text-xs">Müvəqqəti Şifrə</label>
+            <label className="text-[10px] font-black uppercase tracking-[0.16em] text-gray-500 italic sm:text-xs">{t('admin.m_v_qq_ti__ifr_', { defaultValue: t('admin.m_v_qq_ti__ifr_', { defaultValue: 'MÃ¼vÉ™qqÉ™ti ÅifrÉ™' }) })}</label>
             <input
               required={!editingTeacherId}
               value={newTeacher.password}
               onChange={(event) => setNewTeacher({ ...newTeacher, password: event.target.value })}
               type="text"
               className="w-full rounded-xl border border-gray-100 bg-gray-50 px-3 py-2.5 text-sm font-mono font-bold tracking-widest outline-none transition-all focus:border-[#D4AF37] focus:bg-white sm:rounded-2xl sm:px-4 sm:py-3"
-              placeholder={editingTeacherId ? 'Boş buraxın' : 'RIM2026!#'}
+              placeholder={editingTeacherId ? 'BoÅŸ buraxÄ±n' : 'RIM2026!#'}
               disabled={Boolean(editingTeacherId)}
             />
           </div>
@@ -1156,7 +1155,7 @@ const Teachers = () => {
             type="submit"
             className="col-span-2 mt-1 w-full rounded-xl bg-[#D4AF37] py-3.5 text-sm font-black text-white shadow-xl shadow-[#D4AF37]/20 transition-all active:scale-95 hover:bg-[#B88A1B] sm:rounded-2xl sm:py-4 sm:text-base"
           >
-            {editingTeacherId ? 'Düzəlişi Saxla' : 'Hesabı Yarat'}
+            {editingTeacherId ? 'DÃ¼zÉ™liÅŸi Saxla' : 'HesabÄ± Yarat'}
           </button>
         </form>
       </Modal>
@@ -1165,6 +1164,7 @@ const Teachers = () => {
 };
 
 const Tests = () => {
+    const { t } = useTranslation();
   const [tests, setTests] = useState<TestItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -1189,7 +1189,7 @@ const Tests = () => {
         setTests(response.data || []);
       }
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Testlər alınmadı');
+      toast.error(error instanceof Error ? error.message : 'TestlÉ™r alÄ±nmadÄ±');
     } finally {
       setLoading(false);
     }
@@ -1209,10 +1209,10 @@ const Tests = () => {
         setTestResults(nextResults);
         setSelectedTestResult(nextResults[0] || null);
       } else {
-        setResultsError(response.message || 'Test nəticələri alınmadı');
+        setResultsError(response.message || t('admin.test_n_tic_l_ri_al_n', { defaultValue: 'Test nÉ™ticÉ™lÉ™ri alÄ±nmadÄ±' }));
       }
     } catch (error) {
-      setResultsError(error instanceof Error ? error.message : 'Test nəticələri alınmadı');
+      setResultsError(error instanceof Error ? error.message : 'Test nÉ™ticÉ™lÉ™ri alÄ±nmadÄ±');
     } finally {
       setResultsLoading(false);
     }
@@ -1258,7 +1258,7 @@ const Tests = () => {
         result.student?.name || '',
         result.student?.surname || '',
         result.student?.email || '',
-        formatAttemptLabel(result.attemptNumber || 1)
+        formatAttemptLabel(result.attemptNumber || 1, t)
       ]
         .join(' ')
         .toLowerCase()
@@ -1317,9 +1317,9 @@ const Tests = () => {
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#D4AF37]">Testlər</p>
-          <h1 className="mt-2 text-3xl font-black text-gray-900">Bütün testlər və nəticələr</h1>
-          <p className="mt-1 text-gray-500">Testləri seçin, nəticələri inline görün və sual-cavabları səhifə içində izləyin.</p>
+          <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#D4AF37]">{t('admin.testl_r', { defaultValue: t('admin.testl_r', { defaultValue: 'TestlÉ™r' }) })}</p>
+          <h1 className="mt-2 text-3xl font-black text-gray-900">{t('admin.b_t_n_testl_r_v__n_t', { defaultValue: t('admin.b_t_n_testl_r_v__n_t', { defaultValue: 'BÃ¼tÃ¼n testlÉ™r vÉ™ nÉ™ticÉ™lÉ™r' }) })}</h1>
+          <p className="mt-1 text-gray-500">{t('admin.testl_ri_se_in__n_ti', { defaultValue: t('admin.testl_ri_se_in__n_ti', { defaultValue: 'TestlÉ™ri seÃ§in, nÉ™ticÉ™lÉ™ri inline gÃ¶rÃ¼n vÉ™ sual-cavablarÄ± sÉ™hifÉ™ iÃ§indÉ™ izlÉ™yin.' }) })}</p>
         </div>
         <div className="rounded-2xl bg-gray-50 px-4 py-3 text-sm font-bold text-gray-600">
           {filteredTests.length} test
@@ -1334,13 +1334,12 @@ const Tests = () => {
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               type="text"
-              placeholder="Test, kurs və ya müəllim ilə axtar..."
+              placeholder={t('admin.test__kurs_v__ya_m__', { defaultValue: 'Test, kurs vÉ™ ya mÃ¼É™llim ilÉ™ axtar...' })}
               className="w-full rounded-xl border border-gray-100 bg-white py-3 pl-12 pr-4 text-sm outline-none transition-all focus:border-[#D4AF37] focus:ring-0"
             />
           </div>
           <div className="rounded-2xl bg-gray-50 px-4 py-3 text-sm font-bold text-gray-600">
-            {tests.length} ümumi test
-          </div>
+            {tests.length} {t('admin._mumi_test', { defaultValue: t('admin._mumi_test', { defaultValue: 'Ã¼mumi test' }) })}</div>
         </div>
       </div>
 
@@ -1351,8 +1350,7 @@ const Tests = () => {
           className={`px-4 py-2 rounded-xl text-sm font-medium transition-all flex items-center gap-2 ${selectedCourseId === 'all' ? 'bg-[#D4AF37] text-white shadow-md' : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-100'}`}
         >
           <FileText className="w-4 h-4" />
-          Hamısı
-          <span className={`px-2 py-0.5 rounded-lg text-[10px] font-bold ${selectedCourseId === 'all' ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-500'}`}>{tests.length}</span>
+          {t('admin.ham_s_', { defaultValue: t('admin.ham_s_', { defaultValue: 'HamÄ±sÄ±' }) })}<span className={`px-2 py-0.5 rounded-lg text-[10px] font-bold ${selectedCourseId === 'all' ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-500'}`}>{tests.length}</span>
         </button>
         {courses.map((course) => {
           const count = tests.filter((test) => test.courseTitle === course.id).length;
@@ -1398,8 +1396,7 @@ const Tests = () => {
               <div className="flex flex-wrap gap-2 text-xs text-gray-500 mb-5">
                 <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gray-50 border border-gray-100">
                   <Clock className="w-3 h-3" />
-                  {test.duration} dəq
-                </span>
+                  {test.duration} {t('admin.d_q', { defaultValue: t('admin.d_q', { defaultValue: 'dÉ™q' }) })}</span>
                 <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gray-50 border border-gray-100">
                   <FileText className="w-3 h-3" />
                   {test.questionCount} sual
@@ -1409,7 +1406,7 @@ const Tests = () => {
               <div className="flex items-center justify-between gap-2">
                 <div className="text-xs font-semibold text-gray-500 truncate">{test.instructorName}</div>
                 <span className={`rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] ${isSelected ? 'bg-[#D4AF37] text-white' : 'bg-gray-100 text-gray-600'}`}>
-                  {isSelected ? 'Seçildi' : 'Nəticələrə bax'}
+                  {isSelected ? 'SeÃ§ildi' : 'NÉ™ticÉ™lÉ™rÉ™ bax'}
                 </span>
               </div>
             </button>
@@ -1419,20 +1416,19 @@ const Tests = () => {
 
       {!loading && filteredTests.length === 0 && (
         <div className="rounded-2xl border border-dashed border-gray-200 bg-white p-8 text-center italic text-gray-400">
-          Uyğun test tapılmadı.
-        </div>
+          {t('admin.uy_un_test_tap_lmad_', { defaultValue: t('admin.uy_un_test_tap_lmad_', { defaultValue: 'UyÄŸun test tapÄ±lmadÄ±.' }) })}</div>
       )}
 
       <div ref={resultsSectionRef} className="rounded-[32px] border border-gray-100 bg-white p-4 shadow-sm sm:p-6">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#D4AF37]">Nəticələr</p>
-            <h2 className="mt-2 text-2xl font-black text-gray-900">Seçilmiş testin nəticələri</h2>
-            <p className="mt-1 text-gray-500">Aşağıda nəticələr və sual-cavablar ayrı hissələrdə göstərilir.</p>
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#D4AF37]">{t('admin.n_tic_l_r', { defaultValue: t('admin.n_tic_l_r', { defaultValue: 'NÉ™ticÉ™lÉ™r' }) })}</p>
+            <h2 className="mt-2 text-2xl font-black text-gray-900">{t('admin.se_ilmi__testin_n_ti', { defaultValue: t('admin.se_ilmi__testin_n_ti', { defaultValue: 'SeÃ§ilmiÅŸ testin nÉ™ticÉ™lÉ™ri' }) })}</h2>
+            <p className="mt-1 text-gray-500">{t('admin.a_a__da_n_tic_l_r_v_', { defaultValue: t('admin.a_a__da_n_tic_l_r_v_', { defaultValue: 'AÅŸaÄŸÄ±da nÉ™ticÉ™lÉ™r vÉ™ sual-cavablar ayrÄ± hissÉ™lÉ™rdÉ™ gÃ¶stÉ™rilir.' }) })}</p>
           </div>
           <div className="grid grid-cols-2 gap-3 text-sm font-bold text-gray-600 sm:grid-cols-4">
-            <div className="rounded-2xl bg-gray-50 px-4 py-3 text-center">{totalAttempts} cəhd</div>
-            <div className="rounded-2xl bg-gray-50 px-4 py-3 text-center">{uniqueStudents} tələbə</div>
+            <div className="rounded-2xl bg-gray-50 px-4 py-3 text-center">{totalAttempts} {t('admin.c_hd', { defaultValue: t('admin.c_hd', { defaultValue: 'cÉ™hd' }) })}</div>
+            <div className="rounded-2xl bg-gray-50 px-4 py-3 text-center">{uniqueStudents} {t('admin.t_l_b_', { defaultValue: t('admin.t_l_b_', { defaultValue: 'tÉ™lÉ™bÉ™' }) })}</div>
             <div className="rounded-2xl bg-gray-50 px-4 py-3 text-center">{pendingAttempts} yoxlama</div>
             <div className="rounded-2xl bg-gray-50 px-4 py-3 text-center">{testResults.length ? `${averageScore}%` : '-'}</div>
           </div>
@@ -1440,12 +1436,10 @@ const Tests = () => {
 
         {!selectedTest ? (
           <div className="mt-6 rounded-2xl border border-dashed border-gray-200 p-8 text-center text-gray-500">
-            Nəticələri görmək üçün bir test seçin.
-          </div>
+            {t('admin.n_tic_l_ri_g_rm_k___', { defaultValue: t('admin.n_tic_l_ri_g_rm_k___', { defaultValue: 'NÉ™ticÉ™lÉ™ri gÃ¶rmÉ™k Ã¼Ã§Ã¼n bir test seÃ§in.' }) })}</div>
         ) : resultsLoading ? (
           <div className="mt-6 rounded-2xl border border-gray-100 bg-white p-8 text-center text-gray-500 shadow-sm">
-            Nəticələr yüklənir...
-          </div>
+            {t('admin.n_tic_l_r_y_kl_nir__', { defaultValue: t('admin.n_tic_l_r_y_kl_nir__', { defaultValue: 'NÉ™ticÉ™lÉ™r yÃ¼klÉ™nir...' }) })}</div>
         ) : resultsError ? (
           <div className="mt-6 rounded-2xl border border-red-100 bg-red-50 p-5 text-sm font-semibold text-red-700">
             {resultsError}
@@ -1460,13 +1454,13 @@ const Tests = () => {
                     value={resultsSearch}
                     onChange={(event) => setResultsSearch(event.target.value)}
                     type="text"
-                    placeholder="Tələbə adı ilə axtar..."
+                    placeholder={t('admin.t_l_b__ad__il__axtar', { defaultValue: 'TÉ™lÉ™bÉ™ adÄ± ilÉ™ axtar...' })}
                     className="w-full rounded-xl border border-gray-100 bg-gray-50 py-2.5 pl-10 pr-3 text-sm outline-none transition-all focus:border-[#D4AF37] focus:bg-white"
                   />
                 </div>
                 <div className="mt-2 flex items-center justify-between text-[11px] font-bold uppercase tracking-[0.14em] text-gray-400">
-                  <span>{filteredTestResults.length} tapıldı</span>
-                  <span>{testResults.length} ümumi</span>
+                  <span>{filteredTestResults.length} {t('admin.tap_ld_', { defaultValue: t('admin.tap_ld_', { defaultValue: 'tapÄ±ldÄ±' }) })}</span>
+                  <span>{testResults.length} {t('admin._mumi', { defaultValue: t('admin._mumi', { defaultValue: 'Ã¼mumi' }) })}</span>
                 </div>
               </div>
 
@@ -1484,10 +1478,10 @@ const Tests = () => {
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0">
                         <div className="truncate font-bold text-gray-900">
-                          {result.student?.name || 'Naməlum tələbə'} {result.student?.surname || ''}
+                          {result.student?.name || t('admin.nam_lum_t_l_b_', { defaultValue: 'NamÉ™lum tÉ™lÉ™bÉ™' })} {result.student?.surname || ''}
                         </div>
                         <div className="mt-1 text-xs font-black uppercase tracking-[0.14em] text-[#A87A1F]">
-                          {formatAttemptLabel(result.attemptNumber || 1)}
+                          {formatAttemptLabel(result.attemptNumber || 1, t)}
                         </div>
                       </div>
                       <div className={`rounded-xl px-2.5 py-1 text-xs font-black ${result.hasPendingAnswers ? 'bg-yellow-50 text-yellow-600' : isPassed ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'}`}>
@@ -1504,8 +1498,7 @@ const Tests = () => {
 
               {filteredTestResults.length === 0 && (
                 <div className="rounded-2xl border border-dashed border-gray-200 bg-white p-6 text-center text-sm text-gray-500">
-                  Axtarışa uyğun nəticə tapılmadı.
-                </div>
+                  {t('admin.axtar__a_uy_un_n_tic', { defaultValue: t('admin.axtar__a_uy_un_n_tic', { defaultValue: 'AxtarÄ±ÅŸa uyÄŸun nÉ™ticÉ™ tapÄ±lmadÄ±.' }) })}</div>
               )}
             </div>
 
@@ -1515,10 +1508,10 @@ const Tests = () => {
                   <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
                     <div>
                       <div className="text-xs font-black uppercase tracking-[0.16em] text-[#A87A1F]">
-                        {formatAttemptLabel(selectedTestResult.attemptNumber || 1)}
+                        {formatAttemptLabel(selectedTestResult.attemptNumber || 1, t)}
                       </div>
                       <h4 className="mt-1 text-2xl font-black text-gray-900">
-                        {selectedTestResult.student?.name || 'Naməlum tələbə'} {selectedTestResult.student?.surname || ''}
+                        {selectedTestResult.student?.name || t('admin.nam_lum_t_l_b_', { defaultValue: 'NamÉ™lum tÉ™lÉ™bÉ™' })} {selectedTestResult.student?.surname || ''}
                       </h4>
                       <p className="mt-1 text-sm text-gray-500">
                         {selectedTestResult.student?.email || '-'}
@@ -1529,7 +1522,7 @@ const Tests = () => {
                         {selectedTestResult.hasPendingAnswers ? 'Yoxlama' : `${Math.round(selectedTestResult.scorePercentage || 0)}%`}
                       </div>
                       <div className="text-xs font-bold uppercase tracking-[0.14em]">
-                        {selectedTestResult.hasPendingAnswers ? 'Gözləmədə' : 'Nəticə'}
+                        {selectedTestResult.hasPendingAnswers ? 'GÃ¶zlÉ™mÉ™dÉ™' : 'NÉ™ticÉ™'}
                       </div>
                     </div>
                   </div>
@@ -1537,24 +1530,24 @@ const Tests = () => {
                   <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
                     <div className="rounded-2xl bg-gray-50 p-4 text-center">
                       <div className="text-2xl font-black text-[#D4AF37]">{selectedTestResult.answers.filter((answer) => answer.isCorrect).length}</div>
-                      <div className="text-xs font-bold uppercase tracking-[0.14em] text-gray-500">Doğru</div>
+                      <div className="text-xs font-bold uppercase tracking-[0.14em] text-gray-500">{t('admin.do_ru', { defaultValue: t('admin.do_ru', { defaultValue: 'DoÄŸru' }) })}</div>
                     </div>
                     <div className="rounded-2xl bg-gray-50 p-4 text-center">
                       <div className="text-2xl font-black text-red-500">{selectedTestResult.answers.filter((answer) => !answer.isCorrect && answer.status === 'graded').length}</div>
-                      <div className="text-xs font-bold uppercase tracking-[0.14em] text-gray-500">Yanlış</div>
+                      <div className="text-xs font-bold uppercase tracking-[0.14em] text-gray-500">{t('admin.yanl__', { defaultValue: t('admin.yanl__', { defaultValue: 'YanlÄ±ÅŸ' }) })}</div>
                     </div>
                     <div className="rounded-2xl bg-gray-50 p-4 text-center">
                       <div className="text-2xl font-black text-yellow-500">{selectedTestResult.answers.filter((answer) => answer.status === 'pending').length}</div>
-                      <div className="text-xs font-bold uppercase tracking-[0.14em] text-gray-500">Gözləyən</div>
+                      <div className="text-xs font-bold uppercase tracking-[0.14em] text-gray-500">{t('admin.g_zl_y_n', { defaultValue: t('admin.g_zl_y_n', { defaultValue: 'GÃ¶zlÉ™yÉ™n' }) })}</div>
                     </div>
                     <div className="rounded-2xl bg-gray-50 p-4 text-center">
                       <div className="text-2xl font-black text-gray-600">{Math.max((selectedTest?.questions || []).length - selectedTestResult.answers.length, 0)}</div>
-                      <div className="text-xs font-bold uppercase tracking-[0.14em] text-gray-500">Boş</div>
+                      <div className="text-xs font-bold uppercase tracking-[0.14em] text-gray-500">{t('admin.bo_', { defaultValue: t('admin.bo_', { defaultValue: 'BoÅŸ' }) })}</div>
                     </div>
                   </div>
 
                   <div className="space-y-4">
-                    <h5 className="text-lg font-bold text-gray-900">Sual və cavablar</h5>
+                    <h5 className="text-lg font-bold text-gray-900">{t('admin.sual_v__cavablar', { defaultValue: t('admin.sual_v__cavablar', { defaultValue: 'Sual vÉ™ cavablar' }) })}</h5>
                     <div className="space-y-3">
                         {(selectedTest?.questions || []).map((question: any, index: number) => {
                           const answer = getAnswerForQuestion(selectedTestResult, question, index);
@@ -1563,12 +1556,12 @@ const Tests = () => {
                         const selectedAnswerIndex = normalizeMultipleChoiceAnswerIndex(answer?.answer);
                         const correctAnswerIndex = getMultipleChoiceCorrectAnswerIndex(question);
                         const answerStateLabel = !hasAnswer
-                          ? 'Cavab verilməyib'
+                          ? 'Cavab verilmÉ™yib'
                           : answer?.status === 'pending'
-                            ? 'Yoxlama gözləyir'
+                            ? 'Yoxlama gÃ¶zlÉ™yir'
                             : isSelectedQuestionCorrect
-                              ? 'Doğru'
-                              : 'Yanlış';
+                              ? 'DoÄŸru'
+                              : 'YanlÄ±ÅŸ';
 
                         return (
                           <div
@@ -1594,26 +1587,26 @@ const Tests = () => {
                                 {question.answerType === 'open_ended' ? (
                                   <div className="mt-4 space-y-3">
                                     <div className="rounded-xl border border-gray-100 bg-white p-3 text-sm">
-                                      <span className="mb-1 block text-xs font-bold uppercase tracking-[0.14em] text-gray-400">Tələbənin Cavabı</span>
-                                      <span className="text-gray-900">{answer?.answer || 'Cavab verilməyib'}</span>
+                                      <span className="mb-1 block text-xs font-bold uppercase tracking-[0.14em] text-gray-400">{t('admin.t_l_b_nin_cavab_', { defaultValue: t('admin.t_l_b_nin_cavab_', { defaultValue: 'TÉ™lÉ™bÉ™nin CavabÄ±' }) })}</span>
+                                      <span className="text-gray-900">{answer?.answer || t('admin.cavab_verilm_yib', { defaultValue: 'Cavab verilmÉ™yib' })}</span>
                                     </div>
                                     <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-gray-50 p-3 text-sm">
                                       {!hasAnswer ? (
-                                        <span className="font-bold text-gray-500">Bu sual üçün hələ cavab göndərilməyib</span>
+                                        <span className="font-bold text-gray-500">{t('admin.bu_sual____n_h_l__ca', { defaultValue: t('admin.bu_sual____n_h_l__ca', { defaultValue: 'Bu sual Ã¼Ã§Ã¼n hÉ™lÉ™ cavab gÃ¶ndÉ™rilmÉ™yib' }) })}</span>
                                       ) : isNumericOpenEndedQuestion(question) ? (
                                         <span className={isSelectedQuestionCorrect ? 'font-bold text-green-600' : 'font-bold text-red-600'}>
-                                          {isSelectedQuestionCorrect ? 'Avtomatik doğru' : 'Avtomatik yanlış'}
+                                          {isSelectedQuestionCorrect ? 'Avtomatik doÄŸru' : 'Avtomatik yanlÄ±ÅŸ'}
                                         </span>
                                       ) : (
                                         <span className={answer?.status === 'pending' ? 'font-bold text-yellow-600' : isSelectedQuestionCorrect ? 'font-bold text-green-600' : 'font-bold text-red-600'}>
-                                          {answer?.status === 'pending' ? 'Yoxlama gözləyir' : isSelectedQuestionCorrect ? 'Doğru qiymətləndirildi' : 'Yanlış qiymətləndirildi'}
+                                          {answer?.status === 'pending' ? 'Yoxlama gÃ¶zlÉ™yir' : isSelectedQuestionCorrect ? 'DoÄŸru qiymÉ™tlÉ™ndirildi' : 'YanlÄ±ÅŸ qiymÉ™tlÉ™ndirildi'}
                                         </span>
                                       )}
                                       {!isNumericOpenEndedQuestion(question) && answer?.status !== 'pending' && (
                                         <span className="text-xs font-black uppercase tracking-[0.14em] text-gray-400">Manual yoxlama yoxdur</span>
                                       )}
                                       {answer?.status === 'pending' && (
-                                        <span className="text-xs font-black uppercase tracking-[0.14em] text-gray-400">Müəllim baxmalıdır</span>
+                                        <span className="text-xs font-black uppercase tracking-[0.14em] text-gray-400">{t('admin.m__llim_baxmal_d_r', { defaultValue: t('admin.m__llim_baxmal_d_r', { defaultValue: 'MÃ¼É™llim baxmalÄ±dÄ±r' }) })}</span>
                                       )}
                                     </div>
                                   </div>
@@ -1621,12 +1614,12 @@ const Tests = () => {
                                   <div className="mt-4 space-y-3">
                                     <div className="grid gap-2 sm:grid-cols-2">
                                       <div className="rounded-xl border border-gray-100 bg-white p-3 text-sm">
-                                        <span className="mb-1 block text-xs font-bold uppercase tracking-[0.14em] text-gray-400">Seçilən şık</span>
-                                        <span className="font-medium text-gray-900">{hasAnswer ? formatMultipleChoiceAnswer(question, answer?.answer || '') : 'Cavab verilməyib'}</span>
+                                        <span className="mb-1 block text-xs font-bold uppercase tracking-[0.14em] text-gray-400">{t('admin.se_il_n___k', { defaultValue: t('admin.se_il_n___k', { defaultValue: 'SeÃ§ilÉ™n ÅŸÄ±k' }) })}</span>
+                                        <span className="font-medium text-gray-900">{hasAnswer ? formatMultipleChoiceAnswer(question, answer?.answer || '') : 'Cavab verilmÉ™yib'}</span>
                                       </div>
                                       <div className="rounded-xl border border-gray-100 bg-white p-3 text-sm">
-                                        <span className="mb-1 block text-xs font-bold uppercase tracking-[0.14em] text-gray-400">Düzgün şık</span>
-                                        <span className="font-medium text-gray-900">{correctAnswerIndex !== null ? formatMultipleChoiceAnswer(question, String(correctAnswerIndex)) : 'Təyin edilməyib'}</span>
+                                        <span className="mb-1 block text-xs font-bold uppercase tracking-[0.14em] text-gray-400">{t('admin.d_zg_n___k', { defaultValue: t('admin.d_zg_n___k', { defaultValue: 'DÃ¼zgÃ¼n ÅŸÄ±k' }) })}</span>
+                                        <span className="font-medium text-gray-900">{correctAnswerIndex !== null ? formatMultipleChoiceAnswer(question, String(correctAnswerIndex)) : 'TÉ™yin edilmÉ™yib'}</span>
                                       </div>
                                     </div>
 
@@ -1648,16 +1641,15 @@ const Tests = () => {
                                             {String.fromCharCode(65 + optionIndex)}
                                           </div>
                                           <span className="truncate">{option}</span>
-                                          {isActualCorrect && <span className="ml-auto text-[10px] font-black uppercase opacity-70">Doğru</span>}
-                                          {!isActualCorrect && isSelected && <span className="ml-auto text-[10px] font-black uppercase opacity-60">Seçilib</span>}
+                                          {isActualCorrect && <span className="ml-auto text-[10px] font-black uppercase opacity-70">{t('admin.do_ru', { defaultValue: t('admin.do_ru', { defaultValue: 'DoÄŸru' }) })}</span>}
+                                          {!isActualCorrect && isSelected && <span className="ml-auto text-[10px] font-black uppercase opacity-60">{t('admin.se_ilib', { defaultValue: t('admin.se_ilib', { defaultValue: 'SeÃ§ilib' }) })}</span>}
                                         </div>
                                       );
                                     })}
 
                                     {!hasAnswer && (
                                       <div className="rounded-xl border border-dashed border-gray-200 bg-gray-50 p-3 text-sm text-gray-500">
-                                        Bu sual üçün cavab göndərilməyib.
-                                      </div>
+                                        {t('admin.bu_sual____n_cavab_g', { defaultValue: t('admin.bu_sual____n_cavab_g', { defaultValue: 'Bu sual Ã¼Ã§Ã¼n cavab gÃ¶ndÉ™rilmÉ™yib.' }) })}</div>
                                     )}
                                   </div>
                                 )}
@@ -1671,8 +1663,7 @@ const Tests = () => {
                 </div>
               ) : (
                 <div className="flex min-h-[240px] items-center justify-center rounded-2xl border border-dashed border-gray-200 bg-gray-50 text-gray-500">
-                  Görmək üçün bir nəticə seçin.
-                </div>
+                  {t('admin.g_rm_k____n_bir_n_ti', { defaultValue: t('admin.g_rm_k____n_bir_n_ti', { defaultValue: 'GÃ¶rmÉ™k Ã¼Ã§Ã¼n bir nÉ™ticÉ™ seÃ§in.' }) })}</div>
               )}
             </div>
           </div>
@@ -1683,6 +1674,7 @@ const Tests = () => {
 };
 
 const Students = () => {
+    const { t } = useTranslation();
   const [students, setStudents] = useState<StudentItem[]>([]);
   const [courses, setCourses] = useState<CourseItem[]>([]);
   const [tests, setTests] = useState<TestItem[]>([]);
@@ -1719,7 +1711,7 @@ const Students = () => {
       if (coursesResponse.success) setCourses(coursesResponse.data);
       if (testsResponse.success) setTests(testsResponse.data);
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Tələbə məlumatları alınmadı');
+      toast.error(error instanceof Error ? error.message : 'TÉ™lÉ™bÉ™ mÉ™lumatlarÄ± alÄ±nmadÄ±');
     } finally {
       setLoading(false);
     }
@@ -1767,10 +1759,10 @@ const Students = () => {
         setStudentResults(resultsData);
         setSelectedStudentResult(resultsData[0] || null);
       } else {
-        setStudentResultsError(response.message || 'Tələbə nəticələri alınmadı');
+        setStudentResultsError(response.message || t('admin.t_l_b__n_tic_l_ri_al', { defaultValue: 'TÉ™lÉ™bÉ™ nÉ™ticÉ™lÉ™ri alÄ±nmadÄ±' }));
       }
     } catch (error) {
-      setStudentResultsError(error instanceof Error ? error.message : 'Tələbə nəticələri alınmadı');
+      setStudentResultsError(error instanceof Error ? error.message : 'TÉ™lÉ™bÉ™ nÉ™ticÉ™lÉ™ri alÄ±nmadÄ±');
     } finally {
       setStudentResultsLoading(false);
     }
@@ -1790,18 +1782,18 @@ const Students = () => {
 
       if (response.success) {
         toast.success(assignmentAction === 'assign'
-          ? (assignmentType === 'course' ? 'Kurs tələbəyə verildi' : 'Test tələbəyə verildi')
-          : (assignmentType === 'course' ? 'Kurs tələbədən geri alındı' : 'Test tələbədən geri alındı'));
+          ? (assignmentType === 'course' ? 'Kurs tÉ™lÉ™bÉ™yÉ™ verildi' : 'Test tÉ™lÉ™bÉ™yÉ™ verildi')
+          : (assignmentType === 'course' ? 'Kurs tÉ™lÉ™bÉ™dÉ™n geri alÄ±ndÄ±' : 'Test tÉ™lÉ™bÉ™dÉ™n geri alÄ±ndÄ±'));
         setAssignmentModalOpen(false);
         setSelectedStudent(null);
         setSelectedTargetId('');
         setAssignmentSearch('');
         await loadData();
       } else {
-        toast.error(response.message || 'Təyinat edilə bilmədi');
+        toast.error(response.message || t('admin.t_yinat_edil__bilm_d', { defaultValue: 'TÉ™yinat edilÉ™ bilmÉ™di' }));
       }
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Təyinat edilə bilmədi');
+      toast.error(error instanceof Error ? error.message : 'TÉ™yinat edilÉ™ bilmÉ™di');
     }
   };
 
@@ -1855,7 +1847,7 @@ const Students = () => {
         result.test?.title || '',
         result.test?.course?.title || '',
         result.test?.instructor ? `${result.test.instructor.name || ''} ${result.test.instructor.surname || ''}` : '',
-        formatAttemptLabel(result.attemptNumber || 1)
+        formatAttemptLabel(result.attemptNumber || 1, t)
       ]
         .join(' ')
         .toLowerCase()
@@ -1887,16 +1879,15 @@ const Students = () => {
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="min-w-0">
-          <h1 className="text-3xl font-black text-gray-900">Tələbələr</h1>
-          <p className="mt-1 text-gray-500">Tələbələr görünür və onlara kurs və ya test təyin edilir.</p>
+          <h1 className="text-3xl font-black text-gray-900">{t('admin.t_l_b_l_r', { defaultValue: t('admin.t_l_b_l_r', { defaultValue: 'TÉ™lÉ™bÉ™lÉ™r' }) })}</h1>
+          <p className="mt-1 text-gray-500">{t('admin.t_l_b_l_r_g_r_n_r_v_', { defaultValue: t('admin.t_l_b_l_r_g_r_n_r_v_', { defaultValue: 'TÉ™lÉ™bÉ™lÉ™r gÃ¶rÃ¼nÃ¼r vÉ™ onlara kurs vÉ™ ya test tÉ™yin edilir.' }) })}</p>
         </div>
         <button
           onClick={() => loadData()}
           className="inline-flex items-center gap-2 self-start rounded-2xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-bold text-gray-700 shadow-sm transition-all hover:border-[#D4AF37] hover:text-[#D4AF37]"
         >
           <RefreshCw className="h-4 w-4" />
-          Yenilə
-        </button>
+          {t('admin.yenil_', { defaultValue: t('admin.yenil_', { defaultValue: 'YenilÉ™' }) })}</button>
       </div>
 
       <div className="rounded-[24px] border border-gray-100 bg-white p-4 shadow-sm sm:p-5">
@@ -1907,20 +1898,19 @@ const Students = () => {
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               type="text"
-              placeholder="Tələbə adı, email və ya telefon ilə axtar..."
+              placeholder={t('admin.t_l_b__ad___email_v_', { defaultValue: 'TÉ™lÉ™bÉ™ adÄ±, email vÉ™ ya telefon ilÉ™ axtar...' })}
               className="w-full rounded-xl border border-gray-100 bg-white py-3 pl-12 pr-4 text-sm outline-none transition-all focus:border-[#D4AF37] focus:ring-0"
             />
           </div>
           <div className="rounded-2xl bg-gray-50 px-4 py-3 text-sm font-bold text-gray-600">
-            {filteredStudents.length} tələbə
-          </div>
+            {filteredStudents.length} {t('admin.t_l_b_', { defaultValue: t('admin.t_l_b_', { defaultValue: 'tÉ™lÉ™bÉ™' }) })}</div>
         </div>
       </div>
 
       <div className="rounded-[32px] border border-gray-100 bg-white shadow-sm">
         <div className="space-y-3 p-3 sm:p-4">
           {loading && (
-            <div className="rounded-2xl border border-gray-100 p-6 text-center text-gray-400">Tələbələr yüklənir...</div>
+            <div className="rounded-2xl border border-gray-100 p-6 text-center text-gray-400">{t('admin.t_l_b_l_r_y_kl_nir__', { defaultValue: t('admin.t_l_b_l_r_y_kl_nir__', { defaultValue: 'TÉ™lÉ™bÉ™lÉ™r yÃ¼klÉ™nir...' }) })}</div>
           )}
           {!loading && filteredStudents.map((student) => (
             <div key={student.id} className="rounded-2xl border border-gray-100 p-4 transition-colors hover:bg-gray-50/50 sm:p-5">
@@ -1932,7 +1922,7 @@ const Students = () => {
                     </div>
                     <div className="min-w-0">
                       <div className="truncate font-bold text-sm text-gray-900">{student.name}</div>
-                      <div className="truncate text-[11px] text-gray-400">{student.educationLevel || 'Təyin edilməyib'}</div>
+                      <div className="truncate text-[11px] text-gray-400">{student.educationLevel || t('admin.t_yin_edilm_yib', { defaultValue: 'TÉ™yin edilmÉ™yib' })}</div>
                     </div>
                   </div>
                 </div>
@@ -1952,7 +1942,7 @@ const Students = () => {
                   </div>
                 </div>
                 <div className="min-w-0">
-                  <div className="mb-1 text-[10px] font-black uppercase tracking-[0.14em] text-gray-400 xl:hidden">Testlər</div>
+                  <div className="mb-1 text-[10px] font-black uppercase tracking-[0.14em] text-gray-400 xl:hidden">{t('admin.testl_r', { defaultValue: t('admin.testl_r', { defaultValue: 'TestlÉ™r' }) })}</div>
                   <div className="flex flex-wrap gap-1.5">
                     {student.assignedTests.map((test) => (
                       <span key={test._id} className="max-w-full rounded-md bg-blue-50 px-2 py-1 text-[10px] font-bold leading-tight text-blue-600 break-words">
@@ -1985,8 +1975,7 @@ const Students = () => {
                           className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-gray-900 px-3 py-2 text-[10px] font-black uppercase tracking-[0.14em] text-white shadow-lg shadow-gray-900/15 transition-all hover:bg-gray-800 active:scale-95"
                         >
                           <Clock className="h-3.5 w-3.5" />
-                          Test nəticələrini gör
-                        </Link>
+                          {t('admin.test_n_tic_l_rini_g_', { defaultValue: t('admin.test_n_tic_l_rini_g_', { defaultValue: 'Test nÉ™ticÉ™lÉ™rini gÃ¶r' }) })}</Link>
                     </div>
 
                     <div className="flex flex-wrap gap-2">
@@ -2014,8 +2003,7 @@ const Students = () => {
           ))}
           {!loading && filteredStudents.length === 0 && (
             <div className="rounded-2xl border border-dashed border-gray-200 p-8 text-center italic text-gray-400">
-              Hələ ki, heç bir tələbə yoxdur.
-            </div>
+              {t('admin.h_l__ki__he__bir_t_l', { defaultValue: t('admin.h_l__ki__he__bir_t_l', { defaultValue: 'HÉ™lÉ™ ki, heÃ§ bir tÉ™lÉ™bÉ™ yoxdur.' }) })}</div>
           )}
         </div>
       </div>
@@ -2023,7 +2011,7 @@ const Students = () => {
       <Modal
         isOpen={studentResultsModalOpen}
         onClose={() => setStudentResultsModalOpen(false)}
-        title={selectedResultsStudent ? `${selectedResultsStudent.name} üçün test nəticələri` : 'Test nəticələri'}
+        title={selectedResultsStudent ? `${selectedResultsStudent.name} Ã¼Ã§Ã¼n test nÉ™ticÉ™lÉ™ri` : 'Test nÉ™ticÉ™lÉ™ri'}
         contentClassName="max-w-6xl"
         bodyClassName="overflow-hidden p-3 sm:p-4 lg:p-6"
       >
@@ -2032,30 +2020,26 @@ const Students = () => {
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <h4 className="text-lg font-black text-gray-900">
-                  {selectedResultsStudent ? `${selectedResultsStudent.name}` : 'Tələbə'} test nəticələri
-                </h4>
+                  {selectedResultsStudent ? `${selectedResultsStudent.name}` : 'TÉ™lÉ™bÉ™'} {t('admin.test_n_tic_l_ri', { defaultValue: t('admin.test_n_tic_l_ri', { defaultValue: 'test nÉ™ticÉ™lÉ™ri' }) })}</h4>
                 <p className="mt-1 text-sm text-gray-500">
                   {selectedResultsStudent?.email || ''}
                 </p>
               </div>
               <div className="rounded-2xl bg-white px-4 py-3 text-sm font-bold text-gray-600 shadow-sm">
-                {studentResults.length} nəticə
-              </div>
+                {studentResults.length} {t('admin.n_tic_', { defaultValue: t('admin.n_tic_', { defaultValue: 'nÉ™ticÉ™' }) })}</div>
             </div>
           </div>
 
           {studentResultsLoading ? (
             <div className="rounded-2xl border border-gray-100 bg-white p-8 text-center text-gray-500 shadow-sm">
-              Nəticələr yüklənir...
-            </div>
+              {t('admin.n_tic_l_r_y_kl_nir__', { defaultValue: t('admin.n_tic_l_r_y_kl_nir__', { defaultValue: 'NÉ™ticÉ™lÉ™r yÃ¼klÉ™nir...' }) })}</div>
           ) : studentResultsError ? (
             <div className="rounded-2xl border border-red-100 bg-red-50 p-5 text-sm font-semibold text-red-700">
               {studentResultsError}
             </div>
           ) : studentResults.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-gray-200 bg-white p-8 text-center text-gray-500">
-              Bu tələbə üçün nəticə tapılmadı.
-            </div>
+              {t('admin.bu_t_l_b_____n_n_tic', { defaultValue: t('admin.bu_t_l_b_____n_n_tic', { defaultValue: 'Bu tÉ™lÉ™bÉ™ Ã¼Ã§Ã¼n nÉ™ticÉ™ tapÄ±lmadÄ±.' }) })}</div>
           ) : (
             <div className="grid min-h-0 flex-1 gap-4 xl:grid-cols-[340px_minmax(0,1fr)]">
               <div className="min-h-0 space-y-3 overflow-y-auto pr-1 xl:pr-2">
@@ -2066,13 +2050,13 @@ const Students = () => {
                       value={studentResultsSearch}
                       onChange={(event) => setStudentResultsSearch(event.target.value)}
                       type="text"
-                      placeholder="Test adı ilə axtar..."
+                      placeholder={t('admin.test_ad__il__axtar__', { defaultValue: 'Test adÄ± ilÉ™ axtar...' })}
                       className="w-full rounded-xl border border-gray-100 bg-gray-50 py-2.5 pl-10 pr-3 text-sm outline-none transition-all focus:border-[#A87A1F] focus:bg-white"
                     />
                   </div>
                   <div className="mt-2 flex items-center justify-between text-[11px] font-bold uppercase tracking-[0.14em] text-gray-400">
-                    <span>{filteredStudentResults.length} tapıldı</span>
-                    <span>{studentResults.length} ümumi</span>
+                    <span>{filteredStudentResults.length} {t('admin.tap_ld_', { defaultValue: t('admin.tap_ld_', { defaultValue: 'tapÄ±ldÄ±' }) })}</span>
+                    <span>{studentResults.length} {t('admin._mumi', { defaultValue: t('admin._mumi', { defaultValue: 'Ã¼mumi' }) })}</span>
                   </div>
                 </div>
 
@@ -2094,10 +2078,10 @@ const Students = () => {
                       <div className="flex items-start justify-between gap-3">
                         <div className="min-w-0">
                           <div className="truncate font-bold text-gray-900">
-                            {result.test?.title || 'Naməlum test'}
+                            {result.test?.title || t('admin.nam_lum_test', { defaultValue: 'NamÉ™lum test' })}
                           </div>
                           <div className="mt-1 text-xs font-black uppercase tracking-[0.14em] text-[#A87A1F]">
-                            {formatAttemptLabel(result.attemptNumber || 1)}
+                            {formatAttemptLabel(result.attemptNumber || 1, t)}
                           </div>
                         </div>
                         <div className={`rounded-xl px-2.5 py-1 text-xs font-black ${result.hasPendingAnswers ? 'bg-yellow-50 text-yellow-600' : isPassed ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'}`}>
@@ -2113,8 +2097,7 @@ const Students = () => {
                 })}
                 {filteredStudentResults.length === 0 && (
                   <div className="rounded-2xl border border-dashed border-gray-200 bg-white p-6 text-center text-sm text-gray-500">
-                    Axtarışa uyğun test nəticəsi tapılmadı.
-                  </div>
+                    {t('admin.axtar__a_uy_un_test_', { defaultValue: t('admin.axtar__a_uy_un_test_', { defaultValue: 'AxtarÄ±ÅŸa uyÄŸun test nÉ™ticÉ™si tapÄ±lmadÄ±.' }) })}</div>
                 )}
               </div>
 
@@ -2124,13 +2107,13 @@ const Students = () => {
                     <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
                       <div>
                         <div className="text-xs font-black uppercase tracking-[0.16em] text-[#A87A1F]">
-                          {formatAttemptLabel(selectedStudentResult.attemptNumber || 1)}
+                          {formatAttemptLabel(selectedStudentResult.attemptNumber || 1, t)}
                         </div>
                         <h4 className="mt-1 text-2xl font-black text-gray-900">
-                          {selectedStudentResult.test?.title || 'Naməlum test'}
+                          {selectedStudentResult.test?.title || t('admin.nam_lum_test', { defaultValue: 'NamÉ™lum test' })}
                         </h4>
                         <p className="mt-1 text-sm text-gray-500">
-                          {selectedStudentResult.test?.course?.title || 'Kurs yoxdur'} · {selectedStudentResult.test?.instructor ? `${selectedStudentResult.test.instructor.name} ${selectedStudentResult.test.instructor.surname || ''}` : 'Naməlum müəllim'}
+                          {selectedStudentResult.test?.course?.title || 'Kurs yoxdur'} Â· {selectedStudentResult.test?.instructor ? `${selectedStudentResult.test.instructor.name} ${selectedStudentResult.test.instructor.surname || ''}` : 'NamÉ™lum mÃ¼É™llim'}
                         </p>
                       </div>
                       <div className={`rounded-2xl px-4 py-3 text-right ${selectedStudentResult.hasPendingAnswers ? 'bg-yellow-50 text-yellow-700' : (selectedStudentResult.scorePercentage || 0) >= 60 ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
@@ -2138,7 +2121,7 @@ const Students = () => {
                           {selectedStudentResult.hasPendingAnswers ? 'Yoxlama' : `${Math.round(selectedStudentResult.scorePercentage || 0)}%`}
                         </div>
                         <div className="text-xs font-bold uppercase tracking-[0.14em]">
-                          {selectedStudentResult.hasPendingAnswers ? 'Gözləmədə' : 'Nəticə'}
+                          {selectedStudentResult.hasPendingAnswers ? 'GÃ¶zlÉ™mÉ™dÉ™' : 'NÉ™ticÉ™'}
                         </div>
                       </div>
                     </div>
@@ -2146,24 +2129,24 @@ const Students = () => {
                     <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
                       <div className="rounded-2xl bg-gray-50 p-4 text-center">
                         <div className="text-2xl font-black text-[#D4AF37]">{selectedStudentResult.answers.filter((answer) => answer.isCorrect).length}</div>
-                        <div className="text-xs font-bold uppercase tracking-[0.14em] text-gray-500">Doğru</div>
+                        <div className="text-xs font-bold uppercase tracking-[0.14em] text-gray-500">{t('admin.do_ru', { defaultValue: t('admin.do_ru', { defaultValue: 'DoÄŸru' }) })}</div>
                       </div>
                       <div className="rounded-2xl bg-gray-50 p-4 text-center">
                         <div className="text-2xl font-black text-red-500">{selectedStudentResult.answers.filter((answer) => !answer.isCorrect && answer.status === 'graded').length}</div>
-                        <div className="text-xs font-bold uppercase tracking-[0.14em] text-gray-500">Yanlış</div>
+                        <div className="text-xs font-bold uppercase tracking-[0.14em] text-gray-500">{t('admin.yanl__', { defaultValue: t('admin.yanl__', { defaultValue: 'YanlÄ±ÅŸ' }) })}</div>
                       </div>
                       <div className="rounded-2xl bg-gray-50 p-4 text-center">
                         <div className="text-2xl font-black text-yellow-500">{selectedStudentResult.answers.filter((answer) => answer.status === 'pending').length}</div>
-                        <div className="text-xs font-bold uppercase tracking-[0.14em] text-gray-500">Gözləyən</div>
+                        <div className="text-xs font-bold uppercase tracking-[0.14em] text-gray-500">{t('admin.g_zl_y_n', { defaultValue: t('admin.g_zl_y_n', { defaultValue: 'GÃ¶zlÉ™yÉ™n' }) })}</div>
                       </div>
                       <div className="rounded-2xl bg-gray-50 p-4 text-center">
                         <div className="text-2xl font-black text-gray-600">{Math.max((selectedStudentResult.test?.questions || []).length - selectedStudentResult.answers.length, 0)}</div>
-                        <div className="text-xs font-bold uppercase tracking-[0.14em] text-gray-500">Boş</div>
+                        <div className="text-xs font-bold uppercase tracking-[0.14em] text-gray-500">{t('admin.bo_', { defaultValue: t('admin.bo_', { defaultValue: 'BoÅŸ' }) })}</div>
                       </div>
                     </div>
 
                     <div className="space-y-4">
-                      <h5 className="text-lg font-bold text-gray-900">Sual və cavablar</h5>
+                      <h5 className="text-lg font-bold text-gray-900">{t('admin.sual_v__cavablar', { defaultValue: t('admin.sual_v__cavablar', { defaultValue: 'Sual vÉ™ cavablar' }) })}</h5>
                       <div className="space-y-3">
                         {(selectedStudentResult.test?.questions || []).map((question: any, index: number) => {
                           const answer = selectedStudentResult.answers.find((item) => resolveEntityId(item.questionId) === resolveEntityId(question._id));
@@ -2172,12 +2155,12 @@ const Students = () => {
                           const selectedAnswerIndex = normalizeMultipleChoiceAnswerIndex(answer?.answer);
                           const correctAnswerIndex = getMultipleChoiceCorrectAnswerIndex(question);
                           const answerStateLabel = !hasAnswer
-                            ? 'Cavab verilməyib'
+                            ? 'Cavab verilmÉ™yib'
                             : answer?.status === 'pending'
-                              ? 'Yoxlama gözləyir'
+                              ? 'Yoxlama gÃ¶zlÉ™yir'
                               : isSelectedQuestionCorrect
-                                ? 'Doğru'
-                                : 'Yanlış';
+                                ? 'DoÄŸru'
+                                : 'YanlÄ±ÅŸ';
 
                           return (
                             <div
@@ -2203,26 +2186,26 @@ const Students = () => {
                                   {question.answerType === 'open_ended' ? (
                                     <div className="mt-4 space-y-3">
                                       <div className="rounded-xl border border-gray-100 bg-white p-3 text-sm">
-                                        <span className="mb-1 block text-xs font-bold uppercase tracking-[0.14em] text-gray-400">Tələbənin Cavabı</span>
-                                        <span className="text-gray-900">{answer?.selectedDisplayAnswer ?? answer?.displayAnswer ?? answer?.answer ?? 'Cavab verilməyib'}</span>
+                                        <span className="mb-1 block text-xs font-bold uppercase tracking-[0.14em] text-gray-400">{t('admin.t_l_b_nin_cavab_', { defaultValue: t('admin.t_l_b_nin_cavab_', { defaultValue: 'TÉ™lÉ™bÉ™nin CavabÄ±' }) })}</span>
+                                        <span className="text-gray-900">{answer?.selectedDisplayAnswer ?? answer?.displayAnswer ?? answer?.answer ?? t('admin.cavab_verilm_yib', { defaultValue: 'Cavab verilmÉ™yib' })}</span>
                                       </div>
                                       <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl bg-gray-50 p-3 text-sm">
                                         {!hasAnswer ? (
-                                          <span className="font-bold text-gray-500">Bu sual üçün hələ cavab göndərilməyib</span>
+                                          <span className="font-bold text-gray-500">{t('admin.bu_sual____n_h_l__ca', { defaultValue: t('admin.bu_sual____n_h_l__ca', { defaultValue: 'Bu sual Ã¼Ã§Ã¼n hÉ™lÉ™ cavab gÃ¶ndÉ™rilmÉ™yib' }) })}</span>
                                         ) : isNumericOpenEndedQuestion(question) ? (
                                           <span className={isSelectedQuestionCorrect ? 'font-bold text-green-600' : 'font-bold text-red-600'}>
-                                            {isSelectedQuestionCorrect ? 'Avtomatik doğru' : 'Avtomatik yanlış'}
+                                            {isSelectedQuestionCorrect ? 'Avtomatik doÄŸru' : 'Avtomatik yanlÄ±ÅŸ'}
                                           </span>
                                         ) : (
                                           <span className={answer?.status === 'pending' ? 'font-bold text-yellow-600' : isSelectedQuestionCorrect ? 'font-bold text-green-600' : 'font-bold text-red-600'}>
-                                            {answer?.status === 'pending' ? 'Yoxlama gözləyir' : isSelectedQuestionCorrect ? 'Doğru qiymətləndirildi' : 'Yanlış qiymətləndirildi'}
+                                            {answer?.status === 'pending' ? 'Yoxlama gÃ¶zlÉ™yir' : isSelectedQuestionCorrect ? 'DoÄŸru qiymÉ™tlÉ™ndirildi' : 'YanlÄ±ÅŸ qiymÉ™tlÉ™ndirildi'}
                                           </span>
                                         )}
                                         {!isNumericOpenEndedQuestion(question) && answer?.status !== 'pending' && (
                                           <span className="text-xs font-black uppercase tracking-[0.14em] text-gray-400">Manual yoxlama yoxdur</span>
                                         )}
                                         {answer?.status === 'pending' && (
-                                          <span className="text-xs font-black uppercase tracking-[0.14em] text-gray-400">Müəllim baxmalıdır</span>
+                                          <span className="text-xs font-black uppercase tracking-[0.14em] text-gray-400">{t('admin.m__llim_baxmal_d_r', { defaultValue: t('admin.m__llim_baxmal_d_r', { defaultValue: 'MÃ¼É™llim baxmalÄ±dÄ±r' }) })}</span>
                                         )}
                                       </div>
                                     </div>
@@ -2230,12 +2213,12 @@ const Students = () => {
                                     <div className="mt-4 space-y-3">
                                       <div className="grid gap-2 sm:grid-cols-2">
                                         <div className="rounded-xl border border-gray-100 bg-white p-3 text-sm">
-                                          <span className="mb-1 block text-xs font-bold uppercase tracking-[0.14em] text-gray-400">Seçilən şık</span>
-                                          <span className="font-medium text-gray-900">{hasAnswer ? (answer?.selectedDisplayAnswer ?? formatMultipleChoiceAnswer(question, answer?.answer ?? '')) : 'Cavab verilməyib'}</span>
+                                          <span className="mb-1 block text-xs font-bold uppercase tracking-[0.14em] text-gray-400">{t('admin.se_il_n___k', { defaultValue: t('admin.se_il_n___k', { defaultValue: 'SeÃ§ilÉ™n ÅŸÄ±k' }) })}</span>
+                                          <span className="font-medium text-gray-900">{hasAnswer ? (answer?.selectedDisplayAnswer ?? formatMultipleChoiceAnswer(question, answer?.answer ?? '')) : 'Cavab verilmÉ™yib'}</span>
                                         </div>
                                         <div className="rounded-xl border border-gray-100 bg-white p-3 text-sm">
-                                          <span className="mb-1 block text-xs font-bold uppercase tracking-[0.14em] text-gray-400">Düzgün şık</span>
-                                          <span className="font-medium text-gray-900">{correctAnswerIndex !== null ? formatMultipleChoiceAnswer(question, String(correctAnswerIndex)) : 'Təyin edilməyib'}</span>
+                                          <span className="mb-1 block text-xs font-bold uppercase tracking-[0.14em] text-gray-400">{t('admin.d_zg_n___k', { defaultValue: t('admin.d_zg_n___k', { defaultValue: 'DÃ¼zgÃ¼n ÅŸÄ±k' }) })}</span>
+                                          <span className="font-medium text-gray-900">{correctAnswerIndex !== null ? formatMultipleChoiceAnswer(question, String(correctAnswerIndex)) : 'TÉ™yin edilmÉ™yib'}</span>
                                         </div>
                                       </div>
 
@@ -2257,15 +2240,14 @@ const Students = () => {
                                               {String.fromCharCode(65 + optionIndex)}
                                             </div>
                                             <span className="truncate">{option}</span>
-                                            {isActualCorrect && <span className="ml-auto text-[10px] font-black uppercase opacity-70">Doğru</span>}
-                                            {!isActualCorrect && isSelected && <span className="ml-auto text-[10px] font-black uppercase opacity-60">Seçilib</span>}
+                                            {isActualCorrect && <span className="ml-auto text-[10px] font-black uppercase opacity-70">{t('admin.do_ru', { defaultValue: t('admin.do_ru', { defaultValue: 'DoÄŸru' }) })}</span>}
+                                            {!isActualCorrect && isSelected && <span className="ml-auto text-[10px] font-black uppercase opacity-60">{t('admin.se_ilib', { defaultValue: t('admin.se_ilib', { defaultValue: 'SeÃ§ilib' }) })}</span>}
                                           </div>
                                         );
                                       })}
                                       {!hasAnswer && (
                                         <div className="rounded-xl border border-dashed border-gray-200 bg-gray-50 p-3 text-sm text-gray-500">
-                                          Bu sual üçün cavab göndərilməyib.
-                                        </div>
+                                          {t('admin.bu_sual____n_cavab_g', { defaultValue: t('admin.bu_sual____n_cavab_g', { defaultValue: 'Bu sual Ã¼Ã§Ã¼n cavab gÃ¶ndÉ™rilmÉ™yib.' }) })}</div>
                                       )}
                                     </div>
                                   )}
@@ -2279,8 +2261,7 @@ const Students = () => {
                   </div>
                 ) : (
                   <div className="flex min-h-[240px] items-center justify-center rounded-2xl border border-dashed border-gray-200 bg-gray-50 text-gray-500">
-                    Görmək üçün bir nəticə seçin.
-                  </div>
+                    {t('admin.g_rm_k____n_bir_n_ti', { defaultValue: t('admin.g_rm_k____n_bir_n_ti', { defaultValue: 'GÃ¶rmÉ™k Ã¼Ã§Ã¼n bir nÉ™ticÉ™ seÃ§in.' }) })}</div>
                 )}
               </div>
             </div>
@@ -2291,7 +2272,7 @@ const Students = () => {
       <Modal
         isOpen={assignmentModalOpen}
         onClose={() => setAssignmentModalOpen(false)}
-        title={selectedStudent ? `${selectedStudent.name} üçün ${assignmentAction === 'assign' ? 'təyinat' : 'geri alma'}` : 'Təyinat'}
+        title={selectedStudent ? `${selectedStudent.name} Ã¼Ã§Ã¼n ${assignmentAction === 'assign' ? 'tÉ™yinat' : 'geri alma'}` : 'TÉ™yinat'}
       >
         <form onSubmit={handleAssign} className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
           {assignmentAction === 'assign' ? (
@@ -2319,8 +2300,8 @@ const Students = () => {
           <div className="col-span-2 space-y-1.5">
             <label className="text-[10px] font-black uppercase tracking-[0.16em] text-gray-500 italic sm:text-xs">
               {assignmentAction === 'assign'
-                ? (assignmentType === 'course' ? 'Kurs seçin' : 'Test seçin')
-                : (assignmentType === 'course' ? 'Geri alınacaq kurs seçin' : 'Geri alınacaq test seçin')}
+                ? (assignmentType === 'course' ? 'Kurs seÃ§in' : 'Test seÃ§in')
+                : (assignmentType === 'course' ? 'Geri alÄ±nacaq kurs seÃ§in' : 'Geri alÄ±nacaq test seÃ§in')}
             </label>
             <div className="relative">
               <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400 sm:left-4 sm:h-5 sm:w-5" />
@@ -2330,7 +2311,7 @@ const Students = () => {
                 type="text"
                 placeholder={assignmentAction === 'assign'
                   ? (assignmentType === 'course' ? 'Kurs axtar...' : 'Test axtar...')
-                  : (assignmentType === 'course' ? 'Geri alınacaq kurs axtar...' : 'Geri alınacaq test axtar...')}
+                  : (assignmentType === 'course' ? 'Geri alÄ±nacaq kurs axtar...' : 'Geri alÄ±nacaq test axtar...')}
                 className={`mb-2 w-full rounded-xl border border-gray-100 bg-gray-50 px-10 py-2.5 text-sm font-medium outline-none transition-all focus:bg-white sm:mb-3 sm:rounded-2xl sm:px-12 sm:py-3.5 ${assignmentAction === 'assign' ? 'focus:border-[#D4AF37]' : 'focus:border-red-500'}`}
               />
             </div>
@@ -2340,16 +2321,16 @@ const Students = () => {
               onChange={(event) => setSelectedTargetId(event.target.value)}
               className={`w-full rounded-xl border border-gray-100 bg-gray-50 px-3 py-2.5 text-sm font-bold outline-none transition-all focus:bg-white sm:rounded-2xl sm:px-4 sm:py-3 ${assignmentAction === 'assign' ? 'focus:border-[#D4AF37]' : 'focus:border-red-500'}`}
             >
-              <option value="">Seçim edin...</option>
+              <option value="">{t('admin.se_im_edin___', { defaultValue: t('admin.se_im_edin___', { defaultValue: 'SeÃ§im edin...' }) })}</option>
               {assignmentType === 'course' ? (
                 (filteredResources as AssignmentCourseResource[]).length > 0
                   ? (filteredResources as AssignmentCourseResource[]).map((course) => (
                     <option key={getResourceId(course)} value={getResourceId(course)}>{course.title}</option>
                   ))
-                  : <option value="" disabled>{assignmentAction === 'assign' ? 'Axtarışa uyğun kurs tapılmadı' : 'Geri alınacaq kurs tapılmadı'}</option>
+                  : <option value="" disabled>{assignmentAction === 'assign' ? 'AxtarÄ±ÅŸa uyÄŸun kurs tapÄ±lmadÄ±' : 'Geri alÄ±nacaq kurs tapÄ±lmadÄ±'}</option>
               ) : (
                 (filteredResources as AssignmentTestResource[]).map((test) => (
-                  <option key={getResourceId(test)} value={getResourceId(test)}>{test.title}{assignmentAction === 'assign' && test.courseTitle ? ` · ${test.courseTitle}` : ''}</option>
+                  <option key={getResourceId(test)} value={getResourceId(test)}>{test.title}{assignmentAction === 'assign' && test.courseTitle ? ` Â· ${test.courseTitle}` : ''}</option>
                 ))
               )}
             </select>
@@ -2358,7 +2339,7 @@ const Students = () => {
             type="submit"
             className={`col-span-2 w-full rounded-xl py-3.5 text-sm font-black text-white shadow-xl transition-all active:scale-95 sm:rounded-2xl sm:py-4 sm:text-base ${assignmentAction === 'assign' ? 'bg-[#D4AF37] shadow-[#D4AF37]/20 hover:bg-[#B88A1B]' : 'bg-red-500 shadow-red-500/20 hover:bg-red-600'}`}
           >
-            {assignmentAction === 'assign' ? 'Təyin et' : 'Geri al'}
+            {assignmentAction === 'assign' ? 'TÉ™yin et' : 'Geri al'}
           </button>
         </form>
       </Modal>
@@ -2367,6 +2348,7 @@ const Students = () => {
 };
 
 const Categories = () => {
+    const { t } = useTranslation();
   const [categories, setCategories] = useState<CategoryItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -2383,7 +2365,7 @@ const Categories = () => {
         setCategories(response.data);
       }
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Kateqoriyalar alınmadı');
+      toast.error(error instanceof Error ? error.message : 'Kateqoriyalar alÄ±nmadÄ±');
     } finally {
       setLoading(false);
     }
@@ -2413,15 +2395,15 @@ const Categories = () => {
     try {
       const response = await adminApi.createCategory({ name: newCategory.name });
       if (response.success) {
-        toast.success('Yeni kateqoriya əlavə edildi');
+        toast.success(t('admin.yeni_kateqoriya__lav', { defaultValue: 'Yeni kateqoriya É™lavÉ™ edildi' }));
         setIsModalOpen(false);
         setNewCategory({ name: '' });
         await loadCategories();
       } else {
-        toast.error(response.message || 'Kateqoriya əlavə edilə bilmədi');
+        toast.error(response.message || t('admin.kateqoriya__lav__edi', { defaultValue: 'Kateqoriya É™lavÉ™ edilÉ™ bilmÉ™di' }));
       }
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Kateqoriya əlavə edilə bilmədi');
+      toast.error(error instanceof Error ? error.message : 'Kateqoriya É™lavÉ™ edilÉ™ bilmÉ™di');
     }
   };
 
@@ -2432,10 +2414,10 @@ const Categories = () => {
         toast.success('Kateqoriya silindi');
         await loadCategories();
       } else {
-        toast.error(response.message || 'Kateqoriya silinmədi');
+        toast.error(response.message || t('admin.kateqoriya_silinm_di', { defaultValue: 'Kateqoriya silinmÉ™di' }));
       }
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Kateqoriya silinmədi');
+      toast.error(error instanceof Error ? error.message : 'Kateqoriya silinmÉ™di');
     }
   };
 
@@ -2448,7 +2430,7 @@ const Categories = () => {
           </div>
           <div>
             <h1 className="text-3xl font-black text-gray-900">Kateqoriyalar</h1>
-            <p className="text-gray-500 font-medium">Kateqoriyalar artıq backend üzərində idarə olunur.</p>
+            <p className="text-gray-500 font-medium">{t('admin.kateqoriyalar_art_q_', { defaultValue: t('admin.kateqoriyalar_art_q_', { defaultValue: 'Kateqoriyalar artÄ±q backend Ã¼zÉ™rindÉ™ idarÉ™ olunur.' }) })}</p>
           </div>
         </div>
         <button
@@ -2480,8 +2462,7 @@ const Categories = () => {
         <div className="space-y-3 p-3 sm:p-4 md:hidden">
           {loading && (
             <div className="rounded-2xl border border-gray-100 p-6 text-center text-gray-400">
-              Kateqoriyalar yüklənir...
-            </div>
+              {t('admin.kateqoriyalar_y_kl_n', { defaultValue: t('admin.kateqoriyalar_y_kl_n', { defaultValue: 'Kateqoriyalar yÃ¼klÉ™nir...' }) })}</div>
           )}
           {!loading && filteredCategories.map((category) => (
             <div key={category.id} className="rounded-2xl border border-gray-100 p-4">
@@ -2497,7 +2478,7 @@ const Categories = () => {
                     <div className="min-w-0">
                       <div className="truncate font-bold text-gray-900">{category.name}</div>
                       <div className="mt-1 break-words text-sm leading-6 text-gray-500">
-                        {category.description || 'Açıklama yoxdur'}
+                        {category.description || t('admin.a__klama_yoxdur', { defaultValue: 'AÃ§Ä±klama yoxdur' })}
                       </div>
                     </div>
                     <button
@@ -2517,7 +2498,7 @@ const Categories = () => {
           ))}
           {!loading && filteredCategories.length === 0 && (
             <div className="rounded-2xl border border-dashed border-gray-200 p-8 text-center italic text-gray-400">
-              {searchQuery.trim() ? 'Axtarışa uyğun kateqoriya tapılmadı.' : 'Hələ kateqoriya yoxdur.'}
+              {searchQuery.trim() ? 'AxtarÄ±ÅŸa uyÄŸun kateqoriya tapÄ±lmadÄ±.' : 'HÉ™lÉ™ kateqoriya yoxdur.'}
             </div>
           )}
         </div>
@@ -2526,16 +2507,16 @@ const Categories = () => {
           <table className="w-full text-left">
             <thead>
               <tr className="bg-gray-50/50">
-                <th className="px-8 py-5 text-[11px] font-black italic uppercase tracking-widest text-gray-400">Rəng</th>
+                <th className="px-8 py-5 text-[11px] font-black italic uppercase tracking-widest text-gray-400">{t('admin.r_ng', { defaultValue: t('admin.r_ng', { defaultValue: 'RÉ™ng' }) })}</th>
                 <th className="px-8 py-5 text-[11px] font-black italic uppercase tracking-widest text-gray-400">Kateqoriya</th>
-                <th className="px-8 py-5 text-[11px] font-black italic uppercase tracking-widest text-gray-400">Sistem ID</th>
-                <th className="px-8 py-5 text-[11px] font-black italic uppercase tracking-widest text-gray-400 text-right">Əməliyyat</th>
+                <th className="px-8 py-5 text-[11px] font-black italic uppercase tracking-widest text-gray-400">{t('admin.sistem_id', { defaultValue: t('admin.sistem_id', { defaultValue: 'Sistem ID' }) })}</th>
+                <th className="px-8 py-5 text-[11px] font-black italic uppercase tracking-widest text-gray-400 text-right">{t('admin._m_liyyat', { defaultValue: t('admin._m_liyyat', { defaultValue: 'ÆmÉ™liyyat' }) })}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
               {loading && (
                 <tr>
-                  <td colSpan={4} className="px-8 py-12 text-center text-gray-400">Kateqoriyalar yüklənir...</td>
+                  <td colSpan={4} className="px-8 py-12 text-center text-gray-400">{t('admin.kateqoriyalar_y_kl_n', { defaultValue: t('admin.kateqoriyalar_y_kl_n', { defaultValue: 'Kateqoriyalar yÃ¼klÉ™nir...' }) })}</td>
                 </tr>
               )}
               {!loading && filteredCategories.map((category) => (
@@ -2547,7 +2528,7 @@ const Categories = () => {
                   </td>
                   <td className="px-8 py-6">
                     <div className="font-bold text-lg text-gray-900">{category.name}</div>
-                    <div className="text-sm text-gray-500">{category.description || 'Açıklama yoxdur'}</div>
+                    <div className="text-sm text-gray-500">{category.description || t('admin.a__klama_yoxdur', { defaultValue: 'AÃ§Ä±klama yoxdur' })}</div>
                   </td>
                   <td className="px-8 py-6">
                     <code className="rounded-md bg-blue-50 px-2 py-1 text-xs font-black text-blue-500">{category.id}</code>
@@ -2566,7 +2547,7 @@ const Categories = () => {
               {!loading && filteredCategories.length === 0 && (
                 <tr>
                   <td colSpan={4} className="px-8 py-12 text-center italic text-gray-400">
-                    {searchQuery.trim() ? 'Axtarışa uyğun kateqoriya tapılmadı.' : 'Hələ kateqoriya yoxdur.'}
+                    {searchQuery.trim() ? 'AxtarÄ±ÅŸa uyÄŸun kateqoriya tapÄ±lmadÄ±.' : 'HÉ™lÉ™ kateqoriya yoxdur.'}
                   </td>
                 </tr>
               )}
@@ -2578,14 +2559,14 @@ const Categories = () => {
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Yeni Kateqoriya">
         <form onSubmit={handleAdd} className="space-y-6">
           <div className="space-y-2">
-            <label className="text-xs font-black uppercase tracking-widest text-gray-500 italic">Kateqoriya adı</label>
+            <label className="text-xs font-black uppercase tracking-widest text-gray-500 italic">{t('admin.kateqoriya_ad_', { defaultValue: t('admin.kateqoriya_ad_', { defaultValue: 'Kateqoriya adÄ±' }) })}</label>
             <input
               required
               value={newCategory.name}
               onChange={(event) => setNewCategory({ name: event.target.value })}
               type="text"
               className="w-full rounded-2xl border border-gray-100 bg-gray-50 px-5 py-4 font-bold outline-none transition-all focus:border-[#D4AF37] focus:bg-white"
-              placeholder="Məs: Proqramlaşdırma"
+              placeholder={t('admin.m_s__proqramla_d_rma', { defaultValue: 'MÉ™s: ProqramlaÅŸdÄ±rma' })}
             />
           </div>
           <button
@@ -2601,6 +2582,7 @@ const Categories = () => {
 };
 
 export default function AppAdmin() {
+    const { t } = useTranslation();
   const [adminSession, setAdminSession] = useState<AdminSession | null>(() => loadAdminSession());
 
   useEffect(() => {
@@ -2644,7 +2626,7 @@ export default function AppAdmin() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/tests" element={<Tests />} />
           <Route path="/exam-panel" element={<AdminExamPanel />} />
-          <Route path="/exam-panel/history/:examId" element={<AdminExamHistoryDetail />} />
+          <Route path={t('admin._exam_panel_history_', { defaultValue: '/exam-panel/history/:examId' })} element={<AdminExamHistoryDetail />} />
           <Route path="/teachers" element={<Teachers />} />
           <Route path="/students" element={<Students />} />
           <Route path="/categories" element={<Categories />} />
@@ -2653,3 +2635,4 @@ export default function AppAdmin() {
     </BrowserRouter>
   );
 }
+

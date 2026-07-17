@@ -1,49 +1,48 @@
 import { Link } from 'react-router-dom';
 import { FileText, Database, Share2, PenLine, ArrowRight, Lock } from 'lucide-react';
-
-const policySections = [
-  {
-    id: 1,
-    title: 'Toplanan Şəxsi Məlumatlar',
-    description:
-      'Platformada qeydiyyatdan keçərkən, dərslərə abunə olarkən və ya əlaqə formundan istifadə edərkən sizdən ad, soyad, e-poçt ünvanı, təhsil/fəaliyyət məlumatlarınız, eləcə də sistemə giriş üçün IP ünvanları toplanıla bilər. Həmçinin, platforma identifikasiya məqsədilə profil şəklinizin və ya biometrik sifət təsdiqləmənizin göndərilməsini tələb edə bilər (müəllimlər üçün).',
-    icon: Database,
-    accent: 'text-[#A87A1F]',
-  },
-  {
-    id: 2,
-    title: 'Məlumatların Paylaşılması',
-    description:
-      'Sizin şəxsi məlumatlarınız heç bir üçüncü tərəf kommersiya şirkətlərinə və ya reklam agentliklərinə satılmır. Məlumatlar yalnız Azərbaycan Respublikasının qanunvericiliyi tələb etdiyi hallarda müvafiq icra orqanlarına təqdim edilə bilər. Dərs zamanı paylaşılan məzmun və adınız eyni sinifdəki digər iştirakçılara görünə bilər.',
-    icon: Share2,
-    accent: 'text-[#F59E0B]',
-  },
-  {
-    id: 3,
-    title: 'Siyasətdə Dəyişikliklər və Razılıq',
-    description:
-      'Sizin Akademiyanız bu məxfilik siyasətini əvvəlcədən bildiriş etmədən, texnoloji və qanunvericilik yeniliklərinə uyğunlaşdırmaq məqsədilə yeniləyə bilər. Platformadan istifadə edərək siz bu şərtlərlə tam razılaşdığınızı bəyan edirsiniz.',
-    icon: PenLine,
-    accent: 'text-[#EF4444]',
-  },
-  {
-    id: 4,
-    title: 'Məxfilik və Təhlükəsizlik',
-    description:
-      'Məlumatlarınız yalnız xidmətin düzgün işləməsi, təhlükəsizliyin qorunması və sizə daha yaxşı tədris təcrübəsi təqdim edilməsi üçün istifadə olunur. Bu məlumatların qorunması üçün lazımi təhlükəsizlik tədbirləri görülür.',
-    icon: Lock,
-    accent: 'text-[#8B5CF6]',
-  },
-];
+import { useTranslation } from 'react-i18next';
 
 export default function PrivacyPolicy() {
+  const { t } = useTranslation();
+
+  const policySections = [
+    {
+      id: 1,
+      title: t('privacy.section1.title', { defaultValue: 'Toplanan Şəxsi Məlumatlar' }),
+      description: t('privacy.section1.desc', { defaultValue: 'Platformada qeydiyyatdan keçərkən, dərslərə abunə olarkən və ya əlaqə formundan istifadə edərkən sizdən ad, soyad, e-poçt ünvanı, təhsil/fəaliyyət məlumatlarınız, eləcə də sistemə giriş üçün IP ünvanları toplanıla bilər. Həmçinin, platforma identifikasiya məqsədilə profil şəklinizin və ya biometrik sifət təsdiqləmənizin göndərilməsini tələb edə bilər (müəllimlər üçün).' }),
+      icon: Database,
+      accent: 'text-[#A87A1F]',
+    },
+    {
+      id: 2,
+      title: t('privacy.section2.title', { defaultValue: 'Məlumatların Paylaşılması' }),
+      description: t('privacy.section2.desc', { defaultValue: 'Sizin şəxsi məlumatlarınız heç bir üçüncü tərəf kommersiya şirkətlərinə və ya reklam agentliklərinə satılmır. Məlumatlar yalnız Azərbaycan Respublikasının qanunvericiliyi tələb etdiyi hallarda müvafiq icra orqanlarına təqdim edilə bilər. Dərs zamanı paylaşılan məzmun və adınız eyni sinifdəki digər iştirakçılara görünə bilər.' }),
+      icon: Share2,
+      accent: 'text-[#F59E0B]',
+    },
+    {
+      id: 3,
+      title: t('privacy.section3.title', { defaultValue: 'Siyasətdə Dəyişikliklər və Razılıq' }),
+      description: t('privacy.section3.desc', { defaultValue: 'Sizin Akademiyanız bu məxfilik siyasətini əvvəlcədən bildiriş etmədən, texnoloji və qanunvericilik yeniliklərinə uyğunlaşdırmaq məqsədilə yeniləyə bilər. Platformadan istifadə edərək siz bu şərtlərlə tam razılaşdığınızı bəyan edirsiniz.' }),
+      icon: PenLine,
+      accent: 'text-[#EF4444]',
+    },
+    {
+      id: 4,
+      title: t('privacy.section4.title', { defaultValue: 'Məxfilik və Təhlükəsizlik' }),
+      description: t('privacy.section4.desc', { defaultValue: 'Məlumatlarınız yalnız xidmətin düzgün işləməsi, təhlükəsizliyin qorunması və sizə daha yaxşı tədris təcrübəsi təqdim edilməsi üçün istifadə olunur. Bu məlumatların qorunması üçün lazımi təhlükəsizlik tədbirləri görülür.' }),
+      icon: Lock,
+      accent: 'text-[#8B5CF6]',
+    },
+  ];
+
   return (
     <main className="relative overflow-hidden bg-slate-50">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(37,99,235,0.09),_transparent_38%),radial-gradient(circle_at_bottom_right,_rgba(14,165,233,0.08),_transparent_34%)]" />
       <div className="relative mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
         <div className="text-center mb-8 sm:mb-10">
           <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-            Məxfilik Siyasəti
+            {t('privacy.title', { defaultValue: 'Məxfilik Siyasəti' })}
           </h1>
           <div className="mx-auto mt-3 h-1 w-14 rounded-full bg-[#D4AF37]" />
         </div>
@@ -56,13 +55,10 @@ export default function PrivacyPolicy() {
               </div>
               <div>
                 <h2 className="text-lg font-extrabold leading-7 text-slate-900 sm:text-xl">
-                  Məlumatlarınızın qorunması bizim üçün vacibdir
+                  {t('privacy.intro_title', { defaultValue: 'Məlumatlarınızın qorunması bizim üçün vacibdir' })}
                 </h2>
                 <p className="mt-2 max-w-4xl text-sm leading-7 text-slate-700 sm:text-[15px]">
-                  Sizin Akademiyanız onlayn təhsil platforması olaraq (bundan sonra &quot;Sizin Akademiyanız&quot; və ya
-                  &quot;Platforma&quot;) şəxsi məlumatlarınızın təhlükəsizliyinə xüsusi həssaslıqla
-                  yanaşırıq. Bu Məxfilik Siyasəti hansı məlumatların toplandığını və necə istifadə
-                  olunduğunu izah edir.
+                  {t('privacy.intro_desc', { defaultValue: 'Sizin Akademiyanız onlayn təhsil platforması olaraq (bundan sonra "Sizin Akademiyanız" və ya "Platforma") şəxsi məlumatlarınızın təhlükəsizliyinə xüsusi həssaslıqla yanaşırıq. Bu Məxfilik Siyasəti hansı məlumatların toplandığını və necə istifadə olunduğunu izah edir.' })}
                 </p>
               </div>
             </div>
@@ -102,18 +98,15 @@ export default function PrivacyPolicy() {
               </div>
               <div>
                 <h3 className="text-base font-bold text-slate-900">
-                  Məxfilik siyasətində dəyişikliklər və razılıq
+                  {t('privacy.changes_title', { defaultValue: 'Məxfilik siyasətində dəyişikliklər və razılıq' })}
                 </h3>
                 <p className="mt-2 text-sm leading-7 text-slate-600 sm:text-[15px]">
-                  Sizin Akademiyanız bu məxfilik siyasətini əvvəlcədən bildiriş etmədən, texnoloji və
-                  qanunvericilik yeniliklərinə uyğunlaşdırmaq məqsədilə yeniləyə bilər.
-                  Platformadan istifadə edərək siz bu şərtlərlə tam razılaşdığınızı bəyan
-                  edirsiniz. Məxfilik siyasəti ilə bağlı hər hansı sualınız yaranarsa, zəhmət
-                  olmasa{' '}
+                  {t('privacy.changes_desc', { defaultValue: 'Sizin Akademiyanız bu məxfilik siyasətini əvvəlcədən bildiriş etmədən, texnoloji və qanunvericilik yeniliklərinə uyğunlaşdırmaq məqsədilə yeniləyə bilər. Platformadan istifadə edərək siz bu şərtlərlə tam razılaşdığınızı bəyan edirsiniz. Məxfilik siyasəti ilə bağlı hər hansı sualınız yaranarsa, zəhmət olmasa' })}
+                  {' '}
                   <Link to="/contact" className="font-semibold text-[#A87A1F] hover:underline">
-                    Əlaqə bölməsindən
+                    {t('privacy.contact_link', { defaultValue: 'Əlaqə bölməsindən' })}
                   </Link>{' '}
-                  müraciət edin.
+                  {t('privacy.contact_suffix', { defaultValue: 'müraciət edin.' })}
                 </p>
               </div>
             </div>

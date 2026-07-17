@@ -135,11 +135,11 @@ export default function TeacherCourseEdit() {
             setCategories(normalizedCategories);
           }
         } catch (categoryError) {
-          console.error('Kateqoriyalar yüklənmədi', categoryError);
+          console.error(t('teacher.course_edit.categories_load_error', { defaultValue: 'Kateqoriyalar yüklənmədi' }), categoryError);
         }
 
       } catch (err) {
-        toast.error('Serverlə əlaqə kəsildi', { id: 'server-connection-error' });
+        toast.error(t('common.server_connection_error', { defaultValue: 'Serverlə əlaqə kəsildi' }), { id: 'server-connection-error' });
       } finally {
         setIsLoading(false);
       }
@@ -158,7 +158,7 @@ export default function TeacherCourseEdit() {
     // Yadda saxla (Avtomatik backend eşləmə)
     try {
       const token = localStorage.getItem('rim_auth_token');
-      const existingModules = course.modules && course.modules.length > 0 ? course.modules : [{ title: 'Dərslər', videos: [] }];
+      const existingModules = course.modules && course.modules.length > 0 ? course.modules : [{ title: t('teacher.course_edit.lessons', { defaultValue: 'Dərslər' }), videos: [] }];
       existingModules[0].videos = newLessons;
 
       await fetch(`${API_BASE_URL}/courses/${course._id}`, {
@@ -169,7 +169,7 @@ export default function TeacherCourseEdit() {
         },
         body: JSON.stringify({ modules: existingModules })
       });
-      toast.success('Dərs silindi');
+      toast.success(t('teacher.course_edit.lesson_deleted', { defaultValue: 'Dərs silindi' }));
     } catch(err) {
       console.error(err);
     }
@@ -184,7 +184,7 @@ export default function TeacherCourseEdit() {
     const trimmedTitle = typeof editingLesson?.title === 'string' ? editingLesson.title.trim() : '';
 
     if (!trimmedTitle) {
-      toast.error('Video başlığı məcburidir');
+      toast.error(t('teacher.course_edit.video_title_required', { defaultValue: 'Video başlığı məcburidir' }));
       return;
     }
 
@@ -208,7 +208,7 @@ export default function TeacherCourseEdit() {
       setLessons(updatedLessons);
       
       // Backend yaz
-      const existingModules = course.modules && course.modules.length > 0 ? course.modules : [{ title: 'Dərslər', videos: [] }];
+      const existingModules = course.modules && course.modules.length > 0 ? course.modules : [{ title: t('teacher.course_edit.lessons', { defaultValue: 'Dərslər' }), videos: [] }];
       existingModules[0].videos = updatedLessons;
 
       const res = await fetch(`${API_BASE_URL}/courses/${course._id}`, {
@@ -222,11 +222,11 @@ export default function TeacherCourseEdit() {
       
       const data = await res.json();
       if(data.success) {
-        toast.success('Video yeniləmələri qeyd olundu');
+        toast.success(t('teacher.course_edit.video_updates_saved', { defaultValue: 'Video yeniləmələri qeyd olundu' }));
         setCourse({ ...course, modules: existingModules });
       }
     } catch(err) {
-      toast.error('Videonu yeniləyərkən xəta baş verdi');
+      toast.error(t('teacher.course_edit.video_update_error', { defaultValue: 'Videonu yeniləyərkən xəta baş verdi' }));
     }
 
     setIsLoading(false);
@@ -245,20 +245,20 @@ export default function TeacherCourseEdit() {
       const trimmedDescription = typeof course.description === 'string' ? course.description.trim() : '';
 
       if (!trimmedTitle) {
-        toast.error('Kurs başlığı məcburidir');
+        toast.error(t('teacher.course_edit.course_title_required', { defaultValue: 'Kurs başlığı məcburidir' }));
         setIsLoading(false);
         return;
       }
 
       if (!trimmedDescription) {
-        toast.error('Haqqında bölməsi məcburidir');
+        toast.error(t('teacher.course_edit.about_required', { defaultValue: 'Haqqında bölməsi məcburidir' }));
         setIsLoading(false);
         return;
       }
 
       const currentImage = typeof course.image === 'string' ? course.image.trim() : '';
       if (!currentImage && !course.imageFile) {
-        toast.error('Kover şəkli məcburidir');
+        toast.error(t('teacher.course_edit.cover_image_required', { defaultValue: 'Kover şəkli məcburidir' }));
         setIsLoading(false);
         return;
       }
@@ -290,7 +290,7 @@ export default function TeacherCourseEdit() {
         image: finalImageUrl,
         learningPoints: course.learningPoints || [],
         includes: course.includes || [],
-        modules: [{ title: 'Dərslər', videos: lessons }]
+        modules: [{ title: t('teacher.course_edit.lessons', { defaultValue: 'Dərslər' }), videos: lessons }]
       };
 
       const res = await fetch(`${API_BASE_URL}/courses/${id}`, {
@@ -388,15 +388,15 @@ export default function TeacherCourseEdit() {
               className="mb-2 p-0 h-auto hover:bg-transparent text-gray-500 hover:text-gray-900 group"
             >
               <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-              Geri qayıt
+              {t('common.go_back', { defaultValue: 'Geri qayıt' })}
             </Button>
             <h1 className="text-2xl lg:text-3xl font-black text-gray-900">
-              Kursu Redaktə Et
+              {t('teacher.course_edit.edit_course', { defaultValue: 'Kursu Redaktə Et' })}
             </h1>
           </div>
           <div className="flex gap-3">
             <Button variant="outline" className="rounded-xl" onClick={() => navigate(-1)}>
-              Ləğv et
+              {t('common.cancel', { defaultValue: 'Ləğv et' })}
             </Button>
             <Button
               variant="outline"
@@ -405,14 +405,14 @@ export default function TeacherCourseEdit() {
               disabled={isDeleting}
             >
               <Trash2 className="w-4 h-4 mr-2" />
-              {isDeleting ? 'Silinir...' : 'Kursu Sil'}
+              {isDeleting ? t('common.deleting', { defaultValue: 'Silinir...' }) : t('teacher.course_edit.delete_course', { defaultValue: 'Kursu Sil' })}
             </Button>
             <Button 
               className="bg-[#D4AF37] hover:bg-[#B88A1B] text-white rounded-xl px-8 font-bold shadow-lg shadow-[#D4AF37]/20 transition-all active:scale-95" 
               onClick={handleSave}
             >
               <Save className="w-4 h-4 mr-2" />
-              Yadda saxla
+              {t('common.save', { defaultValue: 'Yadda saxla' })}
             </Button>
           </div>
         </div>
@@ -423,7 +423,7 @@ export default function TeacherCourseEdit() {
             <div className="bg-white rounded-3xl p-6 lg:p-8 shadow-sm border border-gray-100">
               <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
                 <Settings className="w-5 h-5 text-[#D4AF37]" />
-                Əsas Məlumatlar
+                {t('teacher.course_edit.basic_info', { defaultValue: 'Əsas Məlumatlar' })}
               </h2>
               <div className="space-y-4">
                 <div>
@@ -435,7 +435,7 @@ export default function TeacherCourseEdit() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Kateqoriya</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t('common.category', { defaultValue: 'Kateqoriya' })}</label>
                   <Select 
                     value={course.category} 
                     onValueChange={(val) => setCourse({ ...course, category: val })}
@@ -443,7 +443,7 @@ export default function TeacherCourseEdit() {
                     <SelectTrigger className="w-full h-11 rounded-xl bg-white border-gray-200">
                       <div className="flex items-center gap-2.5">
                         <Tag className="w-4 h-4 text-gray-400" />
-                        <SelectValue placeholder="Kateqoriya seçin" />
+                        <SelectValue placeholder={t('common.select_category', { defaultValue: 'Kateqoriya seçin' })} />
                       </div>
                     </SelectTrigger>
                     <SelectContent className="bg-white border-gray-100 rounded-xl shadow-xl">
@@ -475,7 +475,7 @@ export default function TeacherCourseEdit() {
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
                   <Video className="w-5 h-5 text-[#D4AF37]" />
-                  Video Dərslər
+                  {t('teacher.course_edit.video_lessons', { defaultValue: 'Video Dərslər' })}
                 </h2>
                 <Button 
                   onClick={() => navigate('/teacher/upload')}
@@ -484,7 +484,7 @@ export default function TeacherCourseEdit() {
                   className="rounded-xl border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37]/5 font-bold"
                 >
                   <Video className="w-4 h-4 mr-1" />
-                  Video Yüklə
+                  {t('teacher.course_edit.upload_video', { defaultValue: 'Video Yüklə' })}
                 </Button>
               </div>
               <div className="space-y-3">
@@ -527,14 +527,14 @@ export default function TeacherCourseEdit() {
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
                   <FileText className="w-5 h-5 text-[#D4AF37]" />
-                  Testlər və Tapşırıqlar
+                  {t('teacher.course_edit.tests_and_assignments', { defaultValue: 'Testlər və Tapşırıqlar' })}
                 </h2>
                 <Button 
                   onClick={() => navigate('/teacher/test/create')}
                   className="bg-[#D4AF37] hover:bg-[#B88A1B] rounded-xl text-white px-4 h-9 font-bold"
                 >
                   <Plus className="w-4 h-4 mr-1" />
-                  Test Yarat
+                  {t('teacher.course_edit.create_test', { defaultValue: 'Test Yarat' })}
                 </Button>
               </div>
               <div className="space-y-3">
@@ -552,7 +552,7 @@ export default function TeacherCourseEdit() {
                          size="icon" 
                          className="h-8 w-8 text-[#D4AF37] hover:bg-[#D4AF37]/10 transition-colors"
                          onClick={() => navigate(`/teacher/tests/${test._id}/results`)}
-                         title="Nəticələrə bax"
+                         title={t('teacher.course_edit.view_results', { defaultValue: 'Nəticələrə bax' })}
                        >
                          <Users className="w-5 h-5" />
                        </Button>
@@ -580,7 +580,7 @@ export default function TeacherCourseEdit() {
                   <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#D4AF37]">{t('teacher.reviews', { defaultValue: 'Rəylər' })}</p>
                   <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2 mt-2">
                     <MessageCircle className="w-5 h-5 text-[#D4AF37]" />
-                    Kurs rəyləri
+                    {t('teacher.course_edit.course_reviews', { defaultValue: 'Kurs rəyləri' })}
                   </h2>
                 </div>
                 <div className="rounded-2xl bg-gray-50 border border-gray-100 px-4 py-3 text-right">
@@ -605,11 +605,11 @@ export default function TeacherCourseEdit() {
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
                   <CheckCircle2 className="w-5 h-5 text-[#D4AF37]" />
-                  Bu kursda nə öyrənəcəksiniz?
+                  {t('teacher.course_edit.what_will_you_learn', { defaultValue: 'Bu kursda nə öyrənəcəksiniz?' })}
                 </h2>
                 <Button 
                   onClick={() => {
-                    const newPoints = [...(course.learningPoints || []), 'Yeni öyrənəcəyiniz bənd'];
+                    const newPoints = [...(course.learningPoints || []), t('teacher.course_edit.new_point', { defaultValue: 'Yeni öyrənəcəyiniz bənd' })];
                     setCourse({ ...course, learningPoints: newPoints });
                   }}
                   variant="outline" 
@@ -617,7 +617,7 @@ export default function TeacherCourseEdit() {
                   className="rounded-xl border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37]/5 font-bold"
                 >
                   <Plus className="w-4 h-4 mr-1" />
-                  Bənd Əlavə Et
+                  {t('teacher.course_edit.add_point', { defaultValue: 'Bənd Əlavə Et' })}
                 </Button>
               </div>
               <div className="space-y-3">
@@ -653,11 +653,11 @@ export default function TeacherCourseEdit() {
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
                   <ShieldCheck className="w-5 h-5 text-[#D4AF37]" />
-                  Kurs daxildir
+                  {t('teacher.course_edit.course_includes', { defaultValue: 'Kurs daxildir' })}
                 </h2>
                 <Button 
                   onClick={() => {
-                    const newIncludes = [...(course.includes || []), 'Yeni xüsusiyyət'];
+                    const newIncludes = [...(course.includes || []), t('teacher.course_edit.new_feature', { defaultValue: 'Yeni xüsusiyyət' })];
                     setCourse({ ...course, includes: newIncludes });
                   }}
                   variant="outline" 
@@ -665,7 +665,7 @@ export default function TeacherCourseEdit() {
                   className="rounded-xl border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37]/5 font-bold"
                 >
                   <Plus className="w-4 h-4 mr-1" />
-                  Əlavə Et
+                  {t('teacher.course_edit.add', { defaultValue: 'Əlavə Et' })}
                 </Button>
               </div>
               <div className="space-y-3">
@@ -738,14 +738,14 @@ export default function TeacherCourseEdit() {
                 variant="outline"
                 className="rounded-xl px-8 h-12 font-bold bg-white border-2 border-gray-100"
             >
-              Ləğv et
+              {t('common.cancel', { defaultValue: 'Ləğv et' })}
             </Button>
             <Button 
                 onClick={handleSave}
                 className="bg-[#D4AF37] hover:bg-[#B88A1B] text-white rounded-xl px-12 h-12 font-bold shadow-lg shadow-[#D4AF37]/20 transition-all active:scale-95"
             >
               <Save className="w-4 h-4 mr-2" />
-              Yadda Saxla
+              {t('common.save', { defaultValue: 'Yadda Saxla' })}
             </Button>
         </div>
       </div>
@@ -775,7 +775,7 @@ export default function TeacherCourseEdit() {
                 id="description"
                 value={editingLesson?.description || ''}
                 onChange={(e) => setEditingLesson({ ...editingLesson, description: e.target.value })}
-                placeholder="Video dərsi haqqında ətraflı məlumat..."
+                placeholder={t('teacher.course_edit.description_placeholder', { defaultValue: 'Video dərsi haqqında ətraflı məlumat...' })}
                 className="rounded-xl min-h-[80px] border-gray-200 focus:border-[#D4AF37] resize-none"
               />
             </div>
@@ -785,7 +785,7 @@ export default function TeacherCourseEdit() {
               className="bg-[#D4AF37] hover:bg-[#B88A1B] text-white rounded-xl w-full h-12 font-bold shadow-lg shadow-[#D4AF37]/20"
               onClick={handleUpdateLesson}
             >
-              Dəyişiklikləri Yadda Saxla
+              {t('common.save_changes', { defaultValue: 'Dəyişiklikləri Yadda Saxla' })}
             </Button>
           </DialogFooter>
         </DialogContent>

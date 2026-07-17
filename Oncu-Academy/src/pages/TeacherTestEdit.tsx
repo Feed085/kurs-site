@@ -160,7 +160,7 @@ export default function TeacherTestEdit() {
         toast.error(t('common.error_prefix') + data.message);
       }
     } catch (err) {
-      toast.error('Server xətası');
+      toast.error(t('common.error', { defaultValue: 'Server xətası' }));
     } finally {
       setIsSaving(false);
     }
@@ -169,7 +169,7 @@ export default function TeacherTestEdit() {
   const handleDelete = async () => {
     if (!id || !test) return;
 
-    const isConfirmed = window.confirm('Bu testi silmək istədiyinizə əminsiniz? Bu əməliyyat geri alına bilməz.');
+    const isConfirmed = window.confirm(t('teacher.test_edit.confirm_delete', { defaultValue: 'Bu testi silmək istədiyinizə əminsiniz? Bu əməliyyat geri alına bilməz.' }));
     if (!isConfirmed) return;
 
     setIsSaving(true);
@@ -185,13 +185,13 @@ export default function TeacherTestEdit() {
 
       const data = await res.json();
       if (data.success) {
-        toast.success('Test silindi');
+        toast.success(t('teacher.test_edit.deleted', { defaultValue: 'Test silindi' }));
         navigate('/teacher/tests', { replace: true });
       } else {
         toast.error(t('common.error_prefix') + data.message);
       }
     } catch (err) {
-      toast.error('Server xətası');
+      toast.error(t('common.error', { defaultValue: 'Server xətası' }));
     } finally {
       setIsSaving(false);
     }
@@ -221,7 +221,7 @@ export default function TeacherTestEdit() {
         questions: test.questions.filter((q: any) => q.id !== id)
       });
     } else {
-      toast.error('Ən azı bir sual olmalıdır');
+      toast.error(t('teacher.test_edit.min_one_question', { defaultValue: 'Ən azı bir sual olmalıdır' }));
     }
   };
 
@@ -282,10 +282,10 @@ export default function TeacherTestEdit() {
               type="button"
             >
               <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-              Geri qayıt
+              {t('common.go_back', { defaultValue: 'Geri qayıt' })}
             </Button>
             <h1 className="text-2xl lg:text-3xl font-black text-gray-900">
-              Testi Redaktə Et
+              {t('teacher.test_edit.edit_title', { defaultValue: 'Testi Redaktə Et' })}
             </h1>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">
@@ -295,7 +295,7 @@ export default function TeacherTestEdit() {
                 onClick={() => navigate(-1)}
               type="button"
             >
-              Ləğv et
+              {t('common.cancel', { defaultValue: 'Ləğv et' })}
             </Button>
             <Button
                 variant="outline"
@@ -313,7 +313,7 @@ export default function TeacherTestEdit() {
               type="button"
                 disabled={isSaving}
             >
-              {isSaving ? 'Yadda saxlanılır...' : (
+              {isSaving ? t('common.saving', { defaultValue: 'Yadda saxlanılır...' }) : (
                 <>
                   <Save className="w-4 h-4 mr-2" />
                   Yadda Saxla
@@ -394,7 +394,7 @@ export default function TeacherTestEdit() {
                        }`}
                      >
                        <Type className="w-4 h-4" />
-                       Mətn Sualı
+                       {t('teacher.test_edit.text_question', { defaultValue: 'Mətn Sualı' })}
                      </button>
                      <button
                        type="button"
@@ -404,7 +404,7 @@ export default function TeacherTestEdit() {
                        }`}
                      >
                        <ImageIcon className="w-4 h-4" />
-                       Şəkil Sualı
+                       {t('teacher.test_edit.image_question', { defaultValue: 'Şəkil Sualı' })}
                      </button>
                   </div>
 
@@ -417,7 +417,7 @@ export default function TeacherTestEdit() {
                        }`}
                      >
                        <CheckCircle className="w-4 h-4" />
-                       Qapalı Test
+                       {t('teacher.test_edit.multiple_choice', { defaultValue: 'Qapalı Test' })}
                      </button>
                      <button
                        type="button"
@@ -427,7 +427,7 @@ export default function TeacherTestEdit() {
                        }`}
                      >
                        <FileText className="w-4 h-4" />
-                       Açıq Sual (Yazı)
+                       {t('teacher.test_edit.open_ended', { defaultValue: 'Açıq Sual (Yazı)' })}
                      </button>
                   </div>
               </div>
@@ -572,7 +572,7 @@ export default function TeacherTestEdit() {
                               inputMode="decimal"
                               value={question.openEndedNumericAnswer || ''}
                               onChange={(e) => updateQuestionField(question.id, 'openEndedNumericAnswer', e.target.value)}
-                              placeholder="Məs: 3.5"
+                              placeholder={t('teacher.test_edit.number_example', { defaultValue: 'Məs: 3.5' })}
                               className="rounded-xl h-12 border-blue-200 focus:border-[#D4AF37] font-medium"
                             />
                           </div>
@@ -592,7 +592,7 @@ export default function TeacherTestEdit() {
           className="h-12 rounded-xl border-2 border-gray-100 bg-white px-8 font-bold text-gray-900 hover:bg-gray-50 sm:flex-1"
             >
               <Plus className="w-4 h-4 mr-2" />
-              Sual Əlavə Et
+              {t('teacher.test_edit.add_question', { defaultValue: 'Sual Əlavə Et' })}
             </Button>
             <Button 
               type="button"
@@ -601,7 +601,7 @@ export default function TeacherTestEdit() {
                 className="h-12 rounded-xl bg-[#D4AF37] px-8 font-bold text-white shadow-lg shadow-[#D4AF37]/20 hover:bg-[#B88A1B] sm:flex-1" 
             >
               <Save className="w-4 h-4 mr-2" />
-              {isSaving ? 'Yadda saxlanır...' : 'Yadda Saxla'}
+              {isSaving ? t('common.saving', { defaultValue: 'Yadda saxlanır...' }) : t('common.save', { defaultValue: 'Yadda Saxla' })}
             </Button>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Star, MessageCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import { Button } from '@/components/ui/button';
 
@@ -33,10 +34,10 @@ type CourseReviewsListProps = {
 
 const getUserName = (review: ReviewItem) => {
   if (review.user && typeof review.user === 'object') {
-    return `${review.user.name || ''} ${review.user.surname || ''}`.trim() || 'Tələbə';
+    return `${review.user.name || ''} ${review.user.surname || ''}`.trim() || 'Student';
   }
 
-  return review.name || 'Tələbə';
+  return review.name || 'Student';
 };
 
 const getUserAvatar = (review: ReviewItem) => {
@@ -77,11 +78,16 @@ export default function CourseReviewsList({
   rating,
   pageSize = 3,
   showSummary = true,
-  title = 'Tələbələrin fikirləri',
-  subtitle = 'Bu kurs üçün',
-  summaryText = 'rəy toplanıb.',
-  emptyMessage = 'Hələ bu kurs üçün rəy yoxdur.'
+  title = 'Student opinions placeholder',
+  subtitle = 'This course subtitle placeholder',
+  summaryText = 'reviews collected.',
+  emptyMessage = 'No reviews yet for this course.'
 }: CourseReviewsListProps) {
+  const { t } = useTranslation();
+  const resolvedTitle = title !== 'Student opinions placeholder' ? title : t('reviews.students_opinions', { defaultValue: 'Tələbələrin fikirləri' });
+  const resolvedSubtitle = subtitle !== 'This course subtitle placeholder' ? subtitle : t('reviews.for_this_course', { defaultValue: 'Bu kurs üçün' });
+  const resolvedSummaryText = summaryText !== 'reviews collected.' ? summaryText : t('reviews.summary_text', { defaultValue: 'rəy toplanıb.' });
+  const resolvedEmptyMessage = emptyMessage !== 'No reviews yet for this course.' ? emptyMessage : t('reviews.empty_message', { defaultValue: 'Hələ bu kurs üçün rəy yoxdur.' });
   const orderedReviews = useMemo(() => [...reviews].sort((left, right) => {
     const rightTime = new Date(right.createdAt || 0).getTime();
     const leftTime = new Date(left.createdAt || 0).getTime();
@@ -110,9 +116,9 @@ export default function CourseReviewsList({
       {showSummary ? (
         <div className="flex flex-col gap-4 rounded-3xl bg-gray-50 p-6 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#D4AF37]">Rəylər</p>
-            <h3 className="mt-2 text-2xl font-black text-gray-900">{title}</h3>
-            <p className="mt-2 text-sm text-gray-500">{subtitle} {reviewCount} {summaryText}</p>
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#D4AF37]">{t('common.reviews', { defaultValue: 'Rəylər' })}</p>
+            <h3 className="mt-2 text-2xl font-black text-gray-900">{resolvedTitle}</h3>
+            <p className="mt-2 text-sm text-gray-500">{resolvedSubtitle} {reviewCount} {resolvedSummaryText}</p>
           </div>
 
           <div className="rounded-3xl bg-[#0A0A0A] px-6 py-5 text-white shadow-xl shadow-gray-200/50">
@@ -125,7 +131,7 @@ export default function CourseReviewsList({
                 />
               ))}
             </div>
-            <p className="mt-2 text-sm text-white/70">{reviewCount} rəy</p>
+            <p className="mt-2 text-sm text-white/70">{reviewCount} {t('common.review_count_suffix', { defaultValue: 'rəy' })}</p>
           </div>
         </div>
       ) : null}
@@ -133,7 +139,7 @@ export default function CourseReviewsList({
       {reviewCount === 0 ? (
         <div className="rounded-3xl border border-dashed border-gray-200 bg-white p-8 text-center text-gray-500">
           <MessageCircle className="mx-auto mb-3 h-8 w-8 text-gray-300" />
-          {emptyMessage}
+          {resolvedEmptyMessage}
         </div>
       ) : (
         <div className="space-y-4">
@@ -174,7 +180,7 @@ export default function CourseReviewsList({
           {totalPages > 1 ? (
             <div className="flex flex-col gap-3 rounded-3xl border border-gray-100 bg-gray-50 p-4 sm:flex-row sm:items-center sm:justify-between">
               <p className="text-sm text-gray-500">
-                Səhifə {currentPage} / {totalPages}
+                {t('reviews.page_indicator', { current: currentPage, total: totalPages, defaultValue: `Səhifə ${currentPage} / ${totalPages}` })}
               </p>
 
               <div className="flex flex-wrap items-center gap-2">
@@ -185,7 +191,7 @@ export default function CourseReviewsList({
                   onClick={() => goToPage(currentPage - 1)}
                   className="rounded-xl"
                 >
-                  Geri
+                  {t('common.back', { defaultValue: 'Geri' })}
                 </Button>
 
                 {pageNumbers.map((page, index) => {
@@ -214,7 +220,7 @@ export default function CourseReviewsList({
                   onClick={() => goToPage(currentPage + 1)}
                   className="rounded-xl"
                 >
-                  İrəli
+                  {t('common.forward', { defaultValue: 'İrəli' })}
                 </Button>
               </div>
             </div>

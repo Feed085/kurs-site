@@ -44,7 +44,7 @@ const getMultipleChoiceCorrectAnswerIndex = (question: any) => {
 const formatMultipleChoiceAnswer = (question: any, answer: string) => {
   const answerIndex = normalizeMultipleChoiceAnswerIndex(answer);
   if (answerIndex === null) {
-    return answer || 'Cavab verilməyib';
+    return answer || t('test.not_answered', { defaultValue: 'Cavab verilməyib' });
   }
 
   const optionText = question?.options?.[answerIndex] ?? '';
@@ -241,7 +241,7 @@ export default function TestDetail() {
 
   const formatDateTime = (value?: string | null) => {
     if (!value) {
-      return 'Tarix təyin edilməyib';
+      return t('test.no_date_set', { defaultValue: 'Tarix təyin edilməyib' });
     }
 
     return new Intl.DateTimeFormat('az-AZ', {
@@ -399,7 +399,7 @@ export default function TestDetail() {
       }
 
       if (!response.ok || payload?.success === false || !payload?.data?.sessionId) {
-        throw new Error(payload?.message || 'Leave session yaradılmadı');
+        throw new Error(payload?.message || t('test.leave_session_failed', { defaultValue: 'Leave session yaradılmadı' }));
       }
 
       persistLeaveSession(payload.data as AdminExamLeaveSessionData);
@@ -410,7 +410,7 @@ export default function TestDetail() {
       }
     } catch (error) {
       if (!options?.suppressUi) {
-        const message = error instanceof Error ? error.message : 'Leave session yaradılmadı';
+        const message = error instanceof Error ? error.message : t('test.leave_session_failed', { defaultValue: 'Leave session yaradılmadı' });
         toast.error(message);
       }
     } finally {
@@ -454,11 +454,11 @@ export default function TestDetail() {
             setSubmitError(null);
           }
         } else {
-          toast.error('Test yüklənərkən xəta: ' + data.message);
+          toast.error(t('test.load_error_prefix', { defaultValue: 'Test yüklənərkən xəta: ' }) + data.message);
           navigate(-1);
         }
       } catch (err) {
-        toast.error('Test yüklənmədi');
+        toast.error(t('test.not_loaded', { defaultValue: 'Test yüklənmədi' }));
         navigate(-1);
       } finally {
         setIsLoading(false);
@@ -604,7 +604,7 @@ export default function TestDetail() {
         const payload = await response.json();
 
         if (!response.ok || payload?.success === false || !payload?.data) {
-          throw new Error(payload?.message || 'Leave session statusu alınmadı');
+          throw new Error(payload?.message || t('test.leave_session_status_failed', { defaultValue: 'Leave session statusu alınmadı' }));
         }
 
         if (isCancelled) {
@@ -642,14 +642,14 @@ export default function TestDetail() {
                   setTimeLeft(getExamTimeLeftSeconds(testPayload.data, panelTest));
                 }
               } catch {
-                toast.error('İmtahan məlumatı yenilənmədi');
+                toast.error(t('test.exam_info_not_updated', { defaultValue: 'İmtahan məlumatı yenilənmədi' }));
               } finally {
                 setIsLoading(false);
               }
             }
           }
 
-          toast.success('Müəllim icazə verdi, imtahan davam edir');
+          toast.success(t('test.teacher_allowed_continue', { defaultValue: 'Müəllim icazə verdi, imtahan davam edir' }));
           return;
         }
 
@@ -657,10 +657,10 @@ export default function TestDetail() {
           clearLeaveSession();
           toast.error(
             nextSession.status === 'expired'
-              ? 'Müddət bitdi, imtahan sonlandırılır'
+              ? t('test.time_up_ending', { defaultValue: 'Müddət bitdi, imtahan sonlandırılır' })
               : nextSession.status === 'finished'
-                ? 'Sessiya bağlandı, imtahan sonlandırılır'
-                : 'İmtahan sonlandırılır'
+                ? t('test.session_closed_ending', { defaultValue: 'Sessiya bağlandı, imtahan sonlandırılır' })
+                : t('test.exam_ending', { defaultValue: 'İmtahan sonlandırılır' })
           );
           void finishTest({ submissionStatus: 'terminated' });
         }
@@ -689,7 +689,7 @@ export default function TestDetail() {
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">{t('common.loading_data')}</h1>
           <Button onClick={() => navigate(-1)}>
-            Geri qayıt
+            {t('common.go_back', { defaultValue: 'Geri qayıt' })}
           </Button>
         </div>
       </div>
@@ -698,17 +698,17 @@ export default function TestDetail() {
 
   const startTest = async () => {
     if (isAdminExam && !isAccessGranted) {
-      toast.error('İmtahanı başlatmaq üçün əvvəlcə giriş yoxlamasını tamamlayın');
+      toast.error(t('test.complete_entry_check', { defaultValue: 'İmtahanı başlatmaq üçün əvvəlcə giriş yoxlamasını tamamlayın' }));
       return;
     }
 
     if (testQuestions.length === 0) {
-      toast.error('İmtahan sualları yüklənməyib');
+      toast.error(t('test.questions_not_loaded', { defaultValue: 'İmtahan sualları yüklənməyib' }));
       return;
     }
 
     if (isAdminExam && isExpired) {
-      toast.error('İmtahan müddəti artıq bitib');
+      toast.error(t('test.exam_expired', { defaultValue: 'İmtahan müddəti artıq bitib' }));
       return;
     }
 
@@ -744,10 +744,10 @@ export default function TestDetail() {
         }
 
         if (!response.ok || payload?.success === false) {
-          throw new Error(payload?.message || 'İmtahan startı qeydə alınmadı');
+          throw new Error(payload?.message || t('test.exam_start_failed', { defaultValue: 'İmtahan startı qeydə alınmadı' }));
         }
       } catch (error) {
-        const message = error instanceof Error ? error.message : 'İmtahan startı qeydə alınmadı';
+        const message = error instanceof Error ? error.message : t('test.exam_start_failed', { defaultValue: 'İmtahan startı qeydə alınmadı' });
         toast.error(message);
         return;
       } finally {
@@ -795,12 +795,12 @@ export default function TestDetail() {
         setEntryBlock(null);
         setTest(data.data);
         setTimeLeft(getExamTimeLeftSeconds(data.data, panelTest));
-        toast.success('İmtahana giriş təsdiqləndi');
+        toast.success(t('test.exam_entry_approved', { defaultValue: 'İmtahana giriş təsdiqləndi' }));
       } else {
-        toast.error(data.message || 'İmtahan girişi alınmadı');
+        toast.error(data.message || t('test.exam_entry_failed', { defaultValue: 'İmtahan girişi alınmadı' }));
       }
     } catch (err) {
-      toast.error('İmtahan giriş yoxlaması alınmadı');
+      toast.error(t('test.exam_entry_check_failed', { defaultValue: 'İmtahan giriş yoxlaması alınmadı' }));
     } finally {
       setIsUnlocking(false);
     }
@@ -852,14 +852,14 @@ export default function TestDetail() {
 
       if (data.success) {
         setResultData(data.data);
-        toast.success(data.data.hasPendingAnswers ? 'İmtahan bitdi! Bəzi açıq suallar sonradan yoxlanılacaq.' : 'Test tamamlandı!');
+        toast.success(data.data.hasPendingAnswers ? t('test.exam_finished_pending', { defaultValue: 'İmtahan bitdi! Bəzi açıq suallar sonradan yoxlanılacaq.' }) : t('test.test_completed', { defaultValue: 'Test tamamlandı!' }));
       } else {
-        const message = data.message || 'Nəticə göndərilərkən xəta baş verdi';
+        const message = data.message || t('test.result_submit_error', { defaultValue: 'Nəticə göndərilərkən xəta baş verdi' });
         setSubmitError(message);
         toast.error(message);
       }
     } catch(err) {
-      const message = 'Nəticə göndərilmədi!';
+      const message = t('test.result_not_submitted', { defaultValue: 'Nəticə göndərilmədi!' });
       setSubmitError(message);
       toast.error(message);
     } finally {
@@ -896,17 +896,17 @@ export default function TestDetail() {
         </div>
         <h2 className="text-2xl font-black text-slate-900">{t('test.out_of_focus_suspended')}</h2>
         <p className="mt-3 text-sm leading-6 text-slate-600 sm:text-base">
-          İmtahana davam etmək üçün aşağıdakı manual kodu müəllimə verin. Müəllim paneldən son qərarı verdikdən sonra sistem reaksiya verəcək.
+          {t('test.manual_code_instruction', { defaultValue: 'İmtahana davam etmək üçün aşağıdakı manual kodu müəllimə verin. Müəllim paneldən son qərarı verdikdən sonra sistem reaksiya verəcək.' })}
         </p>
         <div className="mt-6 rounded-[1.75rem] border border-slate-200 bg-slate-50 p-5">
           {leaveSession?.manualCode ? (
             <div className="flex flex-col items-center gap-4">
               <div className="w-full rounded-2xl bg-slate-900 px-4 py-3 text-white">
-                <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-300">Qalan vaxt</div>
+                <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-300">{t('test.time_left', { defaultValue: 'Qalan vaxt' })}</div>
                 <div className="mt-1 font-mono text-2xl font-black">{formatTime(leaveSessionTimeLeft)}</div>
               </div>
               <div className="w-full rounded-2xl border border-dashed border-slate-300 bg-white px-4 py-3 text-left text-slate-700">
-                <div className="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400">Manual kod</div>
+                <div className="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400">{t('test.manual_code', { defaultValue: 'Manual kod' })}</div>
                 <div className="mt-2 font-mono text-xl font-black tracking-[0.2em]">{leaveSession.manualCode}</div>
               </div>
             </div>
@@ -918,7 +918,7 @@ export default function TestDetail() {
           )}
         </div>
         <p className="mt-4 text-xs leading-5 text-slate-500">
-          Müəllim 5 dəqiqə ərzində qərar verməsə, imtahan avtomatik sonlandırılacaq.
+          {t('test.teacher_decision_timeout', { defaultValue: 'Müəllim 5 dəqiqə ərzində qərar verməsə, imtahan avtomatik sonlandırılacaq.' })}
         </p>
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
           <Button
@@ -929,7 +929,7 @@ export default function TestDetail() {
             disabled={isSubmittingResult}
             className="h-12 w-full rounded-xl border-rose-200 text-rose-700 hover:bg-rose-50 hover:text-rose-800"
           >
-            İmtahanı dayandır
+            {t('test.stop_exam', { defaultValue: 'İmtahanı dayandır' })}
           </Button>
         </div>
       </div>
@@ -942,7 +942,7 @@ export default function TestDetail() {
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">{t('common.loading_data')}</h1>
           <Button onClick={() => navigate(-1)}>
-            Geri qayıt
+            {t('common.go_back', { defaultValue: 'Geri qayıt' })}
           </Button>
         </div>
       </div>
@@ -951,14 +951,14 @@ export default function TestDetail() {
 
   if (entryBlock && entryBlock.code !== 'LEAVE_SESSION_PENDING') {
     const blockedMessage = entryBlock.code === 'ADMIN_EXAM_REENTRY_BLOCKED'
-      ? 'Bu admin imtahanı üçün giriş artıq birdəfəlik istifadə olunub. Yenidən daxil olmaq mümkün deyil.'
+      ? t('test.admin_exam_entry_used', { defaultValue: 'Bu admin imtahanı üçün giriş artıq birdəfəlik istifadə olunub. Yenidən daxil olmaq mümkün deyil.' })
       : entryBlock.code === 'LEAVE_SESSION_EXPIRED'
-      ? 'Leave session müddəti bitdiyi üçün bu imtahana artıq qayıda bilməzsiniz.'
+      ? t('test.leave_session_expired', { defaultValue: 'Leave session müddəti bitdiyi üçün bu imtahana artıq qayıda bilməzsiniz.' })
       : entryBlock.code === 'LEAVE_SESSION_REJECTED'
-        ? 'Müəllim leave session-u rədd etdi. Bu imtahana yenidən giriş bağlanıb.'
+        ? t('test.leave_session_rejected', { defaultValue: 'Müəllim leave session-u rədd etdi. Bu imtahana yenidən giriş bağlanıb.' })
         : entryBlock.code === 'LEAVE_SESSION_FINISHED'
-          ? 'Bu imtahan üçün leave session bağlanıb və yenidən giriş mümkün deyil.'
-          : 'Bu imtahan sizin üçün artıq sonlandırılıb.';
+          ? t('test.leave_session_closed', { defaultValue: 'Bu imtahan üçün leave session bağlanıb və yenidən giriş mümkün deyil.' })
+          : t('test.exam_terminated_for_you', { defaultValue: 'Bu imtahan sizin üçün artıq sonlandırılıb.' });
 
     return (
       <div className="min-h-screen bg-[#F3F3F3] pt-20 lg:pt-24 flex items-center justify-center px-4">
@@ -970,10 +970,10 @@ export default function TestDetail() {
           <p className="mt-3 text-sm leading-6 text-slate-600 sm:text-base">{blockedMessage}</p>
           <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
             <Button variant="outline" onClick={() => navigate('/exam-panel')}>
-              İmtahan panelinə qayıt
+              {t('test.back_to_exam_panel', { defaultValue: 'İmtahan panelinə qayıt' })}
             </Button>
             <Button onClick={() => navigate('/dashboard')} className="bg-[#D4AF37] hover:bg-[#B88A1B] text-white">
-              Panelə qayıt
+              {t('test.back_to_panel', { defaultValue: 'Panelə qayıt' })}
             </Button>
           </div>
         </div>
@@ -995,7 +995,7 @@ export default function TestDetail() {
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 mb-4">{t('common.loading_data')}</h1>
           <Button onClick={() => navigate(-1)}>
-            Geri qayıt
+            {t('common.go_back', { defaultValue: 'Geri qayıt' })}
           </Button>
         </div>
       </div>
@@ -1013,7 +1013,7 @@ export default function TestDetail() {
             className="mb-6"
           >
             <ChevronLeft className="w-4 h-4 mr-1" />
-            Geri qayıt
+            {t('common.go_back', { defaultValue: 'Geri qayıt' })}
           </Button>
 
           <div className="bg-white rounded-3xl p-8 lg:p-12 shadow-lg">
@@ -1025,7 +1025,7 @@ export default function TestDetail() {
               {test.title}
             </h1>
             <p className="text-gray-500 text-center mb-8">
-              {isAdminExam ? 'Admin tərəfindən hazırlanmış yekun imtahan' : 'Özünü Sına'}
+              {isAdminExam ? t('test.admin_exam_subtitle', { defaultValue: 'Admin tərəfindən hazırlanmış yekun imtahan' }) : t('test.self_test', { defaultValue: 'Özünü Sına' })}
             </p>
 
             <div className="grid grid-cols-3 gap-4 mb-8">
@@ -1054,17 +1054,17 @@ export default function TestDetail() {
                         <div className="mt-1 text-sm text-slate-600">{formatDateTime(startsAtValue)}</div>
                         {!hasStarted && startsAtTime ? (
                           <div className="mt-2 text-xs font-black uppercase tracking-[0.14em] text-amber-600">
-                            Açılışa qalan vaxt: {formatCountdown(startsAtTime)}
+                            {t('test.time_until_open', { defaultValue: 'Açılışa qalan vaxt:' })} {formatCountdown(startsAtTime)}
                           </div>
                         ) : null}
                         {hasStarted && !isExpired ? (
                           <div className="mt-2 text-xs font-black uppercase tracking-[0.14em] text-emerald-600">
-                            Qalan müddət: {formatTime(timeLeft)}
+                            {t('test.time_remaining', { defaultValue: 'Qalan müddət:' })} {formatTime(timeLeft)}
                           </div>
                         ) : null}
                         {isExpired ? (
                           <div className="mt-2 text-xs font-black uppercase tracking-[0.14em] text-rose-600">
-                            İmtahan müddəti bitib
+                            {t('test.exam_duration_ended', { defaultValue: 'İmtahan müddəti bitib' })}
                           </div>
                         ) : null}
                       </div>
@@ -1082,7 +1082,7 @@ export default function TestDetail() {
                         <Input
                           value={accessCode}
                           onChange={(event) => setAccessCode(event.target.value)}
-                          placeholder="İmtahan şifrəsi"
+                          placeholder={t("test.exam_password", { defaultValue: "İmtahan şifrəsi" })}
                           className="mt-3 h-12 rounded-xl border-violet-200 bg-white"
                         />
                       </div>
@@ -1090,7 +1090,7 @@ export default function TestDetail() {
                   </div>
                 ) : (
                   <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-700">
-                    Bu imtahan üçün ayrıca şifrə tələb olunmur. Başlamaq üçün giriş yoxlamasını tamamlayın.
+                    {t('test.no_password_required_entry_check', { defaultValue: 'Bu imtahan üçün ayrıca şifrə tələb olunmur. Başlamaq üçün giriş yoxlamasını tamamlayın.' })}
                   </div>
                 )}
 
@@ -1101,18 +1101,18 @@ export default function TestDetail() {
                     className="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-xl h-14 text-lg"
                   >
                     <Lock className="mr-2 h-5 w-5" />
-                    {isExpired ? 'İmtahan bitib' : !canStartAdminExam ? 'Başlama vaxtını gözləyin' : isUnlocking ? 'Giriş yoxlanır...' : 'İmtahan girişini aç'}
+                    {isExpired ? t('test.exam_finished', { defaultValue: 'İmtahan bitib' }) : !canStartAdminExam ? t('test.wait_start_time', { defaultValue: 'Başlama vaxtını gözləyin' }) : isUnlocking ? t('test.verifying_entry', { defaultValue: 'Giriş yoxlanır...' }) : t('test.open_exam_entry', { defaultValue: 'İmtahan girişini aç' })}
                   </Button>
                 ) : (
                   <div className={`rounded-2xl border p-4 text-sm font-semibold ${isExpired ? 'border-rose-200 bg-rose-50 text-rose-700' : 'border-emerald-200 bg-emerald-50 text-emerald-700'}`}>
-                    {isExpired ? 'İmtahan müddəti bitdiyi üçün giriş artıq bağlanıb.' : 'Giriş təsdiqləndi. İndi imtahanı başlada bilərsiniz.'}
+                    {isExpired ? t('test.entry_closed_expired', { defaultValue: 'İmtahan müddəti bitdiyi üçün giriş artıq bağlanıb.' }) : t('test.entry_approved_can_start', { defaultValue: 'Giriş təsdiqləndi. İndi imtahanı başlada bilərsiniz.' })}
                   </div>
                 )}
               </div>
             ) : null}
 
             <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-4 mb-8">
-              <h3 className="font-bold text-yellow-800 mb-2">Qaydalar:</h3>
+              <h3 className="font-bold text-yellow-800 mb-2">{t('test.rules.title', { defaultValue: 'Qaydalar:' })}</h3>
               <ul className="text-sm text-yellow-700 space-y-1">
                 <li>{t('test.rules.rule1')}</li>
                 <li>{t('test.rules.rule2')}</li>
@@ -1125,7 +1125,7 @@ export default function TestDetail() {
               disabled={isAdminExam && (!isAccessGranted || isExpired || isStartingAdminExam)}
               className="w-full bg-[#D4AF37] hover:bg-[#B88A1B] text-white font-semibold rounded-xl h-14 text-lg"
             >
-              {isAdminExam && isStartingAdminExam ? 'İmtahan başladılır...' : 'İmtahana Başla'}
+              {isAdminExam && isStartingAdminExam ? t('test.exam_starting', { defaultValue: 'İmtahan başladılır...' }) : t('test.start_exam', { defaultValue: 'İmtahana Başla' })}
             </Button>
           </div>
         </div>
@@ -1140,10 +1140,10 @@ export default function TestDetail() {
         <div className="min-h-screen bg-[#F3F3F3] pt-20 lg:pt-24 flex items-center justify-center">
           <div className="text-center px-4">
             <div className="text-lg font-bold text-gray-900">
-              {isSubmittingResult ? 'Nəticə göndərilir...' : 'Nəticə göndərilmədi'}
+              {isSubmittingResult ? t('test.submitting_result', { defaultValue: 'Nəticə göndərilir...' }) : t('test.result_not_submitted', { defaultValue: 'Nəticə göndərilmədi' })}
             </div>
             <p className="mt-2 text-sm text-gray-500">
-              {isSubmittingResult ? 'İmtahan avtomatik sonlandırılır, zəhmət olmasa gözləyin.' : (submitError || 'Bağlantı və ya server xətası səbəbilə nəticə qeydə alınmadı.')}
+              {isSubmittingResult ? t('test.exam_auto_ending_wait', { defaultValue: 'İmtahan avtomatik sonlandırılır, zəhmət olmasa gözləyin.' }) : (submitError || t('test.result_not_saved_error', { defaultValue: 'Bağlantı və ya server xətası səbəbilə nəticə qeydə alınmadı.' }))}
             </p>
             {!isSubmittingResult ? (
               <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:justify-center">
@@ -1153,10 +1153,10 @@ export default function TestDetail() {
                   }}
                   className="bg-[#D4AF37] hover:bg-[#B88A1B] text-white"
                 >
-                  Yenidən göndər
+                  {t('test.resend', { defaultValue: 'Yenidən göndər' })}
                 </Button>
                 <Button variant="outline" onClick={() => navigate('/dashboard')}>
-                  Panelə qayıt
+                  {t('test.back_to_panel', { defaultValue: 'Panelə qayıt' })}
                 </Button>
               </div>
             ) : null}
@@ -1187,14 +1187,14 @@ export default function TestDetail() {
               </div>
 
               <h1 className="text-2xl lg:text-3xl font-black text-gray-900 mb-2">
-                {hasPending ? 'Nəticə Gözlənilir' : isPassed ? 'Təbriklər!' : 'Uğursuz oldu'}
+                {hasPending ? t('test.result_pending', { defaultValue: 'Nəticə Gözlənilir' }) : isPassed ? t('test.congratulations', { defaultValue: 'Təbriklər!' }) : t('test.failed', { defaultValue: 'Uğursuz oldu' })}
               </h1>
               <p className="text-gray-500 mb-8">
                 {hasPending 
-                  ? 'Bəzi suallar açıq tiplidir. Müəllim yoxladıqdan sonra yekun nəticəni görə bilərsiniz!' 
+                  ? t('test.pending_open_questions', { defaultValue: 'Bəzi suallar açıq tiplidir. Müəllim yoxladıqdan sonra yekun nəticəni görə bilərsiniz!' })
                   : isPassed 
                     ? t('test.passed') 
-                    : 'Növbəti dəfə daha yaxşı nəticə göstərəcəyinizə əminik!'}
+                    : t('test.better_next_time', { defaultValue: 'Növbəti dəfə daha yaxşı nəticə göstərəcəyinizə əminik!' })}
               </p>
 
               <div className="grid grid-cols-2 gap-4 mb-8">
@@ -1214,7 +1214,7 @@ export default function TestDetail() {
                 <div className="mb-8 text-left">
                   <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
                     <XCircle className="w-5 h-5 text-red-500" />
-                    Səhv Cavablarınız (Yoxlanmış)
+                    {t('test.wrong_answers_graded', { defaultValue: 'Səhv Cavablarınız (Yoxlanmış)' })}
                   </h3>
                   <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
                     {resultData.answers.filter((a:any) => !a.isCorrect && a.status === 'graded').map((a: any, idx: number) => {
@@ -1226,7 +1226,7 @@ export default function TestDetail() {
                           <p className="font-medium text-gray-900 mb-2">
                             {idx + 1}. {q.questionType === 'image' ? (
                               <div className="mt-2 rounded-lg overflow-hidden border border-gray-100 max-w-xs">
-                                <img src={q.content} alt="Sual" className="w-full h-auto" />
+                                <img src={q.content} alt={t('test.question', { defaultValue: 'Sual' })} className="w-full h-auto" />
                               </div>
                             ) : q.content}
                           </p>
@@ -1259,7 +1259,7 @@ export default function TestDetail() {
                   onClick={() => navigate('/dashboard')}
                   className="w-full h-12 rounded-xl"
                 >
-                  Paneline Qayıt
+                  {t('test.back_to_panel', { defaultValue: 'Panelə qayıt' })}
                 </Button>
               </div>
             </div>
@@ -1281,10 +1281,10 @@ export default function TestDetail() {
           <p className="text-sm text-gray-500 mb-6">{t('test.refresh_page_hint')}</p>
           <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
             <Button variant="outline" onClick={() => navigate('/exam-panel')}>
-              İmtahan panelinə qayıt
+              {t('test.back_to_exam_panel', { defaultValue: 'İmtahan panelinə qayıt' })}
             </Button>
             <Button onClick={() => window.location.reload()} className="bg-[#D4AF37] hover:bg-[#B88A1B] text-white">
-              Səhifəni yenilə
+              {t('test.refresh_page', { defaultValue: 'Səhifəni yenilə' })}
             </Button>
           </div>
         </div>
@@ -1301,7 +1301,7 @@ export default function TestDetail() {
           <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h1 className="font-bold text-gray-900">{test.title}</h1>
-              <p className="text-sm text-gray-500">Sual {currentQuestion + 1} / {testQuestions.length}</p>
+              <p className="text-sm text-gray-500">{t('test.question', { defaultValue: 'Sual' })} {currentQuestion + 1} / {testQuestions.length}</p>
             </div>
             <div className={`flex w-full items-center justify-center gap-2 rounded-xl px-4 py-2 sm:w-auto ${
               timeLeft < 60 ? 'bg-red-100 text-red-600' : 'bg-gray-100 text-gray-700'
@@ -1319,7 +1319,7 @@ export default function TestDetail() {
              {currentQuestion + 1}. 
              {question.questionType === 'image' ? (
                 <div className="mt-4 rounded-2xl overflow-hidden border-2 border-gray-50 shadow-sm max-w-lg">
-                   <img src={question.content} alt="Sual" className="w-full h-auto" />
+                   <img src={question.content} alt={t('test.question', { defaultValue: 'Sual' })} className="w-full h-auto" />
                 </div>
              ) : (
                 <span className="ml-2 block mt-2 text-xl font-medium">{question.content}</span>
@@ -1355,7 +1355,7 @@ export default function TestDetail() {
              ) : (
                 <div className="pt-4">
                  <label className="text-sm font-bold text-gray-700 mb-2 block">
-                     {isNumericOpenEndedQuestion(question) ? 'Sizin Cavabınız (Rəqəm)' : 'Sizin Cavabınız (Açıq sual)'}
+                     {isNumericOpenEndedQuestion(question) ? t('test.your_answer_numeric', { defaultValue: 'Sizin Cavabınız (Rəqəm)' }) : t('test.your_answer_open', { defaultValue: 'Sizin Cavabınız (Açıq sual)' })}
                  </label>
                    {isNumericOpenEndedQuestion(question) ? (
                    <Input
@@ -1363,7 +1363,7 @@ export default function TestDetail() {
                      step="any"
                      inputMode="decimal"
                      className="w-full rounded-2xl border-gray-200 p-4 focus:border-[#D4AF37] focus:ring-[#D4AF37]"
-                     placeholder="Məs: 3.5"
+                     placeholder={t('test.example_number', { defaultValue: 'Məs: 3.5' })}
                      value={selectedAnswers[question._id] || ''}
                      onChange={(e) => handleSelectAnswer(question._id, e.target.value)}
                    />
@@ -1371,7 +1371,7 @@ export default function TestDetail() {
                    <textarea
                      rows={5}
                      className="w-full rounded-2xl border-gray-200 p-4 focus:border-[#D4AF37] focus:ring-[#D4AF37]"
-                     placeholder="Fikrinizi bura yazın..."
+                     placeholder={t('test.write_your_answer', { defaultValue: 'Fikrinizi bura yazın...' })}
                      value={selectedAnswers[question._id] || ''}
                      onChange={(e) => handleSelectAnswer(question._id, e.target.value)}
                    ></textarea>
@@ -1390,7 +1390,7 @@ export default function TestDetail() {
             className="w-full rounded-xl sm:w-auto"
           >
             <ChevronLeft className="w-4 h-4 mr-1" />
-            Əvvəlki
+            {t('test.previous', { defaultValue: 'Əvvəlki' })}
           </Button>
 
           <div className="flex max-w-full flex-wrap justify-center gap-2 sm:max-w-[50%]">
@@ -1416,7 +1416,7 @@ export default function TestDetail() {
               onClick={() => setCurrentQuestion(prev => Math.min(testQuestions.length - 1, prev + 1))}
               className="w-full rounded-xl bg-[#D4AF37] text-white hover:bg-[#B88A1B] sm:w-auto"
             >
-              Növbəti
+              {t('test.next', { defaultValue: 'Növbəti' })}
               <ChevronRight className="w-4 h-4 ml-1" />
             </Button>
           ) : (
@@ -1427,7 +1427,7 @@ export default function TestDetail() {
               disabled={isSubmittingResult}
               className="w-full rounded-xl bg-[#D4AF37] text-white shadow-lg shadow-[#D4AF37]/30 hover:bg-[#B88A1B] sm:w-auto"
             >
-              {isSubmittingResult ? 'Göndərilir...' : 'İmtahanı Bitir'}
+              {isSubmittingResult ? t('test.sending', { defaultValue: 'Göndərilir...' }) : t('test.finish_exam', { defaultValue: 'İmtahanı Bitir' })}
               <CheckCircle className="w-4 h-4 ml-1" />
             </Button>
           )}

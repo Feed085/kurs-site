@@ -53,7 +53,7 @@ export default function TeacherDashboard() {
             return;
           }
 
-          throw new Error(data.message || 'Dashboard məlumatları yüklənə bilmədi');
+          throw new Error(data.message || t('teacher.dashboard.load_error', { defaultValue: 'Dashboard məlumatları yüklənə bilmədi' }));
         }
 
         setDashboardData({
@@ -62,7 +62,7 @@ export default function TeacherDashboard() {
         });
         setLoadError(null);
       } catch (error) {
-        const message = error instanceof Error ? error.message : 'Dashboard məlumatları yüklənə bilmədi';
+        const message = error instanceof Error ? error.message : t('teacher.dashboard.load_error', { defaultValue: 'Dashboard məlumatları yüklənə bilmədi' });
         setLoadError(message);
         toast.error(message);
       } finally {
@@ -86,10 +86,10 @@ export default function TeacherDashboard() {
             <p className="mt-3 text-gray-600">{loadError || t('teachers.dashboard_data_not_ready')}</p>
             <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
               <Button onClick={() => window.location.reload()} className="rounded-xl bg-[#D4AF37] hover:bg-[#B88A1B]">
-                Yenidən yoxla
+                {t('common.retry', { defaultValue: 'Yenidən yoxla' })}
               </Button>
               <Button variant="outline" onClick={() => navigate('/login')} className="rounded-xl">
-                Login səhifəsinə qayıt
+                {t('teacher.dashboard.back_to_login', { defaultValue: 'Login səhifəsinə qayıt' })}
               </Button>
             </div>
           </div>
@@ -112,7 +112,7 @@ export default function TeacherDashboard() {
 
   const statCards = [
     {
-      label: 'Ümumi Tələbə',
+      label: t('teacher.dashboard.total_students', { defaultValue: 'Ümumi Tələbə' }),
       value: stats.studentCount,
       icon: Users,
       color: '#D4AF37',
@@ -128,7 +128,7 @@ export default function TeacherDashboard() {
       onClick: scrollToMyCourses,
     },
     {
-      label: 'Testlər',
+      label: t('teacher.dashboard.tests', { defaultValue: 'Testlər' }),
       value: stats.testCount,
       icon: FileText,
       color: '#F59E0B',
@@ -136,7 +136,7 @@ export default function TeacherDashboard() {
       onClick: () => navigate('/teacher/tests'),
     },
     {
-      label: 'Video Dərslər',
+      label: t('teacher.dashboard.video_lessons', { defaultValue: 'Video Dərslər' }),
       value: stats.videoCount,
       icon: Video,
       color: '#EC4899',
@@ -144,7 +144,7 @@ export default function TeacherDashboard() {
       onClick: () => navigate('/teacher/videos'),
     },
     {
-      label: 'Kurs Rəyləri',
+      label: t('teacher.dashboard.course_reviews', { defaultValue: 'Kurs Rəyləri' }),
       value: stats.courseReviewCount || 0,
       icon: MessageCircle,
       color: '#10B981',
@@ -152,7 +152,7 @@ export default function TeacherDashboard() {
       onClick: () => navigate('/teacher/course-reviews'),
     },
     {
-      label: 'Müəllim Rəyləri',
+      label: t('teacher.dashboard.teacher_reviews', { defaultValue: 'Müəllim Rəyləri' }),
       value: stats.teacherReviewCount || 0,
       icon: MessageSquare,
       color: '#8B5CF6',
@@ -172,7 +172,7 @@ export default function TeacherDashboard() {
               {t('teacher.dashboard.title')}
             </h1>
             <p className="text-gray-600 mt-1">
-              Xoş gəldiniz, {user?.name || teacher?.name}!
+              {t('teacher.dashboard.welcome', { name: user?.name || teacher?.name, defaultValue: `Xoş gəldiniz, ${user?.name || teacher?.name}!` })}
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
@@ -198,7 +198,7 @@ export default function TeacherDashboard() {
               className="w-full rounded-xl sm:w-auto"
             >
               <Video className="w-4 h-4 mr-2" />
-              Video Yüklə
+              {t('teacher.dashboard.upload_video', { defaultValue: 'Video Yüklə' })}
             </Button>
             <Button
               onClick={() => navigate('/teacher/test/create')}
@@ -267,11 +267,11 @@ export default function TeacherDashboard() {
                       <div className="flex items-start justify-between mb-2">
                         <h3 className="font-bold text-gray-900">{course.title}</h3>
                       </div>
-                      <p className="text-sm text-gray-500 mb-3">{course.studentCount} {t('teachers.students', { defaultValue: 'Tələbələr' })}</p>
+                      <p className="text-sm text-gray-500 mb-3">{course.studentCount} {t('teacher.dashboard.students', { defaultValue: 'Tələbələr' })}</p>
                       <div className="flex items-center gap-4">
                         <div className="flex-1">
                           <div className="flex items-center justify-between text-xs mb-1">
-                            <span className="text-gray-500">Reytinq</span>
+                            <span className="text-gray-500">{t('common.rating', { defaultValue: 'Reytinq' })}</span>
                             <span className="font-medium text-[#D4AF37]">{course.rating}/5</span>
                           </div>
                           <Progress value={course.rating * 20} className="h-2" />
@@ -284,7 +284,7 @@ export default function TeacherDashboard() {
                           }}
                           className="text-[#D4AF37] hover:text-[#B88A1B] hover:bg-transparent p-0 font-bold flex items-center group/btn"
                         >
-                          Dərslərə bax
+                          {t('teacher.dashboard.view_lessons', { defaultValue: 'Dərslərə bax' })}
                           <ArrowRight className="w-4 h-4 ml-1 group-hover/btn:translate-x-1 transition-transform" />
                         </Button>
                       </div>
@@ -315,7 +315,7 @@ export default function TeacherDashboard() {
                   }}
                   className="text-[#D4AF37] hover:text-[#B88A1B]"
                 >
-                  Hamısı
+                  {t('common.all', { defaultValue: 'Hamısı' })}
                   <ArrowRight className="w-4 h-4 ml-1" />
                 </Button>
               </div>
@@ -349,10 +349,10 @@ export default function TeacherDashboard() {
                 <div className="p-4 bg-gradient-to-br from-[#D4AF37]/10 to-[#A87A1F]/10 rounded-2xl">
                   <div className="flex items-center gap-3 mb-2">
                     <TrendingUp className="w-5 h-5 text-[#D4AF37]" />
-                    <span className="font-medium text-gray-700">Kurs Reytinqi</span>
+                    <span className="font-medium text-gray-700">{t('teacher.dashboard.course_rating', { defaultValue: 'Kurs Reytinqi' })}</span>
                   </div>
                   <div className="text-2xl font-black text-gray-900">{courseRating.toFixed(1)}/5</div>
-                  <div className="text-sm text-gray-500">{stats.courseReviewCount || 0} {t('teacher.reviews', { defaultValue: 'rəy' })}</div>
+                  <div className="text-sm text-gray-500">{stats.courseReviewCount || 0} {t('teacher.dashboard.reviews', { defaultValue: 'rəy' })}</div>
                 </div>
 
                 <div className="p-4 bg-gradient-to-br from-[#8B5CF6]/10 to-[#EC4899]/10 rounded-2xl">
@@ -363,7 +363,7 @@ export default function TeacherDashboard() {
                   <div className="text-2xl font-black text-gray-900">
                     {Number(stats.teacherRating || 0).toFixed(1)}/5
                   </div>
-                  <div className="text-sm text-gray-500">{stats.teacherReviewCount || 0} {t('teacher.reviews', { defaultValue: 'rəy' })}</div>
+                  <div className="text-sm text-gray-500">{stats.teacherReviewCount || 0} {t('teacher.dashboard.reviews', { defaultValue: 'rəy' })}</div>
                 </div>
               </div>
             </div>

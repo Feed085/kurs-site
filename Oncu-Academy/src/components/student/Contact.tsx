@@ -46,7 +46,7 @@ export default function Contact() {
           setCourses(publicCourses.length > 0 ? publicCourses : demoCourses);
         }
       } catch (error) {
-        console.error('Kontakt səhifəsi kursları yüklənmədi', error);
+        console.error(t('contact.load_error', { defaultValue: 'Kontakt səhifəsi kursları yüklənmədi' }), error);
         if (isMounted) {
           setCourses(demoCourses);
         }

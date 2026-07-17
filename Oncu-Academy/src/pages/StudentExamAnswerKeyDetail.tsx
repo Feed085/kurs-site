@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, CheckCircle2, Clock3, Loader2, XCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import Navbar from '@/components/common/Navbar';
 import StudentExamPanelTabBar from '@/components/student/StudentExamPanelTabBar';
 import { Badge } from '@/components/ui/badge';
@@ -76,6 +77,7 @@ const getQuestionAnswer = (result: PanelResult, question: PanelQuestion, index: 
 export default function StudentExamAnswerKeyDetail() {
   const navigate = useNavigate();
   const { resultId } = useParams<{ resultId: string }>();
+  const { t } = useTranslation();
 
   const [result, setResult] = useState<PanelResult | null>(null);
   const [testDetail, setTestDetail] = useState<PanelTestDetail | null>(null);

@@ -71,12 +71,12 @@ export default function TeacherProfile() {
              facebook: d.data.socialNetworks?.facebook || '',
              instagram: d.data.socialNetworks?.instagram || '',
              linkedin: d.data.socialNetworks?.linkedin || '',
-             location: d.data.location || 'Bakı, Azərbaycan',
+             location: d.data.location || t('teacher.profile.baku_azerbaijan', { defaultValue: 'Bakı, Azərbaycan' }),
              avatar: d.data.avatar
            });
         }
       } catch (err) {
-        toast.error('Profil yüklənə bilmədi');
+        toast.error(t('teacher.profile.load_error', { defaultValue: 'Profil yüklənə bilmədi' }));
       } finally {
         setIsLoading(false);
       }
@@ -136,12 +136,12 @@ export default function TeacherProfile() {
         setFormData(prev => ({ ...prev, avatar: finalAvatarUrl }));
         setAvatarFile(null);
         setIsEditing(false);
-        toast.success('Profil yeniləndi!');
+        toast.success(t('teacher.profile.updated', { defaultValue: 'Profil yeniləndi!' }));
       } else {
         toast.error(t('common.error_prefix') + d.message);
       }
     } catch(err) {
-      toast.error('Sunucu ilə əlaqə qurula bilmədi');
+      toast.error(t('common.server_error', { defaultValue: 'Sunucu ilə əlaqə qurula bilmədi' }));
     } finally {
       setIsLoading(false);
     }
@@ -176,7 +176,7 @@ export default function TeacherProfile() {
           className="text-gray-600 hover:text-gray-900 transition-colors mb-4 flex items-center gap-2"
         >
           <ArrowLeft className="w-5 h-5" />
-          Geri qayıt
+          {t('common.go_back', { defaultValue: 'Geri qayıt' })}
         </Button>
       </div>
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
@@ -237,7 +237,7 @@ export default function TeacherProfile() {
                 ) : (
                   <>
                     <Edit2 className="w-4 h-4 mr-2" />
-                    Redaktə et
+                    {t('common.edit', { defaultValue: 'Redaktə et' })}
                   </>
                 )}
               </Button>
@@ -302,7 +302,7 @@ export default function TeacherProfile() {
                       name="location"
                       value={formData.location}
                       onChange={handleChange}
-                      placeholder="Məs: Bakı, Azərbaycan"
+                      placeholder={t('teacher.profile.location_example', { defaultValue: 'Məs: Bakı, Azərbaycan' })}
                       className="rounded-xl"
                     />
                   </div>
@@ -322,7 +322,7 @@ export default function TeacherProfile() {
                       <Phone className="w-5 h-5 text-gray-400" />
                       <div>
                         <p className="text-xs text-gray-500 font-bold uppercase">Telefon</p>
-                        <p className="text-sm font-bold text-gray-900">{formData.phone || 'Qeyd edilməyib'}</p>
+                        <p className="text-sm font-bold text-gray-900">{formData.phone || t('student.not_set', { defaultValue: 'Qeyd edilməyib' })}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-2xl">
@@ -349,7 +349,7 @@ export default function TeacherProfile() {
                     name="education"
                     value={formData.education}
                     onChange={handleChange}
-                    placeholder="Məs: Bakı Dövlət Universiteti, Filologiya fakültəsi, Ali təhsil"
+                    placeholder={t('teacher.profile.education_example', { defaultValue: 'Məs: Bakı Dövlət Universiteti, Filologiya fakültəsi, Ali təhsil' })}
                     className="rounded-xl min-h-[80px]"
                   />
                 ) : (
@@ -375,7 +375,7 @@ export default function TeacherProfile() {
                     onChange={handleChange}
                     type="number"
                     min="0"
-                    placeholder="Məs: 12"
+                    placeholder={t('teacher.profile.experience_example', { defaultValue: 'Məs: 12' })}
                     className="rounded-xl"
                   />
                 ) : (
@@ -395,7 +395,7 @@ export default function TeacherProfile() {
             {/* Specialties */}
             <div className="bg-white rounded-3xl p-6 shadow-sm">
               <h2 className="text-xl font-bold text-gray-900 mb-4">
-                İxtisaslaşdığı Sahələr
+                {t('teacher.profile.specialties', { defaultValue: 'İxtisaslaşdığı Sahələr' })}
               </h2>
               {isEditing ? (
                 <div className="space-y-4">
@@ -403,7 +403,7 @@ export default function TeacherProfile() {
                     name="specialties"
                     value={formData.specialties}
                     onChange={handleChange}
-                    placeholder="Məs: İngilis dili, IELTS, SAT"
+                    placeholder={t('teacher.profile.specialties_example', { defaultValue: 'Məs: İngilis dili, IELTS, SAT' })}
                     className="rounded-xl"
                   />
                   <div className="flex flex-wrap gap-2">
@@ -523,7 +523,7 @@ export default function TeacherProfile() {
                         key={platform.name}
                         onClick={() => {
                           if (!platform.link || platform.link.trim() === '') {
-                            toast.error(`${platform.name} hesabı əlavə edilməyib`);
+                            toast.error(t('teacher.profile.social_not_added', { platform: platform.name, defaultValue: `${platform.name} hesabı əlavə edilməyib` }));
                           } else {
                             window.open(platform.link, '_blank', 'noopener,noreferrer');
                           }

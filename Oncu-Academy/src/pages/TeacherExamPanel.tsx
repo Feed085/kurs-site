@@ -333,30 +333,30 @@ const formatDateTime = (value?: string | null) => {
 
 const draftStatusMeta: Record<string, { label: string; className: string }> = {
   draft: {
-    label: 'Layihə',
+    label: t('test.exam_panel.status_draft', { defaultValue: 'Layihə' }),
     className: 'bg-slate-100 text-slate-600',
   },
   submitted_to_admin: {
-    label: 'Adminə göndərildi',
+    label: t('test.exam_panel.status_pending', { defaultValue: 'Adminə göndərildi' }),
     className: 'bg-[#FFF3CD] text-[#A87A1F]',
   },
   approved: {
-    label: 'Təsdiq olundu',
+    label: t('test.exam_panel.status_approved', { defaultValue: 'Təsdiq olundu' }),
     className: 'bg-sky-100 text-sky-700',
   },
   rejected: {
-    label: 'Rədd edildi',
+    label: t('test.exam_panel.status_rejected', { defaultValue: 'Rədd edildi' }),
     className: 'bg-rose-100 text-rose-700',
   },
   used: {
-    label: 'İstifadə olundu',
+    label: t('test.exam_panel.status_used', { defaultValue: 'İstifadə olundu' }),
     className: 'bg-emerald-100 text-emerald-700',
   },
 };
 
 const leaveSessionStatusMeta: Record<TeacherLeaveSessionStatus, { label: string; className: string }> = {
   pending: {
-    label: 'Qərar gözləyir',
+    label: t('test.exam_panel.status_waiting_decision', { defaultValue: 'Qərar gözləyir' }),
     className: 'bg-amber-100 text-amber-700',
   },
   approved: {
@@ -364,15 +364,15 @@ const leaveSessionStatusMeta: Record<TeacherLeaveSessionStatus, { label: string;
     className: 'bg-emerald-100 text-emerald-700',
   },
   expired: {
-    label: 'Müddəti bitib',
+    label: t('test.exam_panel.status_expired', { defaultValue: 'Müddəti bitib' }),
     className: 'bg-slate-200 text-slate-700',
   },
   finished: {
-    label: 'Bağlanıb',
+    label: t('test.exam_panel.status_closed', { defaultValue: 'Bağlanıb' }),
     className: 'bg-slate-200 text-slate-700',
   },
   rejected: {
-    label: 'Dayandırılıb',
+    label: t('test.exam_panel.status_suspended', { defaultValue: 'Dayandırılıb' }),
     className: 'bg-rose-100 text-rose-700',
   },
 };
@@ -435,7 +435,7 @@ export default function TeacherExamPanel() {
     const payload = await response.json();
 
     if (!response.ok || payload?.success === false) {
-      throw new Error(payload?.message || 'Müəllim imtahan paneli yüklənmədi');
+      throw new Error(payload?.message || t('test.exam_panel.load_error', { defaultValue: 'Müəllim imtahan paneli yüklənmədi' }));
     }
 
     setPanelData(payload.data || { drafts: [], linkedExams: [] });
@@ -446,7 +446,7 @@ export default function TeacherExamPanel() {
       try {
         await loadPanelData();
       } catch (error) {
-        const message = error instanceof Error ? error.message : 'Müəllim imtahan paneli yüklənmədi';
+        const message = error instanceof Error ? error.message : t('test.exam_panel.load_error', { defaultValue: 'Müəllim imtahan paneli yüklənmədi' });
         toast.error(message);
       } finally {
         setIsLoading(false);
@@ -548,7 +548,7 @@ export default function TeacherExamPanel() {
     isResolvingQrRef.current = true;
     setIsResolvingQr(true);
     setQrScannerError(null);
-    setQrScannerMessage('Manual kod yoxlanılır...');
+    setQrScannerMessage(t('test.exam_panel.checking_code', { defaultValue: 'Manual kod yoxlanılır...' }));
 
     try {
       const response = await fetch(`${API_BASE_URL}/tests/leave-sessions/resolve`, {
@@ -562,22 +562,22 @@ export default function TeacherExamPanel() {
       const payload = await response.json();
 
       if (!response.ok || payload?.success === false) {
-        throw new Error(payload?.message || 'Manual kod yoxlanmadı');
+        throw new Error(payload?.message || t('test.exam_panel.code_check_failed', { defaultValue: 'Manual kod yoxlanmadı' }));
       }
 
       const nextSession = payload?.data as TeacherLeaveSessionReviewData | null;
 
       setScannedLeaveSession(nextSession?.sessionId ? nextSession : null);
-      setQrScannerMessage(payload?.message || 'Manual kod tapıldı');
+      setQrScannerMessage(payload?.message || t('test.exam_panel.code_found', { defaultValue: 'Manual kod tapıldı' }));
       setManualQrValue(normalizedManualCode);
 
       if (nextSession?.status === 'pending' || nextSession?.status === 'approved') {
-        toast.success(payload?.message || 'Manual kod tapıldı');
+        toast.success(payload?.message || t('test.exam_panel.code_found', { defaultValue: 'Manual kod tapıldı' }));
       } else {
         toast.error(payload?.message || 'Leave session aktiv deyil');
       }
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Manual kod yoxlanmadı';
+      const message = error instanceof Error ? error.message : t('test.exam_panel.code_check_failed', { defaultValue: 'Manual kod yoxlanmadı' });
       setQrScannerError(message);
       setQrScannerMessage('');
       toast.error(message);
@@ -606,7 +606,7 @@ export default function TeacherExamPanel() {
 
     setLeaveDecisionAction(action);
     setQrScannerError(null);
-    setQrScannerMessage(action === 'approve' ? 'Davam qərarı göndərilir...' : 'Dayandırma qərarı göndərilir...');
+    setQrScannerMessage(action === 'approve' ? t('test.exam_panel.sending_continue', { defaultValue: 'Davam qərarı göndərilir...' }) : t('test.exam_panel.sending_stop', { defaultValue: 'Dayandırma qərarı göndərilir...' }));
 
     try {
       const response = await fetch(`${API_BASE_URL}/tests/leave-sessions/${scannedLeaveSession.sessionId}/${action}`, {
@@ -618,13 +618,13 @@ export default function TeacherExamPanel() {
       const payload = await response.json();
 
       if (!response.ok || payload?.success === false) {
-        throw new Error(payload?.message || 'Qərar qeydə alınmadı');
+        throw new Error(payload?.message || t('test.exam_panel.decision_failed', { defaultValue: 'Qərar qeydə alınmadı' }));
       }
 
       const nextSession = payload?.data as TeacherLeaveSessionReviewData | null;
 
       setScannedLeaveSession(nextSession?.sessionId ? nextSession : scannedLeaveSession);
-      setQrScannerMessage(payload?.message || (action === 'approve' ? 'Leave session təsdiqləndi' : 'Leave session rədd edildi'));
+      setQrScannerMessage(payload?.message || (action === 'approve' ? t('test.exam_panel.leave_approved', { defaultValue: 'Leave session təsdiqləndi' }) : t('test.exam_panel.leave_rejected', { defaultValue: 'Leave session rədd edildi' })));
       toast.success(payload?.message || (action === 'approve' ? 'Leave session təsdiqləndi' : 'Leave session rədd edildi'));
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Qərar qeydə alınmadı';

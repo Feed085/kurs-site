@@ -52,7 +52,7 @@ export default function StudentDashboard() {
           setAssignedTests((data.data.assignedTests || []).filter((test: any) => !test.isAdminAssigned));
         }
       } catch (err) {
-        console.error('Statistika yüklənərkən xəta baş verdi', err);
+        console.error(t('student.dashboard.stats_load_error', { defaultValue: 'Statistika yüklənərkən xəta baş verdi' }), err);
       }
     };
     
@@ -80,10 +80,10 @@ export default function StudentDashboard() {
   };
 
   const stats = [
-    { label: 'Aktiv Kurslar', value: apiStats.activeCoursesCount.toString(), icon: BookOpen, color: '#D4AF37', onClick: scrollToCourses },
-    { label: 'Mənim Testlərim', value: apiStats.assignedTestsCount.toString(), icon: FileText, color: '#A87A1F', onClick: scrollToTests },
-    { label: 'Tamamlanan Testlər', value: apiStats.completedTestsCount.toString(), icon: FileText, color: '#A87A1F', onClick: () => navigate('/dashboard/completed-tests') },
-    { label: 'Sertifikatlar', value: apiStats.certificatesCount.toString(), icon: Award, color: '#F59E0B', onClick: () => navigate('/dashboard/certificates') },
+    { label: t('student.dashboard.active_courses', { defaultValue: 'Aktiv Kurslar' }), value: apiStats.activeCoursesCount.toString(), icon: BookOpen, color: '#D4AF37', onClick: scrollToCourses },
+    { label: t('student.dashboard.my_tests', { defaultValue: 'Mənim Testlərim' }), value: apiStats.assignedTestsCount.toString(), icon: FileText, color: '#A87A1F', onClick: scrollToTests },
+    { label: t('student.dashboard.completed_tests', { defaultValue: 'Tamamlanan Testlər' }), value: apiStats.completedTestsCount.toString(), icon: FileText, color: '#A87A1F', onClick: () => navigate('/dashboard/completed-tests') },
+    { label: t('student.dashboard.certificates', { defaultValue: 'Sertifikatlar' }), value: apiStats.certificatesCount.toString(), icon: Award, color: '#F59E0B', onClick: () => navigate('/dashboard/certificates') },
   ];
 
   const filteredCourses = useMemo(() => {
@@ -133,7 +133,7 @@ export default function StudentDashboard() {
               {t('student.dashboard.title')}
             </h1>
             <p className="text-gray-600 mt-1">
-              Xoş gəldiniz, {user?.name}!
+              {t('student.dashboard.welcome', { name: user?.name, defaultValue: `Xoş gəldiniz, ${user?.name}!` })}
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
@@ -142,14 +142,14 @@ export default function StudentDashboard() {
               variant="outline"
               className="rounded-xl border-gray-200"
             >
-              Mənim Profilim
+              {t('student.dashboard.my_profile', { defaultValue: 'Mənim Profilim' })}
             </Button>
             <Button
               onClick={() => navigate('/courses')}
               className="bg-[#D4AF37] hover:bg-[#B88A1B] text-white rounded-xl"
             >
               <BookOpen className="w-4 h-4 mr-2" />
-              Kurslara bax
+              {t('student.dashboard.browse_courses', { defaultValue: 'Kurslara bax' })}
             </Button>
           </div>
         </div>
@@ -188,7 +188,7 @@ export default function StudentDashboard() {
                   value={courseSearch}
                   onChange={(event) => setCourseSearch(event.target.value)}
                   type="text"
-                  placeholder="Kurs axtar..."
+                  placeholder={t('student.dashboard.search_course', { defaultValue: 'Kurs axtar...' })}
                   className="w-full rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 text-sm outline-none transition-all focus:border-[#D4AF37] focus:bg-white sm:max-w-xs"
                 />
               </div>
@@ -210,7 +210,7 @@ export default function StudentDashboard() {
                       <div className="flex items-center gap-4">
                         <div className="flex-1">
                           <div className="flex items-center justify-between text-xs mb-1">
-                            <span className="text-gray-500">{t('student.progress')}</span>
+                            <span className="text-gray-500">{t('student.progress', { defaultValue: 'Tərəqqi' })}</span>
                             <span className="font-medium text-[#D4AF37]">{course.progress ?? 0}%</span>
                           </div>
                           <Progress value={course.progress ?? 0} className="h-2" />
@@ -221,7 +221,7 @@ export default function StudentDashboard() {
                           className="w-full rounded-lg bg-[#D4AF37] hover:bg-[#B88A1B] sm:w-auto"
                         >
                           <Play className="w-4 h-4 mr-1" />
-                          Başla
+                          {t('student.dashboard.start', { defaultValue: 'Başla' })}
                         </Button>
                       </div>
                     </div>
@@ -232,13 +232,13 @@ export default function StudentDashboard() {
                      <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
                         <BookOpen className="w-8 h-8 text-gray-300" />
                      </div>
-                     <p className="text-gray-500">{t('student.no_courses_yet')}</p>
+                     <p className="text-gray-500">{t('student.no_courses_yet', { defaultValue: 'Hələ heç bir kursunuz yoxdur.' })}</p>
                      <Button 
                        variant="link" 
                        onClick={() => navigate('/courses')}
                        className="text-[#D4AF37] mt-2 font-bold"
                      >
-                       Kurslara göz at
+                       {t('student.dashboard.browse_courses', { defaultValue: 'Kurslara göz at' })}
                      </Button>
                   </div>
                 )}
@@ -248,14 +248,14 @@ export default function StudentDashboard() {
             <div id="my-tests-section" className="bg-white rounded-3xl p-6 shadow-sm">
               <div className="flex flex-col gap-4 mb-6 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <h2 className="text-xl font-bold text-gray-900">{t('student.my_tests')}</h2>
-                  <p className="text-sm text-gray-500 mt-1">{t('student.my_tests_desc')}</p>
+                  <h2 className="text-xl font-bold text-gray-900">{t('student.my_tests', { defaultValue: 'Mənim Testlərim' })}</h2>
+                  <p className="text-sm text-gray-500 mt-1">{t('student.my_tests_desc', { defaultValue: 'Sizə təyin olunmuş testlər' })}</p>
                 </div>
                 <input
                   value={testSearch}
                   onChange={(event) => setTestSearch(event.target.value)}
                   type="text"
-                  placeholder="Test axtar..."
+                  placeholder={t('student.dashboard.search_test', { defaultValue: 'Test axtar...' })}
                   className="w-full rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 text-sm outline-none transition-all focus:border-[#A87A1F] focus:bg-white sm:max-w-xs"
                 />
               </div>
@@ -263,16 +263,16 @@ export default function StudentDashboard() {
               {hasExamPanelTests ? (
                 <div className="mb-4 flex flex-col gap-3 rounded-2xl border border-[#D4AF37]/20 bg-[#FFF9E7] p-4 sm:flex-row sm:items-center sm:justify-between">
                   <div>
-                    <div className="text-sm font-bold text-[#A87A1F]">{t('student.active_tests_in_exam_panel')}</div>
+                    <div className="text-sm font-bold text-[#A87A1F]">{t('student.active_tests_in_exam_panel', { defaultValue: 'Aktiv İmtahanlar Panelidədir' })}</div>
                     <p className="mt-1 text-sm text-gray-600">
-                      {apiStats.adminApprovedAssignedTestsCount} admin imtahanı normal testlərdən ayrı saxlanılır.
+                      {t('student.dashboard.admin_exams_info', { count: apiStats.adminApprovedAssignedTestsCount, defaultValue: `${apiStats.adminApprovedAssignedTestsCount} admin imtahanı normal testlərdən ayrı saxlanılır.` })}
                     </p>
                   </div>
                   <Button
                     onClick={() => navigate('/exam-panel')}
                     className="bg-[#D4AF37] hover:bg-[#B88A1B] rounded-xl text-white font-bold"
                   >
-                    İmtahan panelinə keç
+                    {t('student.dashboard.go_to_exam_panel', { defaultValue: 'İmtahan panelinə keç' })}
                   </Button>
                 </div>
               ) : null}
@@ -282,7 +282,7 @@ export default function StudentDashboard() {
                   (() => {
                     const hasAttempted = Boolean(test.hasAttempted || (test.attemptCount || 0) > 0);
                     const canRetake = Boolean(test.allowRetake);
-                    const buttonLabel = !hasAttempted ? 'Testə başla' : canRetake ? 'Təkrar test' : 'Nəticələri gör';
+                    const buttonLabel = !hasAttempted ? t('student.dashboard.start_test', { defaultValue: 'Testə başla' }) : canRetake ? t('student.dashboard.retake_test', { defaultValue: 'Təkrar test' }) : t('student.dashboard.view_results', { defaultValue: 'Nəticələri gör' });
                     const buttonAction = !hasAttempted || canRetake
                       ? () => navigate(`/tests/${test._id || test.id}`)
                       : () => navigate('/dashboard/completed-tests');
@@ -295,12 +295,12 @@ export default function StudentDashboard() {
                     <div className="flex-1 min-w-0">
                       <h3 className="font-bold text-gray-900 truncate">{test.title}</h3>
                       {hasAttempted && !canRetake ? (
-                        <p className="mt-1 text-xs font-semibold text-[#A87A1F]">{t('student.test_completed')}</p>
+                        <p className="mt-1 text-xs font-semibold text-[#A87A1F]">{t('student.test_completed', { defaultValue: 'Test tamamlanıb' })}</p>
                       ) : null}
                       <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-500">
                         {test.course?.title ? <span>{test.course.title}</span> : null}
-                        <span>{test.instructor ? `${test.instructor.name} ${test.instructor.surname || ''}` : 'Naməlum müəllim'}</span>
-                        <span>{test.duration ? `${test.duration} dəqiqə` : 'Müddət yoxdur'}</span>
+                        <span>{test.instructor ? `${test.instructor.name} ${test.instructor.surname || ''}` : t('student.unknown_teacher', { defaultValue: 'Naməlum müəllim' })}</span>
+                        <span>{test.duration ? `${test.duration} ${t('test.minutes_short', { defaultValue: 'dəqiqə' })}` : t('student.no_duration', { defaultValue: 'Müddət yoxdur' })}</span>
                       </div>
                     </div>
                     <Button
@@ -317,14 +317,14 @@ export default function StudentDashboard() {
                 {filteredTests.length === 0 && (
                   <div className="text-center py-12 rounded-2xl border border-dashed border-gray-200 bg-gray-50">
                     <FileText className="w-8 h-8 text-gray-300 mx-auto mb-3" />
-                    <p className="text-gray-500">Hazırda kurs testiniz yoxdur.</p>
+                    <p className="text-gray-500">{t('student.no_course_tests', { defaultValue: 'Hazırda kurs testiniz yoxdur.' })}</p>
                     {hasExamPanelTests ? (
                       <Button
                         onClick={() => navigate('/exam-panel')}
                         variant="link"
                         className="mt-2 font-bold text-[#A87A1F]"
                       >
-                        Admin imtahanlarını imtahan panelində aç
+                        {t('student.dashboard.open_admin_exams', { defaultValue: 'Admin imtahanlarını imtahan panelində aç' })}
                       </Button>
                     ) : null}
                   </div>
@@ -339,13 +339,13 @@ export default function StudentDashboard() {
                <div className="w-16 h-16 bg-[#D4AF37]/10 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Award className="w-8 h-8 text-[#D4AF37]" />
                </div>
-               <h3 className="text-lg font-bold text-gray-900 mb-2">Hədəflərinizə yaxınsınız!</h3>
-               <p className="text-sm text-gray-500 mb-6">Kursları tamamlayaraq sertifikatlarınızı əldə edin və biliklərinizi rəsmiləşdirin.</p>
+               <h3 className="text-lg font-bold text-gray-900 mb-2">{t('student.close_to_goals', { defaultValue: 'Hədəflərinizə yaxınsınız!' })}</h3>
+               <p className="text-sm text-gray-500 mb-6">{t('student.close_to_goals_desc', { defaultValue: 'Kursları tamamlayaraq sertifikatlarınızı əldə edin və biliklərinizi rəsmiləşdirin.' })}</p>
                <Button 
                  onClick={() => navigate('/courses')}
                  className="w-full bg-[#D4AF37] hover:bg-[#B88A1B] rounded-xl font-bold"
                >
-                 Yeni Kurs Kəşf Et
+                 {t('student.dashboard.discover_new_course', { defaultValue: 'Yeni Kurs Kəşf Et' })}
                </Button>
             </div>
           </div>

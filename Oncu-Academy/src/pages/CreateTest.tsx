@@ -205,16 +205,16 @@ export default function CreateTest() {
           <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-green-100">
             <CheckCircle className="h-12 w-12 text-green-600" />
           </div>
-          <h1 className="mb-4 text-2xl font-black text-gray-900">Test uğurla yaradıldı!</h1>
+          <h1 className="mb-4 text-2xl font-black text-gray-900">{t('test.create_success_title', { defaultValue: 'Test uğurla yaradıldı!' })}</h1>
           <p className="mb-8 text-gray-600">
-            Bu test artıq müəllim testləri siyahısında görünür və kurs daxilində istifadə oluna bilər.
+            {t('test.create_success_desc', { defaultValue: 'Bu test artıq müəllim testləri siyahısında görünür və kurs daxilində istifadə oluna bilər.' })}
           </p>
           <div className="flex gap-4">
             <Button variant="outline" onClick={() => navigate('/teacher/tests')} className="flex-1 rounded-xl">
-              Testlərə keç
+              {t('test.go_to_tests', { defaultValue: 'Testlərə keç' })}
             </Button>
             <Button onClick={resetForm} className="flex-1 rounded-xl bg-[#D4AF37] hover:bg-[#B88A1B]">
-              Yeni test yarat
+              {t('test.create_new_test', { defaultValue: 'Yeni test yarat' })}
             </Button>
           </div>
         </div>
@@ -231,7 +231,7 @@ export default function CreateTest() {
           </Button>
           <div>
             <h1 className="text-2xl font-black text-gray-900 lg:text-3xl">{t('teacher.test.title')}</h1>
-            <p className="text-gray-600">Kursa bağlı test yaradın və sualları birbaşa bu səhifədən qurun.</p>
+            <p className="text-gray-600">{t('test.create_desc', { defaultValue: 'Kursa bağlı test yaradın və sualları birbaşa bu səhifədən qurun.' })}</p>
           </div>
         </div>
 
@@ -260,14 +260,14 @@ export default function CreateTest() {
                   onChange={handleChange}
                   className="h-12 w-full rounded-xl border border-gray-200 px-4 outline-none focus:border-[#D4AF37] focus:ring-[#D4AF37]"
                 >
-                  <option value="">Öz kursunuzu seçin</option>
+                  <option value="">{t('test.select_your_course', { defaultValue: 'Öz kursunuzu seçin' })}</option>
                   {teacherCourses.map((course) => (
                     <option key={course._id || course.id} value={course._id || course.id}>
                       {course.title || 'Adsız kurs'}
                     </option>
                   ))}
                 </select>
-                <p className="mt-2 text-xs text-gray-500">Bu siyahıda yalnız sizə aid kurslar göstərilir.</p>
+                <p className="mt-2 text-xs text-gray-500">{t('test.only_your_courses', { defaultValue: 'Bu siyahıda yalnız sizə aid kurslar göstərilir.' })}</p>
               </div>
             </div>
 
@@ -286,7 +286,7 @@ export default function CreateTest() {
                     onChange={handleChange}
                     className="h-12 rounded-xl pl-12"
                   />
-                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-gray-500">dəqiqə</span>
+                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-gray-500">{t('test.minutes_short', { defaultValue: 'dəqiqə' })}</span>
                 </div>
               </div>
 
@@ -297,8 +297,8 @@ export default function CreateTest() {
                   className="mt-0.5 border-[#A87A1F] data-[state=checked]:border-[#A87A1F] data-[state=checked]:bg-[#A87A1F]"
                 />
                 <div>
-                  <p className="font-semibold text-gray-900">Tələbə testi təkrar yaza bilsin</p>
-                  <p className="text-sm text-gray-500">Söndürülərsə test yalnız bir dəfə yazıla bilər.</p>
+                  <p className="font-semibold text-gray-900">{t('test.edit.allow_retake', { defaultValue: 'Tələbə testi təkrar yaza bilsin' })}</p>
+                  <p className="text-sm text-gray-500">{t('test.edit.allow_retake_desc', { defaultValue: 'Söndürülərsə test yalnız bir dəfə yazıla bilər.' })}</p>
                 </div>
               </div>
             </div>
@@ -315,7 +315,7 @@ export default function CreateTest() {
           <div className="fixed inset-x-3 bottom-3 z-40 flex flex-col gap-3 rounded-3xl border border-white/50 bg-white/90 p-3 shadow-2xl backdrop-blur-md sm:left-1/2 sm:right-auto sm:bottom-6 sm:flex-row sm:items-center sm:gap-4 sm:rounded-2xl sm:p-2 sm:-translate-x-1/2">
             <Button type="button" onClick={addQuestion} variant="outline" className="h-12 rounded-xl border-gray-200 bg-white px-6 font-bold sm:flex-1">
               <Plus className="mr-2 h-4 w-4" />
-              Sual əlavə et
+              {t('test.edit.add_question', { defaultValue: 'Sual əlavə et' })}
             </Button>
 
             <Button
@@ -326,7 +326,7 @@ export default function CreateTest() {
               {isSaving ? (
                 <div className="flex items-center gap-3">
                   <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-                  <span>Yadda saxlanır...</span>
+                  <span>{t('common.saving', { defaultValue: 'Yadda saxlanır...' })}</span>
                 </div>
               ) : (
                 <div className="flex items-center gap-3">

@@ -41,7 +41,7 @@ export default function StudentCertificates() {
           setCertificates(passedTests);
         }
       } catch (err) {
-        console.error('Sertifikatlar gətirilərkən xəta baş verdi', err);
+        console.error(t('student.certificates.load_error', { defaultValue: 'Sertifikatlar gətirilərkən xəta baş verdi' }), err);
       } finally {
         setIsLoading(false);
       }
@@ -61,7 +61,7 @@ export default function StudentCertificates() {
             className="mb-4 text-gray-600 hover:text-gray-900"
           >
             <ChevronLeft className="w-4 h-4 mr-1" />
-            Geri qayıt
+            {t('common.go_back', { defaultValue: 'Geri qayıt' })}
           </Button>
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 bg-[#F59E0B]/10 rounded-xl flex items-center justify-center">
@@ -69,7 +69,7 @@ export default function StudentCertificates() {
             </div>
             <div>
               <h1 className="text-2xl lg:text-3xl font-black text-gray-900">
-                Sertifikatlarım
+                {t('student.certificates.title', { defaultValue: 'Sertifikatlarım' })}
               </h1>
               <p className="text-gray-500 mt-1">
                 {t('certificates.description')}
@@ -88,23 +88,23 @@ export default function StudentCertificates() {
                <Award className="w-10 h-10 text-gray-400" />
              </div>
              <h3 className="text-xl font-bold text-gray-900 mb-2">
-               Sertifikatınız mövcud deyil
+               {t('student.certificates.empty_title', { defaultValue: 'Sertifikatınız mövcud deyil' })}
              </h3>
              <p className="text-gray-500">
-               Kursları uğurla tamamlayaraq sertifikatlarınızı əldə edə bilərsiniz.
+               {t('student.certificates.empty_desc', { defaultValue: 'Kursları uğurla tamamlayaraq sertifikatlarınızı əldə edə bilərsiniz.' })}
              </p>
            </div>
           ) : (
             certificates.map((result: any) => {
                if (!result) return null;
-               const testTitle = result.test?.title || 'Bilinməyən Test';
-               const courseTitle = result.test?.course?.title || 'Kurs Sertifikatı';
+               const testTitle = result.test?.title || t('student.completed_tests.unknown_test', { defaultValue: 'Bilinməyən Test' });
+               const courseTitle = result.test?.course?.title || t('student.certificates.course_certificate', { defaultValue: 'Kurs Sertifikatı' });
                const instructorName = result.test?.course?.instructor?.name 
                  ? `${result.test.course.instructor.name} ${result.test.course.instructor.surname || ''}` 
-                 : 'Sizin Akademiyanız';
+                 : t('student.certificates.your_academy', { defaultValue: 'Sizin Akademiyanız' });
                  
                const dateStr = result.completedAt || result.createdAt;
-               const displayDate = dateStr ? new Date(dateStr).toLocaleDateString('az-AZ') : 'Tarix yoxdur';
+               const displayDate = dateStr ? new Date(dateStr).toLocaleDateString('az-AZ') : t('common.no_date', { defaultValue: 'Tarix yoxdur' });
                
                const safeScore = Number(result.scorePercentage || 0);
                
@@ -130,7 +130,7 @@ export default function StudentCertificates() {
                 <div className="flex items-center justify-between mb-4 pb-4 border-b border-gray-100">
                   <div className="flex items-center gap-2">
                     <CalendarCheck className="w-4 h-4 text-gray-400" />
-                    <span className="text-sm font-medium text-gray-700">Tarix:</span>
+                    <span className="text-sm font-medium text-gray-700">{t('common.date', { defaultValue: 'Tarix:' })}</span>
                   </div>
                   <span className="text-sm font-bold text-gray-900">{displayDate}</span>
                 </div>
@@ -138,14 +138,14 @@ export default function StudentCertificates() {
                 <div className="flex items-center justify-between mb-4 pb-4 border-b border-gray-100">
                   <div className="flex items-center gap-2">
                     <Award className="w-4 h-4 text-gray-400" />
-                    <span className="text-sm font-medium text-gray-700">Nəticə (Dərəcə):</span>
+                    <span className="text-sm font-medium text-gray-700">{t('student.certificate_score_grade', { defaultValue: 'Nəticə (Dərəcə):' })}</span>
                   </div>
                   <span className="text-sm font-bold text-[#D4AF37]">{safeScore.toFixed(0)}%</span>
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div className="text-sm font-medium text-gray-500">
-                    Təlimçi:
+                    {t('common.instructor', { defaultValue: 'Təlimçi:' })}
                   </div>
                   <span className="text-sm font-semibold text-gray-900">{instructorName}</span>
                 </div>
@@ -156,7 +156,7 @@ export default function StudentCertificates() {
                   className="w-full bg-[#F59E0B] hover:bg-[#D97706] text-white rounded-xl h-12 text-md"
                 >
                   <Download className="w-4 h-4 mr-2" />
-                  Yüklə
+                  {t('common.download', { defaultValue: 'Yüklə' })}
                 </Button>
               </div>
             </div>

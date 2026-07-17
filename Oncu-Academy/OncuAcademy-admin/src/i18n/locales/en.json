@@ -1,0 +1,603 @@
+{
+  "nav": {
+    "home": "Home",
+    "courses": "Courses",
+    "teachers": "Teachers",
+    "tests": "Tests",
+    "contact": "Contact",
+    "login": "Log In",
+    "register": "Register",
+    "logout": "Log Out",
+    "dashboard": "Dashboard",
+    "profile": "Profile",
+    "exam_panel": "Exam Panel"
+  },
+  "hero": {
+    "title": "Your Academy",
+    "subtitle": "Clear path in education, strong results",
+    "description": "We are with you at every stage with professional teachers, modern methods and personal approach.",
+    "cta": "Explore",
+    "cta_secondary": "Contact Us",
+    "badge": "Build your future with us"
+  },
+  "features": {
+    "title": "Why Your Academy?",
+    "subtitle": "3 main advantages at a glance",
+    "items": {
+      "teachers": {
+        "title": "Professional Teachers",
+        "desc": "Teaching by experienced and certified teachers"
+      },
+      "online": {
+        "title": "Online and Video Courses",
+        "desc": "Watch courses from anywhere, anytime"
+      },
+      "certificate": {
+        "title": "International Certificates",
+        "desc": "Get globally recognized certificates"
+      },
+      "support": {
+        "title": "24/7 Support",
+        "desc": "Support team always by your side"
+      }
+    },
+    "home_items": {
+      "result": {
+        "title": "Results",
+        "desc": "Courses focus on admission and exam preparation."
+      },
+      "video_lessons": {
+        "title": "Video Lessons",
+        "desc": "Lessons are conducted in an engaging and active format."
+      },
+      "plan": {
+        "title": "Plan",
+        "desc": "Stages are simple, measurable, and clear."
+      },
+      "teachers": {
+        "title": "Professional Teachers",
+        "desc": "Teaching is conducted by experienced and certified instructors."
+      }
+    }
+  },
+  "stats": {
+    "experience": {
+      "number": "15",
+      "label": "YEARS OF EXPERIENCE"
+    },
+    "students": {
+      "number": "5000+",
+      "label": "STUDENTS"
+    },
+    "teachers": {
+      "number": "50+",
+      "label": "TEACHERS"
+    },
+    "courses": {
+      "number": "100+",
+      "label": "COURSES"
+    }
+  },
+  "courses": {
+    "title": "Programs",
+    "subtitle": "Discover your future with us",
+    "categories": {
+      "all": "All",
+      "language": "Language Courses",
+      "exam": "Exam Preparation",
+      "computer": "Computer"
+    },
+    "items": {
+      "sat": {
+        "title": "SAT",
+        "desc": "Preparation for US university admission exam"
+      },
+      "ielts": {
+        "title": "IELTS",
+        "desc": "International English Language Certificate"
+      },
+      "english": {
+        "title": "ENGLISH LANGUAGE",
+        "desc": "Comprehensive English language teaching"
+      },
+      "russian": {
+        "title": "RUSSIAN LANGUAGE",
+        "desc": "Learn Russian at a professional level"
+      },
+      "arabic": {
+        "title": "ARABIC LANGUAGE",
+        "desc": "Basics and grammar of Arabic language"
+      },
+      "turkish": {
+        "title": "TURKISH LANGUAGE",
+        "desc": "Learn Turkish easily"
+      }
+    },
+    "view_all": "See All",
+    "enroll": "Get Course",
+    "auth_required": "Please register to buy the course",
+    "free": "Free",
+    "rating": "Rating",
+    "rating_desc": "User rating",
+    "learning_path": "Learning path",
+    "learning_path_desc": "Structured program flow",
+    "price": "Price",
+    "price_desc": "Open and simple packages",
+    "not_found": "No courses found for the selected category.",
+    "view_lessons": "View Lessons",
+    "search": "Search courses...",
+    "category": "Category",
+    "badge": "Our Courses",
+    "topics_count": "{{count}} topics",
+    "instructor": "Instructor"
+  },
+  "teachers": {
+    "title": "Meet Our Teachers",
+    "subtitle": "Our Professional Team",
+    "button": "More",
+    "view_profile": "View Profile",
+    "specialty": "Specialty",
+    "experience": "Experience",
+    "contact": "Contact",
+    "students_count": "{{count}} students registered for your courses",
+    "specialty_not_set": "Specialty not set",
+    "location": "Location",
+    "contact_info": "Contact Information",
+    "teaching_experience": "Teaching experience",
+    "social_networks": "Social Networks",
+    "dashboard_not_loaded": "Teacher panel could not be loaded",
+    "dashboard_data_not_ready": "Dashboard data is not ready.",
+    "no_courses_added_yet": "No courses added yet.",
+    "teacher_rating": "Teacher Rating",
+    "course_reviews_panel": "Course Reviews Panel",
+    "course_reviews_desc": "See which course it belongs to, search and filter by minimum score.",
+    "total_reviews": "Total reviews",
+    "students": "Students",
+    "courses": "Courses",
+    "search": "Search teachers...",
+    "not_found": "No teachers found",
+    "years_abbr": "years",
+    "team_badge": "Our Team",
+    "loading_categories": "Loading categories..."
+  },
+  "student": {
+    "personal_info": "Personal Information",
+    "mobile_number": "Mobile Number",
+    "education_level": "Education Level",
+    "middle_education": "Middle Education",
+    "other": "Other",
+    "email_readonly": "Email (Read-only)",
+    "email_system": "Email (System profile)",
+    "not_set": "Not set",
+    "academic_career": "Your Academic Career",
+    "progress": "Progress",
+    "no_courses_yet": "You don't have any courses yet.",
+    "my_tests": "My Tests",
+    "my_tests_desc": "Normal tests linked to your courses are shown here.",
+    "active_tests_in_exam_panel": "You have active tests in the exam panel",
+    "test_completed": "Test completed",
+    "exam_answer_key": {
+      "question_content_not_found": "Question content not found.",
+      "your_answer": "Your answer",
+      "correct_answer": "Correct answer",
+      "final_result": "Final result",
+      "score_indicator": "Score indicator",
+      "score_summary": "{{correct}} correct · {{pending}} pending",
+      "correct": "Correct",
+      "wrong": "Wrong",
+      "pending": "Pending",
+      "summary_title": "Question and answer summary",
+      "summary_desc": "You can see your answer and the correct result for each question below."
+    }
+  },
+  "testimonials": {
+    "title": "Our Students Say",
+    "subtitle": "Success Stories"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Get in touch with us",
+    "form": {
+      "title": "Write to us",
+      "name": "Your Name",
+      "email": "Email",
+      "phone": "Phone",
+      "message": "Your Message",
+      "submit": "Send",
+      "success": "Your message has been sent successfully!",
+      "name_placeholder": "Enter your name",
+      "select_course": "Select course",
+      "interest_label": "What are you interested in?",
+      "select": "Select",
+      "interest_course": "The course itself",
+      "interest_test": "One of the tests inside",
+      "message_placeholder": "Type your message...",
+      "redirecting": "Redirecting to WhatsApp..."
+    },
+    "info": {
+      "address": "Address",
+      "phone": "Phone",
+      "email": "Email",
+      "working_hours": "Working Hours",
+      "address_value": "Your address"
+    }
+  },
+  "footer": {
+    "follow_us": "Follow Us",
+    "copyright": "© 2026 Your Academy. All rights reserved.",
+    "links": {
+      "about": "About Us",
+      "courses": "Courses",
+      "teachers": "Teachers",
+      "contact": "Contact",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Use"
+    },
+    "termsDialog": {
+      "title": "Terms of Use",
+      "close": "Close",
+      "sections": {
+        "general": {
+          "title": "General Provisions",
+          "body": "By joining this online education platform, you accept the following terms."
+        },
+        "userResponsibility": {
+          "title": "User Responsibility",
+          "body": "Users must use the platform only for educational purposes. Any illegal activity is prohibited."
+        },
+        "privacy": {
+          "title": "Privacy",
+          "body": "Your personal information is protected and not shared with third parties."
+        },
+        "teacherResponsibility": {
+          "title": "Teacher Responsibility",
+          "body": "Teachers must provide high-quality educational materials."
+        },
+        "studentResponsibility": {
+          "title": "Student Responsibility",
+          "body": "Students must actively participate in courses and follow the platform rules."
+        }
+      }
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Log In",
+      "subtitle": "Log in to your account",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Log In",
+      "no_account": "Don't have an account?",
+      "register": "Register",
+      "forgot_password": "Forgot password?",
+      "remember_me": "Remember me",
+      "or": "or"
+    },
+    "register": {
+      "title": "Register",
+      "subtitle": "Create a new account",
+      "name": "First Name",
+      "surname": "Last Name",
+      "email": "Email",
+      "phone": "Phone",
+      "password": "Password",
+      "confirm_password": "Confirm Password",
+      "accept_terms": "I agree to the terms of use",
+      "accept_terms_error": "You must accept the terms of use",
+      "submit": "Register",
+      "have_account": "Already have an account?",
+      "login": "Log In",
+      "name_placeholder": "First Name",
+      "surname_placeholder": "Last Name",
+      "step_continue": "Continue",
+      "back": "Back",
+      "terms_link": "Terms of Use",
+      "terms_agree": "I agree"
+    },
+    "role": {
+      "student": "Student",
+      "teacher": "Teacher"
+    },
+    "toast": {
+      "login_success": "You have successfully logged in!",
+      "login_error": "Incorrect login credentials or account not found",
+      "google_error": "Google information could not be retrieved",
+      "google_load_error": "Google login could not be loaded",
+      "register_success": "Registration completed successfully!",
+      "register_error": "An error occurred during registration",
+      "name_required": "Please enter your first and last name",
+      "email_phone_required": "Please enter your email and phone number",
+      "password_mismatch": "Passwords do not match",
+      "password_too_short": "Password must be at least 6 characters"
+    }
+  },
+  "student": {
+    "dashboard": {
+      "title": "Student Dashboard",
+      "my_courses": "My Courses",
+      "progress": "Progress",
+      "certificates": "My Certificates",
+      "tests": "My Tests"
+    }
+  },
+  "teacher": {
+    "dashboard": {
+      "title": "Teacher Dashboard",
+      "statistics": "Statistics",
+      "my_students": "My Students",
+      "my_courses": "My Courses",
+      "upload_video": "Upload Video",
+      "create_test": "Create Test",
+      "edit_content": "Edit Content"
+    },
+    "profile": {
+      "title": "Profile",
+      "edit": "Edit",
+      "save": "Save",
+      "bio": "About Me",
+      "education": "Education",
+      "experience": "Experience",
+      "specialties": "Specialties"
+    },
+    "upload": {
+      "title": "Upload Video",
+      "course": "Course",
+      "title_label": "Title",
+      "description": "Description",
+      "video_file": "Video File",
+      "thumbnail": "Thumbnail",
+      "upload": "Upload",
+      "drag_drop": "Drag & drop your video here, or click to select"
+    },
+    "test": {
+      "title": "Create Test",
+      "test_title": "Test Title",
+      "course": "Course",
+      "duration": "Duration (minutes)",
+      "questions": "Questions",
+      "add_question": "Add Question",
+      "question": "Question",
+      "options": "Options",
+      "correct_answer": "Correct Answer",
+      "save": "Save"
+    }
+  },
+  "test": {
+    "title": "Tests",
+    "start": "Start Test",
+    "submit": "Submit",
+    "next": "Next",
+    "prev": "Previous",
+    "finish": "Finish",
+    "time_left": "Time Left",
+    "score": "Score",
+    "correct": "Correct",
+    "wrong": "Wrong",
+    "total": "Total",
+    "back": "Go Back",
+    "badge": "Online Tests",
+    "description": "Test your knowledge and track progress. Solve tests in various subjects.",
+    "search": "Search tests...",
+    "questions_count": "{{count}} questions",
+    "duration_value": "{{count}} min",
+    "not_found": "No tests found",
+    "empty_desc": "Change search criteria and try again"
+  },
+  "subjects": {
+    "az_lang": "Azerbaijani Lang & Lit",
+    "en_lang": "English",
+    "physics": "Physics",
+    "math": "Mathematics",
+    "chemistry": "Chemistry",
+    "primary": "Primary School",
+    "geography": "Geography",
+    "history": "History"
+  },
+  "brand": {
+    "name": "Your Academy",
+    "map_title": "Your Academy Map"
+  },
+  "results": {
+    "title": "Our Results",
+    "image_alt": "Result {{index}}",
+    "close": "Close"
+  },
+  "home": {
+    "categories_all": "All",
+    "teacher_avg_rating": "Average rating",
+    "teacher_course_count": "Course count",
+    "teacher_student_base": "Student base",
+    "teacher_team_desc": "Our experienced teachers unite different fields as one team.",
+    "teacher_not_found": "No teacher information found.",
+    "teacher_students": "students",
+    "teacher_courses": "courses",
+    "teacher_years": "years",
+    "contact_start_msg": "Start with a message",
+    "contact_send_question": "Send your question",
+    "contact_form_desc": "Fill out the short form, and we will share a suitable program via WhatsApp.",
+    "contact_whatsapp_note": "Your message is forwarded directly to WhatsApp and the reply is not lost.",
+    "contact_go_to_form": "Go to form",
+    "contact_quick_form": "Quick form",
+    "contact_want_advice": "Want advice?",
+    "contact_whatsapp_send": "Send on WhatsApp",
+    "contact_whatsapp_greeting": "Hello, I would like to contact Your Academy.",
+    "contact_whatsapp_name": "Name: {{name}}",
+    "contact_whatsapp_course": "Course: {{course}}",
+    "contact_whatsapp_selection": "Selection: {{selection}}",
+    "contact_whatsapp_message": "Message: {{message}}"
+  },
+  "footer_extra": {
+    "description": "The future of education. The path to success with professional teachers and modern teaching methods.",
+    "quick_links": "Quick Links",
+    "social_follow_desc": "Follow us on social media to stay up to date with the latest news."
+  },
+  "loader": {
+    "preparing": "Preparing",
+    "loading_desc": "The screen will open as soon as the platform is fully loaded."
+  },
+  "common": {
+    "loading": "Loading...",
+    "not_found": "Not found",
+    "error": "An error occurred",
+    "error_prefix": "Error: ",
+    "back": "Go back",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "close": "Close",
+    "search": "Search",
+    "no_results": "No results found",
+    "url_placeholder": "Enter URL",
+    "auto_correct": "Auto correct",
+    "auto_wrong": "Auto wrong",
+    "server_error": "Server error",
+    "confirm": "Are you sure?",
+    "success": "Operation completed successfully",
+    "create": "Create",
+    "submit": "Submit to admin",
+    "correct": "Correct",
+    "incorrect": "Incorrect",
+    "back_to_list": "Back to list",
+    "question": "Question",
+    "show_more": "Show more ({{count}} more)",
+    "show_less": "Show less",
+    "untitled": "Untitled exam",
+    "question_count": "questions",
+    "loading_data": "Loading data...",
+    "minute": "Minute",
+    "unknown_course": "Unknown course"
+  },
+  "test": {
+    "started": "Test started! Good luck!",
+    "passed": "You successfully completed the test!",
+    "out_of_focus_suspended": "Exam suspended because you left the site",
+    "manual_code_preparing": "Preparing manual code...",
+    "manual_code_waiting": "Waiting for manual code...",
+    "exam_closed": "Exam closed",
+    "exam_password_required": "Exam password required",
+    "exam_password_description": "Questions will open after entering the password provided by the admin.",
+    "rules": {
+      "rule1": "Make only one choice for multiple choice questions",
+      "rule2": "Open questions (if any) will be checked by the teacher later",
+      "rule3": "The test will close automatically when the time is up"
+    },
+    "current_result": "Current Result",
+    "pending_questions": "Pending Questions",
+    "your_answer": "Your answer",
+    "no_answer_given": "No answer given",
+    "correct_answer": "Correct answer",
+    "expertise_required": "Expertise required",
+    "questions_not_loaded": "Exam questions failed to load",
+    "refresh_page_hint": "Refresh the page or go back to the exam panel.",
+    "start_time": "Start time",
+    "stats": {
+      "correct": "Correct",
+      "incorrect": "Incorrect",
+      "pending": "Pending",
+      "empty": "Empty"
+    },
+    "student_answer_label": "Student's Answer:",
+    "selected_option": "Selected option",
+    "correct_option": "Correct option",
+    "not_assigned": "Not assigned",
+    "selected": "Selected",
+    "edit": {
+      "go_back": "Go back",
+      "test_title": "Test Title",
+      "duration_min": "Duration (Minutes)",
+      "allow_retake": "Allow student to retake test",
+      "allow_retake_desc": "If disabled, the test can only be taken once.",
+      "question_text": "Question text",
+      "click_to_change_image": "Click to change image",
+      "upload_question_image": "Upload question image",
+      "numeric_answer_question": "Numeric answer question",
+      "numeric_answer_desc": "Decimal answers are also accepted."
+    }
+  },
+  "exam": {
+    "drafts": "Exams",
+    "create": "Create Exam",
+    "review": "Review",
+    "results": "Results",
+    "session_code": "Session Code",
+    "edit": "Edit Exam",
+    "update_exam": "Update teacher exam draft",
+    "new_exam": "New teacher exam",
+    "create_description": "This form is separate from course tests. Exams created here are saved as teacher drafts and then sent to admin.",
+    "title": "Exam title",
+    "title_placeholder": "E.g. Mathematics final exam",
+    "add_question": "Add question",
+    "exam": "Exam"
+  },
+  "teacher": {
+    "panel": "Teacher exam panel",
+    "draft_exams": "Your separate exam drafts",
+    "panel_description": "This panel is separate from course tests. Exams you create here are sent to admin, then you can track grading and results of used exams.",
+    "my_exams": "My Exams",
+    "created_drafts": "Teacher-created drafts",
+    "no_drafts": "No draft exams",
+    "create_first_hint": "Go to the Create Exam tab to create your first separate exam draft.",
+    "review_exams": "Exams to review",
+    "pending_expertise": "Exam cards awaiting expertise",
+    "review_description": "Enter the exam, then select a student and grade open questions directly here.",
+    "pending_count": "{{count}} student awaiting expertise answers",
+    "source": "Source",
+    "open_students": "Open students",
+    "no_reviews": "No exams to review",
+    "no_reviews_description": "Open questions requiring teacher expertise will appear here.",
+    "back_to_student_list": "Back to student list",
+    "expertise_questions": "Expertise questions",
+    "open_questions_hint": "Only open questions requiring teacher review are shown.",
+    "student_answer": "Student's answer",
+    "no_answer": "No answer given",
+    "expertise_completed": "Expertise completed",
+    "no_pending_questions": "No open questions requiring teacher review remain for this student.",
+    "student_list": "Student list",
+    "select_student_hint": "Select student answers requiring expertise.",
+    "missing_question_text": "Question text not found, but answer is awaiting expertise.",
+    "videos": {
+      "subtitle": "Video lessons",
+      "title": "My Video Lessons",
+      "description": "Filter by course and title, then go to course edit."
+    },
+    "tests": {
+      "subtitle": "Course tests",
+      "title": "My Tests",
+      "description": "Search for tests linked to courses, filter by course and go to results. Separate teacher exams are managed in the exam panel."
+    },
+    "exam_panel": {
+      "expertise_questions_pending": "{{count}} expertise questions pending",
+      "no_email": "No email",
+      "no_pending_students": "No pending students",
+      "all_questions_checked": "All expertise questions in this exam have already been checked.",
+      "results_label": "Results",
+      "used_exams": "Used exams",
+      "source": "Source",
+      "no_result_visible": "No result visible",
+      "results_appear_desc": "As the admin uses your teacher drafts, final results will appear here.",
+      "leave_session_decision": "Admin exam leave session decision",
+      "leave_session_desc": "Enter the short manual code visible on the student's overlay. After the preview card opens, make the final decision from the teacher panel.",
+      "teacher_only": "This section is for teachers only",
+      "step_1": "1. Get the short manual code visible on the student's overlay.",
+      "step_2": "2. Check the code and confirm the student and exam information on the preview card.",
+      "step_3": "3. Make the final decision with the Continue or Stop Exam button.",
+      "enter_backup_code": "Enter short backup code",
+      "no_student_info": "No student information",
+      "no_exam_info": "No exam information",
+      "session_time": "Session time",
+      "preview_pending": "Preview pending",
+      "preview_desc": "After the manual code is checked, the student's leave session card will open here."
+    }
+  },
+  "metrics": {
+    "draft_exams": "Draft exams",
+    "submitted_to_admin": "Submitted to admin",
+    "pending_reviews": "Pending reviews",
+    "used_exams": "Used"
+  },
+  "certificates": {
+    "description": "Certificates of courses you have successfully completed"
+  }
+}

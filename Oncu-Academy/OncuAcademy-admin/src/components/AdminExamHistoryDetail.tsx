@@ -10,7 +10,59 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { adminApi } from '../services/api';
+import { useTranslation } from "react-i18next";
 
+type AdminExamResultResponse = Awaited<ReturnType<typeof adminApi.getTestResults>>;
+type AdminExamTestDetail = NonNullable<AdminExamResultResponse['data']>['test'];
+type AdminExamResultItem = NonNullable<AdminExamResultResponse['data']>['results'][number];
+
+const formatDateTime = (value?: string | null) => {
+  if (!value) {
+    return '-';
+  }
+
+  const parsedDate = new Date(value);
+
+  if (!Number.isFinite(parsedDate.getTime())) {
+    return '-';
+  }
+
+  return new Intl.DateTimeFormat('az-AZ', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  }).format(parsedDate);
+};
+
+const resolveEntityId = (value: unknown) => {
+  if (value === null || value === undefined) {
+    return '';
+  }
+
+  if (typeof value === 'string' || typeof value === 'number') {
+    return String(value);
+  }
+
+  if (typeof value === 'object') {
+    const objectValue = value as { _id?: unknown; id?: unknown; toString?: () => string };
+
+    if (objectValue._id !== undefined && objectValue._id !== null) {
+      return resolveEntityId(objectValue._id);
+    }
+
+    if (objectValue.id !== undefined && objectValue.id !== null) {
+      return resolveEntityId(objectValue.id);
+    }
+
+    if (typeof objectValue.toString === 'function') {
+      return objectValue.toString();
+    }
+  }
+
+  return String(value);
+};
 type AdminExamResultResponse = Awaited<ReturnType<typeof adminApi.getTestResults>>;
 type AdminExamTestDetail = NonNullable<AdminExamResultResponse['data']>['test'];
 type AdminExamResultItem = NonNullable<AdminExamResultResponse['data']>['results'][number];
@@ -68,10 +120,10 @@ const normalizeMultipleChoiceAnswerIndex = (value: unknown) => {
   return Number.isInteger(parsedValue) && parsedValue >= 0 ? parsedValue : null;
 };
 
-const formatAttemptLabel = (attemptNumber: number) => {
-  if (attemptNumber === 1) return '1-ci cəhd';
-  if (attemptNumber === 2) return '2-ci cəhd';
-  if (attemptNumber === 3) return '3-cü cəhd';
+const formatAttemptLabel = (attemptNumber: number, t?: any) => {
+  if (attemptNumber === 1) return t ? t('admin.1_ci_c_hd', { defaultValue: '1-ci cəhd' }) : '1-ci cəhd';
+  if (attemptNumber === 2) return t ? t('admin.2_ci_c_hd', { defaultValue: '2-ci cəhd' }) : '2-ci cəhd';
+  if (attemptNumber === 3) return t ? t('admin.3_c__c_hd', { defaultValue: '3-cü cəhd' }) : '3-cü cəhd';
   return `${attemptNumber}-ci cəhd`;
 };
 
@@ -208,6 +260,7 @@ const getAnswerStatusMeta = (answer?: { answer?: string; status?: 'graded' | 'pe
 };
 
 export default function AdminExamHistoryDetail() {
+    const { t } = useTranslation();
   const navigate = useNavigate();
   const { examId } = useParams<{ examId: string }>();
 
@@ -224,7 +277,7 @@ export default function AdminExamHistoryDetail() {
 
     const loadExamResults = async () => {
       if (!examId) {
-        setLoadError('İmtahan tapılmadı.');
+        setLoadError(t('admin._mtahan_tap_lmad__', { defaultValue: 'İmtahan tapılmadı.' }));
         setIsLoading(false);
         return;
       }
@@ -236,7 +289,7 @@ export default function AdminExamHistoryDetail() {
         const response = await adminApi.getTestResults(examId);
 
         if (!response.success) {
-          throw new Error(response.message || 'İmtahan nəticələri alınmadı');
+          throw new Error(response.message || t('admin._mtahan_n_tic_l_ri_a', { defaultValue: 'İmtahan nəticələri alınmadı' }));
         }
 
         if (!isMounted) {
@@ -303,24 +356,23 @@ export default function AdminExamHistoryDetail() {
             className="inline-flex items-center gap-2 text-sm font-bold text-gray-500 transition hover:text-[#A87A1F]"
           >
             <ArrowLeft className="h-4 w-4" />
-            Keçmiş imtahanlara qayıt
-          </button>
-          <p className="mt-4 text-sm font-bold uppercase tracking-[0.2em] text-[#D4AF37]">Bitmiş imtahan baxışı</p>
-          <h1 className="mt-2 text-3xl font-black text-gray-900">{examData?.title || 'İmtahan nəticələri'}</h1>
-          <p className="mt-1 text-gray-500">Bu səhifədə iştirak edən tələbələri və onların cavab detallarını ayrıca izləyə bilərsiniz.</p>
+            {t('admin.ke_mi__imtahanlara_q', { defaultValue: t('admin.ke_mi__imtahanlara_q', { defaultValue: 'Keçmiş imtahanlara qayıt' }) })}</button>
+          <p className="mt-4 text-sm font-bold uppercase tracking-[0.2em] text-[#D4AF37]">{t('admin.bitmi__imtahan_bax__', { defaultValue: t('admin.bitmi__imtahan_bax__', { defaultValue: 'Bitmiş imtahan baxışı' }) })}</p>
+          <h1 className="mt-2 text-3xl font-black text-gray-900">{examData?.title || t('admin._mtahan_n_tic_l_ri', { defaultValue: 'İmtahan nəticələri' })}</h1>
+          <p className="mt-1 text-gray-500">{t('admin.bu_s_hif_d__i_tirak_', { defaultValue: t('admin.bu_s_hif_d__i_tirak_', { defaultValue: 'Bu səhifədə iştirak edən tələbələri və onların cavab detallarını ayrıca izləyə bilərsiniz.' }) })}</p>
         </div>
 
         {examData ? (
           <div className="flex flex-wrap gap-2 text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500">
-            <span className="rounded-full bg-white px-3 py-1 shadow-sm">{examData.duration} dəqiqə</span>
+            <span className="rounded-full bg-white px-3 py-1 shadow-sm">{examData.duration} {t('admin.d_qiq_', { defaultValue: t('admin.d_qiq_', { defaultValue: 'dəqiqə' }) })}</span>
             <span className="rounded-full bg-white px-3 py-1 shadow-sm">{(examData.questions || []).length} sual</span>
-            <span className="rounded-full bg-white px-3 py-1 shadow-sm">{results.length} iştirak</span>
+            <span className="rounded-full bg-white px-3 py-1 shadow-sm">{results.length} {t('admin.i_tirak', { defaultValue: t('admin.i_tirak', { defaultValue: 'iştirak' }) })}</span>
           </div>
         ) : null}
       </div>
 
       {isLoading ? (
-        <div className="rounded-[32px] border border-gray-100 bg-white p-10 text-center text-gray-500 shadow-sm">İmtahan nəticələri yüklənir...</div>
+        <div className="rounded-[32px] border border-gray-100 bg-white p-10 text-center text-gray-500 shadow-sm">{t('admin._mtahan_n_tic_l_ri_y', { defaultValue: t('admin._mtahan_n_tic_l_ri_y', { defaultValue: 'İmtahan nəticələri yüklənir...' }) })}</div>
       ) : loadError ? (
         <div className="rounded-[32px] border border-rose-100 bg-rose-50 p-6 text-sm font-bold text-rose-700 shadow-sm">{loadError}</div>
       ) : (
@@ -328,8 +380,8 @@ export default function AdminExamHistoryDetail() {
           <section className="rounded-[32px] border border-gray-100 bg-white p-5 shadow-sm sm:p-6">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
               <div>
-                <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#D4AF37]">İştirak etmiş tələbələr</p>
-                <h2 className="mt-2 text-2xl font-black text-gray-900">Nəticə siyahısı</h2>
+                <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#D4AF37]">{t('admin.__tirak_etmi__t_l_b_', { defaultValue: t('admin.__tirak_etmi__t_l_b_', { defaultValue: 'İştirak etmiş tələbələr' }) })}</p>
+                <h2 className="mt-2 text-2xl font-black text-gray-900">{t('admin.n_tic__siyah_s_', { defaultValue: t('admin.n_tic__siyah_s_', { defaultValue: 'Nəticə siyahısı' }) })}</h2>
               </div>
 
               <div className="relative w-full lg:max-w-sm">
@@ -338,14 +390,14 @@ export default function AdminExamHistoryDetail() {
                   value={participantSearch}
                   onChange={(event) => setParticipantSearch(event.target.value)}
                   type="text"
-                  placeholder="Tələbə axtar..."
+                  placeholder={t('admin.t_l_b__axtar___', { defaultValue: 'Tələbə axtar...' })}
                   className="w-full rounded-2xl border border-gray-100 bg-gray-50 py-3 pl-11 pr-4 text-sm outline-none transition-all focus:border-[#D4AF37] focus:bg-white"
                 />
               </div>
             </div>
 
             {filteredResults.length === 0 ? (
-              <div className="mt-6 rounded-2xl border border-dashed border-gray-200 bg-gray-50 p-10 text-center italic text-gray-400">Bu imtahan üzrə nəticə tapılmadı.</div>
+              <div className="mt-6 rounded-2xl border border-dashed border-gray-200 bg-gray-50 p-10 text-center italic text-gray-400">{t('admin.bu_imtahan__zr__n_ti', { defaultValue: t('admin.bu_imtahan__zr__n_ti', { defaultValue: 'Bu imtahan üzrə nəticə tapılmadı.' }) })}</div>
             ) : (
               <div className="mt-6 grid gap-4 xl:grid-cols-2">
                 {filteredResults.map((result) => {
@@ -363,10 +415,10 @@ export default function AdminExamHistoryDetail() {
                       <div className="flex items-start justify-between gap-3">
                         <div>
                           <div className="text-lg font-black text-gray-900">{result.student?.name} {result.student?.surname || ''}</div>
-                          <div className="mt-1 text-sm text-gray-500">{result.student?.email || 'E-poçt yoxdur'}</div>
+                          <div className="mt-1 text-sm text-gray-500">{result.student?.email || t('admin.e_po_t_yoxdur', { defaultValue: 'E-poçt yoxdur' })}</div>
                         </div>
                         <div className="rounded-2xl bg-white px-3 py-2 text-right">
-                          <div className="text-[11px] font-black uppercase tracking-[0.12em] text-gray-400">Nəticə</div>
+                          <div className="text-[11px] font-black uppercase tracking-[0.12em] text-gray-400">{t('admin.n_tic_', { defaultValue: t('admin.n_tic_', { defaultValue: 'Nəticə' }) })}</div>
                           <div className="mt-1 text-lg font-black text-gray-900">{Math.round(Number(result.scorePercentage || 0))}%</div>
                         </div>
                       </div>
@@ -378,9 +430,9 @@ export default function AdminExamHistoryDetail() {
                       </div>
 
                       <div className="mt-4 grid grid-cols-2 gap-2 text-xs text-gray-600 sm:grid-cols-4">
-                        <div className="rounded-xl bg-white px-3 py-2 font-bold text-emerald-700">{summary.correctCount} doğru</div>
-                        <div className="rounded-xl bg-white px-3 py-2 font-bold text-rose-700">{summary.incorrectCount} səhv</div>
-                        <div className="rounded-xl bg-white px-3 py-2 font-bold text-slate-700">{summary.unansweredCount} boş</div>
+                        <div className="rounded-xl bg-white px-3 py-2 font-bold text-emerald-700">{summary.correctCount} {t('admin.do_ru', { defaultValue: t('admin.do_ru', { defaultValue: 'doğru' }) })}</div>
+                        <div className="rounded-xl bg-white px-3 py-2 font-bold text-rose-700">{summary.incorrectCount} {t('admin.s_hv', { defaultValue: t('admin.s_hv', { defaultValue: 'səhv' }) })}</div>
+                        <div className="rounded-xl bg-white px-3 py-2 font-bold text-slate-700">{summary.unansweredCount} {t('admin.bo_', { defaultValue: t('admin.bo_', { defaultValue: 'boş' }) })}</div>
                         <div className="rounded-xl bg-white px-3 py-2 font-bold text-amber-700">{summary.pendingCount} yoxlanacaq</div>
                       </div>
                     </button>
@@ -394,14 +446,14 @@ export default function AdminExamHistoryDetail() {
             <section className="rounded-[32px] border border-gray-100 bg-white p-5 shadow-sm sm:p-6">
               <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                 <div>
-                  <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#D4AF37]">Tələbə cavab detalı</p>
+                  <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#D4AF37]">{t('admin.t_l_b__cavab_detal_', { defaultValue: t('admin.t_l_b__cavab_detal_', { defaultValue: 'Tələbə cavab detalı' }) })}</p>
                   <h2 className="mt-2 text-2xl font-black text-gray-900">{selectedResult.student?.name} {selectedResult.student?.surname || ''}</h2>
-                  <p className="mt-1 text-sm text-gray-500">Sual-sual səhv, boş və yoxlanacaq cavablar burada görünür.</p>
+                  <p className="mt-1 text-sm text-gray-500">{t('admin.sual_sual_s_hv__bo__', { defaultValue: t('admin.sual_sual_s_hv__bo__', { defaultValue: 'Sual-sual səhv, boş və yoxlanacaq cavablar burada görünür.' }) })}</p>
                 </div>
 
                 <div className="flex flex-wrap gap-2 text-[11px] font-bold uppercase tracking-[0.12em] text-gray-500">
                   <span className="rounded-full bg-gray-50 px-3 py-1">{formatAttemptLabel(selectedResult.attemptNumber || 1)}</span>
-                  <span className="rounded-full bg-gray-50 px-3 py-1">{Math.round(Number(selectedResult.scorePercentage || 0))}% nəticə</span>
+                  <span className="rounded-full bg-gray-50 px-3 py-1">{Math.round(Number(selectedResult.scorePercentage || 0))}{t('admin.__n_tic_', { defaultValue: t('admin.__n_tic_', { defaultValue: '% nəticə' }) })}</span>
                   <span className="rounded-full bg-gray-50 px-3 py-1">{formatDateTime(selectedResult.completedAt || selectedResult.createdAt)}</span>
                 </div>
               </div>
@@ -432,10 +484,10 @@ export default function AdminExamHistoryDetail() {
                             question.content ? (
                               <img src={question.content} alt={`Sual ${index + 1}`} className="max-h-72 rounded-2xl border border-gray-100 object-cover" />
                             ) : (
-                              <p>Sual şəkli tapılmadı.</p>
+                              <p>{t('admin.sual___kli_tap_lmad_', { defaultValue: t('admin.sual___kli_tap_lmad_', { defaultValue: 'Sual şəkli tapılmadı.' }) })}</p>
                             )
                           ) : (
-                            <p>{question.content || 'Sual mətni tapılmadı.'}</p>
+                            <p>{question.content || t('admin.sual_m_tni_tap_lmad_', { defaultValue: 'Sual mətni tapılmadı.' })}</p>
                           )}
                         </div>
 
@@ -466,16 +518,16 @@ export default function AdminExamHistoryDetail() {
 
                         <div className="grid gap-4 lg:grid-cols-2">
                           <div className="rounded-2xl border border-gray-100 bg-white p-4">
-                            <div className="text-xs font-black uppercase tracking-[0.16em] text-gray-400">Tələbənin cavabı</div>
+                            <div className="text-xs font-black uppercase tracking-[0.16em] text-gray-400">{t('admin.t_l_b_nin_cavab_', { defaultValue: t('admin.t_l_b_nin_cavab_', { defaultValue: 'Tələbənin cavabı' }) })}</div>
                             <div className="mt-2 break-words text-sm font-medium text-gray-900">
                               {question.answerType === 'multiple_choice'
                                 ? (hasAnswer ? formatMultipleChoiceAnswer(question, answer?.answer || '') : 'Cavab verilməyib')
-                                : (answer?.answer || 'Cavab verilməyib')}
+                                : (answer?.answer || t('admin.cavab_verilm_yib', { defaultValue: 'Cavab verilməyib' }))}
                             </div>
                           </div>
 
                           <div className="rounded-2xl border border-[#D4AF37]/20 bg-[#FFF9E7] p-4">
-                            <div className="text-xs font-black uppercase tracking-[0.16em] text-[#A87A1F]">Doğru cavab</div>
+                            <div className="text-xs font-black uppercase tracking-[0.16em] text-[#A87A1F]">{t('admin.do_ru_cavab', { defaultValue: t('admin.do_ru_cavab', { defaultValue: 'Doğru cavab' }) })}</div>
                             <div className="mt-2 break-words text-sm font-medium text-gray-900">
                               {question.answerType === 'multiple_choice'
                                 ? (correctAnswerIndex !== null ? formatMultipleChoiceAnswer(question, String(correctAnswerIndex)) : 'Təyin edilməyib')

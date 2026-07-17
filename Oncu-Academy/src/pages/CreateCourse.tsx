@@ -194,8 +194,8 @@ export default function CreateCourse() {
             <ArrowLeft className="w-5 h-5" />
           </Button>
           <div>
-            <h1 className="text-2xl lg:text-3xl font-black text-gray-900">Yeni Kurs Yarat</h1>
-            <p className="text-gray-600">Tələbələr üçün yeni bir təlim proqramı hazırlayın</p>
+            <h1 className="text-2xl lg:text-3xl font-black text-gray-900">{t('courses.create_title', { defaultValue: 'Yeni Kurs Yarat' })}</h1>
+            <p className="text-gray-600">{t('courses.create_desc', { defaultValue: 'Tələbələr üçün yeni bir təlim proqramı hazırlayın' })}</p>
           </div>
         </div>
 
@@ -210,7 +210,7 @@ export default function CreateCourse() {
 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Kursun Adı</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('courses.course_title', { defaultValue: 'Kursun Adı' })}</label>
                     <div className="relative">
                       <BookOpen className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                       <Input
@@ -257,7 +257,7 @@ export default function CreateCourse() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Haqqında</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('courses.about', { defaultValue: 'Haqqında' })}</label>
                     <Textarea
                       value={formData.description}
                       onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -269,7 +269,7 @@ export default function CreateCourse() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Qiymət (AZN)</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">{t('courses.price_azn', { defaultValue: 'Qiymət (AZN)' })}</label>
                       <Input
                         type="number"
                         min="0"
@@ -288,7 +288,7 @@ export default function CreateCourse() {
                           onChange={(e) => setFormData({ ...formData, hasCertificate: e.target.checked })}
                           className="w-5 h-5 rounded border-gray-300 text-[#D4AF37] focus:ring-[#D4AF37]"
                         />
-                        <span className="text-sm font-medium text-gray-700">Sonda Sertifikat veriləcək</span>
+                        <span className="text-sm font-medium text-gray-700">{t('courses.certificate_provided', { defaultValue: 'Sonda Sertifikat veriləcək' })}</span>
                       </label>
                     </div>
                   </div>
@@ -300,7 +300,7 @@ export default function CreateCourse() {
               <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100">
                 <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
                   <ImageIcon className="w-5 h-5 text-[#D4AF37]" />
-                  Kover Şəkli
+                  {t('courses.cover_image', { defaultValue: 'Kover Şəkli' })}
                 </h3>
 
                   <div className="aspect-video w-full rounded-2xl overflow-hidden bg-gray-50 border-2 border-dashed border-gray-200 relative group cursor-pointer">
@@ -309,13 +309,13 @@ export default function CreateCourse() {
                   ) : (
                     <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-400">
                       <ImageIcon className="w-10 h-10 mb-2" />
-                      <span className="text-xs">Şəkil seçin</span>
+                      <span className="text-xs">{t('courses.select_image', { defaultValue: 'Şəkil seçin' })}</span>
                     </div>
                   )}
                   <input type="file" accept="image/*" onChange={handleImageChange} required className="absolute inset-0 opacity-0 cursor-pointer" />
                 </div>
                 <p className="text-[10px] text-gray-500 mt-2 text-center uppercase tracking-wider">
-                  Tövsiyə olunan ölçü: 1280x720 (16:9)
+                  {t('courses.recommended_size', { defaultValue: 'Tövsiyə olunan ölçü: 1280x720 (16:9)' })}
                 </p>
               </div>
 
@@ -329,7 +329,7 @@ export default function CreateCourse() {
                 ) : (
                   <>
                     <Save className="w-5 h-5" />
-                    Kursu Yadda Saxla
+                    {t('courses.save_course', { defaultValue: 'Kursu Yadda Saxla' })}
                   </>
                 )}
               </Button>

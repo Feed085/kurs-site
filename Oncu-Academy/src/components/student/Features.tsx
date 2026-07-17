@@ -96,7 +96,7 @@ export default function Features() {
         <div ref={titleRef} className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full mb-6">
             <span className="w-2 h-2 bg-[#D4AF37] rounded-full" />
-            <span className="text-sm font-medium text-gray-300">Üstünlüklərimiz</span>
+            <span className="text-sm font-medium text-gray-300">{t('common.our_features')}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4">
             {t('features.title')}

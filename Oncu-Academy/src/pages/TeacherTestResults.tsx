@@ -79,17 +79,12 @@ const getResultTimeValue = (result: any) => {
 };
 
 const getAttemptLabel = (attemptNumber: number) => {
-  if (attemptNumber === 1) return '1-ci cəhd';
-  if (attemptNumber === 2) return '2-ci cəhd';
-  if (attemptNumber === 3) return '3-cü cəhd';
-  return `${attemptNumber}-ci cəhd`;
+  return `${attemptNumber}-${t('teacher.test_results.attempt_suffix', { defaultValue: 'ci cəhd' })}`;
 };
 
 const formatMultipleChoiceAnswer = (question: any, answer: string) => {
   const answerIndex = normalizeMultipleChoiceAnswerIndex(answer);
-  if (answerIndex === null) {
-    return answer || 'Cavab verilməyib';
-  }
+    return answer || t('teacher.test_results.no_answer', { defaultValue: 'Cavab verilməyib' });
 
   const optionText = question?.options?.[answerIndex] ?? '';
   const optionLabel = String.fromCharCode(65 + answerIndex);
@@ -189,14 +184,14 @@ export default function TeacherTestResults() {
        });
        const data = await res.json();
        if (data.success) {
-          toast.success('Cavab qiymətləndirildi');
+          toast.success(t('teacher.test_results.graded_success', { defaultValue: 'Cavab qiymətləndirildi' }));
           fetchResults(); // refresh data
        } else {
           toast.error(t('common.error'));
        }
-    } catch (error) {
-       toast.error('Server xətası');
-    }
+     } catch (error) {
+       toast.error(t('common.error', { defaultValue: 'Server xətası' }));
+     }
   };
 
   const isNumericOpenEndedQuestion = (question: any) => {
@@ -266,21 +261,21 @@ export default function TeacherTestResults() {
             className="mb-2 p-0 h-auto hover:bg-transparent text-gray-500 hover:text-gray-900 group"
           >
             <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-            Geri qayıt
+            {t('common.go_back', { defaultValue: 'Geri qayıt' })}
           </Button>
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <h1 className="text-2xl lg:text-3xl font-black text-gray-900">
-                Test Nəticələri
+                {t('teacher.test_results.title', { defaultValue: 'Test Nəticələri' })}
               </h1>
               <p className="text-gray-500 mt-1">
-                {test.title} - {results.length} nəticə
+                {test.title} - {results.length} {t('teacher.test_results.result_count', { defaultValue: 'nəticə' })}
               </p>
             </div>
             <div className="relative w-full md:w-64">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <Input
-                placeholder="Tələbə axtar..."
+                placeholder={t('teacher.test_results.search_student', { defaultValue: 'Tələbə axtar...' })}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10 rounded-xl border-gray-200 bg-white"
@@ -347,7 +342,7 @@ export default function TeacherTestResults() {
                              {(result.scorePercentage || 0).toFixed(0)}%
                            </div>
                            <div className="text-[10px] text-gray-400 uppercase font-bold tracking-wider">
-                             Nəticə
+                             {t('teacher.test_results.result', { defaultValue: 'Nəticə' })}
                            </div>
                         </>
                      )}
@@ -373,7 +368,7 @@ export default function TeacherTestResults() {
           <DialogHeader>
             <DialogTitle className="text-xl font-bold flex items-center gap-2">
               <FileText className="w-5 h-5 text-[#D4AF37]" />
-              Test Detalları: {selectedResult?.student?.name} {selectedResult?.student?.surname}
+              {t('teacher.test_results.test_details', { defaultValue: 'Test Detalları:' })} {selectedResult?.student?.name} {selectedResult?.student?.surname}
             </DialogTitle>
           </DialogHeader>
           
@@ -400,7 +395,7 @@ export default function TeacherTestResults() {
 
               <div className="space-y-4">
                 <h3 className="font-bold text-gray-900 flex items-center gap-2 px-1">
-                  Sual və Cavablar
+                  {t('teacher.test_results.qa_title', { defaultValue: 'Sual və Cavablar' })}
                 </h3>
                 <div className="space-y-3">
                   {test.questions.map((q: any, idx: number) => {
@@ -412,12 +407,12 @@ export default function TeacherTestResults() {
                     const selectedAnswerIndex = normalizeMultipleChoiceAnswerIndex(studentAnsObj?.answer);
                     const correctAnswerIndex = getMultipleChoiceCorrectAnswerIndex(q);
                     const answerStateLabel = !hasAnswer
-                      ? 'Cavab verilməyib'
+                      ? t('teacher.test_results.status_unanswered', { defaultValue: 'Cavab verilməyib' })
                       : isTeacherReviewablePending
-                        ? 'Yoxlama gözləyir'
+                        ? t('teacher.test_results.status_pending', { defaultValue: 'Yoxlama gözləyir' })
                         : isCorrect
-                          ? 'Doğru'
-                          : 'Yanlış';
+                          ? t('teacher.test_results.status_correct', { defaultValue: 'Doğru' })
+                          : t('teacher.test_results.status_incorrect', { defaultValue: 'Yanlış' });
                     
                     return (
                       <div key={q._id} className={cn(
@@ -432,7 +427,7 @@ export default function TeacherTestResults() {
                              <div className="font-medium text-gray-900 text-sm leading-relaxed w-full">
                                 {q.questionType === 'image' ? (
                                    <div className="w-full max-w-sm rounded-lg overflow-hidden my-2">
-                                      <img src={q.content} alt="Sual" className="w-full h-auto" />
+                                      <img src={q.content} alt={t('common.question', { defaultValue: 'Sual' })} className="w-full h-auto" />
                                    </div>
                                 ) : q.content}
                              </div>
@@ -451,12 +446,12 @@ export default function TeacherTestResults() {
                               <div className="ml-7 mt-3">
                                  <div className="bg-white p-3 rounded-lg border border-gray-100 text-sm mb-3">
                                     <span className="text-xs text-gray-400 block mb-1 uppercase font-bold">{t('test.student_answer_label')}</span>
-                                    {studentAnsObj?.answer || 'Cavab verilməyib'}
+                                    {studentAnsObj?.answer || t('teacher.test_results.no_answer', { defaultValue: 'Cavab verilməyib' })}
                                  </div>
                                  <div className="flex justify-between items-center bg-gray-50 p-2 rounded-lg">
                                     {!hasAnswer ? (
                                       <span className="text-sm font-bold text-gray-500 flex items-center gap-1">
-                                        <Clock className="w-4 h-4"/> Cavab verilməyib
+                                        <Clock className="w-4 h-4"/> {t('teacher.test_results.status_unanswered', { defaultValue: 'Cavab verilməyib' })}
                                       </span>
                                     ) : isNumericOpenEndedQuestion(q) ? (
                                       <span className={isCorrect ? "text-sm font-bold text-green-600 flex items-center gap-1" : "text-sm font-bold text-red-600 flex items-center gap-1"}>
@@ -465,18 +460,18 @@ export default function TeacherTestResults() {
                                       </span>
                                     ) : isTeacherReviewablePending ? (
                                        <span className="text-sm font-bold text-yellow-600 flex items-center gap-1">
-                                          <Clock className="w-4 h-4"/> Yoxlama Gözləyir
+                                          <Clock className="w-4 h-4"/> {t('teacher.test_results.status_pending', { defaultValue: 'Yoxlama Gözləyir' })}
                                        </span>
                                     ) : (
                                        <span className={isCorrect ? "text-sm font-bold text-green-600 flex items-center gap-1" : "text-sm font-bold text-red-600 flex items-center gap-1"}>
                                           {isCorrect ? <CheckCircle className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
-                                          {isCorrect ? 'Doğru Qiymətləndirildi' : 'Yanlış Qiymətləndirildi'}
+                                          {isCorrect ? t('teacher.test_results.evaluated_correct', { defaultValue: 'Doğru Qiymətləndirildi' }) : t('teacher.test_results.evaluated_incorrect', { defaultValue: 'Yanlış Qiymətləndirildi' })}
                                        </span>
                                     )}
                                     {isTeacherReviewablePending && (
                                   <div className="flex gap-2">
                                     <Button 
-                                      title="Doğru Qəbul Et"
+                                      title={t('teacher.test_results.accept_correct', { defaultValue: 'Doğru Qəbul Et' })}
                                       size="sm" 
                                       variant="outline" 
                                       className="text-green-600 hover:bg-green-50 border-green-200" 
@@ -485,7 +480,7 @@ export default function TeacherTestResults() {
                                       <CheckCircle className="w-4 h-4" />
                                     </Button>
                                     <Button 
-                                      title="Yanlış Qəbul Et"
+                                      title={t('teacher.test_results.accept_incorrect', { defaultValue: 'Yanlış Qəbul Et' })}
                                       size="sm" 
                                       variant="outline" 
                                       className="text-red-600 hover:bg-red-50 border-red-200" 
@@ -547,7 +542,7 @@ export default function TeacherTestResults() {
                                 })}
                                 {!hasAnswer && (
                                   <div className="rounded-lg border border-dashed border-gray-200 bg-gray-50 p-3 text-sm text-gray-500">
-                                    Bu sual üçün cavab göndərilməyib.
+                                    {t('teacher.test_results.no_answer_submitted', { defaultValue: 'Bu sual üçün cavab göndərilməyib.' })}
                                   </div>
                                 )}
                               </div>

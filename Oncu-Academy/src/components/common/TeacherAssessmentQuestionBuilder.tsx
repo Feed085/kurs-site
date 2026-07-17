@@ -1,6 +1,7 @@
 import { CheckCircle, FileText, HelpCircle, Image as ImageIcon, MinusCircle, PlusCircle, Trash2, Type } from 'lucide-react';
 
 import { Checkbox } from '@/components/ui/checkbox';
+import { useTranslation } from 'react-i18next';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import type { AssessmentQuestion } from '@/lib/teacherAssessment';
@@ -10,21 +11,24 @@ type TeacherAssessmentQuestionBuilderProps = {
   setQuestions: React.Dispatch<React.SetStateAction<AssessmentQuestion[]>>;
   updateQuestion: (id: string, field: keyof AssessmentQuestion, value: AssessmentQuestion[keyof AssessmentQuestion]) => void;
   updateOption: (questionId: string, optionIndex: number, value: string) => void;
-  removeQuestion: (id: string) => void;
+  removeQuestion: (questionId: string) => void;
 };
 
-export function TeacherAssessmentQuestionBuilder({
+export default function TeacherAssessmentQuestionBuilder({
   questions,
   setQuestions,
   updateQuestion,
   updateOption,
   removeQuestion,
 }: TeacherAssessmentQuestionBuilderProps) {
+  const { t } = useTranslation();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold text-gray-900">
-          Suallar ({questions.length})
+          {t('test.edit.questions', { count: questions.length, defaultValue: `Suallar (${questions.length})` })}
         </h2>
       </div>
 
@@ -57,7 +61,7 @@ export function TeacherAssessmentQuestionBuilder({
                 )}
               >
                 <Type className="h-4 w-4" />
-                Mətn sualı
+                {t('test.edit.text_question', { defaultValue: 'Mətn sualı' })}
               </button>
               <button
                 type="button"
@@ -68,7 +72,7 @@ export function TeacherAssessmentQuestionBuilder({
                 )}
               >
                 <ImageIcon className="h-4 w-4" />
-                Şəkil sualı
+                {t('test.edit.image_question', { defaultValue: 'Şəkil sualı' })}
               </button>
             </div>
 
@@ -82,7 +86,7 @@ export function TeacherAssessmentQuestionBuilder({
                 )}
               >
                 <CheckCircle className="h-4 w-4" />
-                Qapalı test
+                {t('test.edit.closed_question', { defaultValue: 'Qapalı test' })}
               </button>
               <button
                 type="button"
@@ -93,7 +97,7 @@ export function TeacherAssessmentQuestionBuilder({
                 )}
               >
                 <FileText className="h-4 w-4" />
-                Açıq sual
+                {t('test.edit.open_question', { defaultValue: 'Açıq sual' })}
               </button>
             </div>
           </div>
@@ -103,7 +107,7 @@ export function TeacherAssessmentQuestionBuilder({
               <Input
                 value={question.content}
                 onChange={(event) => updateQuestion(question.id, 'content', event.target.value)}
-                placeholder="Sual mətnini daxil edin..."
+                placeholder={t('test.edit.enter_question_text', { defaultValue: 'Sual mətnini daxil edin...' })}
                 className="h-12 rounded-xl border-gray-200 focus:border-[#D4AF37]"
               />
             ) : (
@@ -113,14 +117,14 @@ export function TeacherAssessmentQuestionBuilder({
                     <>
                       <img src={question.content} alt={`Sual ${questionIndex + 1}`} className="block h-auto max-h-[520px] w-full object-contain" />
                       <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
-                        <p className="text-xs font-bold text-white">Şəkli dəyişmək üçün klikləyin</p>
+                        <p className="text-xs font-bold text-white">{t('test.edit.click_to_change_image', { defaultValue: 'Şəkli dəyişmək üçün klikləyin' })}</p>
                       </div>
                     </>
                   ) : (
                     <div className="flex min-h-[260px] flex-col items-center justify-center p-8 text-slate-400">
                       <ImageIcon className="mb-2 h-10 w-10 text-[#D4AF37]/70" />
-                      <p className="text-sm font-bold text-slate-700">Sual üçün şəkil yükləyin</p>
-                      <p className="text-xs text-slate-400 mt-1">Klikləyərək fayl seçin və ya sürükləyin</p>
+                      <p className="text-sm font-bold text-slate-700">{t('test.edit.upload_question_image', { defaultValue: 'Sual üçün şəkil yükləyin' })}</p>
+                      <p className="text-xs text-slate-400 mt-1">{t('test.edit.click_or_drag', { defaultValue: 'Klikləyərək fayl seçin və ya sürükləyin' })}</p>
                     </div>
                   )}
                   <input
@@ -144,7 +148,7 @@ export function TeacherAssessmentQuestionBuilder({
             {question.answerType === 'multiple_choice' ? (
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <label className="text-sm font-bold text-gray-700">Variantlar</label>
+                  <label className="text-sm font-bold text-gray-700">{t('test.edit.options_label', { defaultValue: 'Variantlar' })}</label>
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
@@ -226,7 +230,7 @@ export function TeacherAssessmentQuestionBuilder({
                     onCheckedChange={(checked) => updateQuestion(question.id, 'openEndedAnswerType', checked === true ? 'number' : 'text')}
                     className="border-blue-300 data-[state=checked]:border-[#D4AF37] data-[state=checked]:bg-[#D4AF37]"
                   />
-                  <span className="text-sm font-bold text-blue-700">Cavabı yalnız rəqəm olan sual</span>
+                  <span className="text-sm font-bold text-blue-700">{t('test.edit.number_only_answer', { defaultValue: 'Cavabı yalnız rəqəm olan sual' })}</span>
                 </label>
 
                 {question.openEndedAnswerType === 'number' ? (
@@ -242,15 +246,15 @@ export function TeacherAssessmentQuestionBuilder({
                     />
                   </div>
                 ) : (
-                  <p className="text-sm font-medium text-blue-700/80">Mətn cavablar müəllim tərəfindən sonradan yoxlanılacaq.</p>
+                  <p className="text-sm font-medium text-blue-700/80">{t('test.edit.text_answers_reviewed_later', { defaultValue: 'Mətn cavablar müəllim tərəfindən sonradan yoxlanılacaq.' })}</p>
                 )}
               </div>
             )}
 
             <p className="text-xs italic text-gray-400">
               {question.answerType === 'multiple_choice'
-                ? 'Düzgün cavabı seçmək üçün variantın hərfinə klikləyin.'
-                : 'Açıq mətn cavablar avtomatik yoxlanmır, müəllim panelində yoxlanılır.'}
+                ? t('test.edit.click_letter_hint', { defaultValue: 'Düzgün cavabı seçmək üçün variantın hərfinə klikləyin.' })
+                : t('test.edit.open_text_hint', { defaultValue: 'Açıq mətn cavablar avtomatik yoxlanmır, müəllim panelində yoxlanılır.' })}
             </p>
           </div>
         </div>

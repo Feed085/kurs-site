@@ -49,10 +49,10 @@ export default function TeacherTests() {
         if (data.success) {
           setTests(data.data || []);
         } else {
-          throw new Error(data.message || 'Testlər yüklənmədi');
+          throw new Error(data.message || t('teacher.tests.load_error', { defaultValue: 'Testlər yüklənmədi' }));
         }
       } catch (error) {
-        const message = error instanceof Error ? error.message : 'Testlər yüklənmədi';
+        const message = error instanceof Error ? error.message : t('teacher.tests.load_error', { defaultValue: 'Testlər yüklənmədi' });
         toast.error(message);
       } finally {
         setIsLoading(false);
@@ -70,7 +70,7 @@ export default function TeacherTests() {
       const courseId = course._id || course.id;
       if (!courseId) return;
       if (!map.has(courseId)) {
-        map.set(courseId, course.title || 'Naməlum kurs');
+        map.set(courseId, course.title || t('common.unknown_course', { defaultValue: 'Naməlum kurs' }));
       }
     });
     return Array.from(map.entries()).map(([id, title]) => ({ id, title }));
@@ -99,7 +99,7 @@ export default function TeacherTests() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Button variant="ghost" onClick={() => navigate(-1)} className="mb-4 p-0 h-auto hover:bg-transparent text-gray-500 hover:text-gray-900 group">
           <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-          Geri qayıt
+          {t('common.go_back', { defaultValue: 'Geri qayıt' })}
         </Button>
 
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between mb-8">
@@ -114,7 +114,7 @@ export default function TeacherTests() {
               <Input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Test və ya kurs axtar..."
+                placeholder={t('teacher.tests.search_placeholder', { defaultValue: 'Test və ya kurs axtar...' })}
                 className="pl-10 rounded-xl bg-white border-gray-200"
               />
             </div>
@@ -136,7 +136,7 @@ export default function TeacherTests() {
             className={`px-4 py-2 rounded-xl text-sm font-medium transition-all flex items-center gap-2 ${selectedCourseId === 'all' ? 'bg-[#D4AF37] text-white shadow-md' : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-100'}`}
           >
             <Filter className="w-4 h-4" />
-            Hamısı
+            {t('common.all', { defaultValue: 'Hamısı' })}
             <span className={`px-2 py-0.5 rounded-lg text-[10px] font-bold ${selectedCourseId === 'all' ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-500'}`}>{tests.length}</span>
           </button>
           {courses.map((course) => {
@@ -176,11 +176,11 @@ export default function TeacherTests() {
                 <div className="flex flex-wrap gap-2 text-xs text-gray-500 mb-5">
                   <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gray-50 border border-gray-100">
                     <Layers3 className="w-3 h-3" />
-                    {questionCount} sual
+                    {questionCount} {t('common.questions', { defaultValue: 'sual' })}
                   </span>
                   <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gray-50 border border-gray-100">
                     <Clock className="w-3 h-3" />
-                    {test.duration} dəq
+                    {test.duration} {t('common.minutes', { defaultValue: 'dəq' })}
                   </span>
                 </div>
 
@@ -190,13 +190,13 @@ export default function TeacherTests() {
                     className="flex-1 rounded-xl"
                     onClick={() => navigate(`/teacher/tests/${test._id || test.id}`)}
                   >
-                    Düzəlt
+                    {t('common.edit', { defaultValue: 'Düzəlt' })}
                   </Button>
                   <Button
                     className="flex-1 rounded-xl bg-[#D4AF37] hover:bg-[#B88A1B]"
                     onClick={() => navigate(`/teacher/tests/${test._id || test.id}/results`)}
                   >
-                    Nəticələr
+                    {t('teacher.tests.results', { defaultValue: 'Nəticələr' })}
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </div>

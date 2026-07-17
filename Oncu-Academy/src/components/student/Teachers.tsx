@@ -32,7 +32,7 @@ export default function Teachers() {
           setTeachers(teacherList);
         }
       } catch (error) {
-        console.error('Müəllimlər yüklənə bilmədi', error);
+        console.error(t('teachers.load_error', { defaultValue: 'Müəllimlər yüklənə bilmədi' }), error);
       } finally {
         if (isMounted) {
           setIsLoading(false);
@@ -121,7 +121,7 @@ export default function Teachers() {
           <div className="text-center mb-6">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full mb-4">
               <span className="w-2 h-2 bg-[#D4AF37] rounded-full" />
-              <span className="text-sm font-medium text-gray-300">Komandamız</span>
+            <span className="text-sm font-medium text-gray-300">{t('common.our_team', { defaultValue: 'Komandamız' })}</span>
             </div>
             <h2 className="text-3xl font-black text-white mb-3">
               {t('teachers.title')}
@@ -192,7 +192,7 @@ export default function Teachers() {
                           <span className="truncate">{teacher.courseCount}</span>
                         </span>
                         <span className="inline-flex items-center gap-1.5 min-w-0 text-[#F59E0B]">
-                          <span className="truncate">{teacher.experience} il</span>
+                          <span className="truncate">{teacher.experience} {t('common.years', { defaultValue: 'il' })}</span>
                         </span>
                       </div>
 
@@ -217,7 +217,7 @@ export default function Teachers() {
 
           {!isLoading && teachers.length === 0 && (
             <div className="text-center py-10 text-gray-400">
-              Müəllim məlumatı tapılmadı.
+              {t('teachers.no_data_found', { defaultValue: 'Müəllim məlumatı tapılmadı.' })}
             </div>
           )}
         </div>
@@ -228,7 +228,7 @@ export default function Teachers() {
           <div className="max-w-xl">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full mb-4">
               <span className="w-2 h-2 bg-[#D4AF37] rounded-full" />
-              <span className="text-sm font-medium text-gray-300">Komandamız</span>
+            <span className="text-sm font-medium text-gray-300">{t('common.our_team', { defaultValue: 'Komandamız' })}</span>
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4">
               {t('teachers.title')}
@@ -316,7 +316,7 @@ export default function Teachers() {
                       <span className="truncate">{teacher.courseCount}</span>
                     </div>
                     <div className="flex items-center gap-1.5 text-xs sm:text-sm text-gray-400 min-w-0">
-                      <span className="text-[#F59E0B] truncate">{teacher.experience} il</span>
+                      <span className="text-[#F59E0B] truncate">{teacher.experience} {t('common.years', { defaultValue: 'il' })}</span>
                     </div>
                   </div>
 
@@ -342,7 +342,7 @@ export default function Teachers() {
 
         {!isLoading && teachers.length === 0 && (
           <div className="text-center py-10 text-gray-400">
-            Müəllim məlumatı tapılmadı.
+            {t('teachers.no_data_found', { defaultValue: 'Müəllim məlumatı tapılmadı.' })}
           </div>
         )}
         </div>

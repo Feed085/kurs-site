@@ -37,7 +37,7 @@ export default function StudentCompletedTests() {
           setCompletedTests(data.data.filter((result: any) => result.test?.type !== 'admin_exam'));
         }
       } catch (err) {
-        console.error('Tamamlanan testlər gətirilərkən xəta baş verdi', err);
+        console.error(t('student.completed_tests.load_error', { defaultValue: 'Tamamlanan testlər gətirilərkən xəta baş verdi' }), err);
       } finally {
         setIsLoading(false);
       }
@@ -57,7 +57,7 @@ export default function StudentCompletedTests() {
             className="mb-4 text-gray-600 hover:text-gray-900"
           >
             <ChevronLeft className="w-4 h-4 mr-1" />
-            Geri qayıt
+            {t('common.go_back', { defaultValue: 'Geri qayıt' })}
           </Button>
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 bg-[#A87A1F]/10 rounded-xl flex items-center justify-center">
@@ -65,10 +65,10 @@ export default function StudentCompletedTests() {
             </div>
             <div>
               <h1 className="text-2xl lg:text-3xl font-black text-gray-900">
-                Tamamlanan Testlər
+                {t('student.completed_tests.title', { defaultValue: 'Tamamlanan Testlər' })}
               </h1>
               <p className="text-gray-500 mt-1">
-                İndiyə qədər bitirdiyiniz testlərin nəticələri
+                {t('student.completed_tests.desc', { defaultValue: 'İndiyə qədər bitirdiyiniz testlərin nəticələri' })}
               </p>
             </div>
           </div>
@@ -84,23 +84,23 @@ export default function StudentCompletedTests() {
                <FileText className="w-10 h-10 text-gray-400" />
              </div>
              <h3 className="text-xl font-bold text-gray-900 mb-2">
-               Hələ heç bir test tamamlanmayıb
+               {t('student.completed_tests.empty_title', { defaultValue: 'Hələ heç bir test tamamlanmayıb' })}
              </h3>
              <p className="text-gray-500">
-               Normal kurs testləri burada görünür. Admin imtahan nəticələri ayrıca imtahan panelində saxlanılır.
+               {t('student.completed_tests.empty_desc', { defaultValue: 'Normal kurs testləri burada görünür. Admin imtahan nəticələri ayrıca imtahan panelində saxlanılır.' })}
              </p>
              <Button
                onClick={() => navigate('/exam-panel/results')}
                variant="link"
                className="mt-3 font-bold text-[#A87A1F]"
              >
-               İmtahan nəticələrinə bax
+               {t('student.completed_tests.view_exam_results', { defaultValue: 'İmtahan nəticələrinə bax' })}
              </Button>
            </div>
           ) : (
             completedTests.map((result: any) => {
-              const testTitle = result.test?.title || 'Bilinməyən Test';
-              const courseTitle = result.test?.course?.title || 'Bilinməyən Kurs'; // if populated deep
+              const testTitle = result.test?.title || t('student.completed_tests.unknown_test', { defaultValue: 'Bilinməyən Test' });
+              const courseTitle = result.test?.course?.title || t('student.completed_tests.unknown_course', { defaultValue: 'Bilinməyən Kurs' }); // if populated deep
               const percentage = result.scorePercentage || 0;
               const isPassed = percentage >= 50; // simple passing logic
               const qCount = result.answers?.length || 0;
@@ -127,11 +127,11 @@ export default function StudentCompletedTests() {
                 </h3>
                 <div className="flex items-center gap-4 text-sm text-gray-500">
                   <div className="flex items-center gap-1.5">
-                     {hasPending && <span className="font-bold text-yellow-500">Gözləmədəki suallar var</span>}
+                     {hasPending && <span className="font-bold text-yellow-500">{t('student.has_pending_questions', { defaultValue: 'Gözləmədəki suallar var' })}</span>}
                   </div>
                   <div className="flex items-center gap-1.5">
                     <FileText className="w-4 h-4" />
-                    <span>{qCount} sual</span>
+                    <span>{qCount} {t('student.completed_tests.questions', { defaultValue: 'sual' })}</span>
                   </div>
                 </div>
               </div>
@@ -150,18 +150,18 @@ export default function StudentCompletedTests() {
                       <XCircle className="w-3.5 h-3.5" />
                     )}
                     <span className="text-xs font-semibold">
-                      {hasPending ? 'Yoxlanılır' : isPassed ? 'Keçdi' : 'Kəsildi'}
+                      {hasPending ? t('student.completed_tests.checking', { defaultValue: 'Yoxlanılır' }) : isPassed ? t('student.completed_tests.passed', { defaultValue: 'Keçdi' }) : t('student.completed_tests.failed', { defaultValue: 'Kəsildi' })}
                     </span>
                   </div>
                 </div>
 
                 <div className="text-sm">
                   <div className="flex items-center gap-4 mb-2">
-                    <span className="text-gray-500">Doğru:</span>
+                    <span className="text-gray-500">{t('student.correct_short', { defaultValue: 'Doğru:' })}</span>
                     <span className="text-[#D4AF37] font-bold">{correctS}</span>
                   </div>
                   <div className="flex items-center gap-4">
-                    <span className="text-gray-500">Yanlış:</span>
+                    <span className="text-gray-500">{t('student.wrong_short', { defaultValue: 'Yanlış:' })}</span>
                     <span className="text-red-500 font-bold">{qCount - correctS}</span>
                   </div>
                 </div>
@@ -172,11 +172,11 @@ export default function StudentCompletedTests() {
                     className="w-full sm:w-auto mt-2 sm:mt-0 bg-[#D4AF37] hover:bg-[#B88A1B] text-white rounded-xl"
                   >
                     <RotateCcw className="w-4 h-4 mr-2" />
-                    Təkrar test
+                    {t('student.completed_tests.retake', { defaultValue: 'Təkrar test' })}
                   </Button>
                 ) : (
                   <div className="w-full sm:w-auto mt-2 sm:mt-0 rounded-xl border border-gray-200 bg-white px-4 py-3 text-center text-sm font-semibold text-gray-500">
-                    Bu test tək dəfəlikdir
+                    {t('student.completed_tests.one_time', { defaultValue: 'Bu test tək dəfəlikdir' })}
                   </div>
                 )}
               </div>

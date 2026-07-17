@@ -34,7 +34,7 @@ export default function Testimonials() {
         <div ref={titleRef} className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#D4AF37]/10 rounded-full mb-6">
             <span className="w-2 h-2 bg-[#D4AF37] rounded-full" />
-            <span className="text-sm font-medium text-[#D4AF37]">Rəylər</span>
+            <span className="text-sm font-medium text-[#D4AF37]">{t('common.reviews', { defaultValue: 'Rəylər' })}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 mb-4">
             {t('testimonials.title')}

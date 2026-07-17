@@ -48,24 +48,24 @@ import {
 
 const heroCopy: Record<TabKey, { badge: string; title: string; description: string; actionLabel: string; actionPath: string; }> = {
   exams: {
-    badge: 'İmtahan baxışı',
-    title: 'İmtahan paneliniz',
-    description: 'Admin tərəfindən təsdiqlənmiş aktiv testləri izləyin və son nəticələrinizə baxın.',
-    actionLabel: 'Nəticələrim',
+    badge: t('student_exam.tabs.exams.badge', { defaultValue: 'İmtahan baxışı' }),
+    title: t('student_exam.tabs.exams.title', { defaultValue: 'İmtahan paneliniz' }),
+    description: t('student_exam.tabs.exams.description', { defaultValue: 'Admin tərəfindən təsdiqlənmiş aktiv testləri izləyin və son nəticələrinizə baxın.' }),
+    actionLabel: t('student_exam.tabs.exams.actionLabel', { defaultValue: 'Nəticələrim' }),
     actionPath: '/exam-panel/results',
   },
   results: {
-    badge: 'Tamamlanmış nəticələr',
-    title: 'Nəticə tarixçəniz',
-    description: 'Yalnız admin təsdiqli imtahanların yekun nəticələri burada toplanır.',
-    actionLabel: 'İmtahanlara qayıt',
+    badge: t('student_exam.tabs.results.badge', { defaultValue: 'Tamamlanmış nəticələr' }),
+    title: t('student_exam.tabs.results.title', { defaultValue: 'Nəticə tarixçəniz' }),
+    description: t('student_exam.tabs.results.description', { defaultValue: 'Yalnız admin təsdiqli imtahanların yekun nəticələri burada toplanır.' }),
+    actionLabel: t('student_exam.tabs.results.actionLabel', { defaultValue: 'İmtahanlara qayıt' }),
     actionPath: '/exam-panel',
   },
   keys: {
-    badge: 'Cavab açarları',
-    title: 'Açarları açın',
-    description: 'Tamamlanan və admin tərəfindən təsdiqlənmiş imtahanların açarlarını ayrıca səhifədə yoxlayın.',
-    actionLabel: 'Nəticələrim',
+    badge: t('student_exam.tabs.keys.badge', { defaultValue: 'Cavab açarları' }),
+    title: t('student_exam.tabs.keys.title', { defaultValue: 'Açarları açın' }),
+    description: t('student_exam.tabs.keys.description', { defaultValue: 'Tamamlanan və admin tərəfindən təsdiqlənmiş imtahanların açarlarını ayrıca səhifədə yoxlayın.' }),
+    actionLabel: t('student_exam.tabs.keys.actionLabel', { defaultValue: 'Nəticələrim' }),
     actionPath: '/exam-panel/results',
   },
 };
@@ -124,7 +124,7 @@ export default function StudentExamPanelPage() {
         setCompletedResults(resultsResult.status === 'fulfilled' ? resultsResult.value : []);
 
         if (profileResult.status === 'rejected' || resultsResult.status === 'rejected') {
-          setLoadError('Məlumatların bir hissəsi yüklənmədi. Panel mövcud verilənlərlə göstərilir.');
+          setLoadError(t('student_exam.partial_load_error', { defaultValue: 'Məlumatların bir hissəsi yüklənmədi. Panel mövcud verilənlərlə göstərilir.' }));
         }
       } catch (error) {
         if (!isMounted) {
@@ -133,7 +133,7 @@ export default function StudentExamPanelPage() {
 
         setPanelData(null);
         setCompletedResults([]);
-        setLoadError(error instanceof Error ? error.message : 'Panel yüklənə bilmədi.');
+        setLoadError(error instanceof Error ? error.message : t('student_exam.panel_load_error', { defaultValue: 'Panel yüklənə bilmədi.' }));
       } finally {
         if (isMounted) {
           setIsLoading(false);
@@ -227,7 +227,7 @@ export default function StudentExamPanelPage() {
   const averageScore = finalResults.length > 0
     ? Math.round(finalResults.reduce((sum, result) => sum + safeNumber(result.scorePercentage), 0) / finalResults.length)
     : null;
-  const displayName = [panelData?.name || user?.name || 'Tələbə', panelData?.surname || '']
+  const displayName = [panelData?.name || user?.name || t('student_exam.default_student_name', { defaultValue: 'Tələbə' }), panelData?.surname || '']
     .filter(Boolean)
     .join(' ');
   const activeCoursesCount = panelData?.stats?.activeCoursesCount ?? panelData?.activeCourses?.length ?? 0;
@@ -298,18 +298,18 @@ export default function StudentExamPanelPage() {
 
   const renderActiveTestCard = (test: PanelTestSummary) => {
     const testId = getEntityId(test);
-    const courseTitle = test.course?.title || 'Kurs məlumatı yoxdur';
+    const courseTitle = test.course?.title || t('student_exam.no_course_info', { defaultValue: 'Kurs məlumatı yoxdur' });
     const instructorName = test.instructor
       ? `${test.instructor.name || ''} ${test.instructor.surname || ''}`.trim()
-      : 'Müəllim məlumatı yoxdur';
-    const durationLabel = test.duration ? `${test.duration} dəqiqə` : 'Müddət yoxdur';
+      : t('student_exam.no_instructor_info', { defaultValue: 'Müəllim məlumatı yoxdur' });
+    const durationLabel = test.duration ? `${test.duration} ${t('common.minutes', { defaultValue: 'dəqiqə' })}` : t('common.no_duration', { defaultValue: 'Müddət yoxdur' });
     const startsAtTime = test.startsAt ? new Date(test.startsAt).getTime() : null;
     const isScheduled = Boolean(startsAtTime && startsAtTime > Date.now());
     const buttonLabel = test.hasAttempted && test.allowRetake
-      ? 'Təkrar et'
+      ? t('student_exam.retake_exam', { defaultValue: 'Təkrar et' })
       : isScheduled
-        ? 'Detalları aç'
-        : 'İmtahana başla';
+        ? t('student_exam.open_details', { defaultValue: 'Detalları aç' })
+        : t('student_exam.start_exam', { defaultValue: 'İmtahana başla' });
 
     return (
       <div
@@ -320,29 +320,29 @@ export default function StudentExamPanelPage() {
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
               <Badge variant="outline" className="border-emerald-200 bg-emerald-50 text-emerald-700">
-                {isScheduled ? 'Planlanıb' : 'Aktiv'}
+                {isScheduled ? t('student_exam.scheduled', { defaultValue: 'Planlanıb' }) : t('student_exam.active', { defaultValue: 'Aktiv' })}
               </Badge>
               <Badge variant="outline" className="border-[#D4AF37]/30 bg-[#D4AF37]/10 text-[#A87A1F]">
-                Admin təsdiqli
+                {t('student_exam.admin_approved', { defaultValue: 'Admin təsdiqli' })}
               </Badge>
               {test.hasAccessCode ? (
                 <Badge variant="outline" className="border-violet-200 bg-violet-50 text-violet-700">
                   <KeyRound className="mr-1 h-3.5 w-3.5" />
-                  Şifrə ilə
+                  {t('student_exam.with_password', { defaultValue: 'Şifrə ilə' })}
                 </Badge>
               ) : null}
               {test.allowRetake ? (
                 <Badge variant="outline" className="border-amber-200 bg-amber-50 text-amber-700">
-                  Təkrar mümkündür
+                  {t('student_exam.retake_possible', { defaultValue: 'Təkrar mümkündür' })}
                 </Badge>
               ) : null}
               {test.hasAttempted ? (
                 <Badge variant="outline" className="border-slate-200 bg-white text-slate-600">
-                  {test.attemptCount || 1} cəhd
+                  {test.attemptCount || 1} {t('student_exam.attempt_count', { defaultValue: 'cəhd' })}
                 </Badge>
               ) : null}
             </div>
-            <h3 className="mt-3 text-lg font-bold text-slate-900">{test.title || 'Bilinməyən test'}</h3>
+            <h3 className="mt-3 text-lg font-bold text-slate-900">{test.title || t('student.unknown_test', { defaultValue: 'Bilinməyən test' })}</h3>
             <p className="mt-1 text-sm text-slate-500">{courseTitle}</p>
           </div>
           <div className="rounded-2xl bg-[#D4AF37]/10 p-3 text-[#A87A1F]">
@@ -382,12 +382,12 @@ export default function StudentExamPanelPage() {
 
   const renderResultCard = (result: PanelResult, compact = false) => {
     const testId = getEntityId(result.test);
-    const testTitle = result.test?.title || 'Bilinməyən test';
-    const courseTitle = result.test?.course?.title || 'Bilinməyən kurs';
+    const testTitle = result.test?.title || t('student_exam.unknown_test', { defaultValue: 'Bilinməyən test' });
+    const courseTitle = result.test?.course?.title || t('student_exam.unknown_course', { defaultValue: 'Bilinməyən kurs' });
     const instructorSource = result.test?.course?.instructor || result.test?.instructor;
     const instructorName = instructorSource
       ? `${instructorSource.name || ''} ${instructorSource.surname || ''}`.trim()
-      : 'Müəllim məlumatı yoxdur';
+      : t('student_exam.no_instructor_info', { defaultValue: 'Müəllim məlumatı yoxdur' });
     const completedDate = formatDate(result.completedAt || result.createdAt);
     const score = safeNumber(result.scorePercentage);
     const answers = result.answers || [];
@@ -411,11 +411,11 @@ export default function StudentExamPanelPage() {
                 {statusMeta.label}
               </Badge>
               <Badge variant="outline" className="border-[#D4AF37]/30 bg-[#D4AF37]/10 text-[#A87A1F]">
-                Admin təsdiqli
+                {t('student_exam.admin_approved', { defaultValue: 'Admin təsdiqli' })}
               </Badge>
               {result.test?.allowRetake ? (
                 <Badge variant="outline" className="border-slate-200 bg-white text-slate-600">
-                  Təkrar mümkündür
+                  {t('student_exam.retake_possible', { defaultValue: 'Təkrar mümkündür' })}
                 </Badge>
               ) : null}
               <span className="text-xs font-medium text-slate-400">{completedDate}</span>
@@ -426,15 +426,15 @@ export default function StudentExamPanelPage() {
 
           <div className="rounded-3xl bg-slate-50 px-5 py-4 text-right shadow-inner shadow-slate-100/80">
             <div className="text-3xl font-black text-slate-900">{formatPercentage(score)}</div>
-            <div className="text-xs font-medium text-slate-500">Yekun nəticə</div>
+            <div className="text-xs font-medium text-slate-500">{t('student.exam_answer_key.final_result', { defaultValue: 'Yekun nəticə' })}</div>
           </div>
         </div>
 
         <div className={cn('mt-5 grid gap-4', compact ? 'lg:grid-cols-[minmax(0,1fr)]' : 'lg:grid-cols-[minmax(0,1fr)_240px]')}>
           <div>
             <div className="mb-2 flex items-center justify-between text-xs font-medium text-slate-500">
-              <span>Bal göstəricisi</span>
-              <span>{correctAnswers} düzgün · {pendingAnswers} gözləmədə</span>
+              <span>{t('student.exam_answer_key.score_indicator', { defaultValue: 'Bal göstəricisi' })}</span>
+              <span>{t('student.exam_answer_key.score_summary', { correct: correctAnswers, pending: pendingAnswers, defaultValue: '{{correct}} düzgün · {{pending}} gözləmədə' })}</span>
             </div>
             <Progress value={Math.max(0, Math.min(100, score))} className="h-2" />
           </div>
@@ -443,15 +443,15 @@ export default function StudentExamPanelPage() {
             <div className="grid grid-cols-3 gap-3 text-sm">
               <div className="rounded-2xl bg-emerald-50 px-3 py-3 text-center">
                 <div className="text-lg font-black text-emerald-700">{correctAnswers}</div>
-                <div className="text-xs text-emerald-700/80">Düzgün</div>
+                <div className="text-xs text-emerald-700/80">{t('student.exam_answer_key.correct', { defaultValue: 'Düzgün' })}</div>
               </div>
               <div className="rounded-2xl bg-rose-50 px-3 py-3 text-center">
                 <div className="text-lg font-black text-rose-700">{incorrectAnswers}</div>
-                <div className="text-xs text-rose-700/80">Yanlış</div>
+                <div className="text-xs text-rose-700/80">{t('student.exam_answer_key.wrong', { defaultValue: 'Yanlış' })}</div>
               </div>
               <div className="rounded-2xl bg-amber-50 px-3 py-3 text-center">
                 <div className="text-lg font-black text-amber-700">{pendingAnswers}</div>
-                <div className="text-xs text-amber-700/80">Gözləmədə</div>
+                <div className="text-xs text-amber-700/80">{t('student.exam_answer_key.pending', { defaultValue: 'Gözləmədə' })}</div>
               </div>
             </div>
           ) : null}
@@ -462,7 +462,7 @@ export default function StudentExamPanelPage() {
 
   const renderExpiredTestCard = (test: PanelTestSummary) => {
     const testId = getEntityId(test);
-    const courseTitle = test.course?.title || 'Kurs məlumatı yoxdur';
+    const courseTitle = test.course?.title || t('student_exam.no_course_info', { defaultValue: 'Kurs məlumatı yoxdur' });
     const expiredAt = getTestEndTime(test);
 
     return (
@@ -472,14 +472,14 @@ export default function StudentExamPanelPage() {
       >
         <div className="flex flex-wrap items-center gap-2">
           <Badge variant="outline" className="border-rose-200 bg-rose-100 text-rose-700">
-            Müddəti bitib
+            {t('student_exam.expired', { defaultValue: 'Müddəti bitib' })}
           </Badge>
           <Badge variant="outline" className="border-[#D4AF37]/30 bg-[#D4AF37]/10 text-[#A87A1F]">
-            Admin təsdiqli
+            {t('student_exam.admin_approved', { defaultValue: 'Admin təsdiqli' })}
           </Badge>
         </div>
 
-        <h3 className="mt-3 text-lg font-bold text-slate-900">{test.title || 'Bilinməyən test'}</h3>
+        <h3 className="mt-3 text-lg font-bold text-slate-900">{test.title || t('student.unknown_test', { defaultValue: 'Bilinməyən test' })}</h3>
         <p className="mt-1 text-sm text-slate-500">{courseTitle}</p>
 
         <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-slate-500">
@@ -492,7 +492,7 @@ export default function StudentExamPanelPage() {
           {expiredAt ? (
             <span className="inline-flex items-center gap-1.5 text-rose-700">
               <Clock3 className="h-4 w-4" />
-              Bitib: {formatDateTime(new Date(expiredAt).toISOString())}
+              {t('student_exam.expired_at', { defaultValue: 'Bitib:' })} {formatDateTime(new Date(expiredAt).toISOString())}
             </span>
           ) : null}
         </div>
@@ -504,15 +504,15 @@ export default function StudentExamPanelPage() {
     <div className="grid gap-6 lg:grid-cols-2">
       <Card className="gap-0 overflow-hidden border-slate-100 bg-white/95 shadow-sm">
         {renderSectionHeader(
-          'Aktiv imtahanlar',
-          'Admin tərəfindən tələbə üçün təsdiqlənmiş testlər burada görünür.',
+          t('student_exam.active_exams_title', { defaultValue: 'Aktiv imtahanlar' }),
+          t('student_exam.active_exams_desc', { defaultValue: 'Admin tərəfindən tələbə üçün təsdiqlənmiş testlər burada görünür.' }),
           <Button
             type="button"
             variant="outline"
             onClick={() => navigate('/exam-panel/results')}
             className="rounded-xl border-slate-200 text-slate-700"
           >
-            Nəticələrim
+            {t('student_exam.my_results', { defaultValue: 'Nəticələrim' })}
           </Button>
         )}
         <CardContent className="space-y-4 px-6 py-6">
@@ -520,8 +520,8 @@ export default function StudentExamPanelPage() {
             ? activeTests.map((test) => renderActiveTestCard(test))
             : renderEmptyState(
                 t('common.not_found'),
-                'Admin tərəfindən yeni imtahan təyin ediləndə bu bölmədə görünəcək.',
-                'Testlərə bax',
+                t('student_exam.active_exams_empty_desc', { defaultValue: 'Admin tərəfindən yeni imtahan təyin ediləndə bu bölmədə görünəcək.' }),
+                t('student_exam.view_tests', { defaultValue: 'Testlərə bax' }),
                 '/tests',
                 ClipboardList
               )}
@@ -530,15 +530,15 @@ export default function StudentExamPanelPage() {
 
       <Card className="gap-0 overflow-hidden border-slate-100 bg-white/95 shadow-sm">
         {renderSectionHeader(
-          'Keçmiş imtahanlar',
-          'Tamamlanan və ya müddəti bitən admin təsdiqli imtahanların qısa icmalı.',
+          t('student_exam.past_exams_title', { defaultValue: 'Keçmiş imtahanlar' }),
+          t('student_exam.past_exams_desc', { defaultValue: 'Tamamlanan və ya müddəti bitən admin təsdiqli imtahanların qısa icmalı.' }),
           <Button
             type="button"
             variant="outline"
             onClick={() => navigate('/exam-panel/results')}
             className="rounded-xl border-slate-200 text-slate-700"
           >
-            Hamısı
+            {t('common.all', { defaultValue: 'Hamısı' })}
           </Button>
         )}
         <CardContent className="space-y-4 px-6 py-6">
@@ -550,9 +550,9 @@ export default function StudentExamPanelPage() {
                 </>
               )
             : renderEmptyState(
-                'Hələ nəticə yoxdur',
-                'Admin təsdiqli imtahan tamamladıqdan sonra nəticələr burada görünəcək.',
-                'İmtahanlara bax',
+                t('student_exam.no_results_yet', { defaultValue: 'Hələ nəticə yoxdur' }),
+                t('student_exam.no_results_desc', { defaultValue: 'Admin təsdiqli imtahan tamamladıqdan sonra nəticələr burada görünəcək.' }),
+                t('student_exam.view_exams', { defaultValue: 'İmtahanlara bax' }),
                 '/tests',
                 FileText
               )}
@@ -564,30 +564,30 @@ export default function StudentExamPanelPage() {
   const renderResultsSection = () => (
     <Card className="gap-0 overflow-hidden border-slate-100 bg-white/95 shadow-sm">
       {renderSectionHeader(
-        'Tamamlanan imtahanlar',
-        'Yalnız admin tərəfindən təsdiqlənmiş imtahanların yekun nəticələri burada toplanıb.',
+        t('student_exam.completed_exams_title', { defaultValue: 'Tamamlanan imtahanlar' }),
+        t('student_exam.completed_exams_desc', { defaultValue: 'Yalnız admin tərəfindən təsdiqlənmiş imtahanların yekun nəticələri burada toplanıb.' }),
         <Button
           type="button"
           variant="outline"
           onClick={() => navigate('/exam-panel')}
           className="rounded-xl border-slate-200 text-slate-700"
         >
-          İmtahanlara qayıt
+          {t('student_exam.back_to_exams', { defaultValue: 'İmtahanlara qayıt' })}
         </Button>
       )}
       <CardContent className="space-y-4 px-6 py-6">
         {pendingReviewsCount > 0 ? (
           <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
-            {pendingReviewsCount} nəticə hələ müəllim yoxlamasındadır.
+            {t('student_exam.pending_reviews', { count: pendingReviewsCount, defaultValue: `${pendingReviewsCount} nəticə hələ müəllim yoxlamasındadır.` })}
           </div>
         ) : null}
 
         {sortedCompletedResults.length > 0
           ? sortedCompletedResults.map((result) => renderResultCard(result))
           : renderEmptyState(
-              'Hələ nəticə yoxdur',
-              'Admin təsdiqli tamamlanmış testləriniz burada toplanacaq.',
-              'Testlərə bax',
+              t('student_exam.no_results_yet', { defaultValue: 'Hələ nəticə yoxdur' }),
+              t('student_exam.completed_exams_empty_desc', { defaultValue: 'Admin təsdiqli tamamlanmış testləriniz burada toplanacaq.' }),
+              t('student_exam.view_tests', { defaultValue: 'Testlərə bax' }),
               '/tests',
               CheckCircle2
             )}
@@ -598,20 +598,20 @@ export default function StudentExamPanelPage() {
   const renderKeysSection = () => (
     <Card className="gap-0 overflow-hidden border-slate-100 bg-white/95 shadow-sm">
       {renderSectionHeader(
-        'Cavab açarları',
-        'Admin təsdiqli imtahanların sual və cavab detalları ayrıca səhifədə açılır.',
+        t('student_exam.answer_keys_title', { defaultValue: 'Cavab açarları' }),
+        t('student_exam.answer_keys_desc', { defaultValue: 'Admin təsdiqli imtahanların sual və cavab detalları ayrıca səhifədə açılır.' }),
         <Button
           type="button"
           variant="outline"
           onClick={() => navigate('/exam-panel/results')}
           className="rounded-xl border-slate-200 text-slate-700"
         >
-          Nəticələrim
+          {t('student_exam.my_results', { defaultValue: 'Nəticələrim' })}
         </Button>
       )}
       <CardContent className="space-y-4 px-6 py-6">
         <div className="rounded-2xl border border-slate-100 bg-slate-50/80 px-4 py-3 text-sm text-slate-600">
-          Düzgün cavablar yalnız admin tərəfindən təsdiqlənmiş və tamamlanmış imtahanlar üçün göstərilir.
+          {t('student_exam.answer_keys_info', { defaultValue: 'Düzgün cavablar yalnız admin tərəfindən təsdiqlənmiş və tamamlanmış imtahanlar üçün göstərilir.' })}
         </div>
 
         {sortedCompletedResults.length > 0
@@ -637,8 +637,8 @@ export default function StudentExamPanelPage() {
                         </Badge>
                         <span className="text-xs font-medium text-slate-400">{formatDate(result.completedAt || result.createdAt)}</span>
                       </div>
-                      <h3 className="mt-3 text-lg font-bold text-slate-900">{result.test?.title || 'Bilinməyən test'}</h3>
-                      <p className="mt-1 text-sm text-slate-500">{result.test?.course?.title || 'Bilinməyən kurs'}</p>
+                      <h3 className="mt-3 text-lg font-bold text-slate-900">{result.test?.title || t('student.unknown_test', { defaultValue: 'Bilinməyən test' })}</h3>
+                      <p className="mt-1 text-sm text-slate-500">{result.test?.course?.title || t('student.unknown_course', { defaultValue: 'Bilinməyən kurs' })}</p>
                     </div>
 
                     <Button
@@ -647,7 +647,7 @@ export default function StudentExamPanelPage() {
                       disabled={!resultId}
                       className="rounded-xl bg-[#D4AF37] font-semibold text-white hover:bg-[#B88A1B] disabled:cursor-not-allowed disabled:opacity-60"
                     >
-                      Açarı aç
+                      {t('student_exam.open_key', { defaultValue: 'Açarı aç' })}
                       <ArrowRight className="h-4 w-4" />
                     </Button>
                   </div>
@@ -655,9 +655,9 @@ export default function StudentExamPanelPage() {
               );
             })
           : renderEmptyState(
-              'Cavab açarı yoxdur',
-              'Tamamlanmış admin təsdiqli test olduqda açarlarını burada görə bilərsiniz.',
-              'Nəticələrim',
+              t('student_exam.no_answer_key', { defaultValue: 'Cavab açarı yoxdur' }),
+              t('student_exam.answer_key_empty_desc', { defaultValue: 'Tamamlanmış admin təsdiqli test olduqda açarlarını burada görə bilərsiniz.' }),
+              t('student_exam.my_results', { defaultValue: 'Nəticələrim' }),
               '/exam-panel/results',
               KeyRound
             )}
@@ -731,7 +731,7 @@ export default function StudentExamPanelPage() {
                   {hero.title}
                 </h1>
                 <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600 lg:text-base">
-                  Salam, {displayName}. {hero.description}
+                  {t('student_exam.welcome', { name: displayName, defaultValue: `Salam, ${displayName}.` })} {hero.description}
                 </p>
               </div>
 
@@ -749,23 +749,23 @@ export default function StudentExamPanelPage() {
           <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {renderMetricCard(
               ClipboardList,
-              'Aktiv imtahanlar',
+              t('student_exam.metrics.active_exams.title', { defaultValue: 'Aktiv imtahanlar' }),
               String(activeTestsCount),
-              'Admin təsdiqli aktiv testlər',
+              t('student_exam.metrics.active_exams.helper', { defaultValue: 'Admin təsdiqli aktiv testlər' }),
               '#10B981'
             )}
             {renderMetricCard(
               CheckCircle2,
-              'Tamamlanan imtahanlar',
+              t('student_exam.metrics.completed_exams.title', { defaultValue: 'Tamamlanan imtahanlar' }),
               String(completedTestsCount),
-              'Yalnız admin təsdiqli nəticələr',
+              t('student_exam.metrics.completed_exams.helper', { defaultValue: 'Yalnız admin təsdiqli nəticələr' }),
               '#D4AF37'
             )}
             {renderMetricCard(
               TrendingUp,
-              'Ortalama',
+              t('student_exam.metrics.average.title', { defaultValue: 'Ortalama' }),
               averageScore === null ? '—' : `${averageScore}%`,
-              finalResults.length > 0 ? 'Yekunlaşdırılmış nəticələr üzrə' : 'Hələ yekun nəticə yoxdur',
+              finalResults.length > 0 ? t('student_exam.metrics.average.helper_has_results', { defaultValue: 'Yekunlaşdırılmış nəticələr üzrə' }) : t('student_exam.metrics.average.helper_no_results', { defaultValue: 'Hələ yekun nəticə yoxdur' }),
               '#A87A1F'
             )}
           </div>
@@ -777,15 +777,15 @@ export default function StudentExamPanelPage() {
           <div className="mt-8 flex flex-wrap items-center gap-3 text-xs text-slate-500">
             <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1.5">
               <BookOpen className="h-3.5 w-3.5" />
-              {activeCoursesCount} aktiv kurs
+              {activeCoursesCount} {t('student_exam.stats.active_courses', { defaultValue: 'aktiv kurs' })}
             </span>
             <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1.5">
               <CalendarDays className="h-3.5 w-3.5" />
-              {pendingReviewsCount} yoxlanışda nəticə
+              {pendingReviewsCount} {t('student_exam.stats.pending_results', { defaultValue: 'yoxlanışda nəticə' })}
             </span>
             <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1.5">
               <FileText className="h-3.5 w-3.5" />
-              {completedTestsCount} ümumi nəticə
+              {completedTestsCount} {t('student_exam.stats.total_results', { defaultValue: 'ümumi nəticə' })}
             </span>
           </div>
         </div>

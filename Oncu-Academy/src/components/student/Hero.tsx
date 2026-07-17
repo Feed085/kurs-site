@@ -87,7 +87,7 @@ export default function Hero() {
           });
         }
       } catch (error) {
-        console.error('Hero statistikaları yüklənmədi', error);
+        console.error(t('hero.load_error', { defaultValue: 'Hero statistikaları yüklənmədi' }), error);
       }
     };
 

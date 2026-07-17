@@ -36,10 +36,10 @@ export default function TeacherCourseReviews() {
         if (data.success) {
           setCourses(data.data || []);
         } else {
-          throw new Error(data.message || 'Kurs rəyləri yüklənmədi');
+          throw new Error(data.message || t('teacher.reviews.load_error', { defaultValue: 'Kurs rəyləri yüklənmədi' }));
         }
       } catch (error: any) {
-        toast.error(error.message || 'Kurs rəyləri yüklənmədi');
+        toast.error(error.message || t('teacher.reviews.load_error', { defaultValue: 'Kurs rəyləri yüklənmədi' }));
       } finally {
         setIsLoading(false);
       }
@@ -56,12 +56,12 @@ export default function TeacherCourseReviews() {
       return reviews.map((review: any) => {
         const reviewerName = review.user && typeof review.user === 'object'
           ? `${review.user.name || ''} ${review.user.surname || ''}`.trim()
-          : review.name || 'Tələbə';
+          : review.name || t('teacher.reviews.student_default', { defaultValue: 'Tələbə' });
 
         return {
           ...review,
           courseId,
-          courseTitle: course.title || 'Naməlum kurs',
+          courseTitle: course.title || t('common.unknown_course', { defaultValue: 'Naməlum kurs' }),
           courseRating: Number(course.rating || 0),
           ratingValue: Number(review.rating || 0),
           reviewerName,
@@ -75,7 +75,7 @@ export default function TeacherCourseReviews() {
     return courses
       .map((course) => ({
         id: String(course._id || course.id || ''),
-        title: course.title || 'Naməlum kurs'
+        title: course.title || t('common.unknown_course', { defaultValue: 'Naməlum kurs' })
       }))
       .filter((course) => course.id);
   }, [courses]);
@@ -121,7 +121,7 @@ export default function TeacherCourseReviews() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Button variant="ghost" onClick={() => navigate(-1)} className="mb-4 p-0 h-auto hover:bg-transparent text-gray-500 hover:text-gray-900 group">
           <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-          Geri qayıt
+          {t('common.go_back', { defaultValue: 'Geri qayıt' })}
         </Button>
 
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between mb-8">
@@ -136,12 +136,12 @@ export default function TeacherCourseReviews() {
               <Input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Rəy, müəllim, kurs axtar..."
+                placeholder={t('teacher.reviews.search_placeholder', { defaultValue: 'Rəy, müəllim, kurs axtar...' })}
                 className="pl-10 rounded-xl bg-white border-gray-200"
               />
             </div>
             <Button onClick={() => navigate('/teacher/profile#teacher-reviews')} variant="outline" className="rounded-xl border-[#8B5CF6] text-[#8B5CF6] hover:bg-[#8B5CF6]/5">
-              Müəllim Reyləri
+              {t('teacher.reviews.teacher_reviews', { defaultValue: 'Müəllim Reyləri' })}
             </Button>
           </div>
         </div>
@@ -164,14 +164,14 @@ export default function TeacherCourseReviews() {
         <div className="flex flex-wrap items-center gap-2 mb-4">
           <div className="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-white border border-gray-100 text-sm font-medium text-gray-600">
             <Filter className="w-4 h-4" />
-            Filtrlər
+            {t('common.filters', { defaultValue: 'Filtrlər' })}
           </div>
           <button
             type="button"
             onClick={() => setSelectedCourseId('all')}
             className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${selectedCourseId === 'all' ? 'bg-[#D4AF37] text-white shadow-md' : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-100'}`}
           >
-            Hamısı ({totalReviews})
+            {t('common.all', { defaultValue: 'Hamısı' })} ({totalReviews})
           </button>
           {courseOptions.map((course) => {
             return (
@@ -192,14 +192,14 @@ export default function TeacherCourseReviews() {
               className="px-4 py-2 rounded-xl text-sm font-medium transition-all inline-flex items-center gap-2 bg-gray-900 text-white hover:bg-gray-800"
             >
               <X className="w-4 h-4" />
-              Filtrləri sil
+              {t('common.clear_filters', { defaultValue: 'Filtrləri sil' })}
             </button>
           )}
         </div>
 
         <div className="flex flex-wrap gap-2 mb-8">
           {[
-            { value: 'all', label: 'Bütün ballar' },
+            { value: 'all', label: t('teacher.reviews.all_ratings', { defaultValue: 'Bütün ballar' }) },
             { value: '5', label: '5' },
             { value: '4', label: '4' },
             { value: '3', label: '3' },
@@ -213,7 +213,7 @@ export default function TeacherCourseReviews() {
               className={`px-4 py-2 rounded-xl text-sm font-medium transition-all flex items-center gap-2 ${minRating === rating.value ? 'bg-[#D4AF37] text-white shadow-md' : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-100'}`}
             >
               {rating.value === 'all' ? (
-                'Bütün ballar'
+                t('teacher.reviews.all_ratings', { defaultValue: 'Bütün ballar' })
               ) : (
                 <>
                   <span>{rating.label}</span>
@@ -225,7 +225,7 @@ export default function TeacherCourseReviews() {
         </div>
 
         <div className="mb-4 text-sm text-gray-500">
-          {filteredReviews.length} nəticə göstərilir
+          {filteredReviews.length} {t('common.results_shown', { defaultValue: 'nəticə göstərilir' })}
         </div>
 
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
@@ -250,7 +250,7 @@ export default function TeacherCourseReviews() {
                     className="text-[#D4AF37] hover:text-[#B88A1B] hover:bg-[#D4AF37]/5"
                     onClick={() => navigate(`/teacher/courses/${review.courseId}`)}
                   >
-                    Kursu aç
+                    {t('teacher.reviews.open_course', { defaultValue: 'Kursu aç' })}
                   </Button>
                 </div>
               </div>

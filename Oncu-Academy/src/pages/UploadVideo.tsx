@@ -30,7 +30,7 @@ const getVideoDuration = (file: File) => new Promise<number>((resolve, reject) =
 
   video.onerror = () => {
     URL.revokeObjectURL(objectUrl);
-    reject(new Error('Video müddəti oxuna bilmədi'));
+    reject(new Error(t('teacher.upload.video_duration_error', { defaultValue: 'Video müddəti oxuna bilmədi' })));
   };
 });
 
@@ -143,7 +143,7 @@ export default function UploadVideo() {
         { headers: { 'Authorization': `Bearer ${token}` } }
       );
       const presignVideoData = await presignVideoReq.json();
-      if (!presignVideoData.success) throw new Error('Presigned URL (video) xətası');
+      if (!presignVideoData.success) throw new Error(t('teacher.upload.presign_error', { defaultValue: 'Presigned URL (video) xətası' }));
 
       const videoSignedUrl = presignVideoData.data.signedUrl;
       const videoPublicUrl = presignVideoData.data.publicUrl;
@@ -168,7 +168,7 @@ export default function UploadVideo() {
             reject(new Error(`Upload status ${xhr.status}`));
           }
         };
-        xhr.onerror = () => reject(new Error('Şəbəkə xətası (upload)'));
+        xhr.onerror = () => reject(new Error(t('teacher.upload.network_error', { defaultValue: 'Şəbəkə xətası (upload)' })));
         xhr.send(videoFile);
       });
 
@@ -193,7 +193,7 @@ export default function UploadVideo() {
          videoUrl: videoPublicUrl
       };
 
-      const existingModules = course.modules && course.modules.length > 0 ? course.modules : [{ title: 'Dərslər', videos: [] }];
+      const existingModules = course.modules && course.modules.length > 0 ? course.modules : [{ title: t('teacher.upload.lessons_default', { defaultValue: 'Dərslər' }), videos: [] }];
       existingModules[0].videos.push(newVideo);
 
       const updateReq = await fetch(`${API_BASE_URL}/courses/${formData.courseId}`, {
@@ -205,7 +205,7 @@ export default function UploadVideo() {
         body: JSON.stringify({ modules: existingModules })
       });
       const updateData = await updateReq.json();
-      if (!updateData.success) throw new Error('Kurs güncəllənə bilmədi');
+      if (!updateData.success) throw new Error(t('teacher.upload.update_failed', { defaultValue: 'Kurs güncəllənə bilmədi' }));
 
       setIsUploaded(true);
       toast.success(t('common.save'));
@@ -227,7 +227,7 @@ export default function UploadVideo() {
             {t('common.save')}
           </h1>
           <p className="text-gray-600 mb-8">
-            Video'nuz təsdiqləndikdən sonra dərc olunacaq.
+            {t('teacher.upload.approval_notice', { defaultValue: 'Video\'nuz təsdiqləndikdən sonra dərc olunacaq.' })}
           </p>
           <div className="flex gap-4">
             <Button
@@ -235,7 +235,7 @@ export default function UploadVideo() {
               onClick={() => navigate(-1)}
               className="flex-1 rounded-xl"
             >
-              Geri qayıt
+              {t('common.go_back', { defaultValue: 'Geri qayıt' })}
             </Button>
             <Button
               onClick={() => {
@@ -245,7 +245,7 @@ export default function UploadVideo() {
               }}
               className="flex-1 bg-[#D4AF37] hover:bg-[#B88A1B] rounded-xl"
             >
-              Yeni video yüklə
+              {t('teacher.upload.upload_new', { defaultValue: 'Yeni video yüklə' })}
             </Button>
           </div>
         </div>
@@ -270,7 +270,7 @@ export default function UploadVideo() {
               {t('teacher.upload.title')}
             </h1>
             <p className="text-gray-600">
-              Yeni video dərs yükləyin
+              {t('teacher.upload.subtitle', { defaultValue: 'Yeni video dərs yükləyin' })}
             </p>
           </div>
         </div>
@@ -315,7 +315,7 @@ export default function UploadVideo() {
                   }}
                   className="text-red-500 hover:text-red-600 text-sm font-medium"
                 >
-                  Sil
+                  {t('common.delete', { defaultValue: 'Sil' })}
                 </button>
               </div>
             ) : (
@@ -325,10 +325,10 @@ export default function UploadVideo() {
                 </div>
                 <div>
                   <p className="font-medium text-gray-900">
-                    Videonu bura sürükləyin
+                    {t('teacher.upload.drag_here', { defaultValue: 'Videonu bura sürükləyin' })}
                   </p>
                   <p className="text-sm text-gray-500 mt-1">
-                    və ya klikləyib seçin
+                    {t('teacher.upload.or_click', { defaultValue: 'və ya klikləyib seçin' })}
                   </p>
                 </div>
                 <p className="text-xs text-gray-400">
@@ -368,7 +368,7 @@ export default function UploadVideo() {
                 name="title"
                 value={formData.title}
                 onChange={handleChange}
-                placeholder="Video başlığı"
+                placeholder={t('teacher.upload.video_title_placeholder', { defaultValue: 'Video başlığı' })}
                 required
                 className="h-12 rounded-xl"
               />
@@ -382,7 +382,7 @@ export default function UploadVideo() {
                 name="description"
                 value={formData.description}
                 onChange={handleChange}
-                placeholder="Video haqqında qısa məlumat..."
+                placeholder={t('teacher.upload.video_desc_placeholder', { defaultValue: 'Video haqqında qısa məlumat...' })}
                 rows={4}
                 className="rounded-xl resize-none"
               />

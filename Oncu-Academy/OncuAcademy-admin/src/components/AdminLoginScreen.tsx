@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, RefreshCw, Shield, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
 import { adminApi } from '@/services/api';
+import { useTranslation } from 'react-i18next';
 
 declare global {
   interface Window {
@@ -45,7 +46,7 @@ const loadGoogleScript = () => {
   if (existingScript) {
     return new Promise<void>((resolve, reject) => {
       existingScript.addEventListener('load', () => resolve(), { once: true });
-      existingScript.addEventListener('error', () => reject(new Error('Google girişi yüklənmədi')), { once: true });
+      existingScript.addEventListener('error', () => reject(new Error('Google login failed')), { once: true });
     });
   }
 
@@ -56,12 +57,13 @@ const loadGoogleScript = () => {
     script.async = true;
     script.defer = true;
     script.onload = () => resolve();
-    script.onerror = () => reject(new Error('Google girişi yüklənmədi'));
+    script.onerror = () => reject(new Error('Google login failed'));
     document.head.appendChild(script);
   });
 };
 
 export default function AdminLoginScreen({ onAuthenticated }: AdminLoginScreenProps) {
+  const { t } = useTranslation();
   const buttonRef = useRef<HTMLDivElement>(null);
   const [isReady, setIsReady] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
@@ -69,7 +71,7 @@ export default function AdminLoginScreen({ onAuthenticated }: AdminLoginScreenPr
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID as string | undefined;
 
   useEffect(() => {
-    document.title = 'Sizin Akademiyanız — Admin Girişi';
+    document.title = t('admin_login.page_title', { defaultValue: 'Sizin Akademiyanız — Admin Girişi' });
   }, []);
 
   useEffect(() => {
@@ -78,7 +80,7 @@ export default function AdminLoginScreen({ onAuthenticated }: AdminLoginScreenPr
     const initGoogle = async () => {
       if (!clientId) {
         if (isMounted) {
-          setStatusMessage('VITE_GOOGLE_CLIENT_ID təyin edilməyib.');
+          setStatusMessage(t('admin_login.client_id_missing', { defaultValue: 'VITE_GOOGLE_CLIENT_ID təyin edilməyib.' }));
           setIsReady(false);
         }
         return;
@@ -99,7 +101,7 @@ export default function AdminLoginScreen({ onAuthenticated }: AdminLoginScreenPr
           callback: async (response) => {
             const credential = response.credential;
             if (!credential) {
-              toast.error('Google məlumatı alınmadı');
+              toast.error(t('admin_login.google_data_failed', { defaultValue: 'Google məlumatı alınmadı' }));
               return;
             }
 
@@ -110,13 +112,13 @@ export default function AdminLoginScreen({ onAuthenticated }: AdminLoginScreenPr
                   token: result.data.token,
                   user: result.data.user,
                 });
-                toast.success('Admin girişi uğurlu oldu');
+                toast.success(t('admin_login.success', { defaultValue: 'Admin girişi uğurlu oldu' }));
                 return;
               }
 
-              toast.error(result.message || 'Giriş icazəsi yoxlanılmadı');
+              toast.error(result.message || t('admin_login.permission_denied', { defaultValue: 'Giriş icazəsi yoxlanılmadı' }));
             } catch (error) {
-              toast.error(error instanceof Error ? error.message : 'Google girişi uğursuz oldu');
+              toast.error(error instanceof Error ? error.message : t('admin_login.google_failed', { defaultValue: 'Google girişi uğursuz oldu' }));
             }
           },
         });
@@ -133,11 +135,11 @@ export default function AdminLoginScreen({ onAuthenticated }: AdminLoginScreenPr
 
         if (isMounted) {
           setIsReady(true);
-          setStatusMessage('Yalnız icazəli Google hesabları giriş edə bilər.');
+          setStatusMessage(t('admin_login.only_authorized', { defaultValue: 'Yalnız icazəli Google hesabları giriş edə bilər.' }));
         }
       } catch (error) {
         if (isMounted) {
-          setStatusMessage(error instanceof Error ? error.message : 'Google girişi yüklənmədi');
+          setStatusMessage(error instanceof Error ? error.message : t('admin_login.google_load_failed', { defaultValue: 'Google girişi yüklənmədi' }));
           setIsReady(false);
         }
       } finally {
@@ -166,7 +168,7 @@ export default function AdminLoginScreen({ onAuthenticated }: AdminLoginScreenPr
           <div className="flex flex-col justify-center rounded-[32px] border border-gray-100 bg-white p-6 shadow-2xl shadow-gray-200/60 backdrop-blur-sm sm:p-8 lg:p-12">
             <div className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-[#D4AF37]/15 bg-[#D4AF37]/10 px-4 py-2 text-sm font-semibold text-[#B88A1B]">
               <Sparkles className="h-4 w-4" />
-              Google ilə Admin Girişi
+              {t('admin_login.title', { defaultValue: 'Google ilə Admin Girişi' })}
             </div>
 
             <div className="flex items-center gap-4">
@@ -177,24 +179,24 @@ export default function AdminLoginScreen({ onAuthenticated }: AdminLoginScreenPr
               />
               <div className="min-w-0">
                 <p className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">
-                  Sizin Akademiyanız
+                  {t('admin_login.brand', { defaultValue: 'Sizin Akademiyanız' })}
                 </p>
                 <h1 className="mt-1 text-3xl font-black leading-tight text-gray-900 sm:text-4xl">
-                  Admin panelə giriş
+                  {t('admin_login.heading', { defaultValue: 'Admin panelə giriş' })}
                 </h1>
               </div>
             </div>
 
             <p className="mt-5 max-w-xl text-base leading-7 text-gray-600 sm:text-lg">
-              Daxil olmaq üçün Google hesabınızı seçin. Backend icazəli email siyahısını yoxlayacaq və uyğun olmayan hesabları avtomatik rədd edəcək.
+              {t('admin_login.description', { defaultValue: 'Daxil olmaq üçün Google hesabınızı seçin. Backend icazəli email siyahısını yoxlayacaq və uyğun olmayan hesabları avtomatik rədd edəcək.' })}
             </p>
 
             <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
               <div className="rounded-2xl border border-gray-100 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-600">
-                Mobil və masaüstü üçün optimallaşdırılıb
+                {t('admin_login.feature1', { defaultValue: 'Mobil və masaüstü üçün optimallaşdırılıb' })}
               </div>
               <div className="rounded-2xl border border-gray-100 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-600">
-                Yalnız icazəli hesablar giriş edə bilər
+                {t('admin_login.feature2', { defaultValue: 'Yalnız icazəli hesablar giriş edə bilər' })}
               </div>
             </div>
 
@@ -207,8 +209,8 @@ export default function AdminLoginScreen({ onAuthenticated }: AdminLoginScreenPr
                   <Shield className="h-6 w-6" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-black">Admin Girişi</h2>
-                  <p className="text-sm text-gray-500">Yalnız icazəli Google hesabları</p>
+                  <h2 className="text-2xl font-black">{t('admin_login.admin_login', { defaultValue: 'Admin Girişi' })}</h2>
+                  <p className="text-sm text-gray-500">{t('admin_login.only_authorized', { defaultValue: 'Yalnız icazəli Google hesabları' })}</p>
                 </div>
               </div>
 
@@ -225,13 +227,13 @@ export default function AdminLoginScreen({ onAuthenticated }: AdminLoginScreenPr
                     className="flex w-full items-center justify-center gap-2 rounded-full border border-gray-200 px-4 py-3 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50"
                   >
                     <RefreshCw className={`h-4 w-4 ${isConnecting ? 'animate-spin' : ''}`} />
-                    Yenilə
+                    {t('admin_login.refresh', { defaultValue: 'Yenilə' })}
                   </button>
                 )}
               </div>
 
               <div className="mt-6 rounded-2xl bg-gray-50 p-4 text-sm leading-6 text-gray-600">
-                {statusMessage || 'Google düyməsi yüklənir...'}
+                {statusMessage || t('admin_login.button_loading', { defaultValue: 'Google düyməsi yüklənir...' })}
               </div>
 
               <a
@@ -240,7 +242,7 @@ export default function AdminLoginScreen({ onAuthenticated }: AdminLoginScreenPr
                 rel="noreferrer"
                 className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#B88A1B] transition-colors hover:text-[#A87A1F]"
               >
-                Hesab icazələrini yoxla
+                {t('admin_login.check_permissions', { defaultValue: 'Hesab icazələrini yoxla' })}
                 <ArrowUpRight className="h-4 w-4" />
               </a>
             </div>
