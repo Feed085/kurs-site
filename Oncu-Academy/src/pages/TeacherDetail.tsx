@@ -247,12 +247,12 @@ export default function TeacherDetail() {
             {activeTab === 'about' && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-3">{t('teachers.education', { defaultValue: 'Təhsil' })}</h3>
+                  <h3 className="text-lg font-bold text-gray-900 mb-3">{t('teachers.education')}</h3>
                   <div className="flex items-start gap-3 p-4 bg-gray-50 rounded-2xl">
                     <Award className="w-5 h-5 text-[#D4AF37] mt-0.5" />
                     <div>
                       <p className="font-medium text-gray-900">{teacher.education}</p>
-                      <p className="text-sm text-gray-500">{t('teachers.higher_education', { defaultValue: 'Ali təhsil' })}</p>
+                      <p className="text-sm text-gray-500">{t('teachers.higher_education')}</p>
                     </div>
                   </div>
                 </div>
