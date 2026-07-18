@@ -513,7 +513,8 @@
       "students": "Tələbələr",
       "course_rating": "Kurs Reytinqi",
       "reviews": "rəy",
-      "reviews_label": "yorum"
+      "reviews_label": "yorum",
+      "view_lessons": "Derslere bak"
     },
     "profile": {
       "title": "Profil",
