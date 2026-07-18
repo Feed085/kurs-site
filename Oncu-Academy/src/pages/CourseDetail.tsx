@@ -337,7 +337,14 @@ export default function CourseDetail() {
                 <p>{t('courses.login_for_review', { defaultValue: 'Rəy yazmaq üçün tələbə hesabı ilə daxil olun.' })}</p>
               ) : null}
 
-              <CourseReviewsList reviews={courseReviews} rating={course.rating || 0} />
+              <CourseReviewsList 
+                reviews={courseReviews} 
+                rating={course.rating || 0}
+                title={t('reviews.students_opinions')}
+                subtitle={t('reviews.for_this_course')}
+                summaryText={t('reviews.summary_text')}
+                emptyMessage={t('reviews.empty_message')}
+              />
             </section>
           </div>
 
