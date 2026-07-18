@@ -207,7 +207,7 @@ export default function CourseWatch() {
                 onContextMenu={(event) => event.preventDefault()}
                 onEnded={handleLessonCompleted}
               >
-                Brauzeriniz video formatını dəstəkləmir.
+                {t('courses.video_not_supported', { defaultValue: 'Brauzeriniz video formatını dəstəkləmir.' })}
               </video>
             </div>
             
@@ -216,7 +216,7 @@ export default function CourseWatch() {
                 {activeLesson?.title || t('common.not_found')}
               </h1>
               <p className="text-gray-500 font-medium mb-6">
-                {course.title} — Məruzəçi: <span className="text-gray-900">{course.instructor?.name} {course.instructor?.surname}</span>
+                {course.title} — {t('courses.instructor', { defaultValue: 'Məruzəçi:' })} <span className="text-gray-900">{course.instructor?.name} {course.instructor?.surname}</span>
               </p>
 
               <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4 mb-6">
@@ -271,7 +271,7 @@ export default function CourseWatch() {
                   {t('courses.lesson_schedule', { defaultValue: 'Dərs cədvəli' })}
                 </h2>
                 <span className="text-xs font-bold px-2.5 py-1 bg-gray-100 text-gray-600 rounded-lg">
-                  {flatLessons.length} video
+                  {flatLessons.length} {t('courses.videos', { defaultValue: 'video' })}
                 </span>
               </div>
               
@@ -313,7 +313,7 @@ export default function CourseWatch() {
               {tests.length > 0 && (
                  <div className="mt-4 pt-4 border-t border-gray-100">
                     <h3 className="text-sm font-bold text-gray-900 mb-3 text-center uppercase tracking-wider text-[#F59E0B]">
-                      Kurs İmtahanları
+                      {t('courses.course_exams', { defaultValue: 'Kurs İmtahanları' })}
                     </h3>
                     <div className="space-y-2 px-2 custom-scrollbar overflow-y-auto max-h-40">
                       {tests.map((test) => (
