@@ -142,6 +142,7 @@
     "about_placeholder": "Kurs hakkında detaylı bilgi...",
     "price_azn": "Fiyat (AZN)",
     "price_placeholder": "Örn: 50 (Ücretsizse 0 yazın)",
+    "course_image": "Kurs Resmi",
     "certificate_provided": "Sonda Sertifika verilecek",
     "cover_image": "Kapak Resmi",
     "select_image": "Resim seçin",
@@ -604,7 +605,10 @@
       "upload_video": "Video Yükle",
       "tests_and_assignments": "Testler ve Ödevler",
       "create_test": "Test Oluştur",
-      "course_reviews": "Kurs yorumları"
+      "course_reviews": "Kurs yorumları",
+      "reviews_title": "Yorumlar",
+      "what_will_you_learn": "Bu kursta ne öğreneceksiniz?",
+      "course_includes": "Kurs dahil"
     },
     "reviews": {
       "load_error": "Kurs yorumları yüklenemedi",

@@ -142,6 +142,7 @@
     "about_placeholder": "Kurs barədə ətraflı məlumat...",
     "price_azn": "Qiymət (AZN)",
     "price_placeholder": "Məs: 50 (Ödənişsizsə 0 yazın)",
+    "course_image": "Kurs Şəkli",
     "certificate_provided": "Sonda Sertifikat veriləcək",
     "cover_image": "Kover Şəkli",
     "select_image": "Şəkil seçin",
@@ -603,7 +604,10 @@
       "upload_video": "Video Yüklə",
       "tests_and_assignments": "Testlər və Tapşırıqlar",
       "create_test": "Test Yarat",
-      "course_reviews": "Kurs rəyləri"
+      "course_reviews": "Kurs rəyləri",
+      "reviews_title": "Rəylər",
+      "what_will_you_learn": "Bu kursda nə öyrənəcəksiniz?",
+      "course_includes": "Kurs daxildir"
     },
     "reviews": {
       "load_error": "Kurs rəyləri yüklənmədi",

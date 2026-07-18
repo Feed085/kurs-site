@@ -577,7 +577,7 @@ export default function TeacherCourseEdit() {
             <div className="bg-white rounded-3xl p-6 lg:p-8 shadow-sm border border-gray-100">
               <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between mb-6">
                 <div>
-                  <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#D4AF37]">{t('teacher.reviews', { defaultValue: 'Rəylər' })}</p>
+                  <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#D4AF37]">{t('teacher.course_edit.reviews_title', { defaultValue: 'Rəylər' })}</p>
                   <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2 mt-2">
                     <MessageCircle className="w-5 h-5 text-[#D4AF37]" />
                     {t('teacher.course_edit.course_reviews', { defaultValue: 'Kurs rəyləri' })}

@@ -142,6 +142,7 @@
     "about_placeholder": "Detailed information about the course...",
     "price_azn": "Price (AZN)",
     "price_placeholder": "Ex: 50 (Enter 0 for free)",
+    "course_image": "Course Image",
     "certificate_provided": "Certificate will be provided at the end",
     "cover_image": "Cover Image",
     "select_image": "Select image",
@@ -604,7 +605,10 @@
       "upload_video": "Upload Video",
       "tests_and_assignments": "Tests and Assignments",
       "create_test": "Create Test",
-      "course_reviews": "Course reviews"
+      "course_reviews": "Course reviews",
+      "reviews_title": "Reviews",
+      "what_will_you_learn": "What will you learn in this course?",
+      "course_includes": "Course includes"
     },
     "reviews": {
       "load_error": "Could not load course reviews",
