@@ -323,7 +323,7 @@ export default function TeacherTestResults() {
                        <h4 className="font-bold text-gray-900">{result.student?.name} {result.student?.surname}</h4>
                        <div className="flex items-center gap-2 text-xs text-gray-500 mt-0.5">
                          <Clock className="w-3 h-3" />
-                         <span>{new Date(result.completedAt).toLocaleDateString('az-AZ')}</span>
+                         <span>{new Date(result.completedAt).toLocaleDateString(t('common.locale', { defaultValue: 'az-AZ' }))}</span>
                          <span className="rounded-full bg-blue-50 px-2 py-0.5 font-bold text-[#A87A1F]">
                            {getAttemptLabel(result.attemptNumber || 1)}
                          </span>
@@ -333,7 +333,7 @@ export default function TeacherTestResults() {
                    <div className="text-right">
                      {result.hasPendingAnswers ? (
                          <div className="text-sm font-bold text-yellow-600 bg-yellow-50 px-2 py-1 rounded-lg">
-                           Yoxlamada
+                          {t('teacher.test_results.in_review', { defaultValue: 'Yoxlamada' })}
                          </div>
                      ) : (
                         <>
