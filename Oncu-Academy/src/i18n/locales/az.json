@@ -735,6 +735,28 @@
         "min_one_question": "Ən azı bir sual olmalıdır"
       }
     },
+    "test_edit": {
+      "new_question": "Yeni sual",
+      "min_one_question": "Ən azı bir sual olmalıdır",
+      "text_question": "Mətn Sualı",
+      "image_question": "Şəkil Sualı",
+      "multiple_choice": "Qapalı Test",
+      "open_ended": "Açıq Sual (Yazı)",
+      "variant_a": "Variant A",
+      "variant_b": "Variant B",
+      "variant_c": "Variant C",
+      "variant_d": "Variant D",
+      "confirm_delete": "Bu testi silmək istədiyinizə əminsiniz? Bu əməliyyat geri alına bilməz.",
+      "deleted": "Test silindi",
+      "edit_title": "Testi Redaktə Et",
+      "delete": "Sil",
+      "variants": "Variantlar",
+      "add_question": "Sual Əlavə Et",
+      "number_example": "Məs: 3.5",
+      "questions": "Suallar",
+      "question": "Sual",
+      "variant_placeholder": "Variant {{letter}}"
+    },
     "panel": "Müəllim imtahan panel",
     "test_results": {
       "title": "Test Nəticələri",

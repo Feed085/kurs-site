@@ -736,6 +736,28 @@
         "min_one_question": "En az bir soru gerekli"
       }
     },
+    "test_edit": {
+      "new_question": "Yeni Soru",
+      "min_one_question": "En az bir soru gerekli",
+      "text_question": "Metin Sorusu",
+      "image_question": "Resim Sorusu",
+      "multiple_choice": "Çoktan Seçmeli",
+      "open_ended": "Açık Uçlu (Yazı)",
+      "variant_a": "Seçenek A",
+      "variant_b": "Seçenek B",
+      "variant_c": "Seçenek C",
+      "variant_d": "Seçenek D",
+      "confirm_delete": "Bu sınavı silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.",
+      "deleted": "Sınav silindi",
+      "edit_title": "Sınavı Düzenle",
+      "delete": "Sil",
+      "variants": "Seçenekler",
+      "add_question": "Soru Ekle",
+      "number_example": "Örnek: 3.5",
+      "questions": "Sorular",
+      "question": "Soru",
+      "variant_placeholder": "Seçenek {{letter}}"
+    },
     "panel": "Öğretmen sınav paneli",
     "test_results": {
       "title": "Sınav Sonuçları",

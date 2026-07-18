@@ -736,6 +736,28 @@
         "min_one_question": "At least one question is required"
       }
     },
+    "test_edit": {
+      "new_question": "New Question",
+      "min_one_question": "At least one question is required",
+      "text_question": "Text Question",
+      "image_question": "Image Question",
+      "multiple_choice": "Multiple Choice",
+      "open_ended": "Open Ended",
+      "variant_a": "Variant A",
+      "variant_b": "Variant B",
+      "variant_c": "Variant C",
+      "variant_d": "Variant D",
+      "confirm_delete": "Are you sure you want to delete this test? This action cannot be undone.",
+      "deleted": "Test deleted",
+      "edit_title": "Edit Test",
+      "delete": "Delete",
+      "variants": "Variants",
+      "add_question": "Add Question",
+      "number_example": "Example: 3.5",
+      "questions": "Questions",
+      "question": "Question",
+      "variant_placeholder": "Variant {{letter}}"
+    },
     "panel": "Teacher exam panel",
     "test_results": {
       "title": "Test Results",

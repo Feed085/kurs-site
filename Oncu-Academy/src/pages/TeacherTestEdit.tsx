@@ -305,7 +305,7 @@ export default function TeacherTestEdit() {
                 disabled={isSaving}
             >
               <Trash2 className="w-4 h-4 mr-2" />
-              Sil
+              {t('teacher.test_edit.delete', { defaultValue: 'Sil' })}
             </Button>
             <Button 
                 className="w-full rounded-xl bg-[#D4AF37] px-8 font-bold text-white shadow-lg shadow-[#D4AF37]/20 hover:bg-[#B88A1B] sm:w-auto" 
@@ -447,7 +447,7 @@ export default function TeacherTestEdit() {
                      <div className="relative max-w-2xl rounded-2xl overflow-hidden bg-gray-50 border-2 border-dashed border-gray-200 group cursor-pointer hover:border-[#D4AF37]/50 transition-colors">
                         {question.content ? (
                           <>
-                            <img src={question.content} alt="Sual" className="block w-full h-auto max-h-[520px] object-contain" />
+                            <img src={question.content} alt={t('teacher.test_edit.question', { defaultValue: 'Sual' })} className="block w-full h-auto max-h-[520px] object-contain" />
                             <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                                <p className="text-white text-xs font-bold">{t('test.edit.click_to_change_image')}</p>
                             </div>
@@ -484,7 +484,7 @@ export default function TeacherTestEdit() {
                 {question.answerType === 'multiple_choice' ? (
                     <div className="space-y-4">
                       <div className="flex items-center justify-between mb-2">
-                        <label className="text-sm font-bold text-gray-700 uppercase tracking-widest text-[10px]">Variantlar</label>
+                        <label className="text-sm font-bold text-gray-700 uppercase tracking-widest text-[10px]">{t('teacher.test_edit.variants', { defaultValue: 'Variantlar' })}</label>
                         <div className="flex items-center gap-2">
                             <button 
                             type="button"
@@ -545,7 +545,7 @@ export default function TeacherTestEdit() {
                                 <Input 
                                     value={option}
                                     onChange={(e) => updateOption(question.id, optIndex, e.target.value)}
-                                    placeholder={`Variant ${String.fromCharCode(65 + optIndex)}`}
+                                    placeholder={t('teacher.test_edit.variant_placeholder', { defaultValue: 'Variant', letter: String.fromCharCode(65 + optIndex) })}
                                     className="border-none bg-transparent focus-visible:ring-0 p-0 font-medium h-auto"
                                 />
                             </div>
