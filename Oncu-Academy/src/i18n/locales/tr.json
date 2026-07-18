@@ -527,7 +527,8 @@
       "education_example": "ör. Bakü Devlet Üniversitesi, Filoloji Fakültesi, Yüksek Eğitim",
       "experience_example": "ör. 12",
       "specialties_example": "ör. İngilizce, IELTS, SAT",
-      "social_not_added": "{{platform}} hesabı eklenmedi"
+      "social_not_added": "{{platform}} hesabı eklenmedi",
+      "statistics": "İstatistik"
     },
     "upload": {
       "title": "Video Yükle",

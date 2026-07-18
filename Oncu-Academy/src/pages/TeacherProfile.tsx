@@ -443,7 +443,7 @@ export default function TeacherProfile() {
           <div className="space-y-6">
             {/* Stats */}
             <div className="bg-white rounded-3xl p-6 shadow-sm">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Statistika</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">{t('teacher.profile.statistics', { defaultValue: 'Statistika' })}</h2>
               <div className="space-y-4">
                 <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
                   <div className="flex items-center gap-3">
@@ -455,7 +455,7 @@ export default function TeacherProfile() {
                 <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
                   <div className="flex items-center gap-3">
                     <BookOpen className="w-5 h-5 text-[#A87A1F]" />
-                    <span className="text-gray-600">Kurslar</span>
+                    <span className="text-gray-600">{t('teachers.courses')}</span>
                   </div>
                   <span className="font-bold text-gray-900">{teacher?.courseCount}</span>
                 </div>
@@ -469,7 +469,7 @@ export default function TeacherProfile() {
                 <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
                   <div className="flex items-center gap-3">
                     <Star className="w-5 h-5 text-yellow-500" />
-                    <span className="text-gray-600">Reytinq</span>
+                    <span className="text-gray-600">{t('teachers.teacher_rating')}</span>
                   </div>
                   <span className="font-bold text-gray-900">{teacher?.rating}/5</span>
                 </div>

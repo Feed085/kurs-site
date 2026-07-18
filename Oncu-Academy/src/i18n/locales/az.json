@@ -526,7 +526,8 @@
       "education_example": "Məs: Bakı Dövlət Universiteti, Filologiya fakültəsi, Ali təhsil",
       "experience_example": "Məs: 12",
       "specialties_example": "Məs: İngilis dili, IELTS, SAT",
-      "social_not_added": "{{platform}} hesabı əlavə edilməyib"
+      "social_not_added": "{{platform}} hesabı əlavə edilməyib",
+      "statistics": "Statistika"
     },
     "upload": {
       "title": "Video Yüklə",

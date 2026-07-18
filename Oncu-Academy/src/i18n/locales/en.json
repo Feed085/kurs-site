@@ -527,7 +527,8 @@
       "education_example": "e.g. Baku State University, Faculty of Philology, Higher Education",
       "experience_example": "e.g. 12",
       "specialties_example": "e.g. English, IELTS, SAT",
-      "social_not_added": "{{platform}} account not added"
+      "social_not_added": "{{platform}} account not added",
+      "statistics": "Statistics"
     },
     "upload": {
       "title": "Upload Video",
