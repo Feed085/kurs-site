@@ -152,7 +152,7 @@ export default function TeacherDetail() {
                         />
                       ))}
                     </div>
-                    <p className="mt-1 text-xs font-medium text-gray-500">{teacherReviewCount} {t('teacher.reviews', { defaultValue: 'rəy' })}</p>
+                    <p className="mt-1 text-xs font-medium text-gray-500">{teacherReviewCount} {t('teacher.reviews.reviews_label', { defaultValue: 'rəy' })}</p>
                   </div>
                 </div>
               </div>

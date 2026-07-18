@@ -510,7 +510,8 @@
       "teacher_reviews": "Teacher Reviews",
       "students": "Students",
       "course_rating": "Course Rating",
-      "reviews": "reviews"
+      "reviews": "reviews",
+      "reviews_label": "reviews"
     },
     "profile": {
       "title": "Profile",
@@ -600,7 +601,8 @@
       "average_rating": "Average rating",
       "active_filter": "Active filter",
       "all_ratings": "All ratings",
-      "open_course": "Open course"
+      "open_course": "Open course",
+      "reviews_label": "reviews"
     },
     "students": {
       "my_students": "My Students",

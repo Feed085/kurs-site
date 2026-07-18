@@ -593,7 +593,7 @@ export default function TeacherCourseEdit() {
                       />
                     ))}
                   </div>
-                  <div className="text-xs text-gray-500">{(course.reviews || []).length} {t('teacher.reviews', { defaultValue: 'rəy' })}</div>
+                  <div className="text-xs text-gray-500">{(course.reviews || []).length} {t('teacher.reviews.reviews_label', { defaultValue: 'rəy' })}</div>
                 </div>
               </div>
 

@@ -509,7 +509,8 @@
       "teacher_reviews": "Müəllim Rəyləri",
       "students": "Tələbələr",
       "course_rating": "Kurs Reytinqi",
-      "reviews": "rəy"
+      "reviews": "rəy",
+      "reviews_label": "rəy"
     },
     "profile": {
       "title": "Profil",
@@ -599,7 +600,8 @@
       "average_rating": "Orta bal",
       "active_filter": "Aktiv filtr",
       "all_ratings": "Bütün ballar",
-      "open_course": "Kursu aç"
+      "open_course": "Kursu aç",
+      "reviews_label": "rəy"
     },
     "students": {
       "my_students": "Tələbələrim",

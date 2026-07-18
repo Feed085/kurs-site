@@ -352,7 +352,7 @@ export default function TeacherDashboard() {
                     <span className="font-medium text-gray-700">{t('teacher.dashboard.course_rating', { defaultValue: 'Kurs Reytinqi' })}</span>
                   </div>
                   <div className="text-2xl font-black text-gray-900">{courseRating.toFixed(1)}/5</div>
-                  <div className="text-sm text-gray-500">{stats.courseReviewCount || 0} {t('teacher.dashboard.reviews', { defaultValue: 'rəy' })}</div>
+                  <div className="text-sm text-gray-500">{stats.courseReviewCount || 0} {t('teacher.dashboard.reviews_label', { defaultValue: 'rəy' })}</div>
                 </div>
 
                 <div className="p-4 bg-gradient-to-br from-[#8B5CF6]/10 to-[#EC4899]/10 rounded-2xl">
@@ -363,7 +363,7 @@ export default function TeacherDashboard() {
                   <div className="text-2xl font-black text-gray-900">
                     {Number(stats.teacherRating || 0).toFixed(1)}/5
                   </div>
-                  <div className="text-sm text-gray-500">{stats.teacherReviewCount || 0} {t('teacher.dashboard.reviews', { defaultValue: 'rəy' })}</div>
+                  <div className="text-sm text-gray-500">{stats.teacherReviewCount || 0} {t('teacher.dashboard.reviews_label', { defaultValue: 'rəy' })}</div>
                 </div>
               </div>
             </div>
