@@ -783,6 +783,8 @@
     "category_ielts": "IELTS",
     "not_answered": "Cavab verilməyib",
     "no_date_set": "Tarix təyin edilməyib",
+    "question_label": "Sual",
+    "score_label": "Bal",
     "leave_session_failed": "Leave session yaradılmadı",
     "load_error_prefix": "Test yüklənərkən xəta: ",
     "not_loaded": "Test yüklənmədi",

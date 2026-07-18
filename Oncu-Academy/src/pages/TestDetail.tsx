@@ -1031,7 +1031,7 @@ export default function TestDetail() {
             <div className="grid grid-cols-3 gap-4 mb-8">
               <div className="bg-gray-50 rounded-2xl p-4 text-center">
                 <div className="text-2xl font-black text-[#D4AF37]">{questionCount}</div>
-                <div className="text-sm text-gray-500">Sual</div>
+                <div className="text-sm text-gray-500">{t('test.question_label', { defaultValue: 'Sual' })}</div>
               </div>
               <div className="bg-gray-50 rounded-2xl p-4 text-center">
                 <div className="text-2xl font-black text-[#A87A1F]">{test.duration}</div>
@@ -1039,7 +1039,7 @@ export default function TestDetail() {
               </div>
               <div className="bg-gray-50 rounded-2xl p-4 text-center">
                 <div className="text-2xl font-black text-[#F59E0B]">100</div>
-                <div className="text-sm text-gray-500">Bal</div>
+                <div className="text-sm text-gray-500">{t('test.score_label', { defaultValue: 'Bal' })}</div>
               </div>
             </div>
 

@@ -784,6 +784,8 @@
     "category_ielts": "IELTS",
     "not_answered": "No answer given",
     "no_date_set": "No date set",
+    "question_label": "Question",
+    "score_label": "Score",
     "leave_session_failed": "Leave session creation failed",
     "load_error_prefix": "Error loading test: ",
     "not_loaded": "Test could not be loaded",

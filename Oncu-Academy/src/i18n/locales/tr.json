@@ -784,6 +784,8 @@
     "category_ielts": "IELTS",
     "not_answered": "Cevap verilmedi",
     "no_date_set": "Tarih ayarlanmadı",
+    "question_label": "Soru",
+    "score_label": "Puan",
     "leave_session_failed": "Oturumdan ayrılma oluşturulamadı",
     "load_error_prefix": "Test yüklenirken hata: ",
     "not_loaded": "Test yüklenemedi",
