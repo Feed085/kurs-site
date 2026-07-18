@@ -415,7 +415,9 @@
       "questions": "questions",
       "checking": "Checking",
       "passed": "Passed",
-      "failed": "Failed"
+      "failed": "Failed",
+      "retake": "Retake Test",
+      "one_time": "This test is one-time only"
     },
     "certificate_score_grade": "Score (Grade):",
     "has_pending_questions": "Has pending questions",

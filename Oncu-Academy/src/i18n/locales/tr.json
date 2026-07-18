@@ -415,7 +415,9 @@
       "questions": "soru",
       "checking": "Kontrol ediliyor",
       "passed": "Geçti",
-      "failed": "Kaldısınız"
+      "failed": "Kaldısınız",
+      "retake": "Tekrar Test",
+      "one_time": "Bu test tek seferliktir"
     },
     "certificate_score_grade": "Sonuç (Derece):",
     "has_pending_questions": "Bekleyen sorular var",

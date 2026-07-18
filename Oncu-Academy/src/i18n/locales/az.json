@@ -414,7 +414,9 @@
       "questions": "sual",
       "checking": "Yoxlanılır",
       "passed": "Keçdi",
-      "failed": "Kəsildi"
+      "failed": "Kəsildi",
+      "retake": "Təkrar test",
+      "one_time": "Bu test tək dəfəlikdir"
     },
     "certificate_score_grade": "Nəticə (Dərəcə):",
     "has_pending_questions": "Gözləmədəki suallar var",
