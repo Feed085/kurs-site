@@ -803,6 +803,8 @@
     "finish_exam": "Finish Exam",
     "sending": "Sending...",
     "previous": "Previous",
+    "congratulations": "Congratulations!",
+    "failed": "Failed",
     "your_answer_numeric": "Your Answer (Number)",
     "your_answer_open": "Your Answer (Open)",
     "example_number": "Ex: 3.5",

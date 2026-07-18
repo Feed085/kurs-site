@@ -802,6 +802,8 @@
     "finish_exam": "İmtahanı Bitir",
     "sending": "Göndərilir...",
     "previous": "Əvvəlki",
+    "congratulations": "Təbriklər!",
+    "failed": "Uğursuz oldu",
     "your_answer_numeric": "Sizin Cavabınız (Rəqəm)",
     "your_answer_open": "Sizin Cavabınız (Açıq sual)",
     "example_number": "Məs: 3.5",

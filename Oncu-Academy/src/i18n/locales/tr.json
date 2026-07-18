@@ -803,6 +803,8 @@
     "finish_exam": "Sınavı Bitir",
     "sending": "Gönderiliyor...",
     "previous": "Önceki",
+    "congratulations": "Tebrikler!",
+    "failed": "Başarısız",
     "your_answer_numeric": "Cevabınız (Sayı)",
     "your_answer_open": "Cevabınız (Açık soru)",
     "example_number": "Örn: 3.5",
