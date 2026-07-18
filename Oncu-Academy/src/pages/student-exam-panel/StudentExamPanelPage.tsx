@@ -361,7 +361,7 @@ export default function StudentExamPanelPage() {
             {test.startsAt ? (
               <span className="inline-flex items-center gap-1.5">
                 <CalendarDays className="h-4 w-4" />
-                {formatDateTime(test.startsAt)}
+                {formatDateTime(test.startsAt, t)}
               </span>
             ) : null}
             <span className="inline-flex items-center gap-1.5">
@@ -390,14 +390,14 @@ export default function StudentExamPanelPage() {
     const instructorName = instructorSource
       ? `${instructorSource.name || ''} ${instructorSource.surname || ''}`.trim()
       : t('student_exam.no_instructor_info', { defaultValue: 'Müəllim məlumatı yoxdur' });
-    const completedDate = formatDate(result.completedAt || result.createdAt);
+    const completedDate = formatDate(result.completedAt || result.createdAt, t);
     const score = safeNumber(result.scorePercentage);
     const answers = result.answers || [];
     const correctAnswers = answers.filter((answer) => !isPendingReviewAnswer(answer) && answer.isCorrect).length;
     const pendingAnswers = answers.filter((answer) => isPendingReviewAnswer(answer)).length;
     const gradedAnswers = answers.filter((answer) => !isPendingReviewAnswer(answer)).length;
     const incorrectAnswers = Math.max(0, gradedAnswers - correctAnswers);
-    const statusMeta = getResultStatusMeta(result);
+    const statusMeta = getResultStatusMeta(result, t);
     const StatusIcon = statusMeta.icon;
 
     return (
@@ -488,13 +488,13 @@ export default function StudentExamPanelPage() {
           {test.startsAt ? (
             <span className="inline-flex items-center gap-1.5">
               <CalendarDays className="h-4 w-4" />
-              {formatDateTime(test.startsAt)}
+              {formatDateTime(test.startsAt, t)}
             </span>
           ) : null}
           {expiredAt ? (
             <span className="inline-flex items-center gap-1.5 text-rose-700">
               <Clock3 className="h-4 w-4" />
-              {t('student_exam.expired_at', { defaultValue: 'Bitib:' })} {formatDateTime(new Date(expiredAt).toISOString())}
+              {t('student_exam.expired_at', { defaultValue: 'Bitib:' })} {formatDateTime(new Date(expiredAt).toISOString(), t)}
             </span>
           ) : null}
         </div>
@@ -619,7 +619,7 @@ export default function StudentExamPanelPage() {
         {sortedCompletedResults.length > 0
           ? sortedCompletedResults.map((result) => {
               const resultId = getEntityId(result);
-              const statusMeta = getResultStatusMeta(result);
+              const statusMeta = getResultStatusMeta(result, t);
               const StatusIcon = statusMeta.icon;
 
               return (
@@ -637,7 +637,7 @@ export default function StudentExamPanelPage() {
                         <Badge variant="outline" className="border-[#D4AF37]/30 bg-[#D4AF37]/10 text-[#A87A1F]">
                           {t('student_exam.admin_approved', { defaultValue: 'Admin təsdiqli' })}
                         </Badge>
-                        <span className="text-xs font-medium text-slate-400">{formatDate(result.completedAt || result.createdAt)}</span>
+                        <span className="text-xs font-medium text-slate-400">{formatDate(result.completedAt || result.createdAt, t)}</span>
                       </div>
                       <h3 className="mt-3 text-lg font-bold text-slate-900">{result.test?.title || t('student.unknown_test', { defaultValue: 'Bilinməyən test' })}</h3>
                       <p className="mt-1 text-sm text-slate-500">{result.test?.course?.title || t('student.unknown_course', { defaultValue: 'Bilinməyən kurs' })}</p>

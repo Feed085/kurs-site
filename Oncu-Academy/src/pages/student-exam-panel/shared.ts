@@ -197,9 +197,9 @@ export const fetchAuthorizedData = async <T,>(path: string, token: string): Prom
 
 export const getEntityId = (entity: { id?: string; _id?: string } | null | undefined) => entity?.id || entity?._id || '';
 
-export const formatDate = (value?: string | null) => {
+export const formatDate = (value?: string | null, t?: (key: string, options?: { defaultValue?: string }) => string) => {
   if (!value) {
-    return 'Tarix yoxdur';
+    return t ? t('common.no_date', { defaultValue: 'Tarix yoxdur' }) : 'Tarix yoxdur';
   }
 
   return new Intl.DateTimeFormat('az-AZ', {
@@ -232,11 +232,11 @@ export const getMultipleChoiceCorrectAnswerIndex = (question: PanelQuestion) => 
   return null;
 };
 
-export const formatMultipleChoiceAnswer = (question: PanelQuestion, answer: string) => {
+export const formatMultipleChoiceAnswer = (question: PanelQuestion, answer: string, t?: (key: string, options?: { defaultValue?: string }) => string) => {
   const answerIndex = normalizeMultipleChoiceAnswerIndex(answer);
 
   if (answerIndex === null) {
-    return answer || 'Cavab verilməyib';
+    return answer || (t ? t('common.no_answer', { defaultValue: 'Cavab verilməyib' }) : 'Cavab verilməyib');
   }
 
   const optionText = question?.options?.[answerIndex] ?? '';
@@ -244,27 +244,27 @@ export const formatMultipleChoiceAnswer = (question: PanelQuestion, answer: stri
   return optionText ? `${optionLabel}: ${optionText}` : optionLabel;
 };
 
-export const getCorrectAnswerLabel = (question: PanelQuestion) => {
+export const getCorrectAnswerLabel = (question: PanelQuestion, t?: (key: string, options?: { defaultValue?: string }) => string) => {
   if (question.answerType === 'multiple_choice') {
     const correctIndex = getMultipleChoiceCorrectAnswerIndex(question);
 
     if (correctIndex !== null) {
-      return formatMultipleChoiceAnswer(question, String(correctIndex));
+      return formatMultipleChoiceAnswer(question, String(correctIndex), t);
     }
 
-    return question.correctAnswer || 'Təyin edilməyib';
+    return question.correctAnswer || (t ? t('common.not_set', { defaultValue: 'Təyin edilməyib' }) : 'Təyin edilməyib');
   }
 
-  return question.correctAnswer?.trim() || 'Ekspertiza tələb olunur';
+  return question.correctAnswer?.trim() || (t ? t('student.exam_answer_key.expertise_required', { defaultValue: 'Ekspertiza tələb olunur' }) : 'Ekspertiza tələb olunur');
 };
 
-export const getStudentAnswerLabel = (question: PanelQuestion, answer?: string | null) => {
+export const getStudentAnswerLabel = (question: PanelQuestion, answer?: string | null, t?: (key: string, options?: { defaultValue?: string }) => string) => {
   if (!answer?.trim()) {
-    return 'Cavab verilməyib';
+    return t ? t('common.no_answer', { defaultValue: 'Cavab verilməyib' }) : 'Cavab verilməyib';
   }
 
   if (question.answerType === 'multiple_choice') {
-    return formatMultipleChoiceAnswer(question, answer);
+    return formatMultipleChoiceAnswer(question, answer, t);
   }
 
   return answer.trim();
@@ -293,13 +293,13 @@ export const isPendingReviewAnswer = (answer?: PanelResultAnswer | null) => {
   return true;
 };
 
-export const getResultStatusMeta = (result: PanelResult) => {
+export const getResultStatusMeta = (result: PanelResult, t?: (key: string, options?: { defaultValue?: string }) => string) => {
   const score = safeNumber(result.scorePercentage);
   const hasPendingAnswers = Boolean(result.hasPendingAnswers) || (result.answers || []).some((answer) => isPendingReviewAnswer(answer));
 
   if (hasPendingAnswers) {
     return {
-      label: 'Yoxlanılır',
+      label: t ? t('student_exam.checking', { defaultValue: 'Yoxlanılır' }) : 'Yoxlanılır',
       className: 'border-amber-200 bg-amber-50 text-amber-700',
       icon: Loader2,
     };
@@ -307,22 +307,22 @@ export const getResultStatusMeta = (result: PanelResult) => {
 
   if (score >= 50) {
     return {
-      label: 'Keçdi',
+      label: t ? t('student_exam.passed', { defaultValue: 'Keçdi' }) : 'Keçdi',
       className: 'border-emerald-200 bg-emerald-50 text-emerald-700',
       icon: CheckCircle2,
     };
   }
 
   return {
-    label: 'Kəsildi',
+    label: t ? t('student_exam.failed', { defaultValue: 'Kəsildi' }) : 'Kəsildi',
     className: 'border-rose-200 bg-rose-50 text-rose-700',
     icon: XCircle,
   };
 };
 
-export const formatDateTime = (value?: string | null) => {
+export const formatDateTime = (value?: string | null, t?: (key: string, options?: { defaultValue?: string }) => string) => {
   if (!value) {
-    return 'Tarix yoxdur';
+    return t ? t('common.no_date', { defaultValue: 'Tarix yoxdur' }) : 'Tarix yoxdur';
   }
 
   return new Intl.DateTimeFormat('az-AZ', {
