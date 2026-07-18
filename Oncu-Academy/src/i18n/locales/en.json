@@ -180,6 +180,13 @@
     "cover_upload_failed": "Cover image upload failed",
     "course_created": "New course created successfully!"
   },
+  "reviews": {
+    "students_opinions": "Student opinions",
+    "for_this_course": "For this course",
+    "summary_text": "reviews collected.",
+    "empty_message": "No reviews yet for this course.",
+    "page_indicator": "Page {{current}} / {{total}}"
+  },
   "teachers": {
     "title": "Meet Our Teachers",
     "subtitle": "Our Professional Team",

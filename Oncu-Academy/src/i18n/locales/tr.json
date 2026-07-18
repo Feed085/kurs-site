@@ -180,6 +180,13 @@
     "cover_upload_failed": "Kapak resmi yüklenemedi",
     "course_created": "Yeni kurs başarıyla oluşturuldu!"
   },
+  "reviews": {
+    "students_opinions": "Öğrenci görüşleri",
+    "for_this_course": "Bu kurs için",
+    "summary_text": "yorum toplandı.",
+    "empty_message": "Henüz bu kurs için yorum yok.",
+    "page_indicator": "Sayfa {{current}} / {{total}}"
+  },
   "teachers": {
     "title": "Öğretmenlerimizle Tanışın",
     "subtitle": "Profesyonel Ekibimiz",

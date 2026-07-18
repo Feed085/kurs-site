@@ -180,6 +180,13 @@
     "cover_upload_failed": "Kover şəkli yüklənə bilmədi",
     "course_created": "Yeni kurs uğurla yaradıldı!"
   },
+  "reviews": {
+    "students_opinions": "Tələbələrin fikirləri",
+    "for_this_course": "Bu kurs üçün",
+    "summary_text": "rəy toplanıb.",
+    "empty_message": "Hələ bu kurs üçün rəy yoxdur.",
+    "page_indicator": "Səhifə {{current}} / {{total}}"
+  },
   "teachers": {
     "title": "Müəllimlərimizlə tanış olun",
     "subtitle": "Peşəkar komandamız",
