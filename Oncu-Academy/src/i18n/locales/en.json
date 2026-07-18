@@ -445,7 +445,17 @@
       "open_question": "Open question",
       "question_content_not_found": "Question content not found",
       "your_answer": "Your answer",
-      "correct_answer": "Correct answer"
+      "correct_answer": "Correct answer",
+      "final_result": "Final Result",
+      "wrong": "Wrong",
+      "pending": "Pending",
+      "score_indicator": "Score indicator",
+      "score_summary": "{{correct}} correct · {{pending}} pending",
+      "summary_title": "Question Summary",
+      "summary_desc": "Detailed breakdown of your answers for each question",
+      "title": "Answer Key",
+      "no_questions": "No question details found for this exam.",
+      "not_found_message": "Answer key information not found."
     }
   },
   "student_exam": {

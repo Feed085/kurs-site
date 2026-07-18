@@ -444,7 +444,17 @@
       "open_question": "Açıq sual",
       "question_content_not_found": "Sual məzmunu tapılmadı",
       "your_answer": "Sizin cavabınız",
-      "correct_answer": "Düzgün cavab"
+      "correct_answer": "Düzgün cavab",
+      "final_result": "Yekun nəticə",
+      "wrong": "Yanlış",
+      "pending": "Gözləmədə",
+      "score_indicator": "Bal göstəricisi",
+      "score_summary": "{{correct}} düzgün · {{pending}} gözləmədə",
+      "summary_title": "Sual icmalı",
+      "summary_desc": "Hər sual üçün cavablarınızın ətraflı izahı",
+      "title": "Cavab açarı",
+      "no_questions": "Bu imtahan üçün sual detalları tapılmadı.",
+      "not_found_message": "Cavab açarı məlumatı tapılmadı."
     }
   },
   "student_exam": {

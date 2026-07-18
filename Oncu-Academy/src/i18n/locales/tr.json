@@ -445,7 +445,17 @@
       "open_question": "Açık soru",
       "question_content_not_found": "Soru içeriği bulunamadı",
       "your_answer": "Sizin cevabınız",
-      "correct_answer": "Doğru cevap"
+      "correct_answer": "Doğru cevap",
+      "final_result": "Sonuç",
+      "wrong": "Yanlış",
+      "pending": "Bekleyen",
+      "score_indicator": "Puan göstergesi",
+      "score_summary": "{{correct}} doğru · {{pending}} bekleyen",
+      "summary_title": "Soru Özeti",
+      "summary_desc": "Her soru için cevaplarınızın detaylı dökümü",
+      "title": "Cevap Anahtarı",
+      "no_questions": "Bu sınav için soru detayları bulunamadı.",
+      "not_found_message": "Cevap anahtarı bilgisi bulunamadı."
     }
   },
   "student_exam": {

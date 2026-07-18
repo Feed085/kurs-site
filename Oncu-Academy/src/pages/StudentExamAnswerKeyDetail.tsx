@@ -192,8 +192,8 @@ export default function StudentExamAnswerKeyDetail() {
     const answer = getQuestionAnswer(result, question, index);
     const answerStatusMeta = getAnswerStatusMeta(answer, t);
     const AnswerStatusIcon = answerStatusMeta.icon;
-    const studentAnswerLabel = getStudentAnswerLabel(question, answer?.answer);
-    const correctAnswerLabel = getCorrectAnswerLabel(question);
+    const studentAnswerLabel = getStudentAnswerLabel(question, answer?.answer, t);
+    const correctAnswerLabel = getCorrectAnswerLabel(question, t);
     const studentAnswerIndex = normalizeMultipleChoiceAnswerIndex(answer?.answer);
     const correctAnswerIndex = getMultipleChoiceCorrectAnswerIndex(question);
 
@@ -309,18 +309,18 @@ export default function StudentExamAnswerKeyDetail() {
                   <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                     <div>
                       <div className="flex flex-wrap items-center gap-2">
-                        <Badge variant="outline" className={cn('border', getResultStatusMeta(result).className)}>
-                          {getResultStatusMeta(result).label}
+                        <Badge variant="outline" className={cn('border', getResultStatusMeta(result, t).className)}>
+                          {getResultStatusMeta(result, t).label}
                         </Badge>
                         <Badge variant="outline" className="border-[#D4AF37]/30 bg-[#D4AF37]/10 text-[#A87A1F]">
-                          Admin təsdiqli
+                          {t('student_exam.admin_approved', { defaultValue: 'Admin təsdiqli' })}
                         </Badge>
                       </div>
                       <CardTitle className="mt-3 text-2xl font-black text-slate-900 lg:text-3xl">
-                        {result.test?.title || testDetail.title || 'Cavab açarı'}
+                        {result.test?.title || testDetail.title || t('student.exam_answer_key.title', { defaultValue: 'Cavab açarı' })}
                       </CardTitle>
                       <CardDescription className="mt-2 text-slate-600">
-                        {result.test?.course?.title || testDetail.course?.title || 'Kurs məlumatı yoxdur'}
+                        {result.test?.course?.title || testDetail.course?.title || t('student_exam.no_course_info', { defaultValue: 'Kurs məlumatı yoxdur' })}
                       </CardDescription>
                     </div>
 
@@ -335,12 +335,12 @@ export default function StudentExamAnswerKeyDetail() {
                   <div className="flex flex-wrap items-center gap-3 text-sm text-slate-500">
                     <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1.5">
                       <Clock3 className="h-4 w-4" />
-                      {formatDate(result.completedAt || result.createdAt)}
+                      {formatDate(result.completedAt || result.createdAt, t)}
                     </span>
                     {testDetail.duration ? (
                       <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1.5">
                         <Clock3 className="h-4 w-4" />
-                        {testDetail.duration} dəqiqə
+                        {testDetail.duration} {t('common.minutes', { defaultValue: 'dəqiqə' })}
                       </span>
                     ) : null}
                   </div>
@@ -383,7 +383,7 @@ export default function StudentExamAnswerKeyDetail() {
                 ) : (
                   <Card className="border-dashed border-slate-200 bg-white/95 shadow-none">
                     <CardContent className="px-6 py-10 text-center text-sm text-slate-500">
-                      Bu imtahan üçün sual detalları tapılmadı.
+                      {t('student.exam_answer_key.no_questions', { defaultValue: 'Bu imtahan üçün sual detalları tapılmadı.' })}
                     </CardContent>
                   </Card>
                 )}
@@ -392,7 +392,7 @@ export default function StudentExamAnswerKeyDetail() {
           ) : (
             <Card className="border-slate-100 bg-white/95 shadow-sm">
               <CardContent className="px-6 py-10 text-center text-sm text-slate-500">
-                Cavab açarı məlumatı tapılmadı.
+                {t('student.exam_answer_key.not_found_message', { defaultValue: 'Cavab açarı məlumatı tapılmadı.' })}
               </CardContent>
             </Card>
           )}
