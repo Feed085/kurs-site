@@ -642,7 +642,12 @@
       "active_filter": "Aktif filtre",
       "all_ratings": "Tüm puanlar",
       "open_course": "Kursu aç",
-      "reviews_label": "yorum"
+      "reviews_label": "yorum",
+      "students_opinions": "Öğrenci görüşleri",
+      "for_this_course": "Bu kurs için",
+      "summary_text": "yorum toplandı.",
+      "empty_message": "Henüz bu kurs için yorum yok.",
+      "page_indicator": "Sayfa {{current}} / {{total}}"
     },
     "students": {
       "my_students": "Öğrencilerim",
@@ -975,6 +980,7 @@
     "years_experience": "yıl deneyim",
     "reviews": "Yorumlar",
     "reviews_count": "yorum",
+    "review_count_suffix": "yorum",
     "student": "Öğrenci",
     "no_date": "Tarih yok",
     "rating": "Reyting",

@@ -642,7 +642,12 @@
       "active_filter": "Active filter",
       "all_ratings": "All ratings",
       "open_course": "Open course",
-      "reviews_label": "reviews"
+      "reviews_label": "reviews",
+      "students_opinions": "Student opinions",
+      "for_this_course": "For this course",
+      "summary_text": "reviews collected.",
+      "empty_message": "No reviews yet for this course.",
+      "page_indicator": "Page {{current}} / {{total}}"
     },
     "students": {
       "my_students": "My Students",
@@ -966,6 +971,7 @@
     "years_experience": "years experience",
     "reviews": "Reviews",
     "reviews_count": "reviews",
+    "review_count_suffix": "reviews",
     "student": "student",
     "no_date": "No date",
     "rating": "Rating",

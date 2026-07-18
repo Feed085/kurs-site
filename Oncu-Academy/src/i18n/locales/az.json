@@ -641,7 +641,12 @@
       "active_filter": "Aktiv filtr",
       "all_ratings": "Bütün ballar",
       "open_course": "Kursu aç",
-      "reviews_label": "rəy"
+      "reviews_label": "rəy",
+      "students_opinions": "Tələbələrin fikirləri",
+      "for_this_course": "Bu kurs üçün",
+      "summary_text": "rəy toplanıb.",
+      "empty_message": "Hələ bu kurs üçün rəy yoxdur.",
+      "page_indicator": "Səhifə {{current}} / {{total}}"
     },
     "students": {
       "my_students": "Tələbələrim",
@@ -974,6 +979,7 @@
     "years_experience": "il təcrübə",
     "reviews": "Rəylər",
     "reviews_count": "rəy",
+    "review_count_suffix": "rəy",
     "student": "Tələbə",
     "no_date": "Tarix yoxdur",
     "rating": "Reytinq",
