@@ -82,7 +82,11 @@ export default function CourseDetail() {
       return;
     }
 
-    const message = `Salam, Men ${course.title} ile maraqlanıram. Nece ödeniş edeceyim haqqında melumat ala bilerem? ${email}`;
+    const message = t('courses.whatsapp_message', { 
+      course: course.title, 
+      email: email,
+      defaultValue: `Salam, Men ${course.title} ile maraqlanıram. Nece ödeniş edeceyim haqqında melumat ala bilerem? ${email}` 
+    });
     const url = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(message)}`;
     const popup = window.open(url, '_blank', 'noopener,noreferrer');
 
