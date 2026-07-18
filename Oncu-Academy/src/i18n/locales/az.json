@@ -530,6 +530,16 @@
       "social_not_added": "{{platform}} hesabı əlavə edilməyib",
       "statistics": "Statistika"
     },
+    "detail": {
+      "load_error": "Müəllim yüklənə bilmədi",
+      "back_to_teachers": "Müəllimlərə qayıt",
+      "default_location": "Bakı, Azərbaycan",
+      "no_courses": "Bu müəllimin hələ ki aktiv kursu yoxdur.",
+      "teacher_reviews_title": "Müəllim rəyləri",
+      "teacher_reviews_subtitle": "Bu müəllim üçün",
+      "reviews_summary": "rəy toplanıb.",
+      "no_reviews_yet": "Hələ bu müəllim üçün rəy yoxdur."
+    },
     "upload": {
       "title": "Video Yüklə",
       "course": "Kurs",

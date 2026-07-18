@@ -213,7 +213,7 @@ export default function TeacherDetail() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {teacherCourses.length === 0 ? (
                   <div className="text-center text-gray-400 py-8">
-                    Bu müəllimin hələ ki aktiv kursu yoxdur.
+                    {t('teacher.detail.no_courses', { defaultValue: 'Bu müəllimin hələ ki aktiv kursu yoxdur.' })}
                   </div>
                 ) : (
                   teacherCourses.map((course) => (
@@ -259,11 +259,11 @@ export default function TeacherDetail() {
 
                 <div>
                   <h3 className="text-lg font-bold text-gray-900 mb-3">{t('teachers.experience')}</h3>
-                  <p className="text-gray-600 leading-relaxed">{teacher.experience ?? 0} il</p>
+                  <p className="text-gray-600 leading-relaxed">{teacher.experience ?? 0} {t('teachers.years_abbr')}</p>
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-3">İxtisaslar</h3>
+                  <h3 className="text-lg font-bold text-gray-900 mb-3">{t('teacher.profile.specialties', { defaultValue: 'İxtisaslar' })}</h3>
                   <div className="flex flex-wrap gap-2">
                     {(teacher.specializedAreas || []).map((specialty: string, index: number) => (
                       <span
@@ -340,7 +340,7 @@ export default function TeacherDetail() {
                       variant="outline"
                       className="rounded-xl"
                     >
-                      Daxil ol
+                      {t('auth.login', { defaultValue: 'Daxil ol' })}
                     </Button>
                   </div>
                 ) : null}
@@ -349,10 +349,10 @@ export default function TeacherDetail() {
                   reviews={teacherReviews}
                   rating={teacherRating}
                   pageSize={3}
-                  title="Müəllim rəyləri"
-                  subtitle="Bu müəllim üçün"
-                  summaryText="rəy toplanıb."
-                  emptyMessage="Hələ bu müəllim üçün rəy yoxdur."
+                  title={t('teacher.detail.teacher_reviews_title', { defaultValue: 'Müəllim rəyləri' })}
+                  subtitle={t('teacher.detail.teacher_reviews_subtitle', { defaultValue: 'Bu müəllim üçün' })}
+                  summaryText={t('teacher.detail.reviews_summary', { defaultValue: 'rəy toplanıb.' })}
+                  emptyMessage={t('teacher.detail.no_reviews_yet', { defaultValue: 'Hələ bu müəllim üçün rəy yoxdur.' })}
                 />
               </div>
             )}

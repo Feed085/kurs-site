@@ -531,6 +531,16 @@
       "social_not_added": "{{platform}} hesabı eklenmedi",
       "statistics": "İstatistik"
     },
+    "detail": {
+      "load_error": "Öğretmen yüklenemedi",
+      "back_to_teachers": "Öğretmenlere dön",
+      "default_location": "Bakü, Azerbaycan",
+      "no_courses": "Bu öğretmenin henüz aktif kursu yok.",
+      "teacher_reviews_title": "Öğretmen yorumları",
+      "teacher_reviews_subtitle": "Bu öğretmen için",
+      "reviews_summary": "yorum toplandı.",
+      "no_reviews_yet": "Henüz bu öğretmen için yorum yok."
+    },
     "upload": {
       "title": "Video Yükle",
       "course": "Kurs",
