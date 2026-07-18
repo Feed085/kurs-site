@@ -316,7 +316,7 @@ export default function TeacherTestEdit() {
               {isSaving ? t('common.saving', { defaultValue: 'Yadda saxlanılır...' }) : (
                 <>
                   <Save className="w-4 h-4 mr-2" />
-                  Yadda Saxla
+                  {t('common.save', { defaultValue: 'Yadda saxla' })}
                 </>
               )}
             </Button>
@@ -363,7 +363,7 @@ export default function TeacherTestEdit() {
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
               <FileText className="w-6 h-6 text-[#D4AF37]" />
-              Suallar ({test.questions.length})
+              {t('teacher.test_edit.questions', { defaultValue: 'Suallar' })} ({test.questions.length})
             </h2>
           </div>
 
@@ -381,7 +381,7 @@ export default function TeacherTestEdit() {
                 <span className="w-8 h-8 rounded-lg bg-[#D4AF37]/10 text-[#D4AF37] flex items-center justify-center font-bold text-sm">
                   {qIdx + 1}
                 </span>
-                <span className="text-sm font-bold text-gray-400 uppercase tracking-wider">Sual</span>
+                <span className="text-sm font-bold text-gray-400 uppercase tracking-wider">{t('teacher.test_edit.question', { defaultValue: 'Sual' })}</span>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 mb-6">
