@@ -662,7 +662,12 @@
       "course_reviews": "Kurs yorumları",
       "reviews_title": "Yorumlar",
       "what_will_you_learn": "Bu kursta ne öğreneceksiniz?",
-      "course_includes": "Kurs dahil"
+      "course_includes": "Kurs dahil",
+      "new_point": "Yeni öğrenme noktası",
+      "add_point": "Nokta Ekle",
+      "new_feature": "Yeni özellik",
+      "add": "Ekle",
+      "view_results": "Sonuçları Gör"
     },
     "reviews": {
       "load_error": "Kurs yorumları yüklenemedi",

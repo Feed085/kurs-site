@@ -661,7 +661,12 @@
       "course_reviews": "Kurs rəyləri",
       "reviews_title": "Rəylər",
       "what_will_you_learn": "Bu kursda nə öyrənəcəksiniz?",
-      "course_includes": "Kurs daxildir"
+      "course_includes": "Kurs daxildir",
+      "new_point": "Yeni öyrənəcəyiniz bənd",
+      "add_point": "Bənd Əlavə Et",
+      "new_feature": "Yeni xüsusiyyət",
+      "add": "Əlavə Et",
+      "view_results": "Nəticələrə bax"
     },
     "reviews": {
       "load_error": "Kurs rəyləri yüklənmədi",

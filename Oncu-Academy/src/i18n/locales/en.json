@@ -662,7 +662,12 @@
       "course_reviews": "Course reviews",
       "reviews_title": "Reviews",
       "what_will_you_learn": "What will you learn in this course?",
-      "course_includes": "Course includes"
+      "course_includes": "Course includes",
+      "new_point": "New learning point",
+      "add_point": "Add Point",
+      "new_feature": "New feature",
+      "add": "Add",
+      "view_results": "View Results"
     },
     "reviews": {
       "load_error": "Could not load course reviews",
