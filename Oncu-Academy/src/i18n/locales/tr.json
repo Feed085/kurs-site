@@ -805,6 +805,8 @@
     "previous": "Önceki",
     "congratulations": "Tebrikler!",
     "failed": "Başarısız",
+    "better_next_time": "Bir dahaki sefere daha iyi sonuç vereceğinizden eminiz!",
+    "self_test": "Kendini Test Et",
     "your_answer_numeric": "Cevabınız (Sayı)",
     "your_answer_open": "Cevabınız (Açık soru)",
     "example_number": "Örn: 3.5",

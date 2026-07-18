@@ -805,6 +805,8 @@
     "previous": "Previous",
     "congratulations": "Congratulations!",
     "failed": "Failed",
+    "better_next_time": "We're sure you'll do better next time!",
+    "self_test": "Self Test",
     "your_answer_numeric": "Your Answer (Number)",
     "your_answer_open": "Your Answer (Open)",
     "example_number": "Ex: 3.5",
